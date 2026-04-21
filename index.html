@@ -30,6 +30,7 @@ header{border-bottom:2px solid var(--ink)}
 .ad-square{width:100%;height:250px;margin-bottom:1.5rem}
 .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
 .section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+
 /* CONCURSOS */
 .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
 .stat{display:flex;align-items:baseline;gap:6px}
@@ -42,17 +43,25 @@ header{border-bottom:2px solid var(--ink)}
 .search-wrap{margin-bottom:1.25rem}
 .search-wrap input{width:100%;border:1px solid var(--border);padding:9px 14px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;background:white;color:var(--ink);outline:none}
 .search-wrap input:focus{border-color:var(--ink)}
-.ai-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:1.25rem;padding:7px 10px;border:1px solid var(--border);background:white}
-.ai-dot{width:6px;height:6px;border-radius:50%;background:#2a9d5c;animation:pulse 2s infinite;flex-shrink:0}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.loading{text-align:center;padding:3rem 0;color:var(--muted)}
-.loading-spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .75rem}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading p{font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+
+/* STATUS BAR - discreta, sin spinner */
+.ai-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:1.25rem;padding:7px 10px;border:1px solid var(--border);background:white;transition:all .3s}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:#2a9d5c;flex-shrink:0}
+.ai-dot.searching{animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* NOTIFICACIÓN DE NUEVOS CONCURSOS */
+.update-banner{display:none;align-items:center;justify-content:space-between;background:#EAF3DE;border:1px solid #97C459;padding:8px 14px;margin-bottom:1rem;font-size:13px;color:#27500A;cursor:pointer;transition:all .2s}
+.update-banner:hover{background:#C0DD97}
+.update-banner.visible{display:flex}
+.update-banner-btn{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;white-space:nowrap;margin-left:1rem}
+
 .cards{display:flex;flex-direction:column}
 .card{border:1px solid var(--border);border-top:none;padding:1rem 1.25rem;background:white;cursor:pointer;transition:background .15s}
 .card:first-child{border-top:1px solid var(--border)}
 .card:hover{background:var(--cream)}
+.card.new-card{animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 .card-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px}
 .card-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:1px 7px;border:1px solid currentColor}
 .cat-poesia{color:#534AB7}.cat-relato{color:#0F6E56}.cat-novela{color:#993C1D}.cat-infantil{color:#854F0B}.cat-teatro{color:#1a5c8a}.cat-otro{color:var(--muted)}
@@ -65,7 +74,7 @@ header{border-bottom:2px solid var(--ink)}
 .card-fecha{color:var(--muted)}
 .badge-new{display:inline-block;background:var(--accent);color:white;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:1px 5px}
 .empty{text-align:center;padding:3rem;color:var(--muted);border:1px solid var(--border);background:white}
-.error-msg{background:#fff5f5;border:1px solid #fcc;padding:.75rem 1rem;font-size:12px;color:var(--accent);margin-bottom:1rem;display:none}
+
 /* DIRECTORIOS */
 .dir-grid{display:flex;flex-direction:column}
 .dir-item{border:1px solid var(--border);border-top:none;padding:1.25rem;background:white;cursor:pointer;transition:background .15s}
@@ -77,7 +86,8 @@ header{border-bottom:2px solid var(--ink)}
 .dir-tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border:1px solid var(--border);color:var(--muted)}
 .dir-link{font-size:11px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
-/* ARTICULOS */
+
+/* ARTÍCULOS */
 .art-list{display:flex;flex-direction:column}
 .art-item{border:1px solid var(--border);border-top:none;padding:1.25rem;background:white;cursor:pointer;transition:background .15s}
 .art-item:first-child{border-top:1px solid var(--border)}
@@ -86,7 +96,8 @@ header{border-bottom:2px solid var(--ink)}
 .art-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:5px;line-height:1.3}
 .art-excerpt{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px}
 .art-meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-/* DETAIL PAGE */
+
+/* DETALLE */
 .detail-back{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-bottom:1.5rem;transition:color .15s}
 .detail-back:hover{color:var(--accent)}
 .detail-header{border-bottom:2px solid var(--ink);padding-bottom:1.5rem;margin-bottom:2rem}
@@ -105,7 +116,8 @@ header{border-bottom:2px solid var(--ink)}
 .detail-body ul li{margin-bottom:.4rem}
 .detail-body strong{font-weight:500}
 .detail-body .highlight{background:var(--cream);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:1.5rem 0;font-size:14px;line-height:1.6}
-/* MODAL CONCURSO */
+
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.7);z-index:100;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
 .modal-overlay.open{display:flex}
 .modal{background:var(--paper);max-width:640px;width:100%;margin:auto;border:2px solid var(--ink);padding:2rem;position:relative;animation:modalIn .2s ease}
@@ -121,6 +133,7 @@ header{border-bottom:2px solid var(--ink)}
 .modal-desc{font-size:13px;line-height:1.7;color:#3a3a38;margin-bottom:1.25rem;border-top:1px solid var(--border);padding-top:1rem}
 .modal-btn{display:inline-block;background:var(--ink);color:var(--paper);padding:9px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:background .15s}
 .modal-btn:hover{background:var(--accent)}
+
 /* SIDEBAR */
 .sidebar-section{margin-bottom:2rem}
 .sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
@@ -132,6 +145,7 @@ header{border-bottom:2px solid var(--ink)}
 .sidebar-link:last-child{border-bottom:none}
 .sidebar-link:hover{color:var(--accent)}
 .sidebar-link::before{content:'→ ';color:var(--accent);font-size:11px}
+
 footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.05em}
 footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}.site-title{font-size:1.8rem}.detail-grid{grid-template-columns:1fr 1fr}.modal-grid{grid-template-columns:1fr}}
@@ -165,18 +179,22 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 
 <div class="container">
   <div class="layout">
-    <main id="main-content">
+    <main>
 
-      <!-- ════ CONCURSOS ════ -->
+      <!-- CONCURSOS -->
       <div class="page active" id="page-concursos">
         <div class="section-title">Concursos literarios</div>
-        <div class="section-sub">Convocatorias activas · Actualizadas con IA cada 24h</div>
+        <div class="section-sub">Convocatorias activas · Actualizadas diariamente</div>
         <div class="stats-bar">
           <div class="stat"><span class="stat-num" id="total-count">—</span><span class="stat-label">activos</span></div>
           <div class="stat"><span class="stat-num" id="nuevos-count">—</span><span class="stat-label">nuevos</span></div>
           <div class="stat"><span class="stat-num" id="premios-total">—</span><span class="stat-label">en premios</span></div>
         </div>
-        <div class="ai-status"><div class="ai-dot"></div><span id="ai-status-text">Cargando...</span></div>
+        <div class="ai-status"><div class="ai-dot" id="ai-dot"></div><span id="ai-status-text">Cargando concursos...</span></div>
+        <div class="update-banner" id="update-banner" onclick="aplicarNuevos()">
+          <span id="update-text">Nuevos concursos encontrados</span>
+          <span class="update-banner-btn">Ver ahora →</span>
+        </div>
         <div class="search-wrap"><input type="text" id="search" placeholder="Buscar por título, organizador..." oninput="renderCards()"></div>
         <div class="filters">
           <button class="filter-btn active" onclick="setFiltro('todos')" id="btn-todos">Todos</button>
@@ -186,55 +204,53 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
           <button class="filter-btn" onclick="setFiltro('infantil')" id="btn-infantil">Infantil</button>
           <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
         </div>
-        <div class="error-msg" id="error-msg"></div>
-        <div id="loading" class="loading"><div class="loading-spinner"></div><p>Buscando concursos con IA...</p></div>
-        <div class="cards" id="cards" style="display:none"></div>
+        <div class="cards" id="cards"></div>
       </div>
 
-      <!-- ════ EDITORIALES ════ -->
+      <!-- EDITORIALES -->
       <div class="page" id="page-editoriales">
         <div class="section-title">Editoriales españolas</div>
         <div class="section-sub">Directorio completo con información para envío de originales</div>
-        <div class="search-wrap"><input type="text" id="search-edit" placeholder="Buscar editorial, género..." oninput="filterDir('editoriales-list')"></div>
+        <div class="search-wrap"><input type="text" id="search-edit" placeholder="Buscar editorial, género..." oninput="filterDir('editoriales-list','search-edit')"></div>
         <div class="dir-grid" id="editoriales-list"></div>
       </div>
 
-      <!-- ════ AGENTES ════ -->
+      <!-- AGENTES -->
       <div class="page" id="page-agentes">
         <div class="section-title">Agentes literarios</div>
         <div class="section-sub">Directorio de agencias literarias en España</div>
-        <div class="search-wrap"><input type="text" id="search-agent" placeholder="Buscar agencia, especialidad..." oninput="filterDir('agentes-list')"></div>
+        <div class="search-wrap"><input type="text" id="search-agent" placeholder="Buscar agencia, especialidad..." oninput="filterDir('agentes-list','search-agent')"></div>
         <div class="dir-grid" id="agentes-list"></div>
       </div>
 
-      <!-- ════ REVISTAS ════ -->
+      <!-- REVISTAS -->
       <div class="page" id="page-revistas">
         <div class="section-title">Revistas literarias</div>
         <div class="section-sub">Publicaciones donde puedes enviar tu obra</div>
-        <div class="search-wrap"><input type="text" id="search-rev" placeholder="Buscar revista, género..." oninput="filterDir('revistas-list')"></div>
+        <div class="search-wrap"><input type="text" id="search-rev" placeholder="Buscar revista, género..." oninput="filterDir('revistas-list','search-rev')"></div>
         <div class="dir-grid" id="revistas-list"></div>
       </div>
 
-      <!-- ════ ARTÍCULOS ════ -->
+      <!-- ARTÍCULOS -->
       <div class="page" id="page-articulos">
         <div class="section-title">Artículos para escritores</div>
         <div class="section-sub">Guías completas sobre escritura, publicación y el mundo editorial</div>
         <div class="art-list" id="articulos-list"></div>
       </div>
 
-      <!-- ════ RECURSOS ════ -->
+      <!-- RECURSOS -->
       <div class="page" id="page-recursos">
         <div class="section-title">Más recursos</div>
         <div class="section-sub">Herramientas y directorios adicionales para escritores</div>
         <div class="dir-grid">
-          <div class="dir-item"><div class="dir-name">Becas y ayudas a la creación</div><div class="dir-desc">Convocatorias de becas públicas, residencias de escritores y ayudas del Ministerio de Cultura para proyectos literarios.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Becas</span><span class="tag">Residencias</span></div><span class="dir-link">Próximamente →</span></div></div>
-          <div class="dir-item"><div class="dir-name">Orientación legal para escritores</div><div class="dir-desc">Contratos editoriales, derechos de autor, registro de obras y aspectos fiscales de la actividad literaria en España.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Legal</span><span class="tag">Contratos</span></div><span class="dir-link">Próximamente →</span></div></div>
-          <div class="dir-item"><div class="dir-name">Software para escritores</div><div class="dir-desc">Herramientas digitales recomendadas: procesadores de texto, gestores de proyectos narrativos y aplicaciones de productividad creativa.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Software</span><span class="tag">Productividad</span></div><span class="dir-link">Próximamente →</span></div></div>
-          <div class="dir-item"><div class="dir-name">Asociaciones de escritores</div><div class="dir-desc">Directorio de asociaciones y gremios de escritores en España, por género y comunidad autónoma.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Asociaciones</span><span class="tag">Comunidades</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Becas y ayudas a la creación</div><div class="dir-desc">Convocatorias de becas públicas, residencias de escritores y ayudas del Ministerio de Cultura.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Becas</span><span class="tag">Residencias</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Orientación legal para escritores</div><div class="dir-desc">Contratos editoriales, derechos de autor, registro de obras y aspectos fiscales.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Legal</span><span class="tag">Contratos</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Software para escritores</div><div class="dir-desc">Herramientas digitales recomendadas: procesadores de texto, gestores de proyectos narrativos.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Software</span><span class="tag">Productividad</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Asociaciones de escritores</div><div class="dir-desc">Directorio de asociaciones y gremios de escritores en España, por género y comunidad autónoma.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Asociaciones</span></div><span class="dir-link">Próximamente →</span></div></div>
         </div>
       </div>
 
-      <!-- ════ DETALLE ════ -->
+      <!-- DETALLE -->
       <div class="page" id="page-detalle">
         <div id="detalle-content"></div>
       </div>
@@ -261,7 +277,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
   </div>
 </div>
 
-<!-- MODAL CONCURSO -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
@@ -283,185 +299,77 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 </footer>
 
 <script>
-// ═══════════════════════════════
-// CONFIG
-// ═══════════════════════════════
 const PROXY_URL = 'https://anthropic-proxy.dmateos-pascual.workers.dev';
 const FUENTES = ['https://www.escritores.org/becas-y-concursos/','https://culturamas.es/category/concursos/'];
-let concursos=[], filtroActivo='todos';
-const CACHE_KEY='letras_v4', CACHE_HOURS=24;
-let paginaAnterior = 'concursos';
+const CACHE_KEY='letras_v5', CACHE_HOURS=24;
 
-// ═══════════════════════════════
-// DATOS
-// ═══════════════════════════════
+let concursos = [], filtroActivo = 'todos', nuevosConcursos = [];
+
+// ── CONCURSOS BASE (se muestran al instante mientras la IA busca) ──
+const CONCURSOS_BASE = [
+  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2025",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos. Modalidades adulto e infantil.",url:"https://www.melilla.es/cultura",nuevo:false},
+  {titulo:"Certamen Literario Villa de Móstoles",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2025",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio. Abierto a mayores de 18 años.",url:"https://www.mostoles.es",nuevo:false},
+  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2025",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras. Incluye publicación.",url:"https://www.editorialnocturna.com",nuevo:false},
+  {titulo:"Premio Andalucía de Literatura Infantil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"20/05/2025",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:"https://www.juntadeandalucia.es/cultura",nuevo:false},
+  {titulo:"Concurso de Haiku Tres Versos de Primavera",organizacion:"Asociación Española de Haiku",categoria:"Poesía",premio:"500€",fecha_limite:"05/05/2025",descripcion:"Concurso de haiku en español. Máximo 5 haikus por participante. Tema libre.",url:"https://www.haikuespaña.es",nuevo:false},
+  {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"30/06/2025",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas. Incluye publicación en editorial reconocida.",url:"https://www.ateneodesevilla.es",nuevo:false},
+  {titulo:"Certamen de Relato Corto Ciudad de Córdoba",organizacion:"Ayuntamiento de Córdoba",categoria:"Relato corto",premio:"1.200€",fecha_limite:"10/05/2025",descripcion:"Relatos inéditos de temática libre, máximo 10 folios. Solo para autores españoles.",url:"https://www.cordoba.es/cultura",nuevo:false},
+  {titulo:"Premio de Poesía Blas de Otero",organizacion:"Diputación de Bizkaia",categoria:"Poesía",premio:"4.000€",fecha_limite:"25/05/2025",descripcion:"Poemario inédito en lengua castellana. Mínimo 30 poemas o 400 versos. Sin límite de edad.",url:"https://www.bizkaia.eus",nuevo:false},
+];
+
+// ── DATOS DIRECTORIOS ──
 const EDITORIALES = [
-  {id:'alfaguara', nombre:'Alfaguara', ciudad:'Madrid', web:'https://www.alfaguara.com', contacto:'alfaguara@prh.com', generos:['Narrativa','Novela','Ensayo'], descripcion:'Sello del grupo Penguin Random House España, Alfaguara es una de las editoriales de referencia en el mundo hispanohablante. Fundada en 1964, ha publicado a los grandes nombres de la literatura en español, desde Mario Vargas Llosa hasta Javier Marías. Su catálogo abarca desde narrativa literaria de autor hasta ficción más comercial, siempre manteniendo un nivel de calidad editorial muy alto.', catalogo:['Javier Marías','Mario Vargas Llosa','Isabel Allende','Arturo Pérez-Reverte'], envio:'Alfaguara no acepta manuscritos no solicitados directamente. La vía recomendada es presentarse a través de un agente literario. Excepcionalmente, participan en ferias del libro donde editores pueden conocer nuevos autores.', notas:'Premio Alfaguara de Novela: convocatoria anual con 175.000 dólares de dotación.'},
-  {id:'anagrama', nombre:'Anagrama', ciudad:'Barcelona', web:'https://www.anagrama-ed.es', contacto:'info@anagrama-ed.es', generos:['Narrativa','Ensayo','Crónica'], descripcion:'Fundada en 1969 por Jorge Herralde, Anagrama es sinónimo de literatura de calidad y pensamiento crítico en España. La editorial tiene un perfil muy definido: apuesta por autores con voz propia, tanto españoles como internacionales, y ha sido pionera en introducir en España a autores como Roberto Bolaño, Paul Auster o W.G. Sebald. Sus colecciones Narrativas hispánicas y Panorama de narrativas son de referencia.', catalogo:['Roberto Bolaño','Enrique Vila-Matas','Antonio Orejudo','Rodrigo Fresán'], envio:'Anagrama acepta manuscritos por correo postal dirigidos al departamento editorial. Incluye sinopsis de una página, primeros tres capítulos y nota biográfica del autor. Tiempo de respuesta: 3-6 meses.', notas:'Premio Herralde de Novela: uno de los premios literarios más prestigiosos de España, dotado con 18.000 euros.'},
-  {id:'tusquets', nombre:'Tusquets Editores', ciudad:'Barcelona', web:'https://www.tusquetseditores.com', contacto:'tusquets@tusquets.com', generos:['Narrativa','Poesía','Ensayo'], descripcion:'Tusquets es una editorial con personalidad propia dentro del grupo Planeta. Desde 1969 ha combinado la narrativa de calidad con la poesía y el ensayo, siendo especialmente conocida por su apuesta por la literatura erótica en los años setenta y por su colección Andanzas, dedicada a la narrativa contemporánea. Hoy sigue siendo un referente para la narrativa literaria en español.', catalogo:['Eduardo Mendoza','Juan Marsé','Álvaro Pombo','Rosa Montero'], envio:'Tusquets acepta propuestas a través de agente literario preferentemente. Para nuevos autores, aceptan carta de presentación con sinopsis y primeros capítulos por correo postal. No responden si no hay interés.', notas:'Colección Andanzas para narrativa adulta, Maxi para reediciones en bolsillo.'},
-  {id:'siruela', nombre:'Siruela', ciudad:'Madrid', web:'https://www.siruela.com', contacto:'siruela@siruela.com', generos:['Fantasía','Terror','Misterio','Literatura fantástica'], descripcion:'Siruela fue fundada en 1982 y se convirtió rápidamente en la editorial de referencia para la literatura fantástica, de terror y el misterio en España. Han publicado a los grandes clásicos del género —Poe, Lovecraft, M.R. James— junto a voces contemporáneas internacionales y españolas. Su colección La Biblioteca Siruela reúne los mejores títulos de la literatura de lo extraño y lo fantástico.', catalogo:['H.P. Lovecraft','Edgar Allan Poe','Peter Straub','Carlos Ruiz Zafón'], envio:'Siruela acepta manuscritos de novela y relato en los géneros que publica (fantasía, terror, misterio). Enviar sinopsis detallada y primeros tres capítulos por email. Mencionar el género exacto y comparables editoriales.', notas:'Especialmente interesados en literatura fantástica literaria, no en fantasy comercial tipo bestseller.'},
-  {id:'nordica', nombre:'Nórdica Libros', ciudad:'Madrid', web:'https://www.nordicalibros.com', contacto:'info@nordicalibros.com', generos:['Literatura internacional','Ilustrado','Narrativa'], descripcion:'Nórdica Libros nació en 2006 con la vocación de publicar lo mejor de la literatura escandinava y centroeuropea en España. Con los años han ampliado su catálogo a otras literaturas del norte y del centro de Europa, siempre con un cuidado editorial y gráfico excepcional. Sus ediciones ilustradas son especialmente reconocidas por su calidad.', catalogo:['Selma Lagerlöf','Tove Jansson','Hans Christian Andersen','Hermann Hesse'], envio:'Nórdica trabaja principalmente con literatura en traducción. Para autores españoles, aceptan propuestas de narrativa con un componente visual o ilustrado, o novela gráfica. Contactar por email con propuesta completa.', notas:'Premio al mejor libro ilustrado en múltiples ocasiones. No publican ensayo ni poesía.'},
-  {id:'impedimenta', nombre:'Impedimenta', ciudad:'Madrid', web:'https://www.impedimenta.es', contacto:'info@impedimenta.es', generos:['Narrativa literaria','Clásicos','Novela negra'], descripcion:'Impedimenta es una editorial independiente fundada en 2007 que se ha convertido en referente de la literatura exigente y los clásicos recuperados. Su filosofía editorial huye de las modas y apuesta por textos que perduren, desde clásicos poco conocidos hasta narrativa contemporánea de alto valor literario. Sus ediciones son reconocidas por su cuidado gráfico y tipográfico.', catalogo:['Saki','Ronald Firbank','Stella Gibbons','Jane Gardam'], envio:'Impedimenta acepta propuestas de narrativa literaria adulta. Enviar los primeros 50 páginas con sinopsis por email. Son muy selectivos: publican entre 15 y 20 títulos al año. Tiempo de respuesta: hasta 4 meses.', notas:'No publican ensayo, poesía, ni libros infantiles. Prefieren autores con voz narrativa muy definida.'},
+  {id:'alfaguara',nombre:'Alfaguara',ciudad:'Madrid',web:'https://www.alfaguara.com',contacto:'alfaguara@prh.com',generos:['Narrativa','Novela','Ensayo'],descripcion:'Sello del grupo Penguin Random House España, Alfaguara es una de las editoriales de referencia en el mundo hispanohablante. Fundada en 1964, ha publicado a los grandes nombres de la literatura en español, desde Mario Vargas Llosa hasta Javier Marías. Su catálogo abarca desde narrativa literaria de autor hasta ficción más comercial, siempre manteniendo un nivel de calidad editorial muy alto.',catalogo:['Javier Marías','Mario Vargas Llosa','Isabel Allende','Arturo Pérez-Reverte'],envio:'Alfaguara no acepta manuscritos no solicitados directamente. La vía recomendada es presentarse a través de un agente literario. Excepcionalmente, participan en ferias del libro donde editores pueden conocer nuevos autores.',notas:'Premio Alfaguara de Novela: convocatoria anual con 175.000 dólares de dotación.'},
+  {id:'anagrama',nombre:'Anagrama',ciudad:'Barcelona',web:'https://www.anagrama-ed.es',contacto:'info@anagrama-ed.es',generos:['Narrativa','Ensayo','Crónica'],descripcion:'Fundada en 1969 por Jorge Herralde, Anagrama es sinónimo de literatura de calidad y pensamiento crítico en España. La editorial tiene un perfil muy definido: apuesta por autores con voz propia, tanto españoles como internacionales, y ha sido pionera en introducir en España a autores como Roberto Bolaño, Paul Auster o W.G. Sebald.',catalogo:['Roberto Bolaño','Enrique Vila-Matas','Antonio Orejudo','Rodrigo Fresán'],envio:'Anagrama acepta manuscritos por correo postal dirigidos al departamento editorial. Incluye sinopsis de una página, primeros tres capítulos y nota biográfica del autor. Tiempo de respuesta: 3-6 meses.',notas:'Premio Herralde de Novela: uno de los premios literarios más prestigiosos de España, dotado con 18.000 euros.'},
+  {id:'tusquets',nombre:'Tusquets Editores',ciudad:'Barcelona',web:'https://www.tusquetseditores.com',contacto:'tusquets@tusquets.com',generos:['Narrativa','Poesía','Ensayo'],descripcion:'Tusquets es una editorial con personalidad propia dentro del grupo Planeta. Desde 1969 ha combinado la narrativa de calidad con la poesía y el ensayo, siendo especialmente conocida por su apuesta por la narrativa contemporánea. Hoy sigue siendo un referente para la narrativa literaria en español.',catalogo:['Eduardo Mendoza','Juan Marsé','Álvaro Pombo','Rosa Montero'],envio:'Tusquets acepta propuestas a través de agente literario preferentemente. Para nuevos autores, aceptan carta de presentación con sinopsis y primeros capítulos por correo postal.',notas:'Colección Andanzas para narrativa adulta, Maxi para reediciones en bolsillo.'},
+  {id:'siruela',nombre:'Siruela',ciudad:'Madrid',web:'https://www.siruela.com',contacto:'siruela@siruela.com',generos:['Fantasía','Terror','Misterio'],descripcion:'Siruela fue fundada en 1982 y se convirtió rápidamente en la editorial de referencia para la literatura fantástica, de terror y el misterio en España. Han publicado a los grandes clásicos del género junto a voces contemporáneas internacionales y españolas.',catalogo:['H.P. Lovecraft','Edgar Allan Poe','Peter Straub','Carlos Ruiz Zafón'],envio:'Siruela acepta manuscritos de novela y relato en los géneros que publica. Enviar sinopsis detallada y primeros tres capítulos por email. Mencionar el género exacto.',notas:'Especialmente interesados en literatura fantástica literaria, no en fantasy comercial.'},
+  {id:'nordica',nombre:'Nórdica Libros',ciudad:'Madrid',web:'https://www.nordicalibros.com',contacto:'info@nordicalibros.com',generos:['Literatura internacional','Ilustrado','Narrativa'],descripcion:'Nórdica Libros nació en 2006 con la vocación de publicar lo mejor de la literatura escandinava y centroeuropea en España. Sus ediciones ilustradas son especialmente reconocidas por su calidad.',catalogo:['Selma Lagerlöf','Tove Jansson','Hans Christian Andersen','Hermann Hesse'],envio:'Nórdica trabaja principalmente con literatura en traducción. Para autores españoles, aceptan propuestas de narrativa con componente ilustrado o novela gráfica.',notas:'Premio al mejor libro ilustrado en múltiples ocasiones.'},
+  {id:'impedimenta',nombre:'Impedimenta',ciudad:'Madrid',web:'https://www.impedimenta.es',contacto:'info@impedimenta.es',generos:['Narrativa literaria','Clásicos','Novela negra'],descripcion:'Impedimenta es una editorial independiente fundada en 2007, referente de la literatura exigente y los clásicos recuperados. Sus ediciones son reconocidas por su cuidado gráfico y tipográfico.',catalogo:['Saki','Ronald Firbank','Stella Gibbons','Jane Gardam'],envio:'Impedimenta acepta propuestas de narrativa literaria adulta. Enviar los primeros 50 páginas con sinopsis por email. Son muy selectivos. Tiempo de respuesta: hasta 4 meses.',notas:'No publican ensayo, poesía ni libros infantiles.'},
 ];
 
 const AGENTES = [
-  {id:'balcells', nombre:'Agencia Carmen Balcells', ciudad:'Barcelona', web:'https://www.agenciabalcells.com', contacto:'info@agenciabalcells.com', especialidades:['Narrativa literaria','Ensayo','Poesía'], descripcion:'La Agencia Carmen Balcells, fundada en 1960, es la agencia literaria más legendaria del mundo hispanohablante. Su fundadora, Carmen Balcells, fue quien convirtió a García Márquez, Vargas Llosa, Cortázar y tantos otros en los grandes nombres del boom latinoamericano. Hoy, dirigida por sus sucesores, sigue siendo una de las agencias de mayor prestigio para la narrativa en español, tanto para autores consolidados como para voces emergentes de alto potencial.', buscan:'La agencia busca narrativa literaria con ambición y originalidad. No representan literatura de género comercial (thriller, romance, fantasy). Están especialmente interesados en nuevas voces con una propuesta narrativa diferente.', como_contactar:'Enviar carta de presentación personalizada con sinopsis de una página, nota biográfica y primeros tres capítulos por correo postal. No aceptan envíos por email. Tiempo de respuesta: 3 meses mínimo.'},
-  {id:'kerrigan', nombre:'Antonia Kerrigan Literary Agency', ciudad:'Barcelona', web:'https://www.antoniokerrigan.com', contacto:'info@antoniokerrigan.com', especialidades:['Derechos internacionales','Narrativa','No ficción'], descripcion:'Fundada en 1992, la Agencia Antonia Kerrigan es especialista en la venta de derechos de traducción para autores españoles e iberoamericanos en mercados internacionales. Con oficinas en Barcelona y presencia en las principales ferias del libro del mundo (Frankfurt, Londres, Bolonia), son el puente ideal para autores que buscan proyección internacional para sus obras.', buscan:'Representan narrativa literaria y no ficción de calidad con potencial de venta internacional. También ensayo y divulgación. Trabajan tanto con autores con obra publicada como con manuscritos de primera novela con proyección.', como_contactar:'Contacto inicial por email con sinopsis de dos páginas, nota biográfica y primeros dos capítulos. Si hay interés, solicitan el manuscrito completo. Tiempo de respuesta: 6-8 semanas.'},
-  {id:'iese', nombre:'International Editors\' Co.', ciudad:'Barcelona', web:'https://www.internationaleditors.com', contacto:'info@internationaleditors.com', especialidades:['Narrativa','Literatura de autor','Internacional'], descripcion:'International Editors\' Co. es una de las agencias literarias más activas en España para la narrativa de autor. Representan a escritores tanto españoles como latinoamericanos y gestionan sus derechos en España y en el extranjero. Son conocidos por su atención personalizada a los autores y su apuesta por proyectos literarios a largo plazo.', buscan:'Buscan narrativa con voz propia, tanto primera novela como obra de autores con trayectoria. También representan no ficción narrativa y ensayo de calidad. Son más receptivos a la narrativa que a la poesía o el teatro.', como_contactar:'Enviar propuesta completa por email: sinopsis detallada, primeros capítulos, nota biográfica y —si existe— historial de publicaciones. Responden en 4-6 semanas si hay interés.'},
-  {id:'schavelzon', nombre:'Schavelzon Graham', ciudad:'Barcelona / Buenos Aires', web:'https://www.schavelzongrahama.com', contacto:'info@schavelzongrahama.com', especialidades:['Latinoamérica','Narrativa contemporánea','No ficción'], descripcion:'Con oficinas en Barcelona y Buenos Aires, Schavelzon Graham representa a autores de toda la América Latina y España. Son especialmente fuertes en la narrativa latinoamericana contemporánea y en la no ficción narrativa. Su presencia en los dos grandes mercados del español les permite trabajar con un catálogo amplio y muy diverso.', buscan:'Narrativa latinoamericana y española de calidad, no ficción narrativa, crónica periodística literaria y ensayo de ideas. Trabajan con autores emergentes y consolidados. Especialmente interesados en propuestas que conecten con lectores de ambos lados del Atlántico.', como_contactar:'Enviar propuesta por email a la oficina correspondiente según ubicación del autor (Barcelona para España, Buenos Aires para Latinoamérica). Incluir sinopsis, capítulos de muestra y breve bio. Responden en 6-8 semanas.'},
-  {id:'ella-sher', nombre:'The Ella Sher Literary Agency', ciudad:'Madrid', web:'https://www.ellasher.com', contacto:'info@ellasher.com', especialidades:['Infantil','Juvenil','Narrativa adulta'], descripcion:'The Ella Sher es una agencia boutique especializada en literatura infantil y juvenil, uno de los sectores más activos y rentables del mercado editorial español e internacional. También representan narrativa para adultos seleccionada. Son conocidos por su trabajo minucioso con cada autor y por su habilidad para colocar obras en mercados internacionales, especialmente en el mundo anglosajón.', buscan:'Literatura infantil y juvenil de calidad con potencial internacional. En narrativa adulta, buscan voces frescas con propuestas originales. También representan álbum ilustrado si el texto tiene especial potencia.', como_contactar:'Enviar por email: sinopsis de una página, nota biográfica, los tres primeros capítulos (o el álbum completo si es infantil). Responden en 8 semanas si hay interés. No leer sin previo envío de consulta.'},
+  {id:'balcells',nombre:'Agencia Carmen Balcells',ciudad:'Barcelona',web:'https://www.agenciabalcells.com',contacto:'info@agenciabalcells.com',especialidades:['Narrativa literaria','Ensayo','Poesía'],descripcion:'La Agencia Carmen Balcells, fundada en 1960, es la agencia literaria más legendaria del mundo hispanohablante. Su fundadora fue quien convirtió a García Márquez, Vargas Llosa y Cortázar en los grandes nombres del boom latinoamericano.',buscan:'Narrativa literaria con ambición y originalidad. No representan literatura de género comercial. Están especialmente interesados en nuevas voces con una propuesta narrativa diferente.',como_contactar:'Enviar carta de presentación personalizada con sinopsis de una página, nota biográfica y primeros tres capítulos por correo postal. No aceptan envíos por email. Tiempo de respuesta: 3 meses mínimo.'},
+  {id:'kerrigan',nombre:'Antonia Kerrigan Literary Agency',ciudad:'Barcelona',web:'https://www.antoniokerrigan.com',contacto:'info@antoniokerrigan.com',especialidades:['Derechos internacionales','Narrativa','No ficción'],descripcion:'Fundada en 1992, especialista en la venta de derechos de traducción para autores españoles e iberoamericanos en mercados internacionales. Con presencia en las principales ferias del libro del mundo.',buscan:'Narrativa literaria y no ficción de calidad con potencial de venta internacional. Trabajan con autores con obra publicada y con manuscritos de primera novela con proyección.',como_contactar:'Contacto inicial por email con sinopsis de dos páginas, nota biográfica y primeros dos capítulos. Tiempo de respuesta: 6-8 semanas.'},
+  {id:'iese',nombre:'International Editors\' Co.',ciudad:'Barcelona',web:'https://www.internationaleditors.com',contacto:'info@internationaleditors.com',especialidades:['Narrativa','Literatura de autor','Internacional'],descripcion:'Una de las agencias literarias más activas en España para la narrativa de autor. Representan a escritores españoles y latinoamericanos y gestionan sus derechos en España y en el extranjero.',buscan:'Narrativa con voz propia, tanto primera novela como obra de autores con trayectoria. También representan no ficción narrativa y ensayo de calidad.',como_contactar:'Enviar propuesta completa por email: sinopsis detallada, primeros capítulos, nota biográfica e historial de publicaciones. Responden en 4-6 semanas si hay interés.'},
+  {id:'schavelzon',nombre:'Schavelzon Graham',ciudad:'Barcelona / Buenos Aires',web:'https://www.schavelzongrahama.com',contacto:'info@schavelzongrahama.com',especialidades:['Latinoamérica','Narrativa contemporánea','No ficción'],descripcion:'Con oficinas en Barcelona y Buenos Aires, representan a autores de toda la América Latina y España. Especialmente fuertes en la narrativa latinoamericana contemporánea y en la no ficción narrativa.',buscan:'Narrativa latinoamericana y española, no ficción narrativa, crónica periodística literaria y ensayo de ideas. Interesados en propuestas que conecten con lectores de ambos lados del Atlántico.',como_contactar:'Enviar propuesta por email. Incluir sinopsis, capítulos de muestra y breve bio. Responden en 6-8 semanas.'},
+  {id:'ella-sher',nombre:'The Ella Sher Literary Agency',ciudad:'Madrid',web:'https://www.ellasher.com',contacto:'info@ellasher.com',especialidades:['Infantil','Juvenil','Narrativa adulta'],descripcion:'Agencia boutique especializada en literatura infantil y juvenil, uno de los sectores más activos del mercado editorial. También representan narrativa para adultos seleccionada.',buscan:'Literatura infantil y juvenil de calidad con potencial internacional. En narrativa adulta, voces frescas con propuestas originales. También álbum ilustrado con texto de especial potencia.',como_contactar:'Enviar por email: sinopsis de una página, nota biográfica y los tres primeros capítulos. Responden en 8 semanas si hay interés.'},
 ];
 
 const REVISTAS = [
-  {id:'quimera', nombre:'Quimera — Revista de Literatura', ciudad:'Barcelona', web:'https://www.quimerarevista.com', frecuencia:'Mensual', generos:['Narrativa','Poesía','Crítica','Entrevistas'], descripcion:'Quimera es la revista literaria más veterana de España, fundada en 1980. Durante más de cuatro décadas ha sido escaparate de la narrativa y la poesía española e iberoamericana, publicando tanto a autores consagrados como a voces emergentes. Sus entrevistas y ensayos sobre literatura son referencia para lectores y escritores. Tiene una versión digital que complementa la edición impresa.', como_enviar:'Enviar texto inédito por email con el asunto "Colaboración + género". Para narrativa: relatos de hasta 8.000 palabras. Para poesía: entre 3 y 8 poemas. Incluir nota biográfica breve. No publican extractos de novela inédita.', plazos:'Responden en 6-10 semanas. No pagan por colaboraciones espontáneas pero ofrecen visibilidad y ejemplares de autor.'},
-  {id:'clarin', nombre:'Clarín — Revista de Nueva Literatura', ciudad:'Asturias', web:'https://www.revistaclarin.com', frecuencia:'Bimestral', generos:['Poesía','Ensayo poético'], descripcion:'Clarín es la revista de referencia para la poesía española contemporánea. Fundada en 1996, publica poemas inéditos, ensayos sobre poética, entrevistas a poetas y reseñas de poemarios. Tiene una perspectiva comprometida con la calidad y la renovación formal de la poesía en español.', como_enviar:'Enviar entre 4 y 10 poemas inéditos por email. Incluir nota biográfica y una declaración breve sobre el proceso poético. También aceptan ensayos sobre poesía (hasta 3.000 palabras). No publican narrativa.', plazos:'Responden en 8-12 semanas. Pagan un mínimo por colaboraciones seleccionadas.'},
-  {id:'cuento', nombre:'El Cuento de Nunca Acabar', ciudad:'Digital', web:'https://www.elcuentodenuncaacabar.com', frecuencia:'Trimestral', generos:['Relato corto','Microrrelato'], descripcion:'Publicación digital especializada en el relato corto y el microrrelato en español. Activa desde 2010, tiene una comunidad muy fiel de escritores y lectores de cuento. Publica cuatro números al año, cada uno con un tema monográfico, y organiza periódicamente concursos de microrrelato con premios en metálico.', como_enviar:'Relatos inéditos de hasta 5.000 palabras. Para microrrelato, máximo 300 palabras. Enviar por el formulario de su web en los períodos de convocatoria abierta (consultar web para fechas exactas de cada número). Solo aceptan envíos digitales.', plazos:'Responden a todos los envíos en un plazo de 4-6 semanas. Pagan una tarifa mínima por relatos publicados.'},
-  {id:'bem', nombre:'Revista BEM', ciudad:'Digital', web:'https://www.revistabem.es', frecuencia:'Cuatrimestral', generos:['Ciencia ficción','Fantasía','Terror'], descripcion:'BEM es la publicación de referencia para la literatura fantástica, la ciencia ficción y el terror en España. Fundada por aficionados al género que se convirtieron en profesionales, publica relatos de autores españoles y en traducción, crítica, reseñas y artículos sobre el género. Organiza el Premio BEM al mejor relato del año.', como_enviar:'Relatos inéditos de ciencia ficción, fantasía o terror, de entre 3.000 y 15.000 palabras. Enviar por el formulario de su web durante las convocatorias abiertas (2-3 veces al año). Necesario que el texto encaje claramente en uno de los géneros que publican.', plazos:'Proceso de selección de 8-16 semanas. Pagan por los relatos publicados según tarifa SFWA adaptada al mercado español.'},
-  {id:'letras-libres', nombre:'Letras Libres', ciudad:'Madrid', web:'https://www.letraslibres.com', frecuencia:'Mensual', generos:['Ensayo','Política cultural','Narrativa','Crítica'], descripcion:'Letras Libres es una revista cultural de referencia fundada en México en 1999 y con edición española desde 2001. Combina el ensayo político y cultural con la narrativa, la poesía y la crítica literaria. Sus colaboradores son intelectuales, escritores y académicos de primer nivel del mundo hispanohablante.', como_enviar:'Las colaboraciones son principalmente por encargo. Para propuestas espontáneas, enviar email al director editorial con una propuesta de artículo o ensayo (no el texto completo). Para narrativa, buscan específicamente relatos con dimensión política o de ideas, no relato puramente literario.', plazos:'Solo responden si hay interés. Pagan por todas las colaboraciones publicadas.'},
+  {id:'quimera',nombre:'Quimera — Revista de Literatura',ciudad:'Barcelona',web:'https://www.quimerarevista.com',frecuencia:'Mensual',generos:['Narrativa','Poesía','Crítica'],descripcion:'La revista literaria más veterana de España, fundada en 1980. Durante más de cuatro décadas ha sido escaparate de la narrativa y la poesía española e iberoamericana.',como_enviar:'Enviar texto inédito por email con asunto "Colaboración + género". Narrativa: relatos hasta 8.000 palabras. Poesía: entre 3 y 8 poemas. Incluir nota biográfica breve.',plazos:'Responden en 6-10 semanas. No pagan por colaboraciones espontáneas pero ofrecen visibilidad y ejemplares de autor.'},
+  {id:'clarin',nombre:'Clarín — Revista de Nueva Literatura',ciudad:'Asturias',web:'https://www.revistaclarin.com',frecuencia:'Bimestral',generos:['Poesía','Ensayo poético'],descripcion:'La revista de referencia para la poesía española contemporánea. Fundada en 1996, publica poemas inéditos, ensayos sobre poética, entrevistas a poetas y reseñas de poemarios.',como_enviar:'Enviar entre 4 y 10 poemas inéditos por email. Incluir nota biográfica y declaración breve sobre el proceso poético. También aceptan ensayos sobre poesía (hasta 3.000 palabras).',plazos:'Responden en 8-12 semanas. Pagan un mínimo por colaboraciones seleccionadas.'},
+  {id:'cuento',nombre:'El Cuento de Nunca Acabar',ciudad:'Digital',web:'https://www.elcuentodenuncaacabar.com',frecuencia:'Trimestral',generos:['Relato corto','Microrrelato'],descripcion:'Publicación digital especializada en el relato corto y el microrrelato en español. Activa desde 2010, tiene una comunidad fiel de escritores y lectores. Publica cuatro números al año con tema monográfico.',como_enviar:'Relatos inéditos hasta 5.000 palabras. Microrrelato: máximo 300 palabras. Enviar por formulario web en períodos de convocatoria abierta. Solo envíos digitales.',plazos:'Responden a todos los envíos en 4-6 semanas. Pagan una tarifa mínima por relatos publicados.'},
+  {id:'bem',nombre:'Revista BEM',ciudad:'Digital',web:'https://www.revistabem.es',frecuencia:'Cuatrimestral',generos:['Ciencia ficción','Fantasía','Terror'],descripcion:'La publicación de referencia para la literatura fantástica, ciencia ficción y terror en España. Publica relatos de autores españoles y en traducción, crítica y artículos sobre el género.',como_enviar:'Relatos inéditos de CF, fantasía o terror, entre 3.000 y 15.000 palabras. Enviar por formulario web durante convocatorias abiertas (2-3 veces al año).',plazos:'Proceso de selección de 8-16 semanas. Pagan por los relatos publicados según tarifa adaptada al mercado español.'},
+  {id:'letras-libres',nombre:'Letras Libres',ciudad:'Madrid',web:'https://www.letraslibres.com',frecuencia:'Mensual',generos:['Ensayo','Política cultural','Narrativa'],descripcion:'Revista cultural de referencia fundada en México en 1999, con edición española desde 2001. Combina ensayo político y cultural con narrativa, poesía y crítica literaria de primer nivel.',como_enviar:'Las colaboraciones son principalmente por encargo. Para propuestas espontáneas, enviar email al director editorial con propuesta de artículo o ensayo, no el texto completo.',plazos:'Solo responden si hay interés. Pagan por todas las colaboraciones publicadas.'},
 ];
 
 const ARTICULOS = [
-  {id:'agente-literario', cat:'Publicación', titulo:'Cómo encontrar un agente literario en España: guía completa', excerpt:'Todo lo que necesitas saber para conseguir representación literaria.', tiempo:'10 min', cuerpo:`<p>Encontrar un agente literario es, para muchos escritores, el primer gran obstáculo del camino hacia la publicación. En España, el mercado editorial funciona de forma diferente al anglosajón: no es imprescindible tener agente para publicar, pero contar con una buena representación puede marcar la diferencia, especialmente si tienes aspiraciones internacionales.</p>
-<h2>¿Para qué sirve un agente literario?</h2>
-<p>El agente literario es mucho más que un intermediario entre el escritor y la editorial. Es tu representante, tu negociador y, en muchos casos, tu primer lector crítico. Sus funciones principales son:</p>
-<ul><li>Presentar tu obra a los editores más adecuados</li><li>Negociar los contratos editoriales en tus condiciones</li><li>Gestionar los derechos de traducción a otros idiomas</li><li>Asesorarte sobre estrategia editorial a largo plazo</li><li>Resolver conflictos con la editorial si los hubiera</li></ul>
-<p>A cambio, el agente cobra una comisión sobre los ingresos que genera tu obra, habitualmente un 15% sobre los derechos nacionales y un 20% sobre los internacionales. Solo cobran si tú cobras.</p>
-<h2>¿Cuándo buscar agente?</h2>
-<p>La pregunta que todos los escritores se hacen: ¿con qué tienes que tener listo para buscar agente? La respuesta es clara: con un manuscrito terminado, revisado y en su mejor versión posible. Los agentes no trabajan con proyectos a medias ni con primeros borradores. Necesitas una novela (o libro de relatos, o ensayo) completo.</p>
-<div class="highlight">Un agente no te hará escritor. Si tu obra no está lista, ningún agente te la podrá vender. Trabaja primero el manuscrito, busca lectores de confianza, revisa, y solo cuando estés convencido de que está en su mejor versión, empieza a buscar representación.</div>
-<h2>Cómo preparar la propuesta</h2>
-<p>La propuesta para un agente literario tiene varios componentes que debes preparar con cuidado:</p>
-<h3>La carta de consulta</h3>
-<p>Es tu primera impresión. Debe incluir el título, el género, la extensión aproximada en palabras, un párrafo de presentación del libro (el "pitch"), un párrafo sobre ti como escritor, y por qué has elegido a ese agente en particular. Máximo una página. Personalizada para cada agente.</p>
-<h3>La sinopsis</h3>
-<p>Un resumen del argumento completo —incluyendo el final— en una o dos páginas. No es la contraportada: aquí no hay suspense. El agente necesita saber qué pasa en tu libro de principio a fin para valorar si tiene potencial comercial y literario.</p>
-<h3>Los primeros capítulos</h3>
-<p>Normalmente se piden los tres primeros capítulos o las primeras 50 páginas. Es lo más importante: si los primeros capítulos no enganchan al agente, el resto da igual. Invierte tiempo en que ese arranque sea impecable.</p>
-<h2>Dónde encontrar agentes en España</h2>
-<p>El directorio de esta web recoge las principales agencias literarias españolas con información de contacto. Investiga bien cada agencia antes de enviarles: mira qué autores representan, qué géneros trabajan, y si tu libro encaja en su catálogo. Un envío mal dirigido es tiempo perdido para todos.</p>
-<h2>Señales de alerta</h2>
-<p>Desconfía de cualquier agente que te pida dinero por adelantado para "leer tu manuscrito" o "gestionar la presentación". Los agentes legítimos nunca cobran por anticipado. También desconfía de quienes te garantizan publicación: nadie puede garantizarla.</p>
-<div class="highlight">Regla de oro: si el agente te pide dinero antes de venderte algo, no es un agente, es una estafa. Los agentes reales solo cobran cuando consiguen venderte.</div>
-<h2>Qué hacer mientras esperas respuesta</h2>
-<p>El proceso de búsqueda de agente puede llevar meses. Mientras tanto, sigue escribiendo. Trabaja en tu próximo proyecto. Lee en tu género. Y mantén un registro ordenado de a qué agentes has enviado, cuándo, y qué respuesta has recibido.</p>
-<p>El rechazo es parte del proceso. Autores como J.K. Rowling fueron rechazados por decenas de agentes antes de encontrar representación. Lo importante es no rendirse y seguir mejorando tu obra.</p>`},
-  {id:'concursos-guia', cat:'Concursos', titulo:'Guía completa para presentarte a concursos literarios', excerpt:'Todo lo que debes saber antes de enviar tu obra a un concurso.', tiempo:'12 min', cuerpo:`<p>Los concursos literarios son una de las vías más accesibles para que un escritor novel dé sus primeros pasos en el mundo editorial. Un premio puede suponer visibilidad, dinero, y en algunos casos, la publicación de la obra. Pero antes de enviar, hay mucho que saber.</p>
-<h2>Tipos de concursos literarios</h2>
-<p>No todos los concursos son iguales. Hay que distinguir entre:</p>
-<ul><li><strong>Concursos municipales o autonómicos:</strong> Convocados por ayuntamientos, diputaciones o consejerías de cultura. Dotaciones modestas pero gran número de convocatorias.</li><li><strong>Concursos de editoriales:</strong> Los más prestigiosos. Premio Herralde, Premio Alfaguara, Premio Planeta. Llevan aparejada la publicación de la obra.</li><li><strong>Concursos de asociaciones culturales:</strong> Muy variados en dotación y rigor. Hay que revisar bien las bases.</li><li><strong>Concursos digitales:</strong> En plataformas como Wattpad o redes sociales. Sin dotación económica pero con gran difusión.</li></ul>
-<h2>Cómo leer las bases</h2>
-<p>El primer paso antes de presentarse a cualquier concurso es leer las bases detenidamente. Los puntos clave a verificar son:</p>
-<h3>Requisitos de la obra</h3>
-<p>Género, extensión mínima y máxima (en palabras o folios), idioma, y si debe ser inédita. Una obra publicada en cualquier formato —incluyendo blogs o redes sociales— puede no ser considerada inédita según las bases.</p>
-<h3>Requisitos del participante</h3>
-<p>Algunos concursos están limitados por edad, nacionalidad, residencia, o si el autor tiene obra publicada. Compruébalo antes de enviar.</p>
-<h3>Formato de envío</h3>
-<p>La mayoría de concursos exigen seudónimo para garantizar el anonimato. El nombre real va en un sobre cerrado o en un archivo separado. Muchos concursos descalifican automáticamente los trabajos que no respetan el anonimato.</p>
-<div class="highlight">El seudónimo es obligatorio en casi todos los concursos para garantizar la imparcialidad del jurado. Usa siempre un seudónimo diferente del tuyo y nunca incluyas tu nombre en el cuerpo del texto.</div>
-<h2>Derechos de autor en los concursos</h2>
-<p>Lee con especial atención la cláusula de derechos. Lo habitual es que el concurso se quede con el derecho a publicar la obra en un volumen de premiados, pero el autor conserva todos los demás derechos. Sin embargo, algunos concursos —especialmente los de editoriales comerciales— pueden exigir la cesión exclusiva de derechos de publicación. Si el premio lleva aparejada la publicación, el contrato editorial se firma posteriormente.</p>
-<h2>Los errores más comunes</h2>
-<ul><li>No respetar la extensión: si el máximo es 10 folios, 11 folios es descalificación directa.</li><li>Olvidar el seudónimo o incluir el nombre real en el documento.</li><li>Enviar fuera de plazo: muchos concursos son estrictos con la fecha.</li><li>Presentar la misma obra a concursos incompatibles (algunos prohíben presentar simultáneamente).</li><li>No enviar todos los documentos requeridos (a veces piden declaración jurada de inédito).</li></ul>
-<h2>Cómo gestionar los rechazos</h2>
-<p>La mayoría de concursos no dan feedback sobre las obras no seleccionadas. El rechazo es la norma, no la excepción. Escritores consagrados han presentado obras a decenas de concursos antes de ganar el primero. Lo importante es no desanimarse y usar cada presentación como oportunidad de revisar y mejorar la obra.</p>
-<p>Lleva un registro de los concursos a los que presentas: fecha de envío, resultado, y cualquier comentario que recibas. Con el tiempo, ese registro te dará información valiosa sobre tu progreso.</p>`},
-  {id:'primer-parrafo', cat:'Escritura creativa', titulo:'El primer párrafo: cómo atrapar al lector desde la primera línea', excerpt:'Análisis de los recursos más efectivos para abrir una novela o relato.', tiempo:'8 min', cuerpo:`<p>El primer párrafo de una novela o relato es el más importante que escribirás. Es el apretón de manos entre tú y el lector, el contrato implícito que establece el tono, el estilo y las expectativas de lo que viene. Un mal comienzo puede hacer que el lector abandone en la página dos. Un buen comienzo puede hacer que lea de un tirón.</p>
-<h2>Qué debe hacer el primer párrafo</h2>
-<p>No hay una sola forma de empezar, pero el primer párrafo eficaz suele hacer varias cosas a la vez:</p>
-<ul><li><strong>Crear una voz:</strong> El lector debe sentir que hay alguien detrás del texto, con una forma de ver el mundo reconocible.</li><li><strong>Plantar una pregunta:</strong> No necesariamente una pregunta explícita, pero sí una tensión que haga querer seguir leyendo.</li><li><strong>Establecer el tono:</strong> ¿Esto va a ser oscuro, o luminoso? ¿Íntimo o épico? ¿Irónico o grave?</li><li><strong>Situar al lector:</strong> En un tiempo, en un espacio, con un personaje o una voz narrativa.</li></ul>
-<h2>Los cinco tipos de apertura</h2>
-<h3>La apertura in medias res</h3>
-<p>Comenzar en medio de la acción. El lector es arrojado a una situación en marcha y tiene que ponerse al día. Crea inmediata tensión pero puede desorientar si se abusa.</p>
-<h3>La apertura con imagen</h3>
-<p>Una imagen potente que establece el tono y el mundo de la novela. Funciona especialmente bien en literatura más lírica o cuando el paisaje es casi un personaje.</p>
-<h3>La apertura con voz</h3>
-<p>Cuando el narrador se presenta a sí mismo de forma tan característica que su voz ya es suficiente gancho. Típica de la narrativa en primera persona con narradores muy marcados.</p>
-<h3>La apertura con declaración</h3>
-<p>Una afirmación contundente, a veces paradójica, que enuncia el tema o la situación central de la novela. Clásica en literatura realista.</p>
-<h3>La apertura con pregunta</h3>
-<p>Plantear directamente una pregunta o un misterio. Funciona bien en géneros como el thriller o la novela de suspense.</p>
-<div class="highlight">No existe la apertura perfecta universal. La mejor apertura es la que es coherente con el tono y el estilo del resto de la novela. Un comienzo de thriller que arranca con acción desenfrenada sería ridículo en una novela de introspección psicológica.</div>
-<h2>Lo que nunca debes hacer en el primer párrafo</h2>
-<p>Hay algunos errores clásicos que los editores ven repetidamente en manuscritos de escritores noveles:</p>
-<ul><li>Empezar con el protagonista despertándose (el cliché más usado).</li><li>Empezar con una descripción detallada del tiempo atmosférico sin que sirva para nada narrativo.</li><li>Empezar con un prólogo innecesario que explica el contexto histórico durante tres páginas.</li><li>Empezar con un personaje mirándose al espejo para describir su aspecto físico.</li></ul>
-<h2>Revisar el primer párrafo</h2>
-<p>Una vez que tengas el borrador completo, vuelve al primer párrafo. Con frecuencia, el verdadero comienzo de una novela no está en la primera página sino en el tercer capítulo. No tengas miedo de cortar todo lo que precede al momento en que la historia de verdad arranca.</p>
-<p>Pregúntate: ¿qué es lo primero que necesita saber el lector para que esta historia funcione? A veces la respuesta es menos de lo que crees.</p>`},
-  {id:'estructura-tres-actos', cat:'Escritura creativa', titulo:'Estructura en tres actos: la guía definitiva para novelistas', excerpt:'Cómo aplicar la estructura clásica a tu novela sin que se note.', tiempo:'11 min', cuerpo:`<p>La estructura en tres actos es el esqueleto narrativo más utilizado en la historia de la literatura occidental, desde Aristóteles hasta Hollywood. No es una fórmula que coarta la creatividad: es un mapa que te ayuda a no perderte. Los mejores novelistas la conocen perfectamente, aunque sus novelas no lo parezcan.</p>
-<h2>Los tres actos</h2>
-<h3>Acto I: El planteamiento (25% del texto)</h3>
-<p>El primer acto presenta el mundo ordinario del protagonista, introduce al personaje principal con sus deseos y sus miedos, y culmina con el "detonante" o "incidente incitante": el evento que rompe el equilibrio y lanza al protagonista a la aventura.</p>
-<p>Al final del Acto I, el protagonista toma una decisión (o le es impuesta) que le hace cruzar el "umbral" hacia el mundo extraordinario del Acto II. No hay vuelta atrás.</p>
-<h3>Acto II: El conflicto (50% del texto)</h3>
-<p>El corazón de la novela. El protagonista persigue su objetivo mientras los obstáculos se van acumulando. El Acto II se divide a su vez en dos mitades, separadas por el "punto medio" (midpoint), un giro que cambia la dirección de la historia.</p>
-<p>En la primera mitad del Acto II, el protagonista reacciona. En la segunda, actúa. Este cambio de reactivo a proactivo es fundamental. El Acto II termina con el "punto de crisis": el momento más oscuro, el aparente fracaso total, la "noche oscura del alma".</p>
-<h3>Acto III: La resolución (25% del texto)</h3>
-<p>El protagonista, transformado por lo que ha vivido, encuentra la solución al problema principal. El clímax resuelve el conflicto central de la historia. El desenlace recoge los cabos sueltos y muestra el nuevo equilibrio.</p>
-<div class="highlight">La estructura en tres actos no determina el contenido de tu novela, determina su ritmo. Una novela literaria de Javier Marías y una novela de acción de Tom Clancy siguen la misma estructura: el primero la llena de introspección y el segundo de persecuciones.</div>
-<h2>Los puntos de giro</h2>
-<p>Los puntos de giro son los momentos que cambian la dirección de la historia. Hay tres principales:</p>
-<ul><li><strong>Detonante (aprox. página 25):</strong> Rompe el equilibrio inicial.</li><li><strong>Punto de giro I (aprox. página 75):</strong> El protagonista cruza el umbral hacia el mundo extraordinario.</li><li><strong>Punto de giro II (aprox. página 225):</strong> Todo parece perdido. El protagonista toca fondo.</li></ul>
-<h2>Cómo usarla sin que se note</h2>
-<p>La estructura en tres actos falla cuando el escritor la aplica mecánicamente. Los lectores notan cuando un evento dramático ocurre "porque toca" en lugar de porque surge orgánicamente de los personajes y la situación.</p>
-<p>La clave es que los puntos de giro emerjan de las decisiones de los personajes, no de la estructura. Primero escribe a los personajes. Luego comprueba que la estructura funciona.</p>`},
-  {id:'amazon-editorial', cat:'Publicación', titulo:'Amazon KDP vs editorial tradicional: ventajas e inconvenientes reales', excerpt:'Comparativa honesta para ayudarte a tomar la mejor decisión.', tiempo:'14 min', cuerpo:`<p>La autopublicación en Amazon KDP ha democratizado el acceso a los lectores de una forma sin precedentes. Hoy cualquier escritor puede publicar su libro en minutos y tenerlo disponible para millones de lectores en todo el mundo. Pero eso no significa que sea siempre la mejor opción. Esta guía analiza honestamente las ventajas y desventajas de cada vía.</p>
-<h2>Amazon KDP: la autopublicación</h2>
-<h3>Ventajas</h3>
-<ul><li><strong>Regalías altas:</strong> Entre el 35% y el 70% sobre el precio de venta, muy por encima del 8-12% habitual en editorial tradicional.</li><li><strong>Control total:</strong> Tú decides el precio, la portada, el contenido, cuándo publicas y cómo lo promocionas.</li><li><strong>Velocidad:</strong> Puedes publicar en días, no en meses o años.</li><li><strong>Sin intermediarios:</strong> El dinero llega directamente a tu cuenta cada mes.</li><li><strong>Nicho:</strong> Para géneros específicos (romance, thriller de serie, fantasía), el mercado digital autopublicado puede ser muy rentable.</li></ul>
-<h3>Desventajas</h3>
-<ul><li><strong>Sin distribución física:</strong> Tu libro no estará en librerías (salvo que uses KDP Print, con distribución muy limitada).</li><li><strong>Estigma:</strong> Sigue habiendo cierto prejuicio en el mundo literario hacia los libros autopublicados.</li><li><strong>Responsabilidad total:</strong> Debes ocuparte de la edición, la corrección, el diseño, el marketing y la promoción. Todo.</li><li><strong>Visibilidad complicada:</strong> Hay millones de libros en Amazon. Destacar requiere inversión en publicidad (AMS, redes sociales) y tiempo.</li></ul>
-<h2>Editorial tradicional</h2>
-<h3>Ventajas</h3>
-<ul><li><strong>Distribución:</strong> Tu libro en librerías físicas y en los principales canales digitales.</li><li><strong>Equipo editorial:</strong> Editor, corrector, diseñador de portadas y departamento de marketing trabajan por tu libro.</li><li><strong>Legitimidad:</strong> Una editorial tradicional es un aval de calidad en el mundo literario y cultural.</li><li><strong>Prensa y medios:</strong> Las editoriales tienen relaciones con periodistas y medios que pueden reseñar tu obra.</li></ul>
-<h3>Desventajas</h3>
-<ul><li><strong>Regalías bajas:</strong> Entre el 8% y el 12% en papel, algo más en digital. El anticipo puede parecer atractivo, pero hay que "ganarlo" antes de ver más dinero.</li><li><strong>Lentitud:</strong> Del contrato a las librerías puede pasar fácilmente un año.</li><li><strong>Pérdida de control:</strong> La editorial decide la portada, el precio, el momento de publicación y la estrategia de marketing.</li><li><strong>Difícil acceso:</strong> Publicar con una gran editorial es muy competitivo. La mayoría de manuscritos son rechazados.</li></ul>
-<div class="highlight">No hay una respuesta universal. Un autor de novela literaria que aspira a premios y a ser reseñado en suplementos culturales necesita una editorial. Un autor de romance o thriller de serie con una audiencia digital fiel puede vivir muy bien de la autopublicación.</div>
-<h2>¿Y si hago las dos cosas?</h2>
-<p>Cada vez más autores combinan las dos vías: publican sus novelas más ambiciosas con editoriales y autopublican series o géneros más comerciales. No son vías excluyentes.</p>`},
-  {id:'registro-obra', cat:'Derechos de autor', titulo:'Cómo registrar tu obra literaria en España: guía paso a paso', excerpt:'Todo lo que necesitas saber sobre el registro de la propiedad intelectual.', tiempo:'7 min', cuerpo:`<p>Una pregunta muy frecuente entre escritores: ¿tengo que registrar mi obra para que esté protegida? La respuesta corta es no: en España, como en la mayoría de países, la obra está protegida por el derecho de autor desde el momento de su creación, sin necesidad de registro. Pero el registro sí ofrece ventajas prácticas que vale la pena conocer.</p>
-<h2>¿Qué protege el derecho de autor?</h2>
-<p>El derecho de autor protege automáticamente cualquier obra original —literaria, artística, musical— desde el momento en que existe en un soporte tangible. No hace falta registrarla, publicarla, ni poner el símbolo ©. Simplemente, si la has creado tú, es tuya.</p>
-<p>La protección dura toda la vida del autor más 70 años.</p>
-<h2>¿Para qué sirve entonces el registro?</h2>
-<p>El Registro de la Propiedad Intelectual da fecha cierta a la creación de la obra. En caso de litigio —alguien que claim que la obra es suya, o que tú la has copiado— el registro es prueba de que esa obra existía en esa fecha y que tú la presentaste.</p>
-<p>También facilita la gestión de los derechos si quieres ceder o licenciar tu obra a terceros.</p>
-<h2>Cómo registrar en España</h2>
-<p>El registro se hace en el Registro de la Propiedad Intelectual, que en España está gestionado por las comunidades autónomas. Cada comunidad tiene su propio registro, pero el efecto es el mismo en todo el territorio nacional.</p>
-<h3>Pasos</h3>
-<ul><li>Localiza el registro de tu comunidad autónoma (en la web del Ministerio de Cultura puedes encontrar el directorio).</li><li>Rellena el formulario de solicitud (disponible online en la mayoría de comunidades).</li><li>Adjunta la obra en formato digital (PDF) o impresa.</li><li>Paga la tasa (entre 10 y 30 euros según comunidad).</li><li>Recibirás el certificado de registro en días o semanas.</li></ul>
-<div class="highlight">Alternativa gratuita: puedes enviarte a ti mismo la obra por correo certificado y no abrir el sobre. El matasellos de correos acredita la fecha. No es tan sólido como el registro oficial, pero es una opción de emergencia.</div>
-<h2>¿Y los derechos digitales?</h2>
-<p>Los derechos de autor aplican igual al contenido digital. Un texto publicado en tu blog está protegido igual que uno en papel. La diferencia es que la prueba de autoría es más difícil si alguien lo copia. Guardar capturas de pantalla con fecha puede ser útil.</p>`},
-  {id:'premios-importantes', cat:'Concursos', titulo:'Los 10 premios literarios más importantes de España en 2025', excerpt:'Guía de los galardones con mayor dotación económica y prestigio.', tiempo:'8 min', cuerpo:`<p>España tiene una tradición de premios literarios muy rica y variada. Desde el histórico Premio Planeta, con su espectacular ceremonia anual, hasta premios más modestos pero de gran prestigio literario como el Herralde. Esta guía repasa los diez galardones más relevantes para un escritor en España.</p>
-<h2>1. Premio Planeta</h2>
-<p>El más dotado económicamente: 601.000 euros para el ganador y 150.000 para el finalista. Se convoca anualmente y la obra ganadora es publicada por Planeta. Aunque ha sido criticado por su carácter comercial, sigue siendo el premio con mayor repercusión mediática del país.</p>
-<h2>2. Premio Alfaguara de Novela</h2>
-<p>175.000 dólares de dotación y publicación simultánea en todos los países hispanohablantes. Es uno de los premios con mayor proyección internacional. Han ganado autores de todo el mundo hispánico.</p>
-<h2>3. Premio Herralde de Novela</h2>
-<p>18.000 euros y publicación en Anagrama. Menos dotado económicamente que los anteriores pero de enorme prestigio literario. Ganar el Herralde es una garantía de ser tomado en serio por la crítica.</p>
-<h2>4. Premio Nadal</h2>
-<p>Uno de los premios más antiguos de España (desde 1944), publicado por Destino. No es el más dotado pero sí el con más historia. Han ganado Carmen Laforet, Ana María Matute y Carmen Martín Gaite, entre otros.</p>
-<h2>5. Premio Primavera de Novela</h2>
-<p>Convocado por Espasa, dotado con 120.000 euros. Busca novelas de entretenimiento de calidad con proyección comercial.</p>
-<h2>6. Premio Nacional de Narrativa</h2>
-<p>20.000 euros, otorgado por el Ministerio de Cultura. No se convoca sino que se concede a la mejor novela publicada en el año anterior. No puede presentarse candidatura: el jurado selecciona de entre las publicadas.</p>
-<h2>7. Premio de la Crítica</h2>
-<p>Sin dotación económica, pero de gran prestigio. Lo conceden los críticos literarios y es uno de los reconocimientos más valorados en el mundo literario español.</p>
-<h2>8. Premio Tusquets de Novela</h2>
-<p>30.000 euros y publicación en Tusquets. Busca narrativa de calidad con proyección literaria. Es uno de los premios más serios del panorama editorial.</p>
-<h2>9. Premio Ateneo de Sevilla</h2>
-<p>12.000 euros. Uno de los premios de ciudad más prestigiosos de España, con larga tradición y publicación garantizada.</p>
-<h2>10. Premio Ciudad de Torrevieja</h2>
-<p>Convocado por el Ayuntamiento de Torrevieja, con dotaciones entre 60.000 y 120.000 euros según la modalidad. Es uno de los premios municipales con mayor dotación del país.</p>
-<div class="highlight">Consejo: los premios con publicación garantizada son los más interesantes para un autor novel. Ganar un premio con buena dotación pero sin editorial puede ser frustrante si luego el libro no encuentra publicador.</div>`},
+  {id:'agente-literario',cat:'Publicación',titulo:'Cómo encontrar un agente literario en España: guía completa',excerpt:'Todo lo que necesitas saber para conseguir representación literaria.',tiempo:'10 min',cuerpo:`<p>Encontrar un agente literario es, para muchos escritores, el primer gran obstáculo del camino hacia la publicación. En España, el mercado editorial funciona de forma diferente al anglosajón: no es imprescindible tener agente para publicar, pero contar con una buena representación puede marcar la diferencia, especialmente si tienes aspiraciones internacionales.</p><h2>¿Para qué sirve un agente literario?</h2><p>El agente literario es mucho más que un intermediario entre el escritor y la editorial. Es tu representante, tu negociador y, en muchos casos, tu primer lector crítico. Sus funciones principales son:</p><ul><li>Presentar tu obra a los editores más adecuados</li><li>Negociar los contratos editoriales en tus condiciones</li><li>Gestionar los derechos de traducción a otros idiomas</li><li>Asesorarte sobre estrategia editorial a largo plazo</li></ul><p>A cambio, el agente cobra una comisión sobre los ingresos que genera tu obra, habitualmente un 15% sobre los derechos nacionales y un 20% sobre los internacionales. Solo cobran si tú cobras.</p><h2>¿Cuándo buscar agente?</h2><p>La pregunta que todos los escritores se hacen: ¿con qué tienes que tener listo para buscar agente? La respuesta es clara: con un manuscrito terminado, revisado y en su mejor versión posible. Los agentes no trabajan con proyectos a medias ni con primeros borradores.</p><div class="highlight">Un agente no te hará escritor. Si tu obra no está lista, ningún agente te la podrá vender. Trabaja primero el manuscrito, busca lectores de confianza, revisa, y solo cuando estés convencido de que está en su mejor versión, empieza a buscar representación.</div><h2>Cómo preparar la propuesta</h2><h3>La carta de consulta</h3><p>Es tu primera impresión. Debe incluir el título, el género, la extensión aproximada, un párrafo de presentación del libro, un párrafo sobre ti como escritor, y por qué has elegido a ese agente. Máximo una página. Personalizada para cada agente.</p><h3>La sinopsis</h3><p>Un resumen del argumento completo —incluyendo el final— en una o dos páginas. No es la contraportada: aquí no hay suspense. El agente necesita saber qué pasa en tu libro de principio a fin.</p><h3>Los primeros capítulos</h3><p>Normalmente se piden los tres primeros capítulos o las primeras 50 páginas. Es lo más importante: si los primeros capítulos no enganchan al agente, el resto da igual.</p><h2>Señales de alerta</h2><p>Desconfía de cualquier agente que te pida dinero por adelantado. Los agentes legítimos nunca cobran por anticipado. Solo cobran cuando consiguen venderte.</p>`},
+  {id:'concursos-guia',cat:'Concursos',titulo:'Guía completa para presentarte a concursos literarios',excerpt:'Todo lo que debes saber antes de enviar tu obra a un concurso.',tiempo:'12 min',cuerpo:`<p>Los concursos literarios son una de las vías más accesibles para que un escritor novel dé sus primeros pasos. Un premio puede suponer visibilidad, dinero y, en algunos casos, la publicación de la obra.</p><h2>Tipos de concursos literarios</h2><ul><li><strong>Concursos municipales o autonómicos:</strong> Convocados por ayuntamientos y diputaciones. Dotaciones modestas pero gran número de convocatorias.</li><li><strong>Concursos de editoriales:</strong> Los más prestigiosos. Premio Herralde, Alfaguara, Planeta. Llevan aparejada la publicación de la obra.</li><li><strong>Concursos de asociaciones culturales:</strong> Muy variados. Hay que revisar bien las bases.</li></ul><h2>Cómo leer las bases</h2><p>El primer paso antes de presentarse es leer las bases detenidamente. Los puntos clave: género, extensión, idioma, si debe ser inédita, y requisitos del participante.</p><div class="highlight">El seudónimo es obligatorio en casi todos los concursos para garantizar la imparcialidad del jurado. Usa siempre un seudónimo diferente del tuyo y nunca incluyas tu nombre en el cuerpo del texto.</div><h2>Derechos de autor</h2><p>Lee con especial atención la cláusula de derechos. Lo habitual es que el concurso se quede con el derecho a publicar la obra en un volumen de premiados, pero el autor conserva todos los demás derechos.</p><h2>Los errores más comunes</h2><ul><li>No respetar la extensión: si el máximo son 10 folios, 11 es descalificación directa.</li><li>Olvidar el seudónimo o incluir el nombre real.</li><li>Enviar fuera de plazo.</li><li>No enviar todos los documentos requeridos.</li></ul>`},
+  {id:'primer-parrafo',cat:'Escritura creativa',titulo:'El primer párrafo: cómo atrapar al lector desde la primera línea',excerpt:'Análisis de los recursos más efectivos para abrir una novela o relato.',tiempo:'8 min',cuerpo:`<p>El primer párrafo de una novela o relato es el más importante que escribirás. Es el apretón de manos entre tú y el lector, el contrato implícito que establece el tono, el estilo y las expectativas de lo que viene.</p><h2>Qué debe hacer el primer párrafo</h2><ul><li><strong>Crear una voz:</strong> El lector debe sentir que hay alguien detrás del texto.</li><li><strong>Plantar una pregunta:</strong> Una tensión que haga querer seguir leyendo.</li><li><strong>Establecer el tono:</strong> ¿Oscuro o luminoso? ¿Íntimo o épico?</li><li><strong>Situar al lector:</strong> En un tiempo, en un espacio, con un personaje.</li></ul><h2>Los cinco tipos de apertura</h2><h3>In medias res</h3><p>Comenzar en medio de la acción. Crea inmediata tensión pero puede desorientar si se abusa.</p><h3>Con imagen</h3><p>Una imagen potente que establece el tono. Funciona especialmente en literatura más lírica.</p><h3>Con voz</h3><p>Cuando el narrador se presenta de forma tan característica que su voz ya es suficiente gancho.</p><div class="highlight">No existe la apertura perfecta universal. La mejor apertura es la que es coherente con el tono y el estilo del resto de la novela.</div><h2>Lo que nunca debes hacer</h2><ul><li>Empezar con el protagonista despertándose (el cliché más usado).</li><li>Empezar con descripción detallada del tiempo sin función narrativa.</li><li>Empezar con un personaje mirándose al espejo para describir su aspecto.</li></ul>`},
+  {id:'estructura-tres-actos',cat:'Escritura creativa',titulo:'Estructura en tres actos: la guía definitiva para novelistas',excerpt:'Cómo aplicar la estructura clásica a tu novela sin que se note.',tiempo:'11 min',cuerpo:`<p>La estructura en tres actos es el esqueleto narrativo más utilizado en la historia de la literatura occidental. No es una fórmula que coarta la creatividad: es un mapa que te ayuda a no perderte.</p><h2>Los tres actos</h2><h3>Acto I: El planteamiento (25%)</h3><p>Presenta el mundo ordinario del protagonista y culmina con el detonante: el evento que rompe el equilibrio y lanza al protagonista a la aventura.</p><h3>Acto II: El conflicto (50%)</h3><p>El corazón de la novela. El protagonista persigue su objetivo mientras los obstáculos se acumulan. Termina con el punto de crisis: el momento más oscuro.</p><h3>Acto III: La resolución (25%)</h3><p>El protagonista, transformado por lo vivido, encuentra la solución al problema principal. El clímax resuelve el conflicto central.</p><div class="highlight">La estructura en tres actos no determina el contenido de tu novela, determina su ritmo. Los mejores novelistas la conocen perfectamente, aunque sus novelas no lo parezcan.</div>`},
+  {id:'amazon-editorial',cat:'Publicación',titulo:'Amazon KDP vs editorial tradicional: ventajas e inconvenientes reales',excerpt:'Comparativa honesta para ayudarte a tomar la mejor decisión.',tiempo:'14 min',cuerpo:`<p>La autopublicación en Amazon KDP ha democratizado el acceso a los lectores. Hoy cualquier escritor puede publicar su libro en minutos. Pero eso no significa que sea siempre la mejor opción.</p><h2>Amazon KDP: la autopublicación</h2><h3>Ventajas</h3><ul><li><strong>Regalías altas:</strong> Entre el 35% y el 70% sobre el precio de venta.</li><li><strong>Control total:</strong> Tú decides el precio, la portada, el contenido.</li><li><strong>Velocidad:</strong> Puedes publicar en días, no en meses o años.</li></ul><h3>Desventajas</h3><ul><li><strong>Sin distribución física:</strong> Tu libro no estará en librerías.</li><li><strong>Responsabilidad total:</strong> Debes ocuparte de edición, diseño y marketing.</li></ul><h2>Editorial tradicional</h2><h3>Ventajas</h3><ul><li><strong>Distribución:</strong> Tu libro en librerías físicas y canales digitales.</li><li><strong>Equipo editorial:</strong> Editor, corrector y diseñador trabajan por tu libro.</li></ul><h3>Desventajas</h3><ul><li><strong>Regalías bajas:</strong> Entre el 8% y el 12%.</li><li><strong>Pérdida de control:</strong> La editorial decide portada, precio y estrategia.</li></ul><div class="highlight">No hay una respuesta universal. Un autor de novela literaria necesita una editorial. Un autor de romance o thriller de serie puede vivir muy bien de la autopublicación.</div>`},
+  {id:'registro-obra',cat:'Derechos de autor',titulo:'Cómo registrar tu obra literaria en España: guía paso a paso',excerpt:'Todo lo que necesitas saber sobre el registro de la propiedad intelectual.',tiempo:'7 min',cuerpo:`<p>Una pregunta muy frecuente: ¿tengo que registrar mi obra para que esté protegida? La respuesta es no: la obra está protegida desde el momento de su creación, sin necesidad de registro. Pero el registro ofrece ventajas prácticas.</p><h2>¿Para qué sirve el registro?</h2><p>El Registro de la Propiedad Intelectual da fecha cierta a la creación de la obra. En caso de litigio, el registro es prueba de que esa obra existía en esa fecha y que tú la presentaste.</p><h2>Cómo registrar en España</h2><ul><li>Localiza el registro de tu comunidad autónoma.</li><li>Rellena el formulario de solicitud (disponible online).</li><li>Adjunta la obra en formato digital (PDF) o impresa.</li><li>Paga la tasa (entre 10 y 30 euros según comunidad).</li><li>Recibirás el certificado de registro en días o semanas.</li></ul><div class="highlight">Alternativa gratuita: puedes enviarte la obra por correo certificado y no abrir el sobre. El matasellos acredita la fecha. No es tan sólido como el registro oficial pero es una opción válida.</div>`},
+  {id:'premios-importantes',cat:'Concursos',titulo:'Los 10 premios literarios más importantes de España en 2025',excerpt:'Guía de los galardones con mayor dotación económica y prestigio.',tiempo:'8 min',cuerpo:`<p>España tiene una tradición de premios literarios muy rica. Desde el histórico Premio Planeta hasta premios de gran prestigio literario como el Herralde. Esta guía repasa los diez galardones más relevantes.</p><h2>1. Premio Planeta — 601.000€</h2><p>El más dotado económicamente. Se convoca anualmente y la obra ganadora es publicada por Planeta. Sigue siendo el premio con mayor repercusión mediática del país.</p><h2>2. Premio Alfaguara — 175.000$</h2><p>Publicación simultánea en todos los países hispanohablantes. Uno de los premios con mayor proyección internacional.</p><h2>3. Premio Herralde — 18.000€</h2><p>Publicado por Anagrama. Menos dotado económicamente pero de enorme prestigio literario. Ganar el Herralde es una garantía de ser tomado en serio por la crítica.</p><h2>4. Premio Nadal</h2><p>Uno de los más antiguos de España (desde 1944), publicado por Destino. Han ganado Carmen Laforet, Ana María Matute y Carmen Martín Gaite.</p><h2>5. Premio Primavera — 120.000€</h2><p>Convocado por Espasa. Busca novelas de entretenimiento de calidad con proyección comercial.</p><h2>6. Premio Nacional de Narrativa — 20.000€</h2><p>Otorgado por el Ministerio de Cultura a la mejor novela publicada el año anterior.</p><h2>7. Premio Tusquets — 30.000€</h2><p>Publicado por Tusquets. Busca narrativa de calidad con proyección literaria.</p><div class="highlight">Los premios con publicación garantizada son los más interesantes para un autor novel. Ganar un premio con buena dotación pero sin editorial puede ser frustrante si el libro no encuentra publicador.</div>`},
 ];
 
-// ═══════════════════════════════
-// INIT
-// ═══════════════════════════════
+// ══════════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════════
 document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 document.getElementById('year').textContent = new Date().getFullYear();
 
+function showPage(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════
+// DIRECTORIOS
+// ══════════════════════════════════════════════
 function renderDirectorios(){
   renderDir('editoriales-list', EDITORIALES, 'editorial');
   renderDir('agentes-list', AGENTES, 'agente');
@@ -473,12 +381,11 @@ function renderDir(id, data, tipo){
   const cont = document.getElementById(id);
   if(!cont) return;
   cont.innerHTML = data.map(item => {
-    const tags = (item.generos||item.especialidades||item.generos||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('');
-    const sub = item.ciudad || '';
+    const tags = (item.generos||item.especialidades||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('');
     return `<div class="dir-item" onclick="showDetalle('${tipo}','${item.id}')">
       <div class="dir-name">${item.nombre}</div>
       <div class="dir-desc">${item.descripcion.substring(0,180)}...</div>
-      <div class="dir-footer"><div class="dir-tags">${tags}</div><span class="dir-link">${sub} · Ver ficha →</span></div>
+      <div class="dir-footer"><div class="dir-tags">${tags}</div><span class="dir-link">${item.ciudad} · Ver ficha →</span></div>
     </div>`;
   }).join('');
 }
@@ -486,12 +393,19 @@ function renderDir(id, data, tipo){
 function renderArt(){
   const cont = document.getElementById('articulos-list');
   if(!cont) return;
-  cont.innerHTML = ARTICULOS.map(a => `<div class="art-item" onclick="showDetalle('articulo','${a.id}')">
+  cont.innerHTML = ARTICULOS.map(a=>`<div class="art-item" onclick="showDetalle('articulo','${a.id}')">
     <div class="art-cat">${a.cat}</div>
     <div class="art-title">${a.titulo}</div>
     <div class="art-excerpt">${a.excerpt}</div>
     <div class="art-meta">Lectura · ${a.tiempo}</div>
   </div>`).join('');
+}
+
+function filterDir(listId, inputId){
+  const q = (document.getElementById(inputId)||{value:''}).value.toLowerCase();
+  document.querySelectorAll('#'+listId+' .dir-item').forEach(el=>{
+    el.style.display = !q||el.textContent.toLowerCase().includes(q)?'':'none';
+  });
 }
 
 function showDetalle(tipo, id){
@@ -501,175 +415,170 @@ function showDetalle(tipo, id){
   else if(tipo==='revista'){item=REVISTAS.find(x=>x.id===id);backPage='revistas';}
   else if(tipo==='articulo'){item=ARTICULOS.find(x=>x.id===id);backPage='articulos';}
   if(!item) return;
-  paginaAnterior = backPage;
 
   let html = `<div class="detail-back" onclick="showPage('${backPage}',null)">← Volver al directorio</div>`;
 
   if(tipo==='editorial'){
-    html += `<div class="detail-header">
-      <div class="detail-cat">Editorial</div>
-      <h1 class="detail-title">${item.nombre}</h1>
-      <div class="detail-meta">${item.ciudad}</div>
-    </div>
+    html+=`<div class="detail-header"><div class="detail-cat">Editorial</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad}</div></div>
     <div class="detail-grid">
       <div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div>
       <div><div class="detail-field-label">Contacto</div><div class="detail-field-value"><a href="mailto:${item.contacto}">${item.contacto}</a></div></div>
       <div><div class="detail-field-label">Géneros</div><div class="detail-field-value">${item.generos.join(', ')}</div></div>
     </div>
-    <div class="detail-body">
-      <p>${item.descripcion}</p>
-      <h2>Autores del catálogo</h2>
-      <p>${item.catalogo.join(' · ')}</p>
-      <h2>Cómo enviar originales</h2>
-      <p>${item.envio}</p>
-      ${item.notas ? `<div class="highlight">${item.notas}</div>` : ''}
-    </div>`;
+    <div class="detail-body"><p>${item.descripcion}</p><h2>Autores del catálogo</h2><p>${item.catalogo.join(' · ')}</p><h2>Cómo enviar originales</h2><p>${item.envio}</p>${item.notas?`<div class="highlight">${item.notas}</div>`:''}</div>`;
   } else if(tipo==='agente'){
-    html += `<div class="detail-header">
-      <div class="detail-cat">Agencia literaria</div>
-      <h1 class="detail-title">${item.nombre}</h1>
-      <div class="detail-meta">${item.ciudad}</div>
-    </div>
+    html+=`<div class="detail-header"><div class="detail-cat">Agencia literaria</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad}</div></div>
     <div class="detail-grid">
       <div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div>
       <div><div class="detail-field-label">Email</div><div class="detail-field-value"><a href="mailto:${item.contacto}">${item.contacto}</a></div></div>
       <div><div class="detail-field-label">Especialidades</div><div class="detail-field-value">${item.especialidades.join(', ')}</div></div>
     </div>
-    <div class="detail-body">
-      <p>${item.descripcion}</p>
-      <h2>Qué buscan</h2>
-      <p>${item.buscan}</p>
-      <h2>Cómo contactar</h2>
-      <div class="highlight">${item.como_contactar}</div>
-    </div>`;
+    <div class="detail-body"><p>${item.descripcion}</p><h2>Qué buscan</h2><p>${item.buscan}</p><h2>Cómo contactar</h2><div class="highlight">${item.como_contactar}</div></div>`;
   } else if(tipo==='revista'){
-    html += `<div class="detail-header">
-      <div class="detail-cat">Revista literaria</div>
-      <h1 class="detail-title">${item.nombre}</h1>
-      <div class="detail-meta">${item.ciudad} · ${item.frecuencia}</div>
-    </div>
+    html+=`<div class="detail-header"><div class="detail-cat">Revista literaria</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad} · ${item.frecuencia}</div></div>
     <div class="detail-grid">
       <div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div>
       <div><div class="detail-field-label">Géneros</div><div class="detail-field-value">${item.generos.join(', ')}</div></div>
       <div><div class="detail-field-label">Periodicidad</div><div class="detail-field-value">${item.frecuencia}</div></div>
     </div>
-    <div class="detail-body">
-      <p>${item.descripcion}</p>
-      <h2>Cómo enviar tu obra</h2>
-      <p>${item.como_enviar}</p>
-      <h2>Plazos y condiciones</h2>
-      <div class="highlight">${item.plazos}</div>
-    </div>`;
+    <div class="detail-body"><p>${item.descripcion}</p><h2>Cómo enviar tu obra</h2><p>${item.como_enviar}</p><h2>Plazos y condiciones</h2><div class="highlight">${item.plazos}</div></div>`;
   } else if(tipo==='articulo'){
-    html += `<div class="detail-header">
-      <div class="detail-cat">${item.cat}</div>
-      <h1 class="detail-title">${item.titulo}</h1>
-      <div class="detail-meta">Tiempo de lectura: ${item.tiempo}</div>
-    </div>
-    <div class="detail-body">${item.cuerpo}</div>`;
+    html+=`<div class="detail-header"><div class="detail-cat">${item.cat}</div><h1 class="detail-title">${item.titulo}</h1><div class="detail-meta">Tiempo de lectura: ${item.tiempo}</div></div><div class="detail-body">${item.cuerpo}</div>`;
   }
 
   document.getElementById('detalle-content').innerHTML = html;
   showPage('detalle', null);
 }
 
-function showPage(id, btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  if(btn) btn.classList.add('active');
-  window.scrollTo(0,0);
-}
-
-function filterDir(listId){
-  const inputMap = {'editoriales-list':'search-edit','agentes-list':'search-agent','revistas-list':'search-rev'};
-  const q = (document.getElementById(inputMap[listId])||{value:''}).value.toLowerCase();
-  document.querySelectorAll('#'+listId+' .dir-item').forEach(el=>{
-    el.style.display = !q||el.textContent.toLowerCase().includes(q)?'':'none';
-  });
-}
-
-// ═══════════════════════════════
-// CONCURSOS
-// ═══════════════════════════════
+// ══════════════════════════════════════════════
+// CONCURSOS — CARGA INSTANTÁNEA + BÚSQUEDA EN FONDO
+// ══════════════════════════════════════════════
 function getCache(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return null;const{data,ts}=JSON.parse(r);if(Date.now()-ts>CACHE_HOURS*3600000)return null;return data;}catch{return null;}}
 function setCache(d){try{localStorage.setItem(CACHE_KEY,JSON.stringify({data:d,ts:Date.now()}));}catch{}}
+function getCacheAge(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return null;const{ts}=JSON.parse(r);return Math.round((Date.now()-ts)/3600000);}catch{return null;}}
 
 async function init(){
   renderDirectorios();
-  const c=getCache();
-  if(c){concursos=c;renderAll();document.getElementById('ai-status-text').textContent=concursos.length+' concursos · Datos en caché';}
-  else{await fetchConcursos();}
+  const cached = getCache();
+
+  if(cached){
+    // Tenemos caché → mostrar al instante
+    concursos = cached;
+    renderAll();
+    const age = getCacheAge();
+    setStatus(false, `${concursos.length} concursos · Actualizado hace ${age}h`);
+
+    // Si la caché tiene más de 12h, buscar en segundo plano silenciosamente
+    if(age > 12){
+      buscarEnFondo();
+    }
+  } else {
+    // Sin caché → mostrar concursos base al instante, buscar en fondo
+    concursos = [...CONCURSOS_BASE];
+    renderAll();
+    setStatus(true, 'Buscando convocatorias nuevas...');
+    buscarEnFondo();
+  }
 }
 
-async function fetchConcursos(){
-  document.getElementById('loading').style.display='block';
-  document.getElementById('cards').style.display='none';
-  let html='';
+function setStatus(searching, text){
+  document.getElementById('ai-status-text').textContent = text;
+  const dot = document.getElementById('ai-dot');
+  if(searching) dot.classList.add('searching');
+  else dot.classList.remove('searching');
+}
+
+async function buscarEnFondo(){
+  let html = '';
   for(const url of FUENTES){
     try{
-      document.getElementById('ai-status-text').textContent='Leyendo '+new URL(url).hostname+'...';
-      const r=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url));
-      const j=await r.json();
-      html+='\nFUENTE: '+url+'\n'+j.contents.substring(0,8000);
+      const r = await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url));
+      const j = await r.json();
+      html += '\nFUENTE: '+url+'\n'+j.contents.substring(0,8000);
     }catch(e){console.warn(e);}
   }
-  if(!html){usarDemo();return;}
+  if(!html){ setStatus(false, `${concursos.length} concursos · No se pudo conectar`); return; }
+
   try{
-    document.getElementById('ai-status-text').textContent='Analizando con IA...';
-    const res=await fetch(PROXY_URL,{
+    const res = await fetch(PROXY_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4000,messages:[{role:'user',content:`Extrae concursos literarios de este HTML. Devuelve SOLO array JSON sin texto adicional:\n[{"titulo":"","organizacion":"","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"","fecha_limite":"DD/MM/YYYY","descripcion":"","url":"","nuevo":true}]\n\n${html}`}]})
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:4000,
+        messages:[{role:'user',content:`Analiza este HTML de webs de concursos literarios españoles.
+Extrae TODOS los concursos que encuentres. Para cada concurso, extrae la URL EXACTA del concurso (no la URL de la web raíz).
+Devuelve SOLO un array JSON sin texto adicional:
+[{"titulo":"nombre exacto","organizacion":"quien convoca","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotación económica","fecha_limite":"DD/MM/YYYY","descripcion":"descripción breve","url":"URL EXACTA del concurso","nuevo":true}]
+
+${html}`}]
+      })
     });
-    const data=await res.json();
-    if(data.error)throw new Error(data.error.message);
-    const m=data.content[0].text.match(/\[[\s\S]*\]/);
-    if(!m)throw new Error('Sin JSON');
-    const p=JSON.parse(m[0]);
-    if(!p.length){usarDemo();return;}
-    concursos=p;setCache(concursos);renderAll();
-    document.getElementById('ai-status-text').textContent='✓ '+concursos.length+' concursos encontrados · Actualizado ahora';
-  }catch(e){console.error(e);usarDemo();}
+    const data = await res.json();
+    if(data.error) throw new Error(data.error.message);
+    const m = data.content[0].text.match(/\[[\s\S]*\]/);
+    if(!m) throw new Error('Sin JSON');
+    const nuevos = JSON.parse(m[0]);
+    if(!nuevos.length){ setStatus(false, `${concursos.length} concursos · Actualizado ahora`); return; }
+
+    setCache(nuevos);
+
+    // Comparar con los actuales para ver si hay cambios
+    const hayNuevos = nuevos.length !== concursos.length ||
+      nuevos.some(n => !concursos.find(c => c.titulo === n.titulo));
+
+    if(hayNuevos){
+      nuevosConcursos = nuevos;
+      const diff = nuevos.filter(n => !concursos.find(c => c.titulo===n.titulo)).length;
+      const banner = document.getElementById('update-banner');
+      document.getElementById('update-text').textContent = diff > 0
+        ? `${diff} concurso${diff>1?'s':''} nuevo${diff>1?'s':''} encontrado${diff>1?'s':''}`
+        : `Lista actualizada con ${nuevos.length} concursos`;
+      banner.classList.add('visible');
+    } else {
+      setStatus(false, `${nuevos.length} concursos · Actualizado ahora`);
+    }
+
+  }catch(e){
+    console.error(e);
+    setStatus(false, `${concursos.length} concursos · Error al actualizar`);
+  }
 }
 
-function usarDemo(){
-  concursos=[
-    {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2025",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos.",url:"https://escritores.org",nuevo:true},
-    {titulo:"Certamen Literario Villa de Móstoles",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2025",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio.",url:"https://escritores.org",nuevo:true},
-    {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2025",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras.",url:"https://escritores.org",nuevo:false},
-    {titulo:"I Concurso de Microrrelatos Científicos",organizacion:"FECYT",categoria:"Relato corto",premio:"800€",fecha_limite:"28/04/2025",descripcion:"Microrrelatos de hasta 100 palabras sobre temática científica.",url:"https://escritores.org",nuevo:false},
-    {titulo:"Premio Andalucía de Literatura Infantil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"20/05/2025",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:"https://escritores.org",nuevo:true},
-    {titulo:"Concurso Tres Versos de Primavera",organizacion:"Asociación Española de Haiku",categoria:"Poesía",premio:"500€",fecha_limite:"05/05/2025",descripcion:"Concurso de haiku en español. Máximo 5 haikus por participante.",url:"https://escritores.org",nuevo:false},
-    {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"30/06/2025",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas.",url:"https://escritores.org",nuevo:false},
-    {titulo:"Relatos en el Camino — Xacobeo",organizacion:"Xunta de Galicia",categoria:"Relato corto",premio:"2.000€",fecha_limite:"10/05/2025",descripcion:"Relatos de hasta 20 folios inspirados en el Camino de Santiago.",url:"https://escritores.org",nuevo:false},
-  ];
-  document.getElementById('ai-status-text').textContent='Datos de demostración · Proxy configurado';
+function aplicarNuevos(){
+  if(!nuevosConcursos.length) return;
+  concursos = nuevosConcursos;
+  nuevosConcursos = [];
+  document.getElementById('update-banner').classList.remove('visible');
+  setStatus(false, `${concursos.length} concursos · Actualizado ahora`);
   renderAll();
 }
 
+// ══════════════════════════════════════════════
+// RENDER CONCURSOS
+// ══════════════════════════════════════════════
 function diasHasta(f){if(!f)return 999;try{const p=f.split('/');if(p.length!==3)return 999;return Math.ceil((new Date(p[2],p[1]-1,p[0])-new Date())/86400000);}catch{return 999;}}
 
 function renderAll(){
-  document.getElementById('loading').style.display='none';
-  document.getElementById('cards').style.display='flex';
   renderCards();renderStats();renderSidebar();
 }
 
 function renderCards(){
-  const q=document.getElementById('search').value.toLowerCase();
-  const lista=concursos.filter(c=>{
-    if(filtroActivo==='urgentes')return diasHasta(c.fecha_limite)<=14;
+  const q = document.getElementById('search').value.toLowerCase();
+  const lista = concursos.filter(c=>{
+    if(filtroActivo==='urgentes') return diasHasta(c.fecha_limite)<=14;
     if(filtroActivo!=='todos'){const cat=(c.categoria||'').toLowerCase();return cat.includes(filtroActivo==='poesia'?'poesía':filtroActivo==='relato'?'relato':filtroActivo);}
     return true;
   }).filter(c=>!q||(c.titulo+c.organizacion+c.categoria+c.descripcion).toLowerCase().includes(q));
-  const cont=document.getElementById('cards');
-  if(!lista.length){cont.innerHTML='<div class="empty"><p style="font-family:Playfair Display,serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">Sin resultados</p><p style="font-size:12px">Prueba con otro término</p></div>';return;}
-  cont.innerHTML=lista.map(c=>{
-    const dias=diasHasta(c.fecha_limite);
-    const catK=(c.categoria||'').toLowerCase().replace(' corto','').replace('ía','ia').replace('ó','o');
-    const catClass='cat-'+(['poesia','relato','novela','infantil','teatro'].find(x=>catK.includes(x))||'otro');
-    return`<div class="card" onclick="openModal(${concursos.indexOf(c)})">
+  const cont = document.getElementById('cards');
+  if(!lista.length){cont.innerHTML='<div class="empty"><p style="font-family:Playfair Display,serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">Sin resultados</p><p style="font-size:12px;margin-top:4px">Prueba con otro término</p></div>';return;}
+  cont.innerHTML = lista.map(c=>{
+    const dias = diasHasta(c.fecha_limite);
+    const catK = (c.categoria||'').toLowerCase().replace(' corto','').replace('ía','ia').replace('ó','o');
+    const catClass = 'cat-'+(['poesia','relato','novela','infantil','teatro'].find(x=>catK.includes(x))||'otro');
+    // Usar URL real del concurso si existe
+    const urlReal = c.url && !c.url.includes('escritores.org') && !c.url.includes('culturamas.es') ? c.url : null;
+    return `<div class="card" onclick="openModal(${concursos.indexOf(c)})">
       <div class="card-meta"><span class="card-cat ${catClass}">${c.categoria||'Otro'}</span>${c.nuevo?'<span class="badge-new">Nuevo</span>':''}${dias<999?`<span class="card-days ${dias<=7?'urgent':''}">${dias<=0?'Cerrado':'Cierra en '+dias+'d'}</span>`:''}</div>
       <h3 class="card-title">${c.titulo}</h3>
       <div class="card-org">${c.organizacion||''}</div>
@@ -679,15 +588,17 @@ function renderCards(){
 }
 
 function renderStats(){
-  document.getElementById('total-count').textContent=concursos.length;
-  document.getElementById('nuevos-count').textContent=concursos.filter(c=>c.nuevo).length;
-  const t=concursos.reduce((s,c)=>{const m=(c.premio||'').match(/[\d.]+/);return s+(m?parseFloat(m[0].replace('.','')): 0);},0);
-  document.getElementById('premios-total').textContent=t>0?t.toLocaleString('es-ES')+'€':'—';
+  document.getElementById('total-count').textContent = concursos.length;
+  document.getElementById('nuevos-count').textContent = concursos.filter(c=>c.nuevo).length;
+  const t = concursos.reduce((s,c)=>{const m=(c.premio||'').match(/[\d.]+/);return s+(m?parseFloat(m[0].replace('.','')): 0);},0);
+  document.getElementById('premios-total').textContent = t>0?t.toLocaleString('es-ES')+'€':'—';
 }
 
 function renderSidebar(){
-  const u=concursos.filter(c=>diasHasta(c.fecha_limite)<=14&&diasHasta(c.fecha_limite)>0).sort((a,b)=>diasHasta(a.fecha_limite)-diasHasta(b.fecha_limite)).slice(0,5);
-  document.getElementById('sidebar-urgentes').innerHTML=u.length?u.map(c=>`<div class="deadline-item"><span class="deadline-title">${c.titulo}</span><span class="deadline-days">${diasHasta(c.fecha_limite)}d</span></div>`).join(''):'<div style="font-size:12px;color:var(--muted)">Ninguno cierra pronto</div>';
+  const u = concursos.filter(c=>diasHasta(c.fecha_limite)<=14&&diasHasta(c.fecha_limite)>0).sort((a,b)=>diasHasta(a.fecha_limite)-diasHasta(b.fecha_limite)).slice(0,5);
+  document.getElementById('sidebar-urgentes').innerHTML = u.length
+    ? u.map(c=>`<div class="deadline-item"><span class="deadline-title">${c.titulo}</span><span class="deadline-days">${diasHasta(c.fecha_limite)}d</span></div>`).join('')
+    : '<div style="font-size:12px;color:var(--muted)">Ninguno cierra pronto</div>';
 }
 
 function setFiltro(f){
@@ -697,15 +608,22 @@ function setFiltro(f){
   renderCards();
 }
 
+// ══════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════
 function openModal(idx){
-  const c=concursos[idx];if(!c)return;
-  document.getElementById('m-cat').textContent=c.categoria||'Concurso';
-  document.getElementById('m-title').textContent=c.titulo;
-  document.getElementById('m-org').textContent=c.organizacion||'';
-  document.getElementById('m-premio').textContent=c.premio||'Sin especificar';
-  document.getElementById('m-fecha').textContent=c.fecha_limite||'Sin especificar';
-  document.getElementById('m-desc').textContent=c.descripcion||'Sin descripción.';
-  const l=document.getElementById('m-url');l.href=c.url||'#';l.style.display=c.url?'inline-block':'none';
+  const c = concursos[idx]; if(!c) return;
+  document.getElementById('m-cat').textContent = c.categoria||'Concurso';
+  document.getElementById('m-title').textContent = c.titulo;
+  document.getElementById('m-org').textContent = c.organizacion||'';
+  document.getElementById('m-premio').textContent = c.premio||'Sin especificar';
+  document.getElementById('m-fecha').textContent = c.fecha_limite||'Sin especificar';
+  document.getElementById('m-desc').textContent = c.descripcion||'Sin descripción.';
+  const link = document.getElementById('m-url');
+  // Mostrar URL real si existe y no es de escritores.org
+  const urlMostrar = c.url && !c.url.includes('escritores.org') && !c.url.includes('culturamas.es') ? c.url : null;
+  link.href = urlMostrar || '#';
+  link.style.display = urlMostrar ? 'inline-block' : 'none';
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
 }
