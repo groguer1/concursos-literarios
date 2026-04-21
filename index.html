@@ -524,19 +524,34 @@ function renderAll(){renderCards();renderStats();renderSidebar();}
 
 function renderCards(){
   const q=document.getElementById('search').value.toLowerCase();
-  const lista=concursos.filter(c=>{
-    if(filtroActivo==='urgentes')return diasHasta(c.fecha_limite)<=14;
-    if(filtroActivo!=='todos'){const cat=(c.categoria||'').toLowerCase();return cat.includes(filtroActivo==='poesia'?'poesía':filtroActivo==='relato'?'relato':filtroActivo);}
-    return true;
-  }).filter(c=>!q||(c.titulo+c.organizacion+c.categoria+c.descripcion).toLowerCase().includes(q));
+  const LIMITE_DIAS=61; // máximo 2 meses (~61 días)
+
+  const lista=concursos
+    .filter(c=>{
+      const dias=diasHasta(c.fecha_limite);
+      // Eliminar cerrados y los que superan el límite de 2 meses
+      if(dias<=0||dias>LIMITE_DIAS) return false;
+      // Filtro de categoría
+      if(filtroActivo==='urgentes') return dias<=14;
+      if(filtroActivo!=='todos'){const cat=(c.categoria||'').toLowerCase();return cat.includes(filtroActivo==='poesia'?'poesía':filtroActivo==='relato'?'relato':filtroActivo);}
+      return true;
+    })
+    .filter(c=>!q||(c.titulo+c.organizacion+c.categoria+c.descripcion).toLowerCase().includes(q))
+    // Ordenar de más próximo a más lejano
+    .sort((a,b)=>diasHasta(a.fecha_limite)-diasHasta(b.fecha_limite));
+
   const cont=document.getElementById('cards');
-  if(!lista.length){cont.innerHTML='<div class="empty"><p style="font-family:Playfair Display,serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">Sin resultados</p><p style="font-size:12px;margin-top:4px">Prueba con otro término</p></div>';return;}
+  if(!lista.length){
+    cont.innerHTML='<div class="empty"><p style="font-family:Playfair Display,serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">Sin concursos activos</p><p style="font-size:12px;margin-top:4px">No hay convocatorias abiertas en los próximos 2 meses</p></div>';
+    return;
+  }
   cont.innerHTML=lista.map(c=>{
     const dias=diasHasta(c.fecha_limite);
     const catK=(c.categoria||'').toLowerCase().replace(' corto','').replace('ía','ia').replace('ó','o');
     const catClass='cat-'+(['poesia','relato','novela','infantil','teatro'].find(x=>catK.includes(x))||'otro');
+    const daysLabel=dias===0?'Cierra hoy':dias===1?'Cierra mañana':`Cierra en ${dias}d`;
     return`<div class="card" onclick="openModal(${concursos.indexOf(c)})">
-      <div class="card-meta"><span class="card-cat ${catClass}">${c.categoria||'Otro'}</span>${c.nuevo?'<span class="badge-new">Nuevo</span>':''}${dias<999?`<span class="card-days ${dias<=7?'urgent':''}">${dias<=0?'Cerrado':'Cierra en '+dias+'d'}</span>`:''}</div>
+      <div class="card-meta"><span class="card-cat ${catClass}">${c.categoria||'Otro'}</span>${c.nuevo?'<span class="badge-new">Nuevo</span>':''}<span class="card-days ${dias<=7?'urgent':''}">${daysLabel}</span></div>
       <h3 class="card-title">${c.titulo}</h3>
       <div class="card-org">${c.organizacion||''}</div>
       <div class="card-footer"><span class="card-premio">${c.premio||'Sin especificar'}</span><span class="card-fecha">${c.fecha_limite?'Hasta '+c.fecha_limite:''}</span></div>
@@ -545,9 +560,10 @@ function renderCards(){
 }
 
 function renderStats(){
-  document.getElementById('total-count').textContent=concursos.length;
-  document.getElementById('nuevos-count').textContent=concursos.filter(c=>c.nuevo).length;
-  const t=concursos.reduce((s,c)=>{const m=(c.premio||'').match(/[\d.]+/);return s+(m?parseFloat(m[0].replace('.','')): 0);},0);
+  const activos=concursos.filter(c=>diasHasta(c.fecha_limite)>0&&diasHasta(c.fecha_limite)<=61);
+  document.getElementById('total-count').textContent=activos.length;
+  document.getElementById('nuevos-count').textContent=activos.filter(c=>c.nuevo).length;
+  const t=activos.reduce((s,c)=>{const m=(c.premio||'').match(/[\d.]+/);return s+(m?parseFloat(m[0].replace('.','')): 0);},0);
   document.getElementById('premios-total').textContent=t>0?t.toLocaleString('es-ES')+'€':'—';
 }
 
