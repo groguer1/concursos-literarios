@@ -360,14 +360,14 @@ async function resolverUrl(concurso){
 // DATOS BASE (se muestran al instante)
 // ══════════════════════════════════════════════
 const CONCURSOS_BASE = [
-  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2025",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos. Modalidades adulto e infantil.",url:"https://www.melilla.es/melillaPortal/contenidoAction.do?Idm=1&IdmStyle=1&cod_mnu=1&id_cont=1"},
-  {titulo:"Certamen Literario Villa de Móstoles — Relato",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2025",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio. Abierto a mayores de 18 años.",url:"https://www.mostoles.es/es/ayuntamiento/tablondeanuncios"},
-  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2025",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras. Incluye publicación.",url:"https://www.editorialnocturna.com/premio-gotico"},
-  {titulo:"Premio Andalucía de Literatura Infantil y Juvenil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"20/05/2025",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:"https://www.juntadeandalucia.es/cultura/es/actualidad/premios"},
-  {titulo:"Concurso de Haiku Tres Versos de Primavera",organizacion:"Asociación Española de Haiku",categoria:"Poesía",premio:"500€",fecha_limite:"05/05/2025",descripcion:"Concurso de haiku en español. Máximo 5 haikus por participante. Tema libre.",url:""},
-  {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"30/06/2025",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas. Incluye publicación en editorial reconocida.",url:"https://www.ateneodesevilla.es/actividades/premios"},
-  {titulo:"Certamen de Relato Corto Ciudad de Córdoba",organizacion:"Ayuntamiento de Córdoba",categoria:"Relato corto",premio:"1.200€",fecha_limite:"10/05/2025",descripcion:"Relatos inéditos de temática libre, máximo 10 folios. Solo para autores españoles.",url:""},
-  {titulo:"Premio de Poesía Blas de Otero",organizacion:"Diputación de Bizkaia",categoria:"Poesía",premio:"4.000€",fecha_limite:"25/05/2025",descripcion:"Poemario inédito en lengua castellana. Mínimo 30 poemas o 400 versos. Sin límite de edad.",url:"https://www.bizkaia.eus/eu/web/kultura/literatur-sariak"},
+  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2026",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos. Modalidades adulto e infantil.",url:"https://www.melilla.es/melillaPortal/contenidoAction.do?Idm=1&IdmStyle=1&cod_mnu=1&id_cont=1"},
+  {titulo:"Certamen Literario Villa de Móstoles — Relato",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2026",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio. Abierto a mayores de 18 años.",url:"https://www.mostoles.es/es/ayuntamiento/tablondeanuncios"},
+  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2026",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras. Incluye publicación.",url:"https://www.editorialnocturna.com/premio-gotico"},
+  {titulo:"Premio Andalucía de Literatura Infantil y Juvenil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"10/06/2026",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:"https://www.juntadeandalucia.es/cultura/es/actualidad/premios"},
+  {titulo:"Concurso Internacional de Poesía Miguel Hernández",organizacion:"Ayuntamiento de Orihuela",categoria:"Poesía",premio:"6.000€",fecha_limite:"25/05/2026",descripcion:"Poemario inédito en castellano. Mínimo 400 versos. Premio internacional con larga tradición.",url:"https://www.orihuela.es/cultura"},
+  {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"15/06/2026",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas. Incluye publicación en editorial reconocida.",url:"https://www.ateneodesevilla.es/actividades/premios"},
+  {titulo:"Certamen de Relato Corto Ciudad de Córdoba",organizacion:"Ayuntamiento de Córdoba",categoria:"Relato corto",premio:"1.200€",fecha_limite:"05/06/2026",descripcion:"Relatos inéditos de temática libre, máximo 10 folios. Solo para autores españoles.",url:"https://www.cordoba.es/cultura"},
+  {titulo:"Premio de Poesía Blas de Otero",organizacion:"Diputación de Bizkaia",categoria:"Poesía",premio:"4.000€",fecha_limite:"20/06/2026",descripcion:"Poemario inédito en lengua castellana. Mínimo 30 poemas o 400 versos. Sin límite de edad.",url:"https://www.bizkaia.eus/eu/web/kultura/literatur-sariak"},
 ];
 
 // ══════════════════════════════════════════════
@@ -441,6 +441,16 @@ function getCacheAge(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return 
 
 async function init(){
   renderDirectorios();
+  // Limpiar caché si tiene datos de 2025
+  try{
+    const r=localStorage.getItem(CACHE_KEY);
+    if(r){
+      const {data}=JSON.parse(r);
+      if(data&&data.some&&data.some(c=>c.fecha_limite&&c.fecha_limite.includes('2025'))){
+        localStorage.removeItem(CACHE_KEY);
+      }
+    }
+  }catch{}
   const cached=getCache();
   if(cached){
     concursos=cached;renderAll();
