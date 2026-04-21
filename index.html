@@ -3,512 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Concursos Literarios España — Convocatorias actualizadas</title>
-<meta name="description" content="Todos los concursos literarios de España actualizados diariamente. Poesía, relato corto, novela, infantil.">
+<title>Letras Españolas — Concursos y recursos para escritores</title>
+<meta name="description" content="Concursos literarios, recursos para escritores, agentes literarios, editoriales y revistas. Actualizado diariamente con IA.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1a18;
-    --paper: #f5f2eb;
-    --cream: #ede9df;
-    --accent: #c8392b;
-    --gold: #b8860b;
-    --muted: #7a7670;
-    --border: #d4cfc5;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+  :root { --ink:#1a1a18; --paper:#f5f2eb; --cream:#ede9df; --accent:#c8392b; --gold:#b8860b; --muted:#7a7670; --border:#d4cfc5; }
+  *{box-sizing:border-box;margin:0;padding:0} a{color:inherit;text-decoration:none}
+  body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
 
   /* HEADER */
-  header {
-    border-bottom: 2px solid var(--ink);
-    padding: 0 2rem;
-  }
+  header{border-bottom:2px solid var(--ink)}
+  .header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .header-main{text-align:center;padding:1.75rem 2rem 1.25rem}
+  .site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+  .site-title span{color:var(--accent);font-style:italic}
+  .site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+  .header-nav{display:flex;justify-content:center;border-top:1px solid var(--border);overflow-x:auto}
+  .nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s}
+  .nav-btn:last-child{border-right:none}
+  .nav-btn:hover{color:var(--ink);background:var(--cream)}
+  .nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
 
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+  /* LAYOUT */
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem}
+  .layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+  .page{display:none} .page.active{display:block}
 
-  .header-main {
-    text-align: center;
-    padding: 2rem 0 1.5rem;
-  }
+  /* ADS */
+  .ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+  .ad-horizontal{width:100%;height:90px;margin:1rem 0}
+  .ad-square{width:100%;height:250px;margin-bottom:1.5rem}
 
-  .site-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
+  /* SECTION TITLES */
+  .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
+  .section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
 
-  .site-title span { color: var(--accent); font-style: italic; }
+  /* CONCURSOS */
+  .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
+  .stat{display:flex;align-items:baseline;gap:6px}
+  .stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem}
+  .filter-btn{border:1px solid var(--border);background:transparent;padding:4px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all .15s}
+  .filter-btn:hover{border-color:var(--ink);color:var(--ink)}
+  .filter-btn.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .search-wrap{margin-bottom:1.25rem}
+  .search-wrap input{width:100%;border:1px solid var(--border);padding:9px 14px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;background:white;color:var(--ink);outline:none}
+  .search-wrap input:focus{border-color:var(--ink)}
+  .ai-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:1.25rem;padding:7px 10px;border:1px solid var(--border);background:white}
+  .ai-dot{width:6px;height:6px;border-radius:50%;background:#2a9d5c;animation:pulse 2s infinite;flex-shrink:0}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .loading{text-align:center;padding:3rem 0;color:var(--muted)}
+  .loading-spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .75rem}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading p{font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  .cards{display:flex;flex-direction:column}
+  .card{border:1px solid var(--border);border-top:none;padding:1rem 1.25rem;background:white;cursor:pointer;transition:background .15s}
+  .card:first-child{border-top:1px solid var(--border)}
+  .card:hover{background:var(--cream)}
+  .card-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .card-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:1px 7px;border:1px solid currentColor}
+  .cat-poesia{color:#534AB7}.cat-relato{color:#0F6E56}.cat-novela{color:#993C1D}.cat-infantil{color:#854F0B}.cat-teatro{color:#1a5c8a}.cat-otro{color:var(--muted)}
+  .card-days{font-size:11px;color:var(--muted);margin-left:auto}
+  .card-days.urgent{color:var(--accent);font-weight:500}
+  .card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:3px;line-height:1.3}
+  .card-org{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+  .card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:7px;border-top:1px solid var(--border);font-size:12px}
+  .card-premio{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--gold)}
+  .card-fecha{color:var(--muted)}
+  .badge-new{display:inline-block;background:var(--accent);color:white;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:1px 5px}
+  .empty{text-align:center;padding:3rem;color:var(--muted);border:1px solid var(--border);background:white}
+  .error-msg{background:#fff5f5;border:1px solid #fcc;padding:.75rem 1rem;font-size:12px;color:var(--accent);margin-bottom:1rem;display:none}
 
-  .site-tagline {
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.5rem;
-  }
+  /* RECURSOS */
+  .recursos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:2rem}
+  .recurso-item{background:white;padding:1.25rem;cursor:pointer;transition:background .15s}
+  .recurso-item:hover{background:var(--cream)}
+  .recurso-icon{font-size:1.4rem;margin-bottom:.5rem}
+  .recurso-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:4px}
+  .recurso-desc{font-size:12px;color:var(--muted);line-height:1.5}
+  .recurso-count{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-top:6px;font-weight:500}
 
-  .header-nav {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 0.75rem 0;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  /* ARTICULOS & LISTAS */
+  .list-items{display:flex;flex-direction:column}
+  .list-item{border:1px solid var(--border);border-top:none;padding:1.25rem;background:white;cursor:pointer;transition:background .15s}
+  .list-item:first-child{border-top:1px solid var(--border)}
+  .list-item:hover{background:var(--cream)}
+  .list-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:5px}
+  .list-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:5px;line-height:1.3}
+  .list-excerpt{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+  .list-meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 
-  .header-nav a {
-    color: var(--ink);
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.15s;
-  }
-
-  .header-nav a:hover, .header-nav a.active { color: var(--accent); }
-
-  /* AD BANNER */
-  .ad-banner {
-    background: var(--cream);
-    border-bottom: 1px solid var(--border);
-    padding: 0.5rem 2rem;
-    text-align: center;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  .ad-slot {
-    background: var(--cream);
-    border: 1px dashed var(--border);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .ad-horizontal { width: 100%; height: 90px; margin: 1rem 0; }
-  .ad-square { width: 300px; height: 250px; }
-
-  /* MAIN LAYOUT */
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-  .layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 3rem;
-    padding: 2rem 0;
-  }
-
-  /* STATS BAR */
-  .stats-bar {
-    display: flex;
-    gap: 2rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .stat { display: flex; align-items: baseline; gap: 6px; }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
-  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-
-  /* FILTERS */
-  .filters {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-
-  .filter-btn {
-    border: 1px solid var(--border);
-    background: transparent;
-    padding: 5px 14px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: var(--muted);
-    transition: all 0.15s;
-  }
-
-  .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
-  .filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-
-  /* SEARCH */
-  .search-wrap { position: relative; margin-bottom: 1.5rem; }
-  .search-wrap input {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 0;
-    padding: 10px 16px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 14px;
-    background: white;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .search-wrap input:focus { border-color: var(--ink); }
-  .search-wrap input::placeholder { color: var(--muted); }
-
-  /* LOADING */
-  .loading {
-    text-align: center;
-    padding: 4rem 0;
-    color: var(--muted);
-  }
-
-  .loading-spinner {
-    width: 32px;
-    height: 32px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 1rem;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .loading p { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
-
-  /* AI STATUS */
-  .ai-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    background: white;
-  }
-
-  .ai-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #2a9d5c;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-  /* CARDS */
-  .cards { display: flex; flex-direction: column; gap: 0; }
-
-  .card {
-    border: 1px solid var(--border);
-    border-top: none;
-    padding: 1.25rem 1.5rem;
-    background: white;
-    cursor: pointer;
-    transition: background 0.15s;
-    position: relative;
-  }
-
-  .card:first-child { border-top: 1px solid var(--border); }
-  .card:hover { background: var(--cream); }
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-  }
-
-  .card-cat {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 500;
-    padding: 2px 8px;
-    border: 1px solid currentColor;
-  }
-
-  .cat-poesia { color: #534AB7; }
-  .cat-relato { color: #0F6E56; }
-  .cat-novela { color: #993C1D; }
-  .cat-infantil { color: #854F0B; }
-  .cat-teatro { color: #1a5c8a; }
-  .cat-otro { color: var(--muted); }
-
-  .card-days {
-    font-size: 11px;
-    color: var(--muted);
-    margin-left: auto;
-  }
-
-  .card-days.urgent { color: var(--accent); font-weight: 500; }
-
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-    line-height: 1.3;
-  }
-
-  .card-org {
-    font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 8px;
-  }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-  }
-
-  .card-premio {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--gold);
-  }
-
-  .card-fecha { color: var(--muted); }
-
-  .badge-new {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 1px 6px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-
-  /* EMPTY STATE */
-  .empty {
-    text-align: center;
-    padding: 4rem 0;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    background: white;
-  }
-
-  .empty p:first-child {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-style: italic;
-    margin-bottom: 0.5rem;
-  }
-
-  .empty p:last-child { font-size: 13px; }
+  /* EDITORIALES */
+  .editorial-item{border:1px solid var(--border);border-top:none;padding:1rem 1.25rem;background:white}
+  .editorial-item:first-child{border-top:1px solid var(--border)}
+  .editorial-name{font-weight:500;font-size:14px;margin-bottom:3px}
+  .editorial-info{font-size:12px;color:var(--muted);line-height:1.5}
+  .editorial-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+  .tag{font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border:1px solid var(--border);color:var(--muted)}
 
   /* SIDEBAR */
-  .sidebar { padding-top: 0; }
-
-  .sidebar-section {
-    margin-bottom: 2rem;
-  }
-
-  .sidebar-title {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 6px;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-
-  .deadline-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-    gap: 8px;
-  }
-
-  .deadline-item:last-child { border-bottom: none; }
-  .deadline-title { font-weight: 500; flex: 1; line-height: 1.3; }
-  .deadline-days { color: var(--accent); font-weight: 500; white-space: nowrap; font-size: 12px; }
-
-  .fuente-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 12px;
-  }
-
-  .fuente-item:last-child { border-bottom: none; }
-  .fuente-dot { width: 6px; height: 6px; border-radius: 50%; background: #2a9d5c; flex-shrink: 0; }
+  .sidebar-section{margin-bottom:2rem}
+  .sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
+  .deadline-item{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
+  .deadline-item:last-child{border-bottom:none}
+  .deadline-title{font-weight:500;flex:1;line-height:1.3}
+  .deadline-days{color:var(--accent);font-weight:500;white-space:nowrap;font-size:11px}
+  .sidebar-link{display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);cursor:pointer;transition:color .15s}
+  .sidebar-link:last-child{border-bottom:none}
+  .sidebar-link:hover{color:var(--accent)}
+  .sidebar-link::before{content:'→ ';color:var(--accent);font-size:11px}
 
   /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,26,24,0.7);
-    z-index: 100;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 2rem;
-    overflow-y: auto;
-  }
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.7);z-index:100;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
+  .modal-overlay.open{display:flex}
+  .modal{background:var(--paper);max-width:640px;width:100%;margin:auto;border:2px solid var(--ink);padding:2rem;position:relative;animation:modalIn .2s ease}
+  @keyframes modalIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1}
+  .modal-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.5rem}
+  .modal-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1.2;margin-bottom:.4rem}
+  .modal-org{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1.25rem}
+  .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+  .modal-field-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px}
+  .modal-field-value{font-weight:500;font-size:14px}
+  .modal-field-value.premio{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold)}
+  .modal-desc{font-size:13px;line-height:1.7;color:#3a3a38;margin-bottom:1.25rem;border-top:1px solid var(--border);padding-top:1rem}
+  .modal-btn{display:inline-block;background:var(--ink);color:var(--paper);padding:9px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:background .15s}
+  .modal-btn:hover{background:var(--accent)}
 
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--paper);
-    max-width: 640px;
-    width: 100%;
-    margin: auto;
-    border: 2px solid var(--ink);
-    padding: 2rem;
-    position: relative;
-    animation: modalIn 0.2s ease;
-  }
-
-  @keyframes modalIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
-
-  .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--muted);
-    line-height: 1;
-  }
-
-  .modal-cat {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .modal-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 0.5rem;
-  }
-
-  .modal-org {
-    font-size: 13px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1.5rem;
-  }
-
-  .modal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .modal-field { }
-  .modal-field-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 2px; }
-  .modal-field-value { font-weight: 500; font-size: 15px; }
-  .modal-field-value.premio { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); }
-
-  .modal-desc {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #3a3a38;
-    margin-bottom: 1.5rem;
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
-  }
-
-  .modal-btn {
-    display: inline-block;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 10px 24px;
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: background 0.15s;
-  }
-
-  .modal-btn:hover { background: var(--accent); }
-
-  /* FOOTER */
-  footer {
-    border-top: 2px solid var(--ink);
-    margin-top: 3rem;
-    padding: 2rem;
-    text-align: center;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  footer a { color: var(--muted); }
-
-  /* ERROR */
-  .error-msg {
-    background: #fff5f5;
-    border: 1px solid #fcc;
-    padding: 1rem 1.5rem;
-    font-size: 13px;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    .site-title { font-size: 2rem; }
-    .modal-grid { grid-template-columns: 1fr; }
-  }
+  footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.05em}
+  footer a{color:var(--muted)} footer a:hover{color:var(--accent)}
+  @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}.site-title{font-size:1.8rem}.recursos-grid{grid-template-columns:1fr}.modal-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -516,101 +142,162 @@
 <header>
   <div class="header-top">
     <span id="fecha-hoy"></span>
-    <span>Convocatorias literarias de España</span>
-    <span id="update-time">Actualizado hoy</span>
+    <span>Recursos para escritores de España</span>
+    <span>Actualizado hoy</span>
   </div>
   <div class="header-main">
-    <h1 class="site-title">Concursos <span>Literarios</span> España</h1>
-    <p class="site-tagline">Todas las convocatorias · Actualizadas cada día</p>
+    <h1 class="site-title">Letras <span>Españolas</span></h1>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
   </div>
   <nav class="header-nav">
-    <a onclick="setFiltro('todos')" class="active" id="nav-todos">Todos</a>
-    <a onclick="setFiltro('poesia')" id="nav-poesia">Poesía</a>
-    <a onclick="setFiltro('relato')" id="nav-relato">Relato corto</a>
-    <a onclick="setFiltro('novela')" id="nav-novela">Novela</a>
-    <a onclick="setFiltro('infantil')" id="nav-infantil">Infantil</a>
-    <a onclick="setFiltro('urgentes')" id="nav-urgentes">Cierran pronto</a>
+    <button class="nav-btn active" onclick="showPage('concursos',this)">Concursos</button>
+    <button class="nav-btn" onclick="showPage('recursos',this)">Recursos</button>
+    <button class="nav-btn" onclick="showPage('editoriales',this)">Editoriales</button>
+    <button class="nav-btn" onclick="showPage('articulos',this)">Artículos</button>
+    <button class="nav-btn" onclick="showPage('agentes',this)">Agentes literarios</button>
+    <button class="nav-btn" onclick="showPage('revistas',this)">Revistas</button>
   </nav>
 </header>
 
-<div class="ad-banner">Publicidad</div>
 <div class="container">
-  <div class="ad-slot ad-horizontal" id="ad-top">
-    <!-- Google AdSense: reemplaza con tu código -->
-    Espacio publicitario 728×90
-  </div>
+  <div class="ad-slot ad-horizontal">Publicidad 728×90 — Google AdSense</div>
 </div>
 
 <div class="container">
   <div class="layout">
     <main>
-      <div class="stats-bar">
-        <div class="stat"><span class="stat-num" id="total-count">—</span><span class="stat-label">concursos activos</span></div>
-        <div class="stat"><span class="stat-num" id="nuevos-count">—</span><span class="stat-label">nuevos esta semana</span></div>
-        <div class="stat"><span class="stat-num" id="premios-total">—</span><span class="stat-label">en premios</span></div>
+
+      <!-- CONCURSOS -->
+      <div class="page active" id="page-concursos">
+        <div class="section-title">Concursos literarios</div>
+        <div class="section-sub">Convocatorias activas · Actualizadas con IA cada 24h</div>
+        <div class="stats-bar">
+          <div class="stat"><span class="stat-num" id="total-count">—</span><span class="stat-label">activos</span></div>
+          <div class="stat"><span class="stat-num" id="nuevos-count">—</span><span class="stat-label">nuevos</span></div>
+          <div class="stat"><span class="stat-num" id="premios-total">—</span><span class="stat-label">en premios</span></div>
+        </div>
+        <div class="ai-status"><div class="ai-dot"></div><span id="ai-status-text">Cargando...</span></div>
+        <div class="search-wrap"><input type="text" id="search" placeholder="Buscar por título, organizador..." oninput="renderCards()"></div>
+        <div class="filters">
+          <button class="filter-btn active" onclick="setFiltro('todos')" id="btn-todos">Todos</button>
+          <button class="filter-btn" onclick="setFiltro('poesia')" id="btn-poesia">Poesía</button>
+          <button class="filter-btn" onclick="setFiltro('relato')" id="btn-relato">Relato</button>
+          <button class="filter-btn" onclick="setFiltro('novela')" id="btn-novela">Novela</button>
+          <button class="filter-btn" onclick="setFiltro('infantil')" id="btn-infantil">Infantil</button>
+          <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
+        </div>
+        <div class="error-msg" id="error-msg"></div>
+        <div id="loading" class="loading"><div class="loading-spinner"></div><p>Buscando concursos con IA...</p></div>
+        <div class="cards" id="cards" style="display:none"></div>
       </div>
 
-      <div class="ai-status">
-        <div class="ai-dot"></div>
-        <span id="ai-status-text">Cargando concursos...</span>
+      <!-- RECURSOS -->
+      <div class="page" id="page-recursos">
+        <div class="section-title">Recursos para escritores</div>
+        <div class="section-sub">Herramientas, directorios y guías para tu carrera literaria</div>
+        <div class="recursos-grid">
+          <div class="recurso-item" onclick="showPage('agentes',null)"><div class="recurso-icon">✍</div><div class="recurso-title">Agentes literarios</div><div class="recurso-desc">Directorio de agentes literarios en España. Encuentra representación para tu obra.</div><span class="recurso-count">Ver directorio →</span></div>
+          <div class="recurso-item" onclick="showPage('editoriales',null)"><div class="recurso-icon">📚</div><div class="recurso-title">Editoriales</div><div class="recurso-desc">Directorio de editoriales españolas con información de contacto y géneros publicados.</div><span class="recurso-count">Ver directorio →</span></div>
+          <div class="recurso-item" onclick="showPage('revistas',null)"><div class="recurso-icon">📰</div><div class="recurso-title">Revistas literarias</div><div class="recurso-desc">Publicaciones literarias donde puedes enviar tus relatos, poemas y artículos.</div><span class="recurso-count">Ver directorio →</span></div>
+          <div class="recurso-item"><div class="recurso-icon">⚖</div><div class="recurso-title">Orientación legal</div><div class="recurso-desc">Contratos, derechos de autor, registro de obras y aspectos legales para escritores.</div><span class="recurso-count">Próximamente →</span></div>
+          <div class="recurso-item"><div class="recurso-icon">🎓</div><div class="recurso-title">Becas y ayudas</div><div class="recurso-desc">Becas públicas, residencias de escritores y ayudas a la creación literaria en España.</div><span class="recurso-count">Próximamente →</span></div>
+          <div class="recurso-item"><div class="recurso-icon">💻</div><div class="recurso-title">Software para escritores</div><div class="recurso-desc">Herramientas digitales, procesadores de texto y apps para la escritura creativa.</div><span class="recurso-count">Próximamente →</span></div>
+        </div>
+        <div class="section-title" style="margin-top:1rem">Artículos destacados</div>
+        <div class="section-sub">Guías y consejos para escritores</div>
+        <div class="list-items">
+          <div class="list-item"><div class="list-cat">Publicación</div><div class="list-title">Cómo encontrar un agente literario en España</div><div class="list-excerpt">Guía práctica para escritores que buscan representación literaria: qué buscan los agentes, cómo redactar una sinopsis y cómo preparar el primer contacto.</div><div class="list-meta">Recurso esencial · 8 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Concursos</div><div class="list-title">Guía completa para presentarte a concursos literarios</div><div class="list-excerpt">Todo lo que necesitas saber: bases legales, seudónimos, derechos de autor en convocatorias y los errores más comunes.</div><div class="list-meta">Guía práctica · 10 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Escritura creativa</div><div class="list-title">El primer párrafo: cómo atrapar al lector desde la primera línea</div><div class="list-excerpt">Análisis de los recursos literarios más efectivos para abrir una novela o relato, con ejemplos de autores contemporáneos.</div><div class="list-meta">Técnica narrativa · 6 min de lectura</div></div>
+        </div>
       </div>
 
-      <div class="search-wrap">
-        <input type="text" id="search" placeholder="Buscar por título, organizador, categoría..." oninput="renderCards()">
+      <!-- EDITORIALES -->
+      <div class="page" id="page-editoriales">
+        <div class="section-title">Editoriales españolas</div>
+        <div class="section-sub">Directorio con información de contacto y géneros publicados</div>
+        <div class="search-wrap"><input type="text" id="search-edit" placeholder="Buscar editorial..." oninput="filterEditoriales()"></div>
+        <div id="editoriales-list">
+          <div class="editorial-item"><div class="editorial-name">Alfaguara</div><div class="editorial-info">Grupo Penguin Random House. Narrativa contemporánea, literatura española e iberoamericana.</div><div class="editorial-tags"><span class="tag">Narrativa</span><span class="tag">Novela</span><span class="tag">Ensayo</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Tusquets Editores</div><div class="editorial-info">Narrativa, poesía y ensayo de alta calidad. Especialmente abiertos a nuevas voces en narrativa.</div><div class="editorial-tags"><span class="tag">Narrativa</span><span class="tag">Poesía</span><span class="tag">Ensayo</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Anagrama</div><div class="editorial-info">Literatura de calidad, narrativa española e internacional, ensayo y crónica.</div><div class="editorial-tags"><span class="tag">Narrativa</span><span class="tag">Internacional</span><span class="tag">Crónica</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Planeta</div><div class="editorial-info">Gran grupo editorial. Novela comercial, thriller, novela histórica y no ficción.</div><div class="editorial-tags"><span class="tag">Thriller</span><span class="tag">Novela histórica</span><span class="tag">No ficción</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Siruela</div><div class="editorial-info">Literatura fantástica, de terror y misterio. Pioneros de la fantasía en España.</div><div class="editorial-tags"><span class="tag">Fantasía</span><span class="tag">Terror</span><span class="tag">Misterio</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Destino</div><div class="editorial-info">Parte del grupo Planeta. Novela española contemporánea y clásicos modernos.</div><div class="editorial-tags"><span class="tag">Narrativa</span><span class="tag">Contemporánea</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Lumen</div><div class="editorial-info">Literatura de autor, narrativa literaria y ensayo. Muy selectivos con sus propuestas.</div><div class="editorial-tags"><span class="tag">Literaria</span><span class="tag">Ensayo</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Nórdica Libros</div><div class="editorial-info">Literatura escandinava y centroeuropea. También publican autores españoles de calidad.</div><div class="editorial-tags"><span class="tag">Internacional</span><span class="tag">Ilustrado</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Impedimenta</div><div class="editorial-info">Textos literarios exigentes, clásicos recuperados y narrativa contemporánea de autor.</div><div class="editorial-tags"><span class="tag">Literaria</span><span class="tag">Clásicos</span></div></div>
+          <div class="editorial-item"><div class="editorial-name">Sexto Piso</div><div class="editorial-info">Literatura independiente, narrativa latinoamericana y autores emergentes.</div><div class="editorial-tags"><span class="tag">Independiente</span><span class="tag">Latinoamericana</span></div></div>
+        </div>
       </div>
 
-      <div class="filters">
-        <button class="filter-btn active" onclick="setFiltro('todos')" id="btn-todos">Todos</button>
-        <button class="filter-btn" onclick="setFiltro('poesia')" id="btn-poesia">Poesía</button>
-        <button class="filter-btn" onclick="setFiltro('relato')" id="btn-relato">Relato corto</button>
-        <button class="filter-btn" onclick="setFiltro('novela')" id="btn-novela">Novela</button>
-        <button class="filter-btn" onclick="setFiltro('infantil')" id="btn-infantil">Infantil</button>
-        <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
+      <!-- ARTÍCULOS -->
+      <div class="page" id="page-articulos">
+        <div class="section-title">Artículos para escritores</div>
+        <div class="section-sub">Guías, consejos y recursos sobre escritura y publicación</div>
+        <div class="list-items">
+          <div class="list-item"><div class="list-cat">Publicación</div><div class="list-title">Cómo encontrar un agente literario en España</div><div class="list-excerpt">Guía práctica para escritores que buscan representación: qué buscan los agentes, cómo redactar una sinopsis y cómo preparar el primer contacto con una agencia.</div><div class="list-meta">Recurso esencial · 8 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Concursos</div><div class="list-title">Guía completa para presentarte a concursos literarios</div><div class="list-excerpt">Todo lo que necesitas saber antes de enviar tu obra: bases legales, seudónimos, derechos de autor en convocatorias y los errores más comunes que cometen los participantes.</div><div class="list-meta">Guía práctica · 10 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Escritura creativa</div><div class="list-title">El primer párrafo: cómo atrapar al lector desde la primera línea</div><div class="list-excerpt">Análisis de los recursos literarios más efectivos para abrir una novela o relato corto, con ejemplos de autores contemporáneos en lengua española.</div><div class="list-meta">Técnica narrativa · 6 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Autopublicación</div><div class="list-title">Amazon KDP vs. editorial tradicional: ventajas e inconvenientes</div><div class="list-excerpt">Comparativa honesta entre autopublicar en Amazon y buscar una editorial. Regalías, distribución, visibilidad y control creativo analizados en detalle.</div><div class="list-meta">Análisis · 12 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Escritura creativa</div><div class="list-title">Estructura en tres actos: la guía definitiva para novelistas</div><div class="list-excerpt">Cómo aplicar la estructura clásica del guión a la novela. Puntos de giro, midpoint y cómo mantener la tensión narrativa hasta el final.</div><div class="list-meta">Técnica narrativa · 9 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Derechos de autor</div><div class="list-title">Cómo registrar tu obra literaria en España</div><div class="list-excerpt">Guía paso a paso para registrar tu obra en el Registro de la Propiedad Intelectual. Coste, plazos, documentación necesaria y qué protege exactamente el registro.</div><div class="list-meta">Legal · 7 min de lectura</div></div>
+          <div class="list-item"><div class="list-cat">Concursos</div><div class="list-title">Los 10 premios literarios más importantes de España en 2025</div><div class="list-excerpt">Análisis de los galardones con mayor dotación económica y prestigio: Premio Planeta, Premio Nadal, Premio Primavera, Premio Alfaguara y otros seis imprescindibles.</div><div class="list-meta">Selección · 5 min de lectura</div></div>
+        </div>
       </div>
 
-      <div class="error-msg" id="error-msg"></div>
-
-      <div id="loading" class="loading">
-        <div class="loading-spinner"></div>
-        <p>Buscando concursos con IA...</p>
+      <!-- AGENTES -->
+      <div class="page" id="page-agentes">
+        <div class="section-title">Agentes literarios</div>
+        <div class="section-sub">Directorio de agencias literarias en España</div>
+        <div class="list-items">
+          <div class="list-item"><div class="list-cat">Barcelona</div><div class="list-title">Agencia Literaria Carmen Balcells</div><div class="list-excerpt">Una de las agencias más prestigiosas del mundo hispanohablante. Representaron a García Márquez y Vargas Llosa. Actualmente trabajan con autores consolidados de narrativa y ensayo.</div><div class="list-meta">Fundada 1960 · Narrativa · Ensayo</div></div>
+          <div class="list-item"><div class="list-cat">Madrid</div><div class="list-title">International Editors' Co.</div><div class="list-excerpt">Especializada en literatura de autor y obras con proyección internacional. Trabajan tanto con autores consagrados como con nuevas voces de narrativa literaria.</div><div class="list-meta">Narrativa literaria · Internacional</div></div>
+          <div class="list-item"><div class="list-cat">Madrid</div><div class="list-title">Agencia Literaria Antonia Kerrigan</div><div class="list-excerpt">Agencia fundada en 1992, especializada en la venta de derechos de traducción. Amplio catálogo de autores españoles e iberoamericanos con presencia internacional.</div><div class="list-meta">Derechos internacionales · Narrativa</div></div>
+          <div class="list-item"><div class="list-cat">Barcelona</div><div class="list-title">The Ella Sher Literary Agency</div><div class="list-excerpt">Especializada en literatura infantil y juvenil, además de narrativa para adultos. Muy activos en la búsqueda de nuevas voces del panorama literario español.</div><div class="list-meta">Infantil · Juvenil · Narrativa</div></div>
+          <div class="list-item"><div class="list-cat">Madrid</div><div class="list-title">Agencia Literaria Schavelzon Graham</div><div class="list-excerpt">Con oficinas en Buenos Aires y Barcelona, representan a autores de toda la América Latina y España. Especialistas en narrativa contemporánea y no ficción.</div><div class="list-meta">España · Latinoamérica · No ficción</div></div>
+        </div>
       </div>
 
-      <div class="cards" id="cards" style="display:none"></div>
+      <!-- REVISTAS -->
+      <div class="page" id="page-revistas">
+        <div class="section-title">Revistas literarias</div>
+        <div class="section-sub">Publicaciones donde puedes enviar tu obra</div>
+        <div class="list-items">
+          <div class="list-item"><div class="list-cat">Narrativa · Poesía</div><div class="list-title">Quimera — Revista de Literatura</div><div class="list-excerpt">Una de las revistas literarias más veteranas de España (desde 1980). Publica narrativa, poesía, crítica literaria y entrevistas con autores. Acepta colaboraciones.</div><div class="list-meta">Barcelona · Mensual · quimerarevista.com</div></div>
+          <div class="list-item"><div class="list-cat">Poesía</div><div class="list-title">Clarín — Revista de Nueva Literatura</div><div class="list-excerpt">Especializada en poesía española contemporánea. Publica poemas inéditos, entrevistas a poetas y ensayos sobre poética. Acepta envíos de poemas inéditos.</div><div class="list-meta">Asturias · Bimestral</div></div>
+          <div class="list-item"><div class="list-cat">Relato corto</div><div class="list-title">El Cuento de Nunca Acabar</div><div class="list-excerpt">Publicación digital especializada en relato corto y microrrelato. Acepta relatos inéditos de hasta 3.000 palabras. Muy activa en la comunidad de escritores online.</div><div class="list-meta">Digital · Trimestral · Abierta a envíos</div></div>
+          <div class="list-item"><div class="list-cat">Narrativa · Ensayo</div><div class="list-title">Letras Libres</div><div class="list-excerpt">Revista cultural de referencia con secciones de narrativa, ensayo político y cultural, y crítica literaria. Colaboraciones previo contacto con la redacción.</div><div class="list-meta">Madrid · Mensual</div></div>
+          <div class="list-item"><div class="list-cat">Literatura fantástica</div><div class="list-title">Revista BEM</div><div class="list-excerpt">La revista de referencia para ciencia ficción, fantasía y terror en España. Acepta relatos del género, con convocatorias abiertas periódicamente.</div><div class="list-meta">Digital · CF / Fantasía / Terror · Abierta a envíos</div></div>
+        </div>
+      </div>
+
     </main>
 
     <aside class="sidebar">
       <div class="sidebar-section">
-        <div class="ad-slot ad-square">
-          <!-- Google AdSense: reemplaza con tu código -->
-          Espacio publicitario 300×250
-        </div>
+        <div class="ad-slot ad-square">Publicidad 300×250</div>
       </div>
-
       <div class="sidebar-section">
         <div class="sidebar-title">Cierran esta semana</div>
-        <div id="sidebar-urgentes"></div>
+        <div id="sidebar-urgentes"><div style="font-size:12px;color:var(--muted)">Cargando...</div></div>
       </div>
-
       <div class="sidebar-section">
-        <div class="sidebar-title">Fuentes monitorizadas</div>
-        <div class="fuente-item"><div class="fuente-dot"></div>escritores.org</div>
-        <div class="fuente-item"><div class="fuente-dot"></div>culturamas.es</div>
-        <div class="fuente-item"><div class="fuente-dot"></div>BOE (boletín oficial)</div>
-        <div class="fuente-item"><div class="fuente-dot"></div>convocatorias.eu</div>
-        <div class="fuente-item"><div class="fuente-dot"></div>Diputaciones provinciales</div>
+        <div class="sidebar-title">Secciones</div>
+        <span class="sidebar-link" onclick="showPage('concursos',null)">Concursos literarios</span>
+        <span class="sidebar-link" onclick="showPage('recursos',null)">Recursos para escritores</span>
+        <span class="sidebar-link" onclick="showPage('editoriales',null)">Editoriales</span>
+        <span class="sidebar-link" onclick="showPage('articulos',null)">Artículos</span>
+        <span class="sidebar-link" onclick="showPage('agentes',null)">Agentes literarios</span>
+        <span class="sidebar-link" onclick="showPage('revistas',null)">Revistas literarias</span>
       </div>
-
       <div class="sidebar-section">
-        <div class="ad-slot ad-square">
-          <!-- Google AdSense: reemplaza con tu código -->
-          Espacio publicitario 300×250
-        </div>
+        <div class="ad-slot ad-square">Publicidad 300×250</div>
       </div>
     </aside>
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
@@ -618,14 +305,8 @@
     <h2 class="modal-title" id="m-title"></h2>
     <div class="modal-org" id="m-org"></div>
     <div class="modal-grid">
-      <div class="modal-field">
-        <div class="modal-field-label">Premio</div>
-        <div class="modal-field-value premio" id="m-premio"></div>
-      </div>
-      <div class="modal-field">
-        <div class="modal-field-label">Fecha límite</div>
-        <div class="modal-field-value" id="m-fecha"></div>
-      </div>
+      <div><div class="modal-field-label">Premio</div><div class="modal-field-value premio" id="m-premio"></div></div>
+      <div><div class="modal-field-label">Fecha límite</div><div class="modal-field-value" id="m-fecha"></div></div>
     </div>
     <div class="modal-desc" id="m-desc"></div>
     <a href="#" target="_blank" id="m-url" class="modal-btn">Ver convocatoria oficial →</a>
@@ -633,314 +314,157 @@
 </div>
 
 <footer>
-  <p>© <span id="year"></span> Concursos Literarios España · Actualizado automáticamente con IA cada 24h</p>
-  <p style="margin-top:6px"><a href="#">Aviso legal</a> · <a href="#">Política de privacidad</a> · <a href="#">Contacto</a></p>
+  <p>© <span id="year"></span> Letras Españolas · Actualizado automáticamente con IA · Para escritores de España</p>
+  <p style="margin-top:6px"><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Contacto</a> · <a href="#">Publicidad</a></p>
 </footer>
 
 <script>
-// ============================================================
-// CONFIGURACIÓN — cambia estos valores
-// ============================================================
-const ANTHROPIC_API_KEY = 'TU_API_KEY_AQUI'; // Pega tu API key de Anthropic
+const ANTHROPIC_API_KEY = 'TU_API_KEY_AQUI';
+const FUENTES = ['https://www.escritores.org/becas-y-concursos/','https://culturamas.es/category/concursos/'];
+let concursos = [], filtroActivo = 'todos';
+const CACHE_KEY = 'letras_v3', CACHE_HOURS = 24;
 
-const FUENTES = [
-  'https://www.escritores.org/becas-y-concursos/',
-  'https://culturamas.es/category/concursos/',
-];
-
-// ============================================================
-// ESTADO
-// ============================================================
-let concursos = [];
-let filtroActivo = 'todos';
-const CACHE_KEY = 'concursos_cache';
-const CACHE_HOURS = 24;
-
-// ============================================================
-// INIT
-// ============================================================
-document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 document.getElementById('year').textContent = new Date().getFullYear();
 
-async function init() {
-  const cached = getCache();
-  if (cached) {
-    concursos = cached;
-    renderAll();
-    document.getElementById('ai-status-text').textContent = 'Datos en caché · Próxima actualización en ' + horasRestantes() + 'h';
-  } else {
-    await fetchConcursos();
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function getCache(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return null;const{data,ts}=JSON.parse(r);if(Date.now()-ts>CACHE_HOURS*3600000)return null;return data;}catch{return null;}}
+function setCache(d){try{localStorage.setItem(CACHE_KEY,JSON.stringify({data:d,ts:Date.now()}));}catch{}}
+
+async function init(){
+  const c=getCache();
+  if(c){concursos=c;renderAll();document.getElementById('ai-status-text').textContent=concursos.length+' concursos · Datos en caché';}
+  else{await fetchConcursos();}
+}
+
+async function fetchConcursos(){
+  document.getElementById('loading').style.display='block';
+  document.getElementById('cards').style.display='none';
+  let html='';
+  for(const url of FUENTES){
+    try{
+      document.getElementById('ai-status-text').textContent='Leyendo '+new URL(url).hostname+'...';
+      const r=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url));
+      const j=await r.json();
+      html+='\nFUENTE: '+url+'\n'+j.contents.substring(0,8000);
+    }catch(e){console.warn(e);}
   }
-}
-
-// ============================================================
-// CACHE
-// ============================================================
-function getCache() {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const { data, timestamp } = JSON.parse(raw);
-    if (Date.now() - timestamp > CACHE_HOURS * 3600000) return null;
-    return data;
-  } catch { return null; }
-}
-
-function setCache(data) {
-  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() })); } catch {}
-}
-
-function horasRestantes() {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return 0;
-    const { timestamp } = JSON.parse(raw);
-    return Math.max(0, Math.round(CACHE_HOURS - (Date.now() - timestamp) / 3600000));
-  } catch { return 0; }
-}
-
-// ============================================================
-// FETCH CON IA
-// ============================================================
-async function fetchConcursos() {
-  const loading = document.getElementById('loading');
-  const errorMsg = document.getElementById('error-msg');
-  loading.style.display = 'block';
-  document.getElementById('cards').style.display = 'none';
-  errorMsg.style.display = 'none';
-
-  let htmlContent = '';
-
-  for (const url of FUENTES) {
-    try {
-      document.getElementById('ai-status-text').textContent = 'Leyendo ' + new URL(url).hostname + '...';
-      const proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
-      const res = await fetch(proxy);
-      const json = await res.json();
-      htmlContent += '\n\nFUENTE: ' + url + '\n' + json.contents.substring(0, 8000);
-    } catch (e) {
-      console.warn('Error leyendo', url, e);
-    }
-  }
-
-  if (!htmlContent) {
-    usarDatosDemostracion();
-    return;
-  }
-
-  try {
-    document.getElementById('ai-status-text').textContent = 'Analizando con IA...';
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 4000,
-        messages: [{
-          role: 'user',
-          content: `Analiza este contenido HTML de webs de concursos literarios españoles y extrae todos los concursos que encuentres.
-
-Devuelve ÚNICAMENTE un array JSON válido, sin texto adicional, con este formato exacto:
-[{"titulo":"nombre del concurso","organizacion":"quien lo convoca","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"cantidad en euros o descripción","fecha_limite":"DD/MM/YYYY o descripción","descripcion":"descripción breve","url":"enlace si está disponible","nuevo":true}]
-
-Si no encuentras concursos reales, devuelve un array vacío: []
-
-Contenido:
-${htmlContent}`
-        }]
-      })
+  if(!html){usarDemo();return;}
+  try{
+    document.getElementById('ai-status-text').textContent='Analizando con IA...';
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4000,messages:[{role:'user',content:`Extrae concursos literarios de este HTML. Devuelve SOLO array JSON:\n[{"titulo":"","organizacion":"","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"","fecha_limite":"DD/MM/YYYY","descripcion":"","url":"","nuevo":true}]\n\n${html}`}]})
     });
-
-    const data = await response.json();
-
-    if (data.error) throw new Error(data.error.message);
-
-    const text = data.content[0].text.trim();
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) throw new Error('No se encontró JSON válido');
-
-    const parsed = JSON.parse(jsonMatch[0]);
-
-    if (parsed.length === 0) {
-      usarDatosDemostracion();
-      return;
-    }
-
-    concursos = parsed;
-    setCache(concursos);
-    renderAll();
-    document.getElementById('ai-status-text').textContent = '✓ ' + concursos.length + ' concursos encontrados · Actualizado hace un momento';
-
-  } catch (e) {
-    console.error('Error IA:', e);
-    usarDatosDemostracion();
-  }
+    const data=await res.json();
+    if(data.error)throw new Error(data.error.message);
+    const m=data.content[0].text.match(/\[[\s\S]*\]/);
+    if(!m)throw new Error('Sin JSON');
+    const p=JSON.parse(m[0]);
+    if(!p.length){usarDemo();return;}
+    concursos=p;setCache(concursos);renderAll();
+    document.getElementById('ai-status-text').textContent='✓ '+concursos.length+' concursos · Actualizado ahora';
+  }catch(e){console.error(e);usarDemo();}
 }
 
-// ============================================================
-// DATOS DE DEMOSTRACIÓN (cuando no hay API key o falla)
-// ============================================================
-function usarDatosDemostracion() {
-  concursos = [
-    { titulo: "Premio Nacional de Poesía Ciudad de Melilla", organizacion: "Ayuntamiento de Melilla", categoria: "Poesía", premio: "3.000€", fecha_limite: "30/05/2025", descripcion: "Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima de 300 versos.", url: "https://escritores.org", nuevo: true },
-    { titulo: "Certamen Literario Villa de Móstoles", organizacion: "Concejalía de Cultura de Móstoles", categoria: "Relato corto", premio: "1.500€", fecha_limite: "15/05/2025", descripcion: "Relatos de temática libre, extensión máxima 15 folios a doble espacio.", url: "https://escritores.org", nuevo: true },
-    { titulo: "Premio Gótico de Narrativa Fantástica", organizacion: "Editorial Nocturna", categoria: "Novela", premio: "6.000€", fecha_limite: "01/06/2025", descripcion: "Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras.", url: "https://escritores.org", nuevo: false },
-    { titulo: "I Concurso de Microrrelatos Científicos", organizacion: "FECYT", categoria: "Relato corto", premio: "800€", fecha_limite: "28/04/2025", descripcion: "Microrrelatos de hasta 100 palabras sobre temática científica o tecnológica.", url: "https://escritores.org", nuevo: false },
-    { titulo: "Premio Andalucía de Literatura Infantil", organizacion: "Junta de Andalucía", categoria: "Infantil", premio: "5.000€", fecha_limite: "20/05/2025", descripcion: "Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.", url: "https://escritores.org", nuevo: true },
-    { titulo: "Concurso Tres Versos de Primavera", organizacion: "Asociación Española de Haiku", categoria: "Poesía", premio: "500€", fecha_limite: "05/05/2025", descripcion: "Concurso de haiku en español. Máximo 5 haikus por participante.", url: "https://escritores.org", nuevo: false },
-    { titulo: "Premio Ateneo de Sevilla — Novela", organizacion: "Real Ateneo de Sevilla", categoria: "Novela", premio: "12.000€", fecha_limite: "30/06/2025", descripcion: "Novela en lengua castellana, inédita, de un mínimo de 150 páginas.", url: "https://escritores.org", nuevo: false },
-    { titulo: "Relatos en el Camino — Xacobeo", organizacion: "Xunta de Galicia", categoria: "Relato corto", premio: "2.000€", fecha_limite: "10/05/2025", descripcion: "Relatos de hasta 20 folios inspirados en el Camino de Santiago.", url: "https://escritores.org", nuevo: false },
+function usarDemo(){
+  concursos=[
+    {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2025",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos.",url:"https://escritores.org",nuevo:true},
+    {titulo:"Certamen Literario Villa de Móstoles",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2025",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio.",url:"https://escritores.org",nuevo:true},
+    {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2025",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras.",url:"https://escritores.org",nuevo:false},
+    {titulo:"I Concurso de Microrrelatos Científicos",organizacion:"FECYT",categoria:"Relato corto",premio:"800€",fecha_limite:"28/04/2025",descripcion:"Microrrelatos de hasta 100 palabras sobre temática científica.",url:"https://escritores.org",nuevo:false},
+    {titulo:"Premio Andalucía de Literatura Infantil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"20/05/2025",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:"https://escritores.org",nuevo:true},
+    {titulo:"Concurso Tres Versos de Primavera",organizacion:"Asociación Española de Haiku",categoria:"Poesía",premio:"500€",fecha_limite:"05/05/2025",descripcion:"Concurso de haiku en español. Máximo 5 haikus por participante.",url:"https://escritores.org",nuevo:false},
+    {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"30/06/2025",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas.",url:"https://escritores.org",nuevo:false},
+    {titulo:"Relatos en el Camino — Xacobeo",organizacion:"Xunta de Galicia",categoria:"Relato corto",premio:"2.000€",fecha_limite:"10/05/2025",descripcion:"Relatos de hasta 20 folios inspirados en el Camino de Santiago.",url:"https://escritores.org",nuevo:false},
   ];
-
-  document.getElementById('ai-status-text').textContent = 'Mostrando datos de demostración · Configura tu API key para datos reales';
-  if (ANTHROPIC_API_KEY === 'TU_API_KEY_AQUI') {
-    const err = document.getElementById('error-msg');
-    err.textContent = '⚠ Para ver concursos reales, edita el archivo index.html y reemplaza TU_API_KEY_AQUI con tu API key de Anthropic.';
-    err.style.display = 'block';
-  }
+  if(ANTHROPIC_API_KEY==='TU_API_KEY_AQUI'){const e=document.getElementById('error-msg');e.textContent='⚠ Para datos reales: edita index.html y reemplaza TU_API_KEY_AQUI con tu API key de Anthropic (console.anthropic.com → API Keys)';e.style.display='block';}
+  document.getElementById('ai-status-text').textContent='Datos de demostración · Configura la API key para datos reales';
   renderAll();
 }
 
-// ============================================================
-// RENDER
-// ============================================================
-function diasHasta(fechaStr) {
-  if (!fechaStr) return 999;
-  try {
-    const parts = fechaStr.split('/');
-    if (parts.length !== 3) return 999;
-    const fecha = new Date(parts[2], parts[1]-1, parts[0]);
-    return Math.ceil((fecha - new Date()) / 86400000);
-  } catch { return 999; }
+function diasHasta(f){if(!f)return 999;try{const p=f.split('/');if(p.length!==3)return 999;return Math.ceil((new Date(p[2],p[1]-1,p[0])-new Date())/86400000);}catch{return 999;}}
+
+function renderAll(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('cards').style.display='flex';
+  renderCards();renderStats();renderSidebar();
 }
 
-function renderAll() {
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('cards').style.display = 'flex';
-  renderCards();
-  renderStats();
-  renderSidebar();
-}
-
-function renderCards() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const lista = concursos.filter(c => {
-    if (filtroActivo === 'urgentes') return diasHasta(c.fecha_limite) <= 14;
-    if (filtroActivo !== 'todos') return c.categoria?.toLowerCase().includes(filtroActivo.replace('relato','relato').replace('poesia','poesía').replace('novela','novela').replace('infantil','infantil'));
+function renderCards(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const lista=concursos.filter(c=>{
+    if(filtroActivo==='urgentes')return diasHasta(c.fecha_limite)<=14;
+    if(filtroActivo!=='todos'){const cat=(c.categoria||'').toLowerCase();return cat.includes(filtroActivo==='poesia'?'poesía':filtroActivo==='relato'?'relato':filtroActivo);}
     return true;
-  }).filter(c => !q || (c.titulo+c.organizacion+c.categoria+c.descripcion).toLowerCase().includes(q));
-
-  const container = document.getElementById('cards');
-
-  if (lista.length === 0) {
-    container.innerHTML = '<div class="empty"><p>Sin resultados</p><p>Prueba con otro término de búsqueda</p></div>';
-    return;
-  }
-
-  container.innerHTML = lista.map((c, i) => {
-    const dias = diasHasta(c.fecha_limite);
-    const catClass = 'cat-' + (c.categoria||'').toLowerCase().replace(' ','').replace('relato corto','relato').replace('poesía','poesia');
-    const daysText = dias < 999 ? (dias <= 0 ? 'Cerrado' : 'Cierra en ' + dias + 'd') : '';
-    return `<div class="card" onclick="openModal(${i})">
-      <div class="card-meta">
-        <span class="card-cat ${catClass}">${c.categoria||'Otro'}</span>
-        ${c.nuevo ? '<span class="badge-new">Nuevo</span>' : ''}
-        ${daysText ? `<span class="card-days ${dias<=7?'urgent':''}">${daysText}</span>` : ''}
-      </div>
+  }).filter(c=>!q||(c.titulo+c.organizacion+c.categoria+c.descripcion).toLowerCase().includes(q));
+  const cont=document.getElementById('cards');
+  if(!lista.length){cont.innerHTML='<div class="empty"><p style="font-family:Playfair Display,serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">Sin resultados</p><p style="font-size:12px">Prueba con otro término</p></div>';return;}
+  cont.innerHTML=lista.map(c=>{
+    const dias=diasHasta(c.fecha_limite);
+    const catK=(c.categoria||'').toLowerCase().replace(' corto','').replace('ía','ia').replace('ó','o');
+    const catClass='cat-'+(['poesia','relato','novela','infantil','teatro'].find(x=>catK.includes(x))||'otro');
+    return`<div class="card" onclick="openModal(${concursos.indexOf(c)})">
+      <div class="card-meta"><span class="card-cat ${catClass}">${c.categoria||'Otro'}</span>${c.nuevo?'<span class="badge-new">Nuevo</span>':''}${dias<999?`<span class="card-days ${dias<=7?'urgent':''}">${dias<=0?'Cerrado':'Cierra en '+dias+'d'}</span>`:''}</div>
       <h3 class="card-title">${c.titulo}</h3>
       <div class="card-org">${c.organizacion||''}</div>
-      <div class="card-footer">
-        <span class="card-premio">${c.premio||'Premio sin especificar'}</span>
-        <span class="card-fecha">${c.fecha_limite ? 'Hasta ' + c.fecha_limite : ''}</span>
-      </div>
+      <div class="card-footer"><span class="card-premio">${c.premio||'Sin especificar'}</span><span class="card-fecha">${c.fecha_limite?'Hasta '+c.fecha_limite:''}</span></div>
     </div>`;
   }).join('');
-
-  // Mapear índice original para modal
-  container.querySelectorAll('.card').forEach((el, i) => {
-    const original = lista[i];
-    const idx = concursos.indexOf(original);
-    el.setAttribute('onclick', `openModal(${idx})`);
-  });
 }
 
-function renderStats() {
-  document.getElementById('total-count').textContent = concursos.length;
-  const nuevos = concursos.filter(c => c.nuevo).length;
-  document.getElementById('nuevos-count').textContent = nuevos;
-  const premios = concursos.filter(c => c.premio && c.premio.includes('€')).reduce((sum, c) => {
-    const m = c.premio.match(/[\d.]+/);
-    return sum + (m ? parseFloat(m[0].replace('.','')) : 0);
-  }, 0);
-  document.getElementById('premios-total').textContent = premios > 0 ? premios.toLocaleString('es-ES') + '€' : '—';
+function renderStats(){
+  document.getElementById('total-count').textContent=concursos.length;
+  document.getElementById('nuevos-count').textContent=concursos.filter(c=>c.nuevo).length;
+  const t=concursos.reduce((s,c)=>{const m=(c.premio||'').match(/[\d.]+/);return s+(m?parseFloat(m[0].replace('.','')): 0);},0);
+  document.getElementById('premios-total').textContent=t>0?t.toLocaleString('es-ES')+'€':'—';
 }
 
-function renderSidebar() {
-  const urgentes = concursos.filter(c => diasHasta(c.fecha_limite) <= 14 && diasHasta(c.fecha_limite) > 0)
-    .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite))
-    .slice(0, 5);
-
-  const container = document.getElementById('sidebar-urgentes');
-  if (urgentes.length === 0) {
-    container.innerHTML = '<div style="font-size:13px;color:var(--muted)">Ninguno cierra esta semana</div>';
-    return;
-  }
-  container.innerHTML = urgentes.map(c => `
-    <div class="deadline-item">
-      <span class="deadline-title">${c.titulo}</span>
-      <span class="deadline-days">${diasHasta(c.fecha_limite)}d</span>
-    </div>`).join('');
+function renderSidebar(){
+  const u=concursos.filter(c=>diasHasta(c.fecha_limite)<=14&&diasHasta(c.fecha_limite)>0).sort((a,b)=>diasHasta(a.fecha_limite)-diasHasta(b.fecha_limite)).slice(0,5);
+  document.getElementById('sidebar-urgentes').innerHTML=u.length?u.map(c=>`<div class="deadline-item"><span class="deadline-title">${c.titulo}</span><span class="deadline-days">${diasHasta(c.fecha_limite)}d</span></div>`).join(''):'<div style="font-size:12px;color:var(--muted)">Ninguno cierra pronto</div>';
 }
 
-// ============================================================
-// FILTROS
-// ============================================================
-function setFiltro(f) {
-  filtroActivo = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
-  const btn = document.getElementById('btn-' + f);
-  if (btn) btn.classList.add('active');
-  const nav = document.getElementById('nav-' + f);
-  if (nav) nav.classList.add('active');
+function setFiltro(f){
+  filtroActivo=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('btn-'+f);if(btn)btn.classList.add('active');
   renderCards();
 }
 
-// ============================================================
-// MODAL
-// ============================================================
-function openModal(idx) {
-  const c = concursos[idx];
-  if (!c) return;
-  document.getElementById('m-cat').textContent = c.categoria || 'Concurso';
-  document.getElementById('m-title').textContent = c.titulo;
-  document.getElementById('m-org').textContent = c.organizacion || '';
-  document.getElementById('m-premio').textContent = c.premio || 'Sin especificar';
-  document.getElementById('m-fecha').textContent = c.fecha_limite || 'Sin especificar';
-  document.getElementById('m-desc').textContent = c.descripcion || 'Sin descripción disponible.';
-  const link = document.getElementById('m-url');
-  link.href = c.url || '#';
-  link.style.display = c.url ? 'inline-block' : 'none';
+function filterEditoriales(){
+  const q=document.getElementById('search-edit').value.toLowerCase();
+  document.querySelectorAll('.editorial-item').forEach(el=>{el.style.display=!q||el.textContent.toLowerCase().includes(q)?'':'none';});
+}
+
+function openModal(idx){
+  const c=concursos[idx];if(!c)return;
+  document.getElementById('m-cat').textContent=c.categoria||'Concurso';
+  document.getElementById('m-title').textContent=c.titulo;
+  document.getElementById('m-org').textContent=c.organizacion||'';
+  document.getElementById('m-premio').textContent=c.premio||'Sin especificar';
+  document.getElementById('m-fecha').textContent=c.fecha_limite||'Sin especificar';
+  document.getElementById('m-desc').textContent=c.descripcion||'Sin descripción.';
+  const l=document.getElementById('m-url');l.href=c.url||'#';l.style.display=c.url?'inline-block':'none';
   document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
-function closeModal(e) {
-  if (e && e.target !== document.getElementById('modal') && !e.target.classList.contains('modal-close')) return;
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal')&&!e.target.classList.contains('modal-close'))return;
   document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({}); });
-
-// ============================================================
-// START
-// ============================================================
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal({});});
 init();
 </script>
 </body>
