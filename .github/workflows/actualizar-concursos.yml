@@ -2,8 +2,8 @@ name: Actualizar concursos literarios
 
 on:
   schedule:
-    - cron: '0 6 * * *' # Se ejecuta a las 6:00 AM cada día
-  workflow_dispatch:     # Permite ejecutarlo manualmente
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 
 jobs:
   actualizar:
@@ -20,25 +20,17 @@ jobs:
         with:
           node-version: '20'
 
-      # Paso opcional de depuración: Lista los archivos para confirmar rutas
-      - name: Verificar archivos
+      - name: Listar archivos para depurar
         run: ls -R
 
       - name: Buscar concursos con IA
         env:
           PROXY_URL: ${{ secrets.PROXY_URL }}
-        # Usamos ./ para asegurar ruta relativa desde la raíz
-        run: node ./scripts/buscar-concursos.js
+        run: node scripts/buscar-concursos.js
 
-      - name: Guardar cambios si hay concursos nuevos
+      - name: Guardar cambios
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add index.html
-          # El comando diff --quiet devuelve 1 si hay cambios, permitiendo el commit
-          if ! git diff --cached --quiet; then
-            git commit -m "Actualización automática de concursos $(date +'%d/%m/%Y')"
-            git push
-          else
-            echo "No hay cambios para subir"
-          fi
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Actualización automática" && git push)
