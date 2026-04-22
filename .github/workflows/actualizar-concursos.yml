@@ -1,0 +1,36 @@
+name: Actualizar concursos literarios
+
+on:
+  schedule:
+    # Ejecutar cada día a las 7:00 AM hora española (6:00 UTC)
+    - cron: '0 6 * * *'
+  # Permitir ejecución manual desde GitHub
+  workflow_dispatch:
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Buscar concursos con IA
+        env:
+          PROXY_URL: ${{ secrets.PROXY_URL }}
+        run: node scripts/buscar-concursos.js
+
+      - name: Guardar cambios si hay concursos nuevos
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Actualización automática de concursos $(date +'%d/%m/%Y')"
+          git push
