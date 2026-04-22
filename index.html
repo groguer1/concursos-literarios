@@ -102,6 +102,8 @@ header{border-bottom:2px solid var(--ink)}
 .detail-body ul li{margin-bottom:.4rem}
 .detail-body strong{font-weight:500}
 .detail-body .highlight{background:var(--cream);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:1.5rem 0;font-size:14px;line-height:1.6}
+
+/* MODAL con sistema de URL de 3 niveles */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.7);z-index:100;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
 .modal-overlay.open{display:flex}
 .modal{background:var(--paper);max-width:640px;width:100%;margin:auto;border:2px solid var(--ink);padding:2rem;position:relative;animation:modalIn .2s ease}
@@ -123,6 +125,7 @@ header{border-bottom:2px solid var(--ink)}
 .modal-btn-secondary:hover{background:var(--cream)}
 .url-status{font-size:11px;color:var(--muted);margin-top:8px;display:none}
 .url-status.visible{display:block}
+
 .sidebar-section{margin-bottom:2rem}
 .sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
 .deadline-item{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
@@ -141,180 +144,291 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <body>
 
 <header>
-  <div class="header-top">
-    <span id="fecha-hoy"></span>
-    <span>Recursos para escritores de España</span>
-    <span>Actualizado hoy</span>
-  </div>
-  <div class="header-main">
-    <h1 class="site-title">Letras <span>Españolas</span></h1>
-    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
-  </div>
-  <nav class="header-nav">
-    <button class="nav-btn active" onclick="showPage('concursos',this)">Concursos</button>
-    <button class="nav-btn" onclick="showPage('editoriales',this)">Editoriales</button>
-    <button class="nav-btn" onclick="showPage('agentes',this)">Agentes literarios</button>
-    <button class="nav-btn" onclick="showPage('revistas',this)">Revistas</button>
-    <button class="nav-btn" onclick="showPage('articulos',this)">Artículos</button>
-    <button class="nav-btn" onclick="showPage('recursos',this)">Más recursos</button>
-  </nav>
+  <div class="header-top">
+    <span id="fecha-hoy"></span>
+    <span>Recursos para escritores de España</span>
+    <span>Actualizado hoy</span>
+  </div>
+  <div class="header-main">
+    <h1 class="site-title">Letras <span>Españolas</span></h1>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+  </div>
+  <nav class="header-nav">
+    <button class="nav-btn active" onclick="showPage('concursos',this)">Concursos</button>
+    <button class="nav-btn" onclick="showPage('editoriales',this)">Editoriales</button>
+    <button class="nav-btn" onclick="showPage('agentes',this)">Agentes literarios</button>
+    <button class="nav-btn" onclick="showPage('revistas',this)">Revistas</button>
+    <button class="nav-btn" onclick="showPage('articulos',this)">Artículos</button>
+    <button class="nav-btn" onclick="showPage('recursos',this)">Más recursos</button>
+  </nav>
 </header>
 
 <div class="container">
-  <div class="layout">
-    <main>
-      <div class="page active" id="page-concursos">
-        <div class="section-title">Concursos literarios</div>
-        <div class="section-sub">Convocatorias activas · Actualizadas diariamente</div>
-        <div class="stats-bar">
-          <div class="stat"><span class="stat-num" id="total-count">—</span><span class="stat-label">activos</span></div>
-          <div class="stat"><span class="stat-num" id="premios-total">—</span><span class="stat-label">en premios</span></div>
-        </div>
-        <div class="ai-status"><div class="ai-dot" id="ai-dot"></div><span id="ai-status-text">Cargando concursos...</span></div>
-        <div class="search-wrap"><input type="text" id="search" placeholder="Buscar por título, organizador..." oninput="renderCards()"></div>
-        <div class="filters">
-          <button class="filter-btn active" onclick="setFiltro('todos')" id="btn-todos">Todos</button>
-          <button class="filter-btn" onclick="setFiltro('poesia')" id="btn-poesia">Poesía</button>
-          <button class="filter-btn" onclick="setFiltro('relato')" id="btn-relato">Relato</button>
-          <button class="filter-btn" onclick="setFiltro('novela')" id="btn-novela">Novela</button>
-          <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
-        </div>
-        <div class="cards" id="cards"></div>
-      </div>
-
-      <div class="page" id="page-editoriales">
-        <div class="section-title">Editoriales españolas</div>
-        <div class="dir-grid">
-          <div class="dir-item"><div class="dir-name">Editorial Planeta</div><div class="dir-desc">Principal grupo editorial en España. Aceptan manuscritos a través de sus diversos sellos.</div></div>
-          <div class="dir-item"><div class="dir-name">Anagrama</div><div class="dir-desc">Referente en literatura de calidad y ensayo.</div></div>
-        </div>
-      </div>
-      
-      <div class="page" id="page-agentes">
-        <div class="section-title">Agentes literarios</div>
-        <div class="dir-grid">
-          <div class="dir-item"><div class="dir-name">Agencia Carmen Balcells</div><div class="dir-desc">La agencia más histórica y relevante del mundo hispano.</div></div>
-        </div>
-      </div>
-
-      <div class="page" id="page-revistas">
-        <div class="section-title">Revistas literarias</div>
-        <div class="dir-grid">
-          <div class="dir-item"><div class="dir-name">Zenda</div><div class="dir-desc">Revista de libros y autores dirigida por Arturo Pérez-Reverte.</div></div>
-        </div>
-      </div>
-
-      <div class="page" id="page-articulos">
-        <div class="section-title">Artículos para escritores</div>
-        <div class="art-list">
-          <div class="art-item"><div class="art-title">Cómo enviar tu manuscrito a una editorial</div><div class="art-excerpt">Guía paso a paso para preparar tu propuesta editorial.</div></div>
-        </div>
-      </div>
-
-      <div class="page" id="page-recursos">
-        <div class="section-title">Más recursos</div>
-        <p>Próximamente más herramientas...</p>
-      </div>
-
-    </main>
-
-    <aside class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-title">Cierran pronto</div>
-        <div id="sidebar-urgentes"></div>
-      </div>
-    </aside>
-  </div>
+  <div class="ad-slot ad-horizontal">Publicidad 728×90 — Google AdSense</div>
 </div>
 
+<div class="container">
+  <div class="layout">
+    <main>
+      <div class="page active" id="page-concursos">
+        <div class="section-title">Concursos literarios</div>
+        <div class="section-sub">Convocatorias activas · Actualizadas diariamente</div>
+        <div class="stats-bar">
+          <div class="stat"><span class="stat-num" id="total-count">—</span><span class="stat-label">activos</span></div>
+          <div class="stat"><span class="stat-num" id="nuevos-count">—</span><span class="stat-label">nuevos</span></div>
+          <div class="stat"><span class="stat-num" id="premios-total">—</span><span class="stat-label">en premios</span></div>
+        </div>
+        <div class="ai-status"><div class="ai-dot" id="ai-dot"></div><span id="ai-status-text">Cargando concursos...</span></div>
+        <div class="update-banner" id="update-banner" onclick="aplicarNuevos()">
+          <span id="update-text">Nuevos concursos encontrados</span>
+          <span class="update-banner-btn">Ver ahora →</span>
+        </div>
+        <div class="search-wrap"><input type="text" id="search" placeholder="Buscar por título, organizador..." oninput="renderCards()"></div>
+        <div class="filters">
+          <button class="filter-btn active" onclick="setFiltro('todos')" id="btn-todos">Todos</button>
+          <button class="filter-btn" onclick="setFiltro('poesia')" id="btn-poesia">Poesía</button>
+          <button class="filter-btn" onclick="setFiltro('relato')" id="btn-relato">Relato</button>
+          <button class="filter-btn" onclick="setFiltro('novela')" id="btn-novela">Novela</button>
+          <button class="filter-btn" onclick="setFiltro('infantil')" id="btn-infantil">Infantil</button>
+          <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
+        </div>
+        <div class="cards" id="cards"></div>
+      </div>
+
+      <div class="page" id="page-editoriales">
+        <div class="section-title">Editoriales españolas</div>
+        <div class="section-sub">Directorio completo con información para envío de originales</div>
+        <div class="search-wrap"><input type="text" id="search-edit" placeholder="Buscar editorial, género..." oninput="filterDir('editoriales-list','search-edit')"></div>
+        <div class="dir-grid" id="editoriales-list"></div>
+      </div>
+
+      <div class="page" id="page-agentes">
+        <div class="section-title">Agentes literarios</div>
+        <div class="section-sub">Directorio de agencias literarias en España</div>
+        <div class="search-wrap"><input type="text" id="search-agent" placeholder="Buscar agencia, especialidad..." oninput="filterDir('agentes-list','search-agent')"></div>
+        <div class="dir-grid" id="agentes-list"></div>
+      </div>
+
+      <div class="page" id="page-revistas">
+        <div class="section-title">Revistas literarias</div>
+        <div class="section-sub">Publicaciones donde puedes enviar tu obra</div>
+        <div class="search-wrap"><input type="text" id="search-rev" placeholder="Buscar revista, género..." oninput="filterDir('revistas-list','search-rev')"></div>
+        <div class="dir-grid" id="revistas-list"></div>
+      </div>
+
+      <div class="page" id="page-articulos">
+        <div class="section-title">Artículos para escritores</div>
+        <div class="section-sub">Guías completas sobre escritura, publicación y el mundo editorial</div>
+        <div class="art-list" id="articulos-list"></div>
+      </div>
+
+      <div class="page" id="page-recursos">
+        <div class="section-title">Más recursos</div>
+        <div class="section-sub">Herramientas y directorios adicionales para escritores</div>
+        <div class="dir-grid">
+          <div class="dir-item"><div class="dir-name">Becas y ayudas a la creación</div><div class="dir-desc">Convocatorias de becas públicas, residencias de escritores y ayudas del Ministerio de Cultura.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Becas</span><span class="tag">Residencias</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Orientación legal para escritores</div><div class="dir-desc">Contratos editoriales, derechos de autor, registro de obras y aspectos fiscales.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Legal</span><span class="tag">Contratos</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Software para escritores</div><div class="dir-desc">Herramientas digitales recomendadas: procesadores de texto y apps para la escritura creativa.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Software</span></div><span class="dir-link">Próximamente →</span></div></div>
+          <div class="dir-item"><div class="dir-name">Asociaciones de escritores</div><div class="dir-desc">Directorio de asociaciones y gremios de escritores en España por género y comunidad autónoma.</div><div class="dir-footer"><div class="dir-tags"><span class="tag">Asociaciones</span></div><span class="dir-link">Próximamente →</span></div></div>
+        </div>
+      </div>
+
+      <!-- AVISO LEGAL -->
+      <div class="page" id="page-legal">
+        <div class="detail-back" onclick="showPage('concursos',null)">← Volver al inicio</div>
+        <div class="detail-header"><div class="detail-cat">Legal</div><h1 class="detail-title">Aviso legal</h1><div class="detail-meta">Última actualización: abril 2026</div></div>
+        <div class="detail-body">
+          <h2>Titular del sitio web</h2>
+          <p>En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información (LSSI-CE), se informa de los siguientes datos:</p>
+          <ul><li><strong>Titular:</strong> David Mateos Pascual</li><li><strong>Municipio:</strong> Boadilla del Monte, Madrid, España</li><li><strong>Email:</strong> dmateos.pascual@gmail.com</li><li><strong>Sitio web:</strong> letrasespanolas.org</li></ul>
+          <h2>Objeto</h2>
+          <p>Letras Españolas es un sitio web de información y recursos para escritores. Su objeto es proporcionar información sobre concursos literarios, editoriales, agentes, revistas y artículos de interés para la comunidad literaria española.</p>
+          <h2>Propiedad intelectual</h2>
+          <p>Los contenidos del sitio web son propiedad de David Mateos Pascual o de sus respectivos autores y están protegidos por la legislación española e internacional sobre propiedad intelectual. Queda prohibida su reproducción total o parcial sin autorización expresa.</p>
+          <h2>Responsabilidad</h2>
+          <p>El titular no se hace responsable de la exactitud de la información proporcionada por terceros ni de los contenidos de los sitios enlazados. La información sobre concursos se obtiene de fuentes públicas y puede estar sujeta a cambios. Se recomienda verificar siempre en las fuentes oficiales de cada convocatoria.</p>
+          <h2>Legislación aplicable</h2>
+          <p>Este aviso legal se rige por la legislación española vigente. Para cualquier controversia, las partes se someten a los Juzgados y Tribunales de Madrid.</p>
+        </div>
+      </div>
+
+      <!-- PRIVACIDAD -->
+      <div class="page" id="page-privacidad">
+        <div class="detail-back" onclick="showPage('concursos',null)">← Volver al inicio</div>
+        <div class="detail-header"><div class="detail-cat">Legal</div><h1 class="detail-title">Política de privacidad</h1><div class="detail-meta">Última actualización: abril 2026</div></div>
+        <div class="detail-body">
+          <h2>Responsable del tratamiento</h2>
+          <p>David Mateos Pascual, email: dmateos.pascual@gmail.com, es el responsable del tratamiento de los datos personales en letrasespanolas.org.</p>
+          <h2>Datos que recopilamos</h2>
+          <p>Este sitio web no recopila datos personales de forma directa. No existe formulario de registro ni suscripción. Se procesan automáticamente:</p>
+          <ul><li><strong>Datos de navegación:</strong> Dirección IP, navegador y páginas visitadas, de forma anónima mediante GitHub Pages.</li><li><strong>Almacenamiento local:</strong> El navegador guarda en localStorage la caché de concursos durante 24 horas. Estos datos no se transfieren a ningún servidor externo.</li></ul>
+          <h2>Publicidad</h2>
+          <p>Este sitio utiliza Google AdSense para mostrar publicidad. Google puede usar cookies para mostrar anuncios personalizados. Puedes desactivarlo en <a href="https://www.google.com/settings/ads" target="_blank">google.com/settings/ads</a>.</p>
+          <h2>Tus derechos</h2>
+          <p>Conforme al RGPD, tienes derecho a acceder, rectificar, suprimir y oponerte al tratamiento de tus datos. Contacta en dmateos.pascual@gmail.com.</p>
+        </div>
+      </div>
+
+      <!-- COOKIES -->
+      <div class="page" id="page-cookies">
+        <div class="detail-back" onclick="showPage('concursos',null)">← Volver al inicio</div>
+        <div class="detail-header"><div class="detail-cat">Legal</div><h1 class="detail-title">Política de cookies</h1><div class="detail-meta">Última actualización: abril 2026</div></div>
+        <div class="detail-body">
+          <h2>Cookies técnicas propias</h2>
+          <p>Usamos localStorage para guardar la caché de concursos y evitar cargas innecesarias. Estos datos no salen de tu navegador y se eliminan automáticamente cada 24 horas.</p>
+          <h2>Cookies de terceros — Google AdSense</h2>
+          <p>Google AdSense utiliza cookies para mostrar anuncios personalizados basándose en tus visitas anteriores a este y otros sitios.</p>
+          <h2>Cómo gestionar las cookies</h2>
+          <p>Puedes configurar tu navegador para rechazar todas las cookies:</p>
+          <ul><li><a href="https://support.google.com/chrome/answer/95647" target="_blank">Chrome</a></li><li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies" target="_blank">Firefox</a></li><li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank">Safari</a></li></ul>
+        </div>
+      </div>
+
+      <!-- CONTACTO -->
+      <div class="page" id="page-contacto">
+        <div class="detail-back" onclick="showPage('concursos',null)">← Volver al inicio</div>
+        <div class="detail-header"><div class="detail-cat">Contacto</div><h1 class="detail-title">Contacto y publicidad</h1><div class="detail-meta">letrasespanolas.org</div></div>
+        <div class="detail-body">
+          <h2>Contacto general</h2>
+          <p>Para cualquier consulta o sugerencia: <a href="mailto:dmateos.pascual@gmail.com">dmateos.pascual@gmail.com</a></p>
+          <h2>Envío de concursos</h2>
+          <p>Si conoces un concurso que no aparece en nuestra web, escríbenos indicando el nombre, organización convocante, fecha límite y enlace a las bases oficiales.</p>
+          <h2>Publicidad</h2>
+          <p>Letras Españolas utiliza Google AdSense. Si tu empresa quiere anunciarse directamente, contacta por email indicando "Publicidad" en el asunto.</p>
+          <h2>Errores e incidencias</h2>
+          <p>Si detectas información incorrecta o un enlace roto, comunícanoslo por email para corregirlo lo antes posible.</p>
+        </div>
+      </div>
+
+      <div class="page" id="page-detalle">
+        <div id="detalle-content"></div>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-section"><div class="ad-slot ad-square">Publicidad 300×250</div></div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Cierran esta semana</div>
+        <div id="sidebar-urgentes"><div style="font-size:12px;color:var(--muted)">Cargando...</div></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Secciones</div>
+        <span class="sidebar-link" onclick="showPage('concursos',null)">Concursos literarios</span>
+        <span class="sidebar-link" onclick="showPage('editoriales',null)">Editoriales</span>
+        <span class="sidebar-link" onclick="showPage('agentes',null)">Agentes literarios</span>
+        <span class="sidebar-link" onclick="showPage('revistas',null)">Revistas literarias</span>
+        <span class="sidebar-link" onclick="showPage('articulos',null)">Artículos</span>
+        <span class="sidebar-link" onclick="showPage('recursos',null)">Más recursos</span>
+      </div>
+      <div class="sidebar-section"><div class="ad-slot ad-square">Publicidad 300×250</div></div>
+    </aside>
+  </div>
+</div>
+
+<!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-cat" id="m-cat"></div>
-    <h2 class="modal-title" id="m-title"></h2>
-    <div class="modal-org" id="m-org"></div>
-    <div class="modal-grid">
-      <div><div class="modal-field-label">Premio</div><div class="modal-field-value premio" id="m-premio"></div></div>
-      <div><div class="modal-field-label">Fecha límite</div><div class="modal-field-value" id="m-fecha"></div></div>
-    </div>
-    <div class="modal-desc" id="m-desc"></div>
-    <div class="modal-actions" id="m-actions"></div>
-  </div>
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-cat" id="m-cat"></div>
+    <h2 class="modal-title" id="m-title"></h2>
+    <div class="modal-org" id="m-org"></div>
+    <div class="modal-grid">
+      <div><div class="modal-field-label">Premio</div><div class="modal-field-value premio" id="m-premio"></div></div>
+      <div><div class="modal-field-label">Fecha límite</div><div class="modal-field-value" id="m-fecha"></div></div>
+    </div>
+    <div class="modal-desc" id="m-desc"></div>
+    <div class="modal-actions" id="m-actions"></div>
+    <div class="url-status" id="url-status"></div>
+  </div>
 </div>
+
+<footer>
+  <p>© <span id="year"></span> Letras Españolas · Para escritores de España</p>
+  <p style="margin-top:6px"><a href="#" onclick="showPage('legal',null)">Aviso legal</a> · <a href="#" onclick="showPage('privacidad',null)">Privacidad</a> · <a href="#" onclick="showPage('cookies',null)">Cookies</a> · <a href="#" onclick="showPage('contacto',null)">Contacto</a></p>
+</footer>
 
 <script>
-// TUS CONCURSOS PRECARGADOS (No los he tocado)
+const PROXY_URL = 'https://anthropic-proxy.dmateos-pascual.workers.dev';
+const FUENTES = ['https://www.escritores.org/becas-y-concursos/','https://culturamas.es/category/concursos/'];
+const CACHE_KEY='letras_v7', CACHE_HOURS=24;
+const SHEETS_ARTICULOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=0&single=true&output=csv';
+const SHEETS_CONCURSOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=450389386&single=true&output=csv';
+const DOMINIOS_GENERICOS = ['escritores.org','culturamas.es','google.com','bing.com','yahoo.com'];
+
+let concursos=[], filtroActivo='todos', nuevosConcursos=[];
+
+// ══════════════════════════════════════════════
+// SISTEMA DE RESOLUCIÓN DE URL — 3 NIVELES
+// ══════════════════════════════════════════════
+
+// Nivel 1: comprueba si la URL es específica (no portada genérica)
+function esUrlEspecifica(url){
+  if(!url) return false;
+  try{
+    const u = new URL(url);
+    // Si el path es muy corto (solo la raíz o una sección), es genérica
+    const path = u.pathname.replace(/\/+$/,'');
+    if(path.length < 5) return false;
+    // Si apunta a un dominio genérico de buscador o agregador, descartar
+    if(DOMINIOS_GENERICOS.some(d => u.hostname.includes(d))) return false;
+    return true;
+  }catch{ return false; }
+}
+
+// Nivel 2: buscar en DuckDuckGo la URL exacta del concurso
+async function buscarUrlDuckDuckGo(titulo, organizacion){
+  try{
+    const query = encodeURIComponent(`"${titulo}" bases convocatoria ${organizacion}`);
+    const ddgUrl = 'https://html.duckduckgo.com/html/?q='+query;
+    const html = await fetchUrl(ddgUrl);
+    if(!html) return null;
+
+    // Extraer primeros enlaces de resultados de DDG
+    const matches = html.matchAll(/href="(https?:\/\/[^"]+)"/g);
+    for(const m of matches){
+      const link = m[1];
+      // Ignorar dominios de DDG, anuncios y agregadores
+      if(link.includes('duckduckgo.com')) continue;
+      if(link.includes('google.com')) continue;
+      if(link.includes('escritores.org')) continue;
+      if(link.includes('culturamas.es')) continue;
+      if(link.includes('facebook.com')) continue;
+      if(link.includes('twitter.com')) continue;
+      if(link.includes('utm_')) continue;
+      // El primer resultado válido es nuestra mejor opción
+      return decodeURIComponent(link);
+    }
+  }catch(e){ console.warn('DDG error:', e); }
+  return null;
+}
+
+// Nivel 3: URL de búsqueda en Google (siempre funciona como fallback)
+function urlBusquedaGoogle(titulo, organizacion){
+  const q = encodeURIComponent(`${titulo} bases convocatoria ${organizacion}`);
+  return `https://www.google.com/search?q=${q}`;
+}
+
+// Resolver URL para un concurso — ejecuta los 3 niveles
+async function resolverUrl(concurso){
+  // Nivel 1: ¿ya tenemos una URL específica de la IA?
+  if(esUrlEspecifica(concurso.url)){
+    return { url: concurso.url, nivel: 1, label: 'Ver convocatoria oficial' };
+  }
+
+  // Nivel 2: buscar en DuckDuckGo
+  const urlDDG = await buscarUrlDuckDuckGo(concurso.titulo, concurso.organizacion||'');
+  if(urlDDG){
+    return { url: urlDDG, nivel: 2, label: 'Ver convocatoria oficial' };
+  }
+
+  // Nivel 3: búsqueda en Google
+  return { url: urlBusquedaGoogle(concurso.titulo, concurso.organizacion||''), nivel: 3, label: 'Buscar convocatoria en Google' };
+}
+
+// ══════════════════════════════════════════════
+// DATOS BASE (se muestran al instante)
+// ══════════════════════════════════════════════
 const CONCURSOS_BASE = [
-  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2026",descripcion:"Concurso de poesía abierto a todos los autores en lengua española.",url:""},
-  {titulo:"Certamen Literario Villa de Móstoles",organizacion:"Ayuntamiento de Móstoles",categoria:"Relato",premio:"1.500€",fecha_limite:"15/05/2026",descripcion:"Relatos de temática libre.",url:""},
-  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"2.000€",fecha_limite:"20/04/2026",descripcion:"Novelas de género fantástico y gótico.",url:""}
-];
-
-let concursos = [...CONCURSOS_BASE];
-let filtroActivo = 'todos';
-
-function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  if(btn) {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-}
-
-function diasHasta(fechaStr) {
-  const parts = fechaStr.split('/');
-  const fecha = new Date(parts[2], parts[1]-1, parts[0]);
-  const diff = fecha - new Date();
-  return Math.ceil(diff / 86400000);
-}
-
-function renderCards() {
-  const container = document.getElementById('cards');
-  const search = document.getElementById('search').value.toLowerCase();
-  
-  let filtrados = concursos.filter(c => {
-    const cumpleSearch = c.titulo.toLowerCase().includes(search) || c.organizacion.toLowerCase().includes(search);
-    if (filtroActivo === 'todos') return cumpleSearch;
-    if (filtroActivo === 'urgentes') return cumpleSearch && diasHasta(c.fecha_limite) <= 7;
-    return cumpleSearch && c.categoria.toLowerCase().includes(filtroActivo);
-  });
-
-  container.innerHTML = filtrados.map(c => {
-    const dias = diasHasta(c.fecha_limite);
-    return `
-      <div class="card" onclick="openModal('${c.titulo}')">
-        <div class="card-meta">
-          <span class="card-cat">${c.categoria}</span>
-          <span class="card-days ${dias <= 7 ? 'urgent' : ''}">${dias} días</span>
-        </div>
-        <div class="card-title">${c.titulo}</div>
-        <div class="card-org">${c.organizacion}</div>
-        <div class="card-footer">
-          <span class="card-premio">${c.premio}</span>
-          <span class="card-fecha">${c.fecha_limite}</span>
-        </div>
-      </div>
-    `;
-  }).join('');
-  
-  renderSidebar();
-}
-
-function renderSidebar() {
-  const urgentes = concursos.filter(c => diasHasta(c.fecha_limite) <= 7);
-  document.getElementById('sidebar-urgentes').innerHTML = urgentes.map(c => `
-    <div class="deadline-item">
-      <span class="deadline-title">${c.titulo}</span>
-      <span class="deadline-days">${diasHasta(c.fecha_limite)}d</span>
-    </div>
-  `).join('');
-}
-
-function openModal(titulo) {
-  const c = concursos.find(x => x.titulo === titulo);
-  document.getElementById('m-cat').textContent = c.categoria;
-  document.getElementById('m-title').textContent = c.titulo;
-  document.getElementById('m-org').textContent = c.organizacion;
-  document.getElementById('m-premio').textContent = c.premio;
-  document.getElementById('m-fecha').textContent = c.fecha_limite;
+  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2026",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos. Modalidades adulto e infantil.",url:""},
+  {titulo:"Certamen Literario Villa de Móstoles — Relato",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2026",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio. Abierto a mayores de 18 años.",url:""},
+  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Noctu
