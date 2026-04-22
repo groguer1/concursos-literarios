@@ -581,24 +581,36 @@ function setStatus(searching,text){
 }
 
 async function buscarEnFondo(){
-  let html='';
-  for(const url of FUENTES){
+  setStatus(true, 'Buscando nuevas convocatorias...');
+
+  // Búsquedas en DuckDuckGo para encontrar concursos recientes
+  const QUERIES = [
+    'concursos literarios España 2026 bases convocatoria',
+    'premios literarios España 2026 poesia relato novela',
+    'certamen literario 2026 España convocatoria abierta',
+  ];
+
+  let html = '';
+  for(const q of QUERIES){
     try{
-      const contents = await fetchUrl(url);
-      if(contents) html+='\nFUENTE: '+url+'\n'+contents.substring(0,8000);
-    }catch(e){console.warn(e);}
+      const ddgUrl = 'https://html.duckduckgo.com/html/?q='+encodeURIComponent(q);
+      const contents = await fetchUrl(ddgUrl);
+      if(contents) html += '\nBÚSQUEDA: '+q+'\n'+contents.substring(0,5000);
+    }catch(e){ console.warn(e); }
   }
-  if(!html){setStatus(false,`${concursos.length} concursos · Sin conexión`);return;}
+
+  if(!html){ setStatus(false,`${concursos.length} concursos · Sin conexión`); return; }
+
   try{
     const res=await fetch(PROXY_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-haiku-4-5-20251001',max_tokens:4000,
-        messages:[{role:'user',content:`Analiza este HTML de webs de concursos literarios españoles y extrae TODOS los concursos que encuentres.
-Para cada concurso, intenta encontrar la URL EXACTA y ESPECÍFICA de la convocatoria (no la portada del ayuntamiento ni la raíz de la web, sino la página concreta donde están publicadas las bases o el anuncio del concurso).
-Devuelve SOLO array JSON sin texto adicional:
-[{"titulo":"nombre exacto del concurso","organizacion":"entidad convocante","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotación en euros","fecha_limite":"DD/MM/YYYY","descripcion":"descripción breve de 1-2 frases","url":"URL EXACTA Y ESPECÍFICA de la convocatoria o cadena vacía si no la encuentras","nuevo":true}]
+        messages:[{role:'user',content:`Analiza estos resultados de búsqueda sobre concursos literarios en España y extrae todos los concursos que encuentres con fecha límite en 2026.
+Para cada concurso devuelve SOLO array JSON sin texto adicional:
+[{"titulo":"nombre exacto","organizacion":"entidad convocante","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotación en euros","fecha_limite":"DD/MM/YYYY","descripcion":"descripción breve","url":"URL si aparece o cadena vacía","nuevo":true}]
+Solo incluye concursos con fecha límite futura. Si no encuentras ninguno claro devuelve [].
 
 ${html}`}]
       })
@@ -608,7 +620,7 @@ ${html}`}]
     const m=data.content[0].text.match(/\[[\s\S]*\]/);
     if(!m)throw new Error('Sin JSON');
     const nuevos=JSON.parse(m[0]);
-    if(!nuevos.length){setStatus(false,`${concursos.length} concursos · Actualizado`);return;}
+    if(!nuevos.length){ setStatus(false,`${concursos.length} concursos · Actualizado`); return; }
     setCache(nuevos);
     const hayNuevos=nuevos.length!==concursos.length||nuevos.some(n=>!concursos.find(c=>c.titulo===n.titulo));
     if(hayNuevos){
