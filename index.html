@@ -282,7 +282,9 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <script>
 const PROXY_URL = 'https://anthropic-proxy.dmateos-pascual.workers.dev';
 const FUENTES = ['https://www.escritores.org/becas-y-concursos/','https://culturamas.es/category/concursos/'];
-const CACHE_KEY='letras_v6', CACHE_HOURS=24;
+const CACHE_KEY='letras_v7', CACHE_HOURS=24;
+const SHEETS_ARTICULOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=450389386&single=true&output=csv';
+const SHEETS_CONCURSOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=0&single=true&output=csv';
 const DOMINIOS_GENERICOS = ['escritores.org','culturamas.es','google.com','bing.com','yahoo.com'];
 
 let concursos=[], filtroActivo='todos', nuevosConcursos=[];
@@ -408,9 +410,80 @@ function renderDir(id,data,tipo){
     return`<div class="dir-item" onclick="showDetalle('${tipo}','${item.id}')"><div class="dir-name">${item.nombre}</div><div class="dir-desc">${item.descripcion.substring(0,180)}...</div><div class="dir-footer"><div class="dir-tags">${tags}</div><span class="dir-link">${item.ciudad} · Ver ficha →</span></div></div>`;
   }).join('');
 }
+// ── LEER CSV DE GOOGLE SHEETS ──
+function parseCSV(text){
+  const lines = text.trim().split('\n');
+  if(lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,''));
+  return lines.slice(1).map(line=>{
+    // Parsear CSV respetando campos entre comillas
+    const cols = [];
+    let cur = '', inQ = false;
+    for(let i=0;i<line.length;i++){
+      const c=line[i];
+      if(c==='"'){ inQ=!inQ; }
+      else if(c===','&&!inQ){ cols.push(cur.trim()); cur=''; }
+      else{ cur+=c; }
+    }
+    cols.push(cur.trim());
+    const obj={};
+    headers.forEach((h,i)=>{ obj[h]=cols[i]||''; });
+    return obj;
+  }).filter(r=>Object.values(r).some(v=>v!==''));
+}
+
+let articulosSheets = []; // artículos cargados desde Sheets
+let concursosSheets = []; // concursos manuales desde Sheets
+
+async function cargarSheets(){
+  // Cargar artículos desde Sheets
+  try{
+    const r = await fetch(SHEETS_ARTICULOS);
+    const csv = await r.text();
+    const rows = parseCSV(csv);
+    if(rows.length > 0){
+      articulosSheets = rows.map(r=>({
+        id: r.id || 'art-'+Math.random().toString(36).substr(2,6),
+        cat: r.categoria || 'General',
+        titulo: r.titulo || '',
+        excerpt: r.excerpt || '',
+        tiempo: r.tiempo || '5 min',
+        cuerpo: r.cuerpo || '<p>'+r.excerpt+'</p>',
+        fromSheets: true
+      })).filter(a=>a.titulo);
+    }
+  }catch(e){ console.warn('Error cargando artículos de Sheets:', e); }
+
+  // Cargar concursos manuales desde Sheets
+  try{
+    const r = await fetch(SHEETS_CONCURSOS);
+    const csv = await r.text();
+    const rows = parseCSV(csv);
+    if(rows.length > 0){
+      concursosSheets = rows.map(r=>({
+        titulo: r.titulo || '',
+        organizacion: r.organizacion || '',
+        categoria: r.categoria || 'Otro',
+        premio: r.premio || '',
+        fecha_limite: r.fecha_limite || '',
+        descripcion: r.descripcion || '',
+        url: r.url || '',
+        nuevo: r.nuevo === 'true' || r.nuevo === 'TRUE' || r.nuevo === '1',
+        fromSheets: true
+      })).filter(c=>c.titulo);
+    }
+  }catch(e){ console.warn('Error cargando concursos de Sheets:', e); }
+
+  renderArt();
+}
+
 function renderArt(){
   const cont=document.getElementById('articulos-list');if(!cont)return;
-  cont.innerHTML=ARTICULOS.map(a=>`<div class="art-item" onclick="showDetalle('articulo','${a.id}')"><div class="art-cat">${a.cat}</div><div class="art-title">${a.titulo}</div><div class="art-excerpt">${a.excerpt}</div><div class="art-meta">Lectura · ${a.tiempo}</div></div>`).join('');
+  // Combinar artículos del código + los de Sheets (Sheets primero si los hay)
+  const todos = articulosSheets.length > 0
+    ? [...articulosSheets, ...ARTICULOS]
+    : ARTICULOS;
+  cont.innerHTML=todos.map(a=>`<div class="art-item" onclick="showDetalle('articulo','${a.id}')"><div class="art-cat">${a.cat}</div><div class="art-title">${a.titulo}</div><div class="art-excerpt">${a.excerpt}</div><div class="art-meta">Lectura · ${a.tiempo}</div></div>`).join('');
 }
 function filterDir(listId,inputId){
   const q=(document.getElementById(inputId)||{value:''}).value.toLowerCase();
@@ -421,7 +494,10 @@ function showDetalle(tipo,id){
   if(tipo==='editorial'){item=EDITORIALES.find(x=>x.id===id);backPage='editoriales';}
   else if(tipo==='agente'){item=AGENTES.find(x=>x.id===id);backPage='agentes';}
   else if(tipo==='revista'){item=REVISTAS.find(x=>x.id===id);backPage='revistas';}
-  else if(tipo==='articulo'){item=ARTICULOS.find(x=>x.id===id);backPage='articulos';}
+  else if(tipo==='articulo'){
+    const todosArt = [...articulosSheets, ...ARTICULOS];
+    item=todosArt.find(x=>x.id===id);backPage='articulos';
+  }
   if(!item)return;
   let html=`<div class="detail-back" onclick="showPage('${backPage}',null)">← Volver al directorio</div>`;
   if(tipo==='editorial'){html+=`<div class="detail-header"><div class="detail-cat">Editorial</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad}</div></div><div class="detail-grid"><div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div><div><div class="detail-field-label">Contacto</div><div class="detail-field-value"><a href="mailto:${item.contacto}">${item.contacto}</a></div></div><div><div class="detail-field-label">Géneros</div><div class="detail-field-value">${item.generos.join(', ')}</div></div></div><div class="detail-body"><p>${item.descripcion}</p><h2>Autores del catálogo</h2><p>${item.catalogo.join(' · ')}</p><h2>Cómo enviar originales</h2><p>${item.envio}</p>${item.notas?`<div class="highlight">${item.notas}</div>`:''}</div>`;}
@@ -441,6 +517,8 @@ function getCacheAge(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return 
 
 async function init(){
   renderDirectorios();
+  // Cargar Sheets en paralelo (artículos + concursos manuales)
+  cargarSheets();
   // Limpiar caché si tiene datos de 2025
   try{
     const r=localStorage.getItem(CACHE_KEY);
@@ -453,7 +531,10 @@ async function init(){
   }catch{}
   const cached=getCache();
   if(cached){
-    concursos=cached;renderAll();
+    concursos=cached;
+    // Mezclar con concursos manuales de Sheets si los hay
+    setTimeout(()=>{ if(concursosSheets.length>0){ mezclarConcursosSheets(); } },2000);
+    renderAll();
     const age=getCacheAge();
     setStatus(false,`${concursos.length} concursos · Actualizado hace ${age}h`);
     if(age>12) buscarEnFondo();
@@ -461,6 +542,18 @@ async function init(){
     concursos=[...CONCURSOS_BASE];renderAll();
     setStatus(true,'Buscando nuevas convocatorias...');
     buscarEnFondo();
+    // Mezclar con concursos manuales de Sheets cuando carguen
+    setTimeout(()=>{ if(concursosSheets.length>0){ mezclarConcursosSheets(); } },3000);
+  }
+}
+
+function mezclarConcursosSheets(){
+  // Añadir concursos de Sheets que no estén ya en la lista
+  const nuevos = concursosSheets.filter(s=>!concursos.find(c=>c.titulo===s.titulo));
+  if(nuevos.length>0){
+    concursos = [...nuevos, ...concursos];
+    renderAll();
+    setStatus(false,`${concursos.length} concursos · Incluidos ${nuevos.length} de tu hoja de cálculo`);
   }
 }
 
@@ -601,10 +694,9 @@ async function openModal(idx){
   document.getElementById('m-fecha').textContent=c.fecha_limite||'Sin especificar';
   document.getElementById('m-desc').textContent=c.descripcion||'Sin descripción.';
 
-  // Mostrar modal inmediatamente con botón de "buscando..."
   const actions=document.getElementById('m-actions');
   const statusEl=document.getElementById('url-status');
-  actions.innerHTML=`<button class="modal-btn modal-btn-secondary" disabled>Buscando enlace oficial...</button>`;
+  actions.innerHTML=`<button class="modal-btn modal-btn-secondary" disabled>Buscando enlace...</button>`;
   statusEl.textContent='';statusEl.classList.remove('visible');
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
@@ -612,21 +704,73 @@ async function openModal(idx){
   // Resolver URL en segundo plano
   try{
     const resultado=await resolverUrl(c);
+    let btns='';
     if(resultado.nivel===1){
-      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">${resultado.label} →</a>`;
+      btns=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria oficial →</a>`;
       statusEl.textContent='Enlace directo a la convocatoria oficial';
     }else if(resultado.nivel===2){
-      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">${resultado.label} →</a>
+      btns=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria →</a>
         <a href="${urlBusquedaGoogle(c.titulo,c.organizacion||'')}" target="_blank" class="modal-btn modal-btn-secondary">Buscar en Google</a>`;
       statusEl.textContent='Enlace encontrado mediante búsqueda automática';
     }else{
-      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">${resultado.label} →</a>`;
-      statusEl.textContent='No se encontró enlace directo · La búsqueda te llevará a los resultados relevantes';
+      btns=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Buscar en Google →</a>`;
+      statusEl.textContent='No se encontró enlace directo';
     }
+    // Añadir botón "Ver bases completas" si hay URL válida nivel 1 o 2
+    if(resultado.nivel<=2){
+      btns+=`<button onclick="verBasesCompletas(${idx},'${resultado.url}')" class="modal-btn modal-btn-secondary">Ver bases completas con IA</button>`;
+    }
+    actions.innerHTML=btns;
     statusEl.classList.add('visible');
   }catch(e){
     const q=encodeURIComponent(`${c.titulo} bases convocatoria`);
     actions.innerHTML=`<a href="https://www.google.com/search?q=${q}" target="_blank" class="modal-btn modal-btn-primary">Buscar en Google →</a>`;
+  }
+}
+
+async function verBasesCompletas(idx, url){
+  const c=concursos[idx];if(!c)return;
+  const actions=document.getElementById('m-actions');
+  const statusEl=document.getElementById('url-status');
+  // Cambiar botón a estado cargando
+  actions.querySelectorAll('button').forEach(b=>{ if(b.textContent.includes('bases')) b.textContent='Leyendo bases...'; b.disabled=true; });
+  statusEl.textContent='La IA está leyendo la convocatoria oficial...';
+  statusEl.classList.add('visible');
+
+  try{
+    // Leer la página del concurso
+    const r=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url));
+    const j=await r.json();
+    const html=j.contents.substring(0,10000);
+
+    // Pedir a la IA que extraiga las bases
+    const res=await fetch(PROXY_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',max_tokens:2000,
+        messages:[{role:'user',content:`Lee este HTML de una convocatoria literaria y extrae las bases del concurso de forma clara y estructurada.
+Incluye: requisitos de participación, extensión de la obra, género, cómo enviar, fecha límite, premio, jurado si aparece.
+Responde en español con formato HTML usando <h3> para secciones y <p> para el texto. Sin introducción, directo al contenido.
+Si no encuentras información de bases, responde solo: <p>No se encontraron las bases en esta página.</p>
+
+HTML: ${html}`}]
+      })
+    });
+    const data=await res.json();
+    if(data.error)throw new Error(data.error.message);
+    const basesHtml=data.content[0].text;
+
+    // Mostrar bases en el modal expandido
+    const desc=document.getElementById('m-desc');
+    desc.innerHTML=`<div style="font-size:13px;line-height:1.7">${basesHtml}</div>`;
+    statusEl.textContent='Bases extraídas con IA · Verifica siempre en la fuente oficial';
+    // Restaurar botones sin el de "Ver bases"
+    actions.querySelectorAll('button').forEach(b=>{ if(b.textContent.includes('bases')||b.textContent.includes('Leyendo')) b.remove(); });
+
+  }catch(e){
+    statusEl.textContent='No se pudieron cargar las bases. Consulta la convocatoria oficial.';
+    actions.querySelectorAll('button').forEach(b=>{ b.disabled=false; b.textContent='Ver bases completas con IA'; });
   }
 }
 
