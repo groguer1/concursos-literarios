@@ -311,10 +311,9 @@ function esUrlEspecifica(url){
 async function buscarUrlDuckDuckGo(titulo, organizacion){
   try{
     const query = encodeURIComponent(`"${titulo}" bases convocatoria ${organizacion}`);
-    const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://html.duckduckgo.com/html/?q='+query)}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const html = data.contents || '';
+    const ddgUrl = 'https://html.duckduckgo.com/html/?q='+query;
+    const html = await fetchUrl(ddgUrl);
+    if(!html) return null;
 
     // Extraer primeros enlaces de resultados de DDG
     const matches = html.matchAll(/href="(https?:\/\/[^"]+)"/g);
@@ -410,7 +409,24 @@ function renderDir(id,data,tipo){
     return`<div class="dir-item" onclick="showDetalle('${tipo}','${item.id}')"><div class="dir-name">${item.nombre}</div><div class="dir-desc">${item.descripcion.substring(0,180)}...</div><div class="dir-footer"><div class="dir-tags">${tags}</div><span class="dir-link">${item.ciudad} · Ver ficha →</span></div></div>`;
   }).join('');
 }
-// ── LEER CSV DE GOOGLE SHEETS ──
+// Proxies para leer webs externas — intenta varios si falla
+async function fetchUrl(url){
+  const proxies = [
+    `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+    `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  ];
+  for(const proxy of proxies){
+    try{
+      const r = await fetch(proxy, {signal: AbortSignal.timeout(8000)});
+      if(!r.ok) continue;
+      const j = await r.json();
+      const contents = j.contents || j.body || j;
+      if(typeof contents === 'string' && contents.length > 100) return contents;
+    }catch(e){ continue; }
+  }
+  return null;
+}
 function parseCSV(text){
   const lines = text.trim().split('\n');
   if(lines.length < 2) return [];
@@ -568,9 +584,8 @@ async function buscarEnFondo(){
   let html='';
   for(const url of FUENTES){
     try{
-      const r=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url));
-      const j=await r.json();
-      html+='\nFUENTE: '+url+'\n'+j.contents.substring(0,8000);
+      const contents = await fetchUrl(url);
+      if(contents) html+='\nFUENTE: '+url+'\n'+contents.substring(0,8000);
     }catch(e){console.warn(e);}
   }
   if(!html){setStatus(false,`${concursos.length} concursos · Sin conexión`);return;}
@@ -739,9 +754,8 @@ async function verBasesCompletas(idx, url){
 
   try{
     // Leer la página del concurso
-    const r=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(url));
-    const j=await r.json();
-    const html=j.contents.substring(0,10000);
+    const html = await fetchUrl(url);
+    if(!html) throw new Error('No se pudo leer la página');
 
     // Pedir a la IA que extraiga las bases
     const res=await fetch(PROXY_URL,{
