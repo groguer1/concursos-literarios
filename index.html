@@ -428,14 +428,14 @@ async function resolverUrl(concurso){
 // DATOS BASE (se muestran al instante)
 // ══════════════════════════════════════════════
 const CONCURSOS_BASE = [
-  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2026",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos. Modalidades adulto e infantil.",url:"https://www.melilla.es/melillaPortal/contenidoAction.do?Idm=1&IdmStyle=1&cod_mnu=1&id_cont=1"},
-  {titulo:"Certamen Literario Villa de Móstoles — Relato",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2026",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio. Abierto a mayores de 18 años.",url:"https://www.mostoles.es/es/ayuntamiento/tablondeanuncios"},
-  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2026",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras. Incluye publicación.",url:"https://www.editorialnocturna.com/premio-gotico"},
-  {titulo:"Premio Andalucía de Literatura Infantil y Juvenil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"10/06/2026",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:"https://www.juntadeandalucia.es/cultura/es/actualidad/premios"},
-  {titulo:"Concurso Internacional de Poesía Miguel Hernández",organizacion:"Ayuntamiento de Orihuela",categoria:"Poesía",premio:"6.000€",fecha_limite:"25/05/2026",descripcion:"Poemario inédito en castellano. Mínimo 400 versos. Premio internacional con larga tradición.",url:"https://www.orihuela.es/cultura"},
-  {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"15/06/2026",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas. Incluye publicación en editorial reconocida.",url:"https://www.ateneodesevilla.es/actividades/premios"},
-  {titulo:"Certamen de Relato Corto Ciudad de Córdoba",organizacion:"Ayuntamiento de Córdoba",categoria:"Relato corto",premio:"1.200€",fecha_limite:"05/06/2026",descripcion:"Relatos inéditos de temática libre, máximo 10 folios. Solo para autores españoles.",url:"https://www.cordoba.es/cultura"},
-  {titulo:"Premio de Poesía Blas de Otero",organizacion:"Diputación de Bizkaia",categoria:"Poesía",premio:"4.000€",fecha_limite:"20/06/2026",descripcion:"Poemario inédito en lengua castellana. Mínimo 30 poemas o 400 versos. Sin límite de edad.",url:"https://www.bizkaia.eus/eu/web/kultura/literatur-sariak"},
+  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2026",descripcion:"Concurso de poesía abierto a todos los autores en lengua española. Extensión mínima 300 versos. Modalidades adulto e infantil.",url:""},
+  {titulo:"Certamen Literario Villa de Móstoles — Relato",organizacion:"Concejalía de Cultura de Móstoles",categoria:"Relato corto",premio:"1.500€",fecha_limite:"15/05/2026",descripcion:"Relatos de temática libre, extensión máxima 15 folios a doble espacio. Abierto a mayores de 18 años.",url:""},
+  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"6.000€",fecha_limite:"01/06/2026",descripcion:"Novelas de terror, fantasía oscura o ciencia ficción. Mínimo 70.000 palabras. Incluye publicación.",url:""},
+  {titulo:"Premio Andalucía de Literatura Infantil y Juvenil",organizacion:"Junta de Andalucía",categoria:"Infantil",premio:"5.000€",fecha_limite:"10/06/2026",descripcion:"Literatura infantil y juvenil en español o lenguas cooficiales de Andalucía.",url:""},
+  {titulo:"Concurso Internacional de Poesía Miguel Hernández",organizacion:"Ayuntamiento de Orihuela",categoria:"Poesía",premio:"6.000€",fecha_limite:"25/05/2026",descripcion:"Poemario inédito en castellano. Mínimo 400 versos. Premio internacional con larga tradición.",url:""},
+  {titulo:"Premio Ateneo de Sevilla — Novela",organizacion:"Real Ateneo de Sevilla",categoria:"Novela",premio:"12.000€",fecha_limite:"15/06/2026",descripcion:"Novela en lengua castellana, inédita, mínimo 150 páginas. Incluye publicación en editorial reconocida.",url:""},
+  {titulo:"Certamen de Relato Corto Ciudad de Córdoba",organizacion:"Ayuntamiento de Córdoba",categoria:"Relato corto",premio:"1.200€",fecha_limite:"05/06/2026",descripcion:"Relatos inéditos de temática libre, máximo 10 folios. Solo para autores españoles.",url:""},
+  {titulo:"Premio de Poesía Blas de Otero",organizacion:"Diputación de Bizkaia",categoria:"Poesía",premio:"4.000€",fecha_limite:"20/06/2026",descripcion:"Poemario inédito en lengua castellana. Mínimo 30 poemas o 400 versos. Sin límite de edad.",url:""},
 ];
 
 // ══════════════════════════════════════════════
@@ -649,21 +649,14 @@ function setStatus(searching,text){
 }
 
 async function buscarEnFondo(){
-  setStatus(true, 'Buscando nuevas convocatorias...');
+  setStatus(true,'Buscando nuevas convocatorias...');
+  let html='';
 
-  // Búsquedas en DuckDuckGo para encontrar concursos recientes
-  const QUERIES = [
-    'concursos literarios España 2026 bases convocatoria',
-    'premios literarios España 2026 poesia relato novela',
-    'certamen literario 2026 España convocatoria abierta',
-  ];
-
-  let html = '';
-  for(const q of QUERIES){
+  // Usar el Worker para leer las fuentes directamente
+  for(const url of FUENTES){
     try{
-      const ddgUrl = 'https://html.duckduckgo.com/html/?q='+encodeURIComponent(q);
-      const contents = await fetchUrl(ddgUrl);
-      if(contents) html += '\nBÚSQUEDA: '+q+'\n'+contents.substring(0,5000);
+      const contents = await fetchUrl(url);
+      if(contents) html+='\nFUENTE: '+url+'\n'+contents.substring(0,8000);
     }catch(e){ console.warn(e); }
   }
 
@@ -675,10 +668,11 @@ async function buscarEnFondo(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-haiku-4-5-20251001',max_tokens:4000,
-        messages:[{role:'user',content:`Analiza estos resultados de búsqueda sobre concursos literarios en España y extrae todos los concursos que encuentres con fecha límite en 2026.
-Para cada concurso devuelve SOLO array JSON sin texto adicional:
-[{"titulo":"nombre exacto","organizacion":"entidad convocante","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotación en euros","fecha_limite":"DD/MM/YYYY","descripcion":"descripción breve","url":"URL si aparece o cadena vacía","nuevo":true}]
-Solo incluye concursos con fecha límite futura. Si no encuentras ninguno claro devuelve [].
+        messages:[{role:'user',content:`Analiza este HTML de webs de concursos literarios españoles y extrae TODOS los concursos que encuentres con fecha límite en 2026.
+Para cada concurso intenta encontrar la URL exacta de la convocatoria.
+Devuelve SOLO array JSON sin texto adicional:
+[{"titulo":"nombre exacto","organizacion":"entidad convocante","categoria":"Poesía|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotación en euros","fecha_limite":"DD/MM/YYYY","descripcion":"descripción breve","url":"URL exacta o cadena vacía","nuevo":true}]
+Solo concursos con fecha límite futura. Si no encuentras ninguno devuelve [].
 
 ${html}`}]
       })
@@ -791,80 +785,29 @@ async function openModal(idx){
 
   const actions=document.getElementById('m-actions');
   const statusEl=document.getElementById('url-status');
-  actions.innerHTML=`<button class="modal-btn modal-btn-secondary" disabled>Buscando enlace...</button>`;
+  const googleUrl=`<a href="${urlBusquedaGoogle(c.titulo,c.organizacion||'')}" target="_blank" class="modal-btn modal-btn-secondary">Buscar en Google</a>`;
+
+  // Mostrar botón Google inmediatamente mientras buscamos URL específica
+  actions.innerHTML=googleUrl;
   statusEl.textContent='';statusEl.classList.remove('visible');
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
 
-  // Resolver URL en segundo plano
+  // Intentar encontrar URL específica en segundo plano
   try{
     const resultado=await resolverUrl(c);
-    let btns='';
     if(resultado.nivel===1){
-      btns=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria oficial →</a>`;
+      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria oficial →</a>${googleUrl}`;
       statusEl.textContent='Enlace directo a la convocatoria oficial';
+      statusEl.classList.add('visible');
     }else if(resultado.nivel===2){
-      btns=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria →</a>
-        <a href="${urlBusquedaGoogle(c.titulo,c.organizacion||'')}" target="_blank" class="modal-btn modal-btn-secondary">Buscar en Google</a>`;
-      statusEl.textContent='Enlace encontrado mediante búsqueda automática';
-    }else{
-      btns=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Buscar en Google →</a>`;
-      statusEl.textContent='No se encontró enlace directo';
+      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria →</a>${googleUrl}`;
+      statusEl.textContent='Enlace encontrado automáticamente';
+      statusEl.classList.add('visible');
     }
-    // Añadir botón "Ver bases completas" si hay URL válida nivel 1 o 2
-    if(resultado.nivel<=2){
-      btns+=`<button onclick="verBasesCompletas(${idx},'${resultado.url}')" class="modal-btn modal-btn-secondary">Ver bases completas con IA</button>`;
-    }
-    actions.innerHTML=btns;
-    statusEl.classList.add('visible');
+    // nivel 3 ya tiene Google por defecto
   }catch(e){
-    const q=encodeURIComponent(`${c.titulo} bases convocatoria`);
-    actions.innerHTML=`<a href="https://www.google.com/search?q=${q}" target="_blank" class="modal-btn modal-btn-primary">Buscar en Google →</a>`;
-  }
-}
-
-async function verBasesCompletas(idx, url){
-  const c=concursos[idx];if(!c)return;
-  const actions=document.getElementById('m-actions');
-  const statusEl=document.getElementById('url-status');
-  // Cambiar botón a estado cargando
-  actions.querySelectorAll('button').forEach(b=>{ if(b.textContent.includes('bases')) b.textContent='Leyendo bases...'; b.disabled=true; });
-  statusEl.textContent='La IA está leyendo la convocatoria oficial...';
-  statusEl.classList.add('visible');
-
-  try{
-    // Leer la página del concurso
-    const html = await fetchUrl(url);
-    if(!html) throw new Error('No se pudo leer la página');
-
-    // Pedir a la IA que extraiga las bases
-    const res=await fetch(PROXY_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',max_tokens:2000,
-        messages:[{role:'user',content:`Lee este HTML de una convocatoria literaria y extrae las bases del concurso de forma clara y estructurada.
-Incluye: requisitos de participación, extensión de la obra, género, cómo enviar, fecha límite, premio, jurado si aparece.
-Responde en español con formato HTML usando <h3> para secciones y <p> para el texto. Sin introducción, directo al contenido.
-Si no encuentras información de bases, responde solo: <p>No se encontraron las bases en esta página.</p>
-
-HTML: ${html}`}]
-      })
-    });
-    const data=await res.json();
-    if(data.error)throw new Error(data.error.message);
-    const basesHtml=data.content[0].text;
-
-    // Mostrar bases en el modal expandido
-    const desc=document.getElementById('m-desc');
-    desc.innerHTML=`<div style="font-size:13px;line-height:1.7">${basesHtml}</div>`;
-    statusEl.textContent='Bases extraídas con IA · Verifica siempre en la fuente oficial';
-    // Restaurar botones sin el de "Ver bases"
-    actions.querySelectorAll('button').forEach(b=>{ if(b.textContent.includes('bases')||b.textContent.includes('Leyendo')) b.remove(); });
-
-  }catch(e){
-    statusEl.textContent='No se pudieron cargar las bases. Consulta la convocatoria oficial.';
-    actions.querySelectorAll('button').forEach(b=>{ b.disabled=false; b.textContent='Ver bases completas con IA'; });
+    // Ya tiene el botón de Google visible
   }
 }
 
