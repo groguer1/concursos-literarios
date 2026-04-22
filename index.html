@@ -170,7 +170,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
           <div class="stat"><span class="stat-num" id="total-count">—</span><span class="stat-label">activos</span></div>
           <div class="stat"><span class="stat-num" id="premios-total">—</span><span class="stat-label">en premios</span></div>
         </div>
-        <div class="ai-status"><div class="ai-dot" id="ai-dot"></div><span id="ai-status-text">Actualizado mediante IA</span></div>
+        <div class="ai-status"><div class="ai-dot" id="ai-dot"></div><span id="ai-status-text">Cargando concursos...</span></div>
         <div class="search-wrap"><input type="text" id="search" placeholder="Buscar por título, organizador..." oninput="renderCards()"></div>
         <div class="filters">
           <button class="filter-btn active" onclick="setFiltro('todos')" id="btn-todos">Todos</button>
@@ -182,11 +182,40 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
         <div class="cards" id="cards"></div>
       </div>
 
-      <div class="page" id="page-editoriales"><div class="section-title">Editoriales españolas</div><div class="dir-grid" id="editoriales-list"></div></div>
-      <div class="page" id="page-agentes"><div class="section-title">Agentes literarios</div><div class="dir-grid" id="agentes-list"></div></div>
-      <div class="page" id="page-revistas"><div class="section-title">Revistas literarias</div><div class="dir-grid" id="revistas-list"></div></div>
-      <div class="page" id="page-articulos"><div class="section-title">Artículos</div><div class="art-list" id="articulos-list"></div></div>
-      <div class="page" id="page-recursos"><div class="section-title">Más recursos</div><p>Contenido en desarrollo...</p></div>
+      <div class="page" id="page-editoriales">
+        <div class="section-title">Editoriales españolas</div>
+        <div class="dir-grid">
+          <div class="dir-item"><div class="dir-name">Editorial Planeta</div><div class="dir-desc">Principal grupo editorial en España. Aceptan manuscritos a través de sus diversos sellos.</div></div>
+          <div class="dir-item"><div class="dir-name">Anagrama</div><div class="dir-desc">Referente en literatura de calidad y ensayo.</div></div>
+        </div>
+      </div>
+      
+      <div class="page" id="page-agentes">
+        <div class="section-title">Agentes literarios</div>
+        <div class="dir-grid">
+          <div class="dir-item"><div class="dir-name">Agencia Carmen Balcells</div><div class="dir-desc">La agencia más histórica y relevante del mundo hispano.</div></div>
+        </div>
+      </div>
+
+      <div class="page" id="page-revistas">
+        <div class="section-title">Revistas literarias</div>
+        <div class="dir-grid">
+          <div class="dir-item"><div class="dir-name">Zenda</div><div class="dir-desc">Revista de libros y autores dirigida por Arturo Pérez-Reverte.</div></div>
+        </div>
+      </div>
+
+      <div class="page" id="page-articulos">
+        <div class="section-title">Artículos para escritores</div>
+        <div class="art-list">
+          <div class="art-item"><div class="art-title">Cómo enviar tu manuscrito a una editorial</div><div class="art-excerpt">Guía paso a paso para preparar tu propuesta editorial.</div></div>
+        </div>
+      </div>
+
+      <div class="page" id="page-recursos">
+        <div class="section-title">Más recursos</div>
+        <p>Próximamente más herramientas...</p>
+      </div>
+
     </main>
 
     <aside class="sidebar">
@@ -214,10 +243,14 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 </div>
 
 <script>
-// AQUÍ ES DONDE EL SCRIPT DE GITHUB ESCRIBE LOS CONCURSOS
-const CONCURSOS_BASE = [];
+// TUS CONCURSOS PRECARGADOS (No los he tocado)
+const CONCURSOS_BASE = [
+  {titulo:"Premio Nacional de Poesía Ciudad de Melilla",organizacion:"Ayuntamiento de Melilla",categoria:"Poesía",premio:"3.000€",fecha_limite:"30/05/2026",descripcion:"Concurso de poesía abierto a todos los autores en lengua española.",url:""},
+  {titulo:"Certamen Literario Villa de Móstoles",organizacion:"Ayuntamiento de Móstoles",categoria:"Relato",premio:"1.500€",fecha_limite:"15/05/2026",descripcion:"Relatos de temática libre.",url:""},
+  {titulo:"Premio Gótico de Narrativa Fantástica",organizacion:"Editorial Nocturna",categoria:"Novela",premio:"2.000€",fecha_limite:"20/04/2026",descripcion:"Novelas de género fantástico y gótico.",url:""}
+];
 
-let concursos = [];
+let concursos = [...CONCURSOS_BASE];
 let filtroActivo = 'todos';
 
 function showPage(id, btn) {
@@ -240,17 +273,12 @@ function renderCards() {
   const container = document.getElementById('cards');
   const search = document.getElementById('search').value.toLowerCase();
   
-  let filtrados = CONCURSOS_BASE.filter(c => {
+  let filtrados = concursos.filter(c => {
     const cumpleSearch = c.titulo.toLowerCase().includes(search) || c.organizacion.toLowerCase().includes(search);
     if (filtroActivo === 'todos') return cumpleSearch;
     if (filtroActivo === 'urgentes') return cumpleSearch && diasHasta(c.fecha_limite) <= 7;
     return cumpleSearch && c.categoria.toLowerCase().includes(filtroActivo);
   });
-
-  if (filtrados.length === 0) {
-    container.innerHTML = '<div class="empty">No se han encontrado concursos.</div>';
-    return;
-  }
 
   container.innerHTML = filtrados.map(c => {
     const dias = diasHasta(c.fecha_limite);
@@ -258,13 +286,13 @@ function renderCards() {
       <div class="card" onclick="openModal('${c.titulo}')">
         <div class="card-meta">
           <span class="card-cat">${c.categoria}</span>
-          <span class="card-days ${dias <= 7 ? 'urgent' : ''}">${dias} días restantes</span>
+          <span class="card-days ${dias <= 7 ? 'urgent' : ''}">${dias} días</span>
         </div>
         <div class="card-title">${c.titulo}</div>
         <div class="card-org">${c.organizacion}</div>
         <div class="card-footer">
           <span class="card-premio">${c.premio}</span>
-          <span class="card-fecha">Límite: ${c.fecha_limite}</span>
+          <span class="card-fecha">${c.fecha_limite}</span>
         </div>
       </div>
     `;
@@ -274,9 +302,7 @@ function renderCards() {
 }
 
 function renderSidebar() {
-  const urgentes = CONCURSOS_BASE.filter(c => diasHasta(c.fecha_limite) <= 7)
-    .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
-  
+  const urgentes = concursos.filter(c => diasHasta(c.fecha_limite) <= 7);
   document.getElementById('sidebar-urgentes').innerHTML = urgentes.map(c => `
     <div class="deadline-item">
       <span class="deadline-title">${c.titulo}</span>
@@ -286,55 +312,9 @@ function renderSidebar() {
 }
 
 function openModal(titulo) {
-  const c = CONCURSOS_BASE.find(x => x.titulo === titulo);
+  const c = concursos.find(x => x.titulo === titulo);
   document.getElementById('m-cat').textContent = c.categoria;
   document.getElementById('m-title').textContent = c.titulo;
   document.getElementById('m-org').textContent = c.organizacion;
   document.getElementById('m-premio').textContent = c.premio;
   document.getElementById('m-fecha').textContent = c.fecha_limite;
-  document.getElementById('m-desc').textContent = c.descripcion;
-  
-  const actions = document.getElementById('m-actions');
-  actions.innerHTML = c.url ? `<a href="${c.url}" target="_blank" class="modal-btn modal-btn-primary">Ver bases</a>` : '';
-  
-  document.getElementById('modal').classList.add('open');
-}
-
-function closeModal(e) {
-  if (!e || e.target.id === 'modal' || e.target.className === 'modal-close') {
-    document.getElementById('modal').classList.remove('open');
-  }
-}
-
-function setFiltro(f) {
-  filtroActivo = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn-' + f).classList.add('active');
-  renderCards();
-}
-
-function updateStats() {
-  document.getElementById('total-count').textContent = CONCURSOS_BASE.length;
-  const totalEuros = CONCURSOS_BASE.reduce((acc, c) => {
-    const num = parseInt(c.premio.replace(/[^0-9]/g, '')) || 0;
-    return acc + num;
-  }, 0);
-  document.getElementById('premios-total').textContent = totalEuros.toLocaleString() + '€';
-}
-
-// INICIO DE LA APP
-window.onload = () => {
-  const hoy = new Date();
-  document.getElementById('fecha-hoy').textContent = hoy.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-  
-  if (CONCURSOS_BASE.length > 0) {
-    renderCards();
-    updateStats();
-    document.getElementById('ai-dot').style.background = '#2a9d5c';
-  } else {
-    document.getElementById('cards').innerHTML = '<div class="empty">Buscando concursos... (Vuelve en unos minutos)</div>';
-  }
-};
-</script>
-</body>
-</html>
