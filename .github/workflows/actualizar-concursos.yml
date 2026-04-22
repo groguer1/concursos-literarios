@@ -26,7 +26,7 @@ jobs:
         env:
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: node scripts/buscar-concursos.js
-
+        working-directory: ${{ github.workspace }}
       - name: Guardar cambios si hay concursos nuevos
         run: |
           git config --local user.email "action@github.com"
