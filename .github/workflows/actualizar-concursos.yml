@@ -27,6 +27,7 @@ jobs:
         timeout-minutes: 3
         env:
           PROXY_URL: ${{ secrets.PROXY_URL }}
+          ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
         run: node scripts/buscar-concursos.js
 
       - name: Guardar cambios si hay concursos nuevos
