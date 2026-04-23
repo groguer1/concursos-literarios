@@ -35,7 +35,6 @@ function httpsPost(hostname, path, headers, bodyBuf) {
   });
 }
 
-// Leer URL via Worker de Cloudflare
 async function fetchUrl(url) {
   try {
     const urlObj = new URL(PROXY_URL);
@@ -50,23 +49,28 @@ async function fetchUrl(url) {
   }
 }
 
-// Llamar a Anthropic directamente
 async function llamarIA(texto) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
   limite.setDate(limite.getDate() + 61);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
+  // Limpiar HTML manteniendo texto en espanol (tildes, enie, etc)
   const textoLimpio = texto
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<style[\s\S]*?<\/style>/gi, '')
     .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#[0-9]+;/g, ' ')
     .replace(/\s+/g, ' ')
-    .replace(/[^\x20-\x7E\n]/g, '')
     .trim()
     .substring(0, 6000);
 
-  const prompt = 'Analiza estos textos de webs de concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Devuelve SOLO array JSON: [{"titulo":"nombre","organizacion":"quien convoca","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY","descripcion":"breve","url":"","nuevo":false}] Si no hay concursos devuelve: []\n\n' + textoLimpio;
+  const prompt = 'Analiza estos textos de webs de concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Devuelve SOLO array JSON valido sin texto adicional: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"url si aparece o vacia","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []\n\n' + textoLimpio;
 
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
@@ -113,9 +117,9 @@ async function main() {
   let concursos = [];
   try {
     const respuesta = await llamarIA(html);
-    console.log('Respuesta recibida');
+    console.log('Respuesta IA recibida');
     const match = respuesta.match(/\[[\s\S]*\]/);
-    if (!match) throw new Error('Sin JSON');
+    if (!match) throw new Error('Sin JSON en respuesta');
     concursos = JSON.parse(match[0]);
     console.log('Encontrados: ' + concursos.length);
   } catch(e) {
@@ -123,14 +127,14 @@ async function main() {
     process.exit(0);
   }
 
-  if (!concursos.length) { console.log('Sin concursos'); process.exit(0); }
+  if (!concursos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
 
   concursos = concursos
     .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= 61; })
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
-  console.log('Validos: ' + concursos.length);
-  if (!concursos.length) { console.log('Ninguno en rango'); process.exit(0); }
+  console.log('Validos en rango: ' + concursos.length);
+  if (!concursos.length) { console.log('Ninguno en rango de 2 meses'); process.exit(0); }
 
   let html_file = fs.readFileSync('index.html', 'utf8');
   const concursosJS = 'const CONCURSOS_BASE = ' + JSON.stringify(concursos) + ';';
