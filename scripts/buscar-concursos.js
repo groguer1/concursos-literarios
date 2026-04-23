@@ -54,7 +54,8 @@ async function main() {
     console.log('Leyendo ' + url);
     const contents = await fetchUrl(url);
     if (contents) {
-      html += '\nFUENTE: ' + url + '\n' + contents.substring(0, 8000);
+const limpio = contents.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').substring(0, 8000);
+html += '\nFUENTE: ' + url + '\n' + limpio;
       console.log('OK');
     } else {
       console.warn('No se pudo leer ' + url);
@@ -68,7 +69,8 @@ async function main() {
   const limite = new Date(); limite.setDate(limite.getDate() + 61);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
-  const prompt = 'Analiza este HTML de webs de concursos literarios espanoles y extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Devuelve SOLO array JSON sin texto adicional ni markdown: [{"titulo":"nombre exacto","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion en euros","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"URL exacta o cadena vacia","nuevo":false}] Si no encuentras concursos devuelve exactamente: []\n\n' + html;
+  const htmlSeguro = Buffer.from(html).toString('utf8').replace(/[^\x09\x0A\x0D\x20-\x7E\xA0-\xFF]/g, '');
+const prompt = 'Analiza este HTML...\n\n' + htmlSeguro;
 
   let concursos = [];
   try {
