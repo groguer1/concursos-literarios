@@ -1,6 +1,4 @@
-// scripts/buscar-concursos.js
 const fs = require('fs');
-const https = require('https');
 
 const PROXY_URL = process.env.PROXY_URL;
 const FUENTES = [
@@ -8,54 +6,21 @@ const FUENTES = [
   'https://culturamas.es/category/concursos/',
 ];
 
-// Timeout global — si el script lleva más de 2 minutos, salir
-setTimeout(() => {
-  console.log('Timeout global alcanzado, saliendo');
-  process.exit(0);
-}, 120000);
+setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 120000);
 
-function httpPost(url, data) {
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify(data);
-    const urlObj = new URL(url);
-    const options = {
-      hostname: urlObj.hostname,
-      path: urlObj.pathname + (urlObj.search || ''),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(body),
-      },
-      timeout: 20000,
-    };
-
-    const req = https.request(options, (res) => {
-      let responseData = '';
-      res.setTimeout(20000, () => {
-        req.destroy();
-        reject(new Error('Timeout leyendo respuesta'));
-      });
-      res.on('data', chunk => responseData += chunk);
-      res.on('end', () => {
-        try { resolve(JSON.parse(responseData)); }
-        catch(e) { reject(new Error('JSON invalido: ' + responseData.substring(0, 200))); }
-      });
-    });
-
-    req.on('error', reject);
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('Timeout de conexion'));
-    });
-
-    req.write(body);
-    req.end();
+async function postProxy(data) {
+  const res = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+    signal: AbortSignal.timeout(25000),
   });
+  return res.json();
 }
 
 async function fetchUrl(url) {
   try {
-    const result = await httpPost(PROXY_URL, { type: 'fetch', url });
+    const result = await postProxy({ type: 'fetch', url });
     return result.contents || null;
   } catch(e) {
     console.warn('Error leyendo ' + url + ': ' + e.message);
@@ -64,7 +29,7 @@ async function fetchUrl(url) {
 }
 
 async function llamarIA(prompt) {
-  const result = await httpPost(PROXY_URL, {
+  const result = await postProxy({
     model: 'claude-haiku-4-5-20251001',
     max_tokens: 4000,
     messages: [{ role: 'user', content: prompt }]
@@ -77,17 +42,12 @@ function diasHasta(fechaStr) {
   if (!fechaStr) return -1;
   const parts = fechaStr.split('/');
   if (parts.length !== 3) return -1;
-  const fecha = new Date(parts[2], parts[1] - 1, parts[0]);
-  return Math.ceil((fecha - new Date()) / 86400000);
+  return Math.ceil((new Date(parts[2], parts[1]-1, parts[0]) - new Date()) / 86400000);
 }
 
 async function main() {
-  console.log('Iniciando busqueda de concursos...');
-
-  if (!PROXY_URL) {
-    console.error('PROXY_URL no configurado');
-    process.exit(1);
-  }
+  console.log('Iniciando busqueda...');
+  if (!PROXY_URL) { console.error('PROXY_URL no configurado'); process.exit(1); }
 
   let html = '';
   for (const url of FUENTES) {
@@ -95,22 +55,18 @@ async function main() {
     const contents = await fetchUrl(url);
     if (contents) {
       html += '\nFUENTE: ' + url + '\n' + contents.substring(0, 8000);
-      console.log('Leido OK (' + contents.length + ' chars)');
+      console.log('OK');
     } else {
       console.warn('No se pudo leer ' + url);
     }
   }
 
-  if (!html) {
-    console.log('No se pudieron leer las fuentes, saliendo');
-    process.exit(0);
-  }
+  if (!html) { console.log('Sin fuentes, saliendo'); process.exit(0); }
 
-  console.log('Analizando con IA...');
-  const hoy = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  const limite = new Date();
-  limite.setDate(limite.getDate() + 61);
-  const fechaLimite = limite.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  console.log('Llamando a IA...');
+  const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
+  const limite = new Date(); limite.setDate(limite.getDate() + 61);
+  const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
   const prompt = 'Analiza este HTML de webs de concursos literarios espanoles y extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Devuelve SOLO array JSON sin texto adicional ni markdown: [{"titulo":"nombre exacto","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion en euros","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"URL exacta o cadena vacia","nuevo":false}] Si no encuentras concursos devuelve exactamente: []\n\n' + html;
 
@@ -118,47 +74,32 @@ async function main() {
   try {
     const respuesta = await llamarIA(prompt);
     const match = respuesta.match(/\[[\s\S]*\]/);
-    if (!match) throw new Error('No se encontro JSON');
+    if (!match) throw new Error('Sin JSON');
     concursos = JSON.parse(match[0]);
-    console.log('Encontrados ' + concursos.length + ' concursos');
+    console.log('Encontrados: ' + concursos.length);
   } catch(e) {
     console.error('Error IA: ' + e.message);
     process.exit(0);
   }
 
-  if (concursos.length === 0) {
-    console.log('Sin concursos nuevos');
-    process.exit(0);
-  }
+  if (!concursos.length) { console.log('Sin concursos'); process.exit(0); }
 
-  concursos = concursos.filter(c => {
-    const dias = diasHasta(c.fecha_limite);
-    return dias > 0 && dias <= 61;
-  }).sort((a, b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
+  concursos = concursos
+    .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= 61; })
+    .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
-  console.log('Concursos validos: ' + concursos.length);
-
-  if (concursos.length === 0) {
-    console.log('Ninguno dentro del rango');
-    process.exit(0);
-  }
+  console.log('Validos: ' + concursos.length);
+  if (!concursos.length) { console.log('Ninguno en rango'); process.exit(0); }
 
   let html_file = fs.readFileSync('index.html', 'utf8');
   const concursosJS = 'const CONCURSOS_BASE = ' + JSON.stringify(concursos) + ';';
   const regex = /const CONCURSOS_BASE = \[[\s\S]*?\];/;
 
-  if (!regex.test(html_file)) {
-    console.error('No se encontro CONCURSOS_BASE en index.html');
-    process.exit(1);
-  }
+  if (!regex.test(html_file)) { console.error('No se encontro CONCURSOS_BASE'); process.exit(1); }
 
-  html_file = html_file.replace(regex, concursosJS);
-  fs.writeFileSync('index.html', html_file, 'utf8');
-  console.log('index.html actualizado con ' + concursos.length + ' concursos');
+  fs.writeFileSync('index.html', html_file.replace(regex, concursosJS), 'utf8');
+  console.log('Actualizado con ' + concursos.length + ' concursos');
   concursos.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
-main().catch(e => {
-  console.error('Error fatal: ' + e.message);
-  process.exit(0);
-});
+main().catch(e => { console.error('Error: ' + e.message); process.exit(0); });
