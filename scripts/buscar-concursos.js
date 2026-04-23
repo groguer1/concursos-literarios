@@ -13,10 +13,7 @@ setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 120000);
 function httpsPost(hostname, path, headers, bodyBuf) {
   return new Promise((resolve, reject) => {
     const options = {
-      hostname,
-      port: 443,
-      path,
-      method: 'POST',
+      hostname, port: 443, path, method: 'POST',
       headers: { ...headers, 'Content-Length': bodyBuf.length },
       timeout: 30000,
     };
@@ -49,28 +46,28 @@ async function fetchUrl(url) {
   }
 }
 
-async function llamarIA(texto) {
+function limpiarHTML(texto) {
+  return texto
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#[0-9]+;/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+// ✅ CORREGIDO: llamar la IA por cada URL por separado, con más texto
+async function llamarIA(textoFuente, urlFuente) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
   limite.setDate(limite.getDate() + 61);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
-  // Limpiar HTML manteniendo texto en espanol (tildes, enie, etc)
-  const textoLimpio = texto
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#[0-9]+;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .substring(0, 6000);
+  // ✅ CORREGIDO: aumentado de 6000 a 15000 chars
+  const textoLimpio = limpiarHTML(textoFuente).substring(0, 15000);
 
-  const prompt = 'Analiza estos textos de webs de concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Devuelve SOLO array JSON valido sin texto adicional: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"url si aparece o vacia","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []\n\n' + textoLimpio;
+  const prompt = 'Analiza este texto de la web ' + urlFuente + ' sobre concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no ves fechas claras, incluye igualmente los concursos que encuentres con fecha_limite estimada o vacia. Devuelve SOLO array JSON valido sin texto adicional: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY o vacia si no aparece","descripcion":"descripcion breve","url":"url si aparece o vacia","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []\n\n' + textoLimpio;
 
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
@@ -89,9 +86,9 @@ async function llamarIA(texto) {
 }
 
 function diasHasta(fechaStr) {
-  if (!fechaStr) return -1;
+  if (!fechaStr) return 30; // ✅ si no hay fecha, asumimos que está vigente
   const parts = fechaStr.split('/');
-  if (parts.length !== 3) return -1;
+  if (parts.length !== 3) return 30;
   return Math.ceil((new Date(parts[2], parts[1]-1, parts[0]) - new Date()) / 86400000);
 }
 
@@ -99,37 +96,32 @@ async function main() {
   console.log('Iniciando busqueda de concursos...');
   if (!ANTHROPIC_KEY) { console.error('ANTHROPIC_KEY no configurado'); process.exit(1); }
 
-  let html = '';
+  let todosLosConcursos = [];
+
+  // ✅ CORREGIDO: procesar cada URL por separado
   for (const url of FUENTES) {
     console.log('Leyendo ' + url);
     const contents = await fetchUrl(url);
-    if (contents) {
-      html += '\nFUENTE: ' + url + '\n' + contents.substring(0, 8000);
-      console.log('Leido OK');
-    } else {
-      console.warn('No se pudo leer ' + url);
+    if (!contents) { console.warn('No se pudo leer ' + url); continue; }
+    console.log('Leido OK (' + contents.length + ' chars)');
+
+    console.log('Analizando ' + url + ' con IA...');
+    try {
+      const respuesta = await llamarIA(contents, url);
+      const match = respuesta.match(/\[[\s\S]*\]/);
+      if (!match) { console.warn('Sin JSON en respuesta para ' + url); continue; }
+      const concursos = JSON.parse(match[0]);
+      console.log('Encontrados en ' + url + ': ' + concursos.length);
+      todosLosConcursos = todosLosConcursos.concat(concursos);
+    } catch(e) {
+      console.error('Error IA para ' + url + ': ' + e.message);
     }
   }
 
-  if (!html) { console.log('Sin fuentes, saliendo'); process.exit(0); }
+  if (!todosLosConcursos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
 
-  console.log('Analizando con IA...');
-  let concursos = [];
-  try {
-    const respuesta = await llamarIA(html);
-    console.log('Respuesta IA recibida');
-    const match = respuesta.match(/\[[\s\S]*\]/);
-    if (!match) throw new Error('Sin JSON en respuesta');
-    concursos = JSON.parse(match[0]);
-    console.log('Encontrados: ' + concursos.length);
-  } catch(e) {
-    console.error('Error IA: ' + e.message);
-    process.exit(0);
-  }
-
-  if (!concursos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
-
-  concursos = concursos
+  // Filtrar y ordenar
+  const concursos = todosLosConcursos
     .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= 61; })
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
