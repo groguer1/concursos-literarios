@@ -8,29 +8,46 @@ const FUENTES = [
   'https://culturamas.es/category/concursos/',
 ];
 
+// Timeout global — si el script lleva más de 2 minutos, salir
+setTimeout(() => {
+  console.log('Timeout global alcanzado, saliendo');
+  process.exit(0);
+}, 120000);
+
 function httpPost(url, data) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify(data);
     const urlObj = new URL(url);
     const options = {
       hostname: urlObj.hostname,
-      path: urlObj.pathname,
+      path: urlObj.pathname + (urlObj.search || ''),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(body),
       },
+      timeout: 20000,
     };
+
     const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
+      let responseData = '';
+      res.setTimeout(20000, () => {
+        req.destroy();
+        reject(new Error('Timeout leyendo respuesta'));
+      });
+      res.on('data', chunk => responseData += chunk);
       res.on('end', () => {
-        try { resolve(JSON.parse(data)); }
-        catch(e) { reject(new Error('JSON invalido: ' + data.substring(0, 200))); }
+        try { resolve(JSON.parse(responseData)); }
+        catch(e) { reject(new Error('JSON invalido: ' + responseData.substring(0, 200))); }
       });
     });
+
     req.on('error', reject);
-    req.setTimeout(30000, () => { req.destroy(); reject(new Error('Timeout')); });
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error('Timeout de conexion'));
+    });
+
     req.write(body);
     req.end();
   });
@@ -78,7 +95,7 @@ async function main() {
     const contents = await fetchUrl(url);
     if (contents) {
       html += '\nFUENTE: ' + url + '\n' + contents.substring(0, 8000);
-      console.log('Leido OK');
+      console.log('Leido OK (' + contents.length + ' chars)');
     } else {
       console.warn('No se pudo leer ' + url);
     }
