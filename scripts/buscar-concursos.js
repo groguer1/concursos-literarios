@@ -4,8 +4,8 @@ const https = require('https');
 const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
 const PROXY_URL = process.env.PROXY_URL;
 const FUENTES = [
-  'https://www.escritores.org/becas-y-concursos/',
-  'https://culturamas.es/category/concursos/',
+  'https://www.escritores.org/concursos/concursos-1/concursos-literarios',
+  'https://www.escritores.org/recursos-para-escritores/7293-concursos-literarios-espana',
 ];
 
 setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 120000);
@@ -39,11 +39,9 @@ async function fetchUrl(url) {
     const result = await httpsPost(urlObj.hostname, urlObj.pathname, {
       'Content-Type': 'application/json',
     }, body);
-    // 🔍 DEBUG: ver estructura completa de lo que devuelve el proxy
     console.log('DEBUG proxy keys:', Object.keys(result));
-    console.log('DEBUG contents type:', typeof result.contents);
-    console.log('DEBUG primeros 500 chars:', (result.contents || '').substring(0, 500));
-    return result.contents || null;
+    console.log('DEBUG primeros 300 chars:', JSON.stringify(result).substring(0, 300));
+    return result.contents || result.content || result.html || result.text || null;
   } catch(e) {
     console.warn('Error leyendo ' + url + ': ' + e.message);
     return null;
@@ -69,11 +67,10 @@ async function llamarIA(textoFuente, urlFuente) {
 
   const textoLimpio = limpiarHTML(textoFuente).substring(0, 15000);
 
-  // 🔍 DEBUG: ver cuánto texto llega a la IA
   console.log('DEBUG texto limpio chars:', textoLimpio.length);
-  console.log('DEBUG primeros 300 chars limpios:', textoLimpio.substring(0, 300));
+  console.log('DEBUG muestra texto:', textoLimpio.substring(0, 400));
 
-  const prompt = 'Analiza este texto de la web ' + urlFuente + ' sobre concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no ves fechas claras, incluye igualmente los concursos que encuentres con fecha_limite estimada o vacia. Devuelve SOLO array JSON valido sin texto adicional: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY o vacia si no aparece","descripcion":"descripcion breve","url":"url si aparece o vacia","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []\n\n' + textoLimpio;
+  const prompt = 'Analiza este texto de la web ' + urlFuente + ' sobre concursos literarios. Extrae TODOS los concursos que encuentres, especialmente los que tengan fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no ves fechas claras, incluye igualmente los concursos con fecha_limite vacia. Devuelve SOLO array JSON valido sin texto adicional: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve","url":"url si aparece o vacia","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []\n\n' + textoLimpio;
 
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
@@ -90,10 +87,7 @@ async function llamarIA(textoFuente, urlFuente) {
   if (result.error) throw new Error(JSON.stringify(result.error));
 
   const respuesta = result.content[0].text;
-
-  // 🔍 DEBUG: ver qué devuelve la IA
-  console.log('DEBUG respuesta IA completa:', respuesta);
-
+  console.log('DEBUG respuesta IA:', respuesta.substring(0, 500));
   return respuesta;
 }
 
