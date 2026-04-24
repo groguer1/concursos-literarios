@@ -31,7 +31,7 @@ jobs:
           ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
         run: node scripts/buscar-concursos.js
 
-           - name: Guardar cambios si hay concursos nuevos
+      - name: Guardar cambios si hay concursos nuevos
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
