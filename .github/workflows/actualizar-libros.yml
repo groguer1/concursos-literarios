@@ -25,7 +25,6 @@ jobs:
       - name: Descargar pagina de novedades
         run: |
           curl -s -L --max-time 30 -A "Mozilla/5.0" "https://www.todostuslibros.com/mas_vendidos" > /tmp/libros.html || echo "" > /tmp/libros.html
-
       - name: Buscar libros con IA
         timeout-minutes: 4
         env:
