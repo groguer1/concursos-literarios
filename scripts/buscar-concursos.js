@@ -95,7 +95,8 @@ async function main() {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
       const respuesta = await llamarIA(html, f.nombre);
-      const match = respuesta.match(/\[[\s\S]*\]/);
+      const limpio = respuesta.replace(/```json|```/g, '');
+const match = limpio.match(/\[[\s\S]*\]/);
       if (!match) { console.warn('Sin JSON para ' + f.nombre); continue; }
       const concursos = JSON.parse(match[0]);
       console.log('Encontrados en ' + f.nombre + ': ' + concursos.length);
