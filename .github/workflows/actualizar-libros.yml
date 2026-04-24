@@ -24,8 +24,7 @@ jobs:
 
       - name: Descargar pagina de novedades
         run: |
-          curl -s -L --max-time 30 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "https://www.casadellibro.com/novedades/literatura" > /tmp/libros.html || echo "" > /tmp/libros.html
-          echo "Descargado: $(wc -c < /tmp/libros.html) bytes"
+          curl -s -L --max-time 30 -A "Mozilla/5.0" "https://www.todostuslibros.com/mas_vendidos" > /tmp/libros.html || echo "" > /tmp/libros.html
 
       - name: Buscar libros con IA
         timeout-minutes: 4
