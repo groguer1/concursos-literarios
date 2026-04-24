@@ -21,9 +21,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Listar archivos para depurar
-        run: ls -R
-
       - name: Buscar concursos con IA
         timeout-minutes: 3
         env:
@@ -36,6 +33,6 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add index.html
-          git diff --staged --quiet || git commit -m "Actualizacion automatica de concursos $(date +'%d/%m/%Y')"
+          git diff --staged --quiet || git commit -m "Actualizacion automatica $(date +'%d/%m/%Y')"
           git pull --rebase origin main
           git push
