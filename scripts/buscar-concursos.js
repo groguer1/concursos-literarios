@@ -4,8 +4,8 @@ const https = require('https');
 const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
 const PROXY_URL = process.env.PROXY_URL;
 const FUENTES = [
-  'https://www.escritores.org/concursos/concursos-1/concursos-literarios',
-  'https://www.escritores.org/recursos-para-escritores/7293-concursos-literarios-espana',
+  'https://www.finalescerrados.com/p/concursos.html',
+  'https://www.guiadeconcursos.com/',
 ];
 
 setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 120000);
