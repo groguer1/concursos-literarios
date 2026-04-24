@@ -41,7 +41,7 @@ function limpiarHTML(texto) {
 async function llamarIA(texto, fuente) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
-  limite.setDate(limite.getDate() + 61);
+  limite.setDate(limite.getDate() + 30);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
   const textoLimpio = limpiarHTML(texto).substring(0, 12000);
@@ -108,7 +108,7 @@ async function main() {
   if (!todos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
 
   const filtrados = todos
-    .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= 61; })
+    .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= 30;
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
   console.log('Validos en rango: ' + filtrados.length);
