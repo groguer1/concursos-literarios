@@ -21,13 +21,16 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Listar archivos para depurar
-        run: ls -R
+      - name: Descargar paginas de concursos
+        run: |
+          curl -s --max-time 30 -A "Mozilla/5.0" "https://www.escritores.org/concursos/concursos-1/concursos-literarios" > /tmp/fuente1.html || echo "" > /tmp/fuente1.html
+          curl -s --max-time 30 -A "Mozilla/5.0" "https://culturamas.es/category/concursos/" > /tmp/fuente2.html || echo "" > /tmp/fuente2.html
+          echo "Fuente1: $(wc -c < /tmp/fuente1.html) bytes"
+          echo "Fuente2: $(wc -c < /tmp/fuente2.html) bytes"
 
       - name: Buscar concursos con IA
-        timeout-minutes: 3
+        timeout-minutes: 4
         env:
-          PROXY_URL: ${{ secrets.PROXY_URL }}
           ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_KEY }}
         run: node scripts/buscar-concursos.js
 
