@@ -24,7 +24,7 @@ jobs:
       - name: Descargar paginas de concursos
         run: |
           curl -s -L --max-time 30 -A "Mozilla/5.0" "https://www.escritores.org/concursos/concursos-1/concursos-literarios" > /tmp/fuente1.html || echo "" > /tmp/fuente1.html
-          curl -s -L --max-time 30 -A "Mozilla/5.0" "https://culturamas.es/concursos/" > /tmp/fuente2.html || echo "" > /tmp/fuente2.html
+          curl -s -L --max-time 30 -A "Mozilla/5.0" "https://www.guiadeconcursos.com/" > /tmp/fuente2.html || echo "" > /tmp/fuente2.html
           echo "Fuente1: $(wc -c < /tmp/fuente1.html) bytes"
           echo "Fuente2: $(wc -c < /tmp/fuente2.html) bytes"
 
@@ -39,6 +39,6 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add index.html
-          git diff --staged --quiet || git commit -m "Actualización automática de concursos $(date +'%d/%m/%Y')"
+          git diff --staged --quiet || git commit -m "Actualizacion automatica de concursos $(date +'%d/%m/%Y')"
           git pull --rebase origin main
           git push
