@@ -3,14 +3,14 @@ const https = require('https');
 
 const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
 
-setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 120000);
+setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 240000);
 
 function httpsPost(hostname, path, headers, bodyBuf) {
   return new Promise((resolve, reject) => {
     const options = {
       hostname, port: 443, path, method: 'POST',
       headers: { ...headers, 'Content-Length': bodyBuf.length },
-      timeout: 60000,
+      timeout: 90000,
     };
     const req = https.request(options, (res) => {
       const chunks = [];
