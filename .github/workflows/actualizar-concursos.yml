@@ -23,8 +23,8 @@ jobs:
 
       - name: Descargar paginas de concursos
         run: |
-          curl -s --max-time 30 -A "Mozilla/5.0" "https://www.escritores.org/concursos/concursos-1/concursos-literarios" > /tmp/fuente1.html || echo "" > /tmp/fuente1.html
-          curl -s -L --max-time 30 -A "Mozilla/5.0" "https://culturamas.es/category/concursos/" > /tmp/fuente2.html
+          curl -s -L --max-time 30 -A "Mozilla/5.0" "https://www.escritores.org/concursos/concursos-1/concursos-literarios" > /tmp/fuente1.html || echo "" > /tmp/fuente1.html
+          curl -s -L --max-time 30 -A "Mozilla/5.0" "https://culturamas.es/concursos/" > /tmp/fuente2.html || echo "" > /tmp/fuente2.html
           echo "Fuente1: $(wc -c < /tmp/fuente1.html) bytes"
           echo "Fuente2: $(wc -c < /tmp/fuente2.html) bytes"
 
