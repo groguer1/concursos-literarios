@@ -44,20 +44,19 @@ async function llamarIA(texto, fuente) {
   limite.setDate(limite.getDate() + 61);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
-  const textoLimpio = limpiarHTML(texto).substring(0, 15000);
+  const textoLimpio = limpiarHTML(texto).substring(0, 12000);
   console.log('Texto limpio de ' + fuente + ': ' + textoLimpio.length + ' chars');
-  console.log('Muestra: ' + textoLimpio.substring(0, 200));
 
   if (textoLimpio.length < 100) {
     console.warn('Texto demasiado corto, saltando ' + fuente);
     return '[]';
   }
 
-  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve","url":"url o vacia","nuevo":false}] Si no hay ninguno devuelve solo esto: []\n\n' + textoLimpio;
+  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae como maximo los 10 concursos mas proximos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
 
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4000,
+    max_tokens: 8000,
     messages: [{ role: 'user', content: prompt }]
   }), 'utf8');
 
