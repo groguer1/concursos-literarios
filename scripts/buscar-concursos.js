@@ -33,10 +33,10 @@ async function buscarConcursos() {
   limite.setDate(limite.getDate() + 61);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
-  const prompt = 'Busca en escritores.org/concursos y culturamas.es/category/concursos los concursos literarios en español con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Devuelve SOLO un array JSON valido sin texto adicional: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"url del concurso","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []';
+  const prompt = 'Busca en internet concursos literarios en español convocados en España con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Usa fuentes como escritores.org, culturamas.es, guiadeconcursos.com o similares. Devuelve SOLO un array JSON valido sin texto adicional ni explicaciones: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"url del concurso","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []';
 
   const body = Buffer.from(JSON.stringify({
-    model: 'claude-haiku-4-5-20251001',
+    model: 'claude-sonnet-4-20250514',
     max_tokens: 4000,
     tools: [{ type: 'web_search_20250305', name: 'web_search' }],
     messages: [{ role: 'user', content: prompt }]
@@ -50,13 +50,12 @@ async function buscarConcursos() {
 
   if (result.error) throw new Error(JSON.stringify(result.error));
 
-  // Recoger todo el texto de los bloques de respuesta
   const texto = result.content
     .filter(b => b.type === 'text')
     .map(b => b.text)
     .join('');
 
-  console.log('DEBUG respuesta IA:', texto.substring(0, 500));
+  console.log('DEBUG respuesta IA:', texto.substring(0, 800));
   return texto;
 }
 
