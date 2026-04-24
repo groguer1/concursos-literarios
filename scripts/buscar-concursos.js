@@ -53,7 +53,7 @@ async function llamarIA(texto, fuente) {
     return '[]';
   }
 
-  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. Devuelve SOLO array JSON sin texto adicional: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve","url":"url o vacia","nuevo":false}] Si no hay ninguno devuelve: []\n\n' + textoLimpio;
+  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve","url":"url o vacia","nuevo":false}] Si no hay ninguno devuelve solo esto: []\n\n' + textoLimpio;
 
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
@@ -73,10 +73,6 @@ async function llamarIA(texto, fuente) {
   return respuesta;
 }
 
-function quitarMarcadores(texto) {
-  return texto.replace(/`{3}json/g, '').replace(/`{3}/g, '');
-}
-
 function diasHasta(fechaStr) {
   if (!fechaStr) return 30;
   const parts = fechaStr.split('/');
@@ -90,7 +86,7 @@ async function main() {
 
   const fuentes = [
     { archivo: '/tmp/fuente1.html', nombre: 'escritores.org' },
-    { archivo: '/tmp/fuente2.html', nombre: 'culturamas.es' },
+    { archivo: '/tmp/fuente2.html', nombre: 'guiadeconcursos.com' },
   ];
 
   let todos = [];
@@ -99,10 +95,10 @@ async function main() {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
       const respuesta = await llamarIA(html, f.nombre);
-      const limpio = quitarMarcadores(respuesta);
-      const match = limpio.match(/\[[\s\S]*\]/);
-      if (!match) { console.warn('Sin JSON para ' + f.nombre); continue; }
-      const concursos = JSON.parse(match[0]);
+      const inicio = respuesta.indexOf('[');
+      const fin = respuesta.lastIndexOf(']');
+      if (inicio === -1 || fin === -1) { console.warn('Sin JSON para ' + f.nombre); continue; }
+      const concursos = JSON.parse(respuesta.substring(inicio, fin + 1));
       console.log('Encontrados en ' + f.nombre + ': ' + concursos.length);
       todos = todos.concat(concursos);
     } catch(e) {
