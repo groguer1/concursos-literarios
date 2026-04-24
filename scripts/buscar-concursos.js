@@ -73,7 +73,8 @@ async function main() {
   let concursos = [];
   try {
     const respuesta = await buscarConcursos();
-    const match = respuesta.match(/\[[\s\S]*\]/);
+    const limpio = respuesta.replace(/```json|```/g, '');
+const match = limpio.match(/\[[\s\S]*\]/);
     if (!match) throw new Error('Sin JSON en respuesta');
     concursos = JSON.parse(match[0]);
     console.log('Encontrados: ' + concursos.length);
