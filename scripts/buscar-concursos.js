@@ -36,7 +36,7 @@ async function buscarConcursos() {
   const prompt = 'Busca en internet concursos literarios en español convocados en España con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Usa fuentes como escritores.org, culturamas.es, guiadeconcursos.com o similares. Devuelve SOLO un array JSON valido sin texto adicional ni explicaciones: [{"titulo":"nombre del concurso","organizacion":"entidad convocante","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion economica","fecha_limite":"DD/MM/YYYY","descripcion":"descripcion breve","url":"url del concurso","nuevo":false}] Si no encuentras ninguno devuelve exactamente: []';
 
   const body = Buffer.from(JSON.stringify({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-4-6',
     max_tokens: 4000,
     tools: [{ type: 'web_search_20250305', name: 'web_search' }],
     messages: [{ role: 'user', content: prompt }]
