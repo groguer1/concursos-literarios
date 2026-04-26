@@ -127,3 +127,6 @@ function renderArticulosExternos(containerId) {
 document.addEventListener('DOMContentLoaded', function() {
   renderArticulosExternos('articulos-list');
 });
+
+// Dispara evento por si renderArt() ya se llamó antes de que este script cargara
+window.dispatchEvent(new Event('articulosReady'));
