@@ -321,6 +321,14 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
         <div id="sidebar-urgentes"><div style="font-size:12px;color:var(--muted)">Cargando...</div></div>
       </div>
       <div class="sidebar-section">
+        <div class="sidebar-title">Concursos por género</div>
+        <a class="sidebar-link" href="/?categoria=poesia">Concursos de poesía</a>
+        <a class="sidebar-link" href="/?categoria=relato">Concursos de relato corto</a>
+        <a class="sidebar-link" href="/?categoria=novela">Concursos de novela</a>
+        <a class="sidebar-link" href="/?categoria=infantil">Literatura infantil</a>
+        <a class="sidebar-link" href="/?categoria=teatro">Concursos de teatro</a>
+      </div>
+      <div class="sidebar-section">
         <div class="sidebar-title">Secciones</div>
         <span class="sidebar-link" onclick="showPage('concursos',null)">Concursos literarios</span>
         <a class="sidebar-link" href="editoriales.html">Editoriales</a>
@@ -605,6 +613,29 @@ async function init(){
     buscarEnFondo();
     setTimeout(()=>{ if(concursosSheets.length>0){ mezclarConcursosSheets(); } },3000);
   }
+  // Leer parámetro ?categoria= de la URL para SEO
+  aplicarParametroCategoria();
+}
+
+// Metadatos y filtro por categoría según parámetro URL
+const META_CATEGORIAS = {
+  poesia:   { filtro:'poesia',   title:'Concursos de Poesía en España 2026 — Letras Españolas', desc:'Convocatorias de concursos de poesía en España abiertas ahora. Actualizadas diariamente con fechas límite, premios y bases.' },
+  relato:   { filtro:'relato',   title:'Concursos de Relato Corto en España 2026 — Letras Españolas', desc:'Concursos de relato corto y cuento en España activos ahora. Fechas límite, premios y bases actualizadas a diario.' },
+  novela:   { filtro:'novela',   title:'Concursos de Novela en España 2026 — Letras Españolas', desc:'Premios y concursos de novela en España convocados ahora. Dotaciones, requisitos y fechas de cierre.' },
+  infantil: { filtro:'infantil', title:'Concursos de Literatura Infantil en España 2026 — Letras Españolas', desc:'Concursos de literatura infantil y juvenil en España. Convocatorias activas con fechas límite y bases.' },
+  teatro:   { filtro:'teatro',   title:'Concursos de Teatro en España 2026 — Letras Españolas', desc:'Convocatorias de dramaturgia y teatro en España abiertas ahora. Premios, fechas y bases actualizadas.' },
+};
+
+function aplicarParametroCategoria(){
+  const params = new URLSearchParams(window.location.search);
+  const cat = (params.get('categoria')||'').toLowerCase();
+  if(!cat || !META_CATEGORIAS[cat]) return;
+  const meta = META_CATEGORIAS[cat];
+  // Actualizar title y meta description para que Google los indexe correctamente
+  document.title = meta.title;
+  document.querySelector('meta[name="description"]').setAttribute('content', meta.desc);
+  // Activar el filtro correspondiente
+  setFiltro(meta.filtro);
 }
 
 function mezclarConcursosSheets(){
