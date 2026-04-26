@@ -551,13 +551,29 @@ async function cargarSheets(){
 function renderArt(){
   const cont = document.getElementById('articulos-list');
   if(!cont) return;
-  // Si articulos.js ya cargó, usarlo; si no, reintentarlo cuando cargue
-  if(typeof renderArticulosExternos === 'function'){
-    renderArticulosExternos('articulos-list');
-  } else {
-    // articulos.js aún no ha cargado — reintentamos cuando el DOM esté listo
-    window.addEventListener('articulosReady', function(){ renderArticulosExternos('articulos-list'); }, {once:true});
-  }
+  const arts = [
+    {cat:'Publicación', titulo:'Cómo escribir una sinopsis que conquiste a editores y agentes', excerpt:'Guía completa: estructura, los cinco elementos imprescindibles y los errores que arruinan una sinopsis antes de que el agente pase a la segunda página.', tiempo:'12 min', url:'articulos/como-escribir-sinopsis-editorial.html'},
+    {cat:'Publicación', titulo:'Cómo encontrar un agente literario en España: guía completa', excerpt:'Qué hace un agente, cuándo buscarlo, cómo preparar la propuesta y qué agencias buscan tu género. Todo lo que necesitas antes de enviar tu primera consulta.', tiempo:'14 min', url:'articulos/agente-literario-espana.html'},
+    {cat:'Publicación', titulo:'La carta de presentación a una editorial: cómo escribirla y qué no poner nunca', excerpt:'La estructura exacta, los cuatro bloques que tiene que tener y los errores que la matan en treinta segundos.', tiempo:'12 min', url:'articulos/carta-presentacion-editorial.html'},
+    {cat:'Concursos', titulo:'Guía completa para presentarte a concursos literarios en España', excerpt:'Tipos de concursos, cómo leer las bases, el seudónimo, los derechos cedidos y los errores que descalifican automáticamente.', tiempo:'13 min', url:'articulos/guia-concursos-literarios-espana.html'},
+    {cat:'Concursos', titulo:'Los grandes premios literarios de España en 2026: guía completa', excerpt:'Premio Planeta, Herralde, Alfaguara, Nadal, Loewe y los Premios Nacionales: dotación, requisitos y qué tipo de obra busca cada jurado.', tiempo:'11 min', url:'articulos/premios-literarios-espana-2026.html'},
+    {cat:'Escritura creativa', titulo:'Cómo escribir un relato corto para ganar un concurso literario', excerpt:'Guía técnica: estructura, apertura, el giro final, la extensión óptima y qué diferencia técnicamente a los finalistas del resto.', tiempo:'13 min', url:'articulos/como-escribir-relato-corto-concurso.html'},
+    {cat:'Escritura creativa', titulo:'El primer párrafo: cómo atrapar al lector desde la primera línea', excerpt:'Los tipos de apertura que funcionan, los errores que cierran el libro antes de empezar y por qué es el párrafo que más vale la pena reescribir.', tiempo:'10 min', url:'articulos/como-escribir-primer-parrafo-novela.html'},
+    {cat:'Escritura creativa', titulo:'Estructura en tres actos: la guía definitiva para novelistas', excerpt:'Cómo aplicar la estructura clásica a tu novela: detonante, punto oscuro, clímax y el arco del personaje que hace que el lector llegue al final.', tiempo:'13 min', url:'articulos/estructura-tres-actos-novela.html'},
+    {cat:'Publicación', titulo:'Amazon KDP vs editorial tradicional: comparativa honesta para escritores españoles', excerpt:'Regalías, distribución, control creativo y velocidad: cuándo tiene sentido cada opción y el modelo híbrido que usan cada vez más autores.', tiempo:'15 min', url:'articulos/amazon-kdp-vs-editorial-tradicional.html'},
+    {cat:'Publicación', titulo:'Autopublicación en papel: guía completa de KDP Print e IngramSpark', excerpt:'Cómo autopublicar tu libro en papel en España: diferencias entre plataformas, costes reales y distribución en librerías.', tiempo:'14 min', url:'articulos/autopublicacion-papel-kdp-print.html'},
+    {cat:'Derechos de autor', titulo:'El contrato editorial: cláusulas que debes leer (y negociar) antes de firmar', excerpt:'Anticipo, regalías, territorialidad, reversión de derechos y cláusula de opción: qué significan y qué nunca deberías aceptar.', tiempo:'15 min', url:'articulos/contrato-editorial-clausulas.html'},
+    {cat:'Derechos de autor', titulo:'Derechos de autor en contratos editoriales: qué ceder y qué conservar', excerpt:'Derechos morales, patrimoniales, de traducción y audiovisuales: cuáles son inalienables y cómo proteger tus intereses.', tiempo:'12 min', url:'articulos/derechos-autor-contrato-editorial.html'},
+    {cat:'Derechos de autor', titulo:'Cómo registrar tu obra literaria en España: guía paso a paso', excerpt:'Para qué sirve el registro, dónde y cómo registrar en cada comunidad autónoma, cuánto cuesta y las alternativas gratuitas válidas.', tiempo:'9 min', url:'articulos/registrar-obra-literaria-espana.html'}
+  ];
+  cont.innerHTML = arts.map(a =>
+    `<a class="art-item" href="${a.url}" target="_top">
+       <div class="art-cat">${a.cat}</div>
+       <div class="art-title">${a.titulo}</div>
+       <div class="art-excerpt">${a.excerpt}</div>
+       <div class="art-meta">Lectura · ${a.tiempo}</div>
+     </a>`
+  ).join('');
 }
 function filterDir(listId,inputId){
   const q=(document.getElementById(inputId)||{value:''}).value.toLowerCase();
