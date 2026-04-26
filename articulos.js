@@ -115,7 +115,7 @@ function renderArticulosExternos(containerId) {
   const cont = document.getElementById(containerId);
   if (!cont) return;
   cont.innerHTML = ARTICULOS.map(a =>
-    `<a class="art-item" href="${a.url}">
+    `<a class="art-item" href="/${a.url}" target="_top">`
        <div class="art-cat">${a.cat}</div>
        <div class="art-title">${a.titulo}</div>
        <div class="art-excerpt">${a.excerpt}</div>
