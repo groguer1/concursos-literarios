@@ -110,8 +110,6 @@ header{border-bottom:2px solid var(--ink)}
 .detail-body ul li{margin-bottom:.4rem}
 .detail-body strong{font-weight:500}
 .detail-body .highlight{background:var(--cream);border-left:3px solid var(--accent);padding:.75rem 1rem;margin:1.5rem 0;font-size:14px;line-height:1.6}
-
-/* MODAL con sistema de URL de 3 niveles */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.7);z-index:100;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
 .modal-overlay.open{display:flex}
 .modal{background:var(--paper);max-width:640px;width:100%;margin:auto;border:2px solid var(--ink);padding:2rem;position:relative;animation:modalIn .2s ease}
@@ -133,7 +131,6 @@ header{border-bottom:2px solid var(--ink)}
 .modal-btn-secondary:hover{background:var(--cream)}
 .url-status{font-size:11px;color:var(--muted);margin-top:8px;display:none}
 .url-status.visible{display:block}
-
 .sidebar-section{margin-bottom:2rem}
 .sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
 .deadline-item{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}
@@ -373,33 +370,26 @@ let concursos=[], filtroActivo='todos', nuevosConcursos=[];
 // SISTEMA DE RESOLUCIÓN DE URL — 3 NIVELES
 // ══════════════════════════════════════════════
 
-// Nivel 1: comprueba si la URL es específica (no portada genérica)
 function esUrlEspecifica(url){
   if(!url) return false;
   try{
     const u = new URL(url);
-    // Si el path es muy corto (solo la raíz o una sección), es genérica
     const path = u.pathname.replace(/\/+$/,'');
     if(path.length < 5) return false;
-    // Si apunta a un dominio genérico de buscador o agregador, descartar
     if(DOMINIOS_GENERICOS.some(d => u.hostname.includes(d))) return false;
     return true;
   }catch{ return false; }
 }
 
-// Nivel 2: buscar en DuckDuckGo la URL exacta del concurso
 async function buscarUrlDuckDuckGo(titulo, organizacion){
   try{
     const query = encodeURIComponent(`"${titulo}" bases convocatoria ${organizacion}`);
     const ddgUrl = 'https://html.duckduckgo.com/html/?q='+query;
     const html = await fetchUrl(ddgUrl);
     if(!html) return null;
-
-    // Extraer primeros enlaces de resultados de DDG
     const matches = html.matchAll(/href="(https?:\/\/[^"]+)"/g);
     for(const m of matches){
       const link = m[1];
-      // Ignorar dominios de DDG, anuncios y agregadores
       if(link.includes('duckduckgo.com')) continue;
       if(link.includes('google.com')) continue;
       if(link.includes('escritores.org')) continue;
@@ -407,38 +397,30 @@ async function buscarUrlDuckDuckGo(titulo, organizacion){
       if(link.includes('facebook.com')) continue;
       if(link.includes('twitter.com')) continue;
       if(link.includes('utm_')) continue;
-      // El primer resultado válido es nuestra mejor opción
       return decodeURIComponent(link);
     }
   }catch(e){ console.warn('DDG error:', e); }
   return null;
 }
 
-// Nivel 3: URL de búsqueda en Google (siempre funciona como fallback)
 function urlBusquedaGoogle(titulo, organizacion){
   const q = encodeURIComponent(`${titulo} bases convocatoria ${organizacion}`);
   return `https://www.google.com/search?q=${q}`;
 }
 
-// Resolver URL para un concurso — ejecuta los 3 niveles
 async function resolverUrl(concurso){
-  // Nivel 1: ¿ya tenemos una URL específica de la IA?
   if(esUrlEspecifica(concurso.url)){
     return { url: concurso.url, nivel: 1, label: 'Ver convocatoria oficial' };
   }
-
-  // Nivel 2: buscar en DuckDuckGo
   const urlDDG = await buscarUrlDuckDuckGo(concurso.titulo, concurso.organizacion||'');
   if(urlDDG){
     return { url: urlDDG, nivel: 2, label: 'Ver convocatoria oficial' };
   }
-
-  // Nivel 3: búsqueda en Google
   return { url: urlBusquedaGoogle(concurso.titulo, concurso.organizacion||''), nivel: 3, label: 'Buscar convocatoria en Google' };
 }
 
 // ══════════════════════════════════════════════
-// DATOS BASE (se muestran al instante)
+// DATOS BASE
 // ══════════════════════════════════════════════
 const CONCURSOS_BASE = [{"titulo":"SEXTO CERTAMEN IBEROAMERICANO DE DRAMATURGIA CARLOS SCHWADERER CASTUERA","organizacion":"España","categoria":"Teatro","premio":"1.500€, puesta en escena y edición en formato libro","fecha_limite":"27/04/2026","descripcion":"Dramaturgia para mayores de 18 años","url":"","nuevo":false},{"titulo":"VII CERTAMEN DE RELATOS HISTÓRICOS CABALLEROS DEL REY FERNANDO","organizacion":"España","categoria":"Relato corto","premio":"Diploma, 150€ en metálico y vale de 50€ en libros","fecha_limite":"30/04/2026","descripcion":"Relatos históricos para autores españoles o residentes en España","url":"","nuevo":false},{"titulo":"XVII CERTAMEN DE POESÍA ÁNGEL CRESPO","organizacion":"España","categoria":"Poesia","premio":"1.000€","fecha_limite":"30/04/2026","descripcion":"Poesía para residentes o nacidos en España mayores de 16 años","url":"","nuevo":false},{"titulo":"XI CERTAMEN POÉTICO ALFONSO MONTEAGUDO","organizacion":"España","categoria":"Poesia","premio":"Publicación, 100 ejemplares, 400€ y estancia de fin de semana","fecha_limite":"30/04/2026","descripcion":"Poesía para mayores de 18 años nacidos o residentes en Andalucía","url":"","nuevo":false},{"titulo":"31 CERTAMEN DE CÓMIC MUTANTES PASEANTES","organizacion":"España","categoria":"Otro","premio":"600€","fecha_limite":"30/04/2026","descripcion":"Cómic para dibujantes españoles de 14 a 35 años no profesionales","url":"","nuevo":false},{"titulo":"V PREMIO PLATTA DE TEATRO BREVE","organizacion":"España","categoria":"Teatro","premio":"Traducción a tres lenguas, trofeo y asistencia a lecturas dramatizadas","fecha_limite":"30/04/2026","descripcion":"Teatro breve sin restricciones","url":"","nuevo":false},{"titulo":"VII CERTAMEN INTERNACIONAL DE CUENTO CORTO CASA REGIONAL CASTILLA-LA MANCHA","organizacion":"España","categoria":"Relato corto","premio":"400€ y diploma","fecha_limite":"30/04/2026","descripcion":"Cuento corto para mayores de 18 años","url":"","nuevo":false},{"titulo":"CONCURSO DE RELATOS CORTOS JOSÉ ANDRÉS VÁZQUEZ","organizacion":"España","categoria":"Relato corto","premio":"250€ en libros y 300€","fecha_limite":"30/04/2026","descripcion":"Relatos cortos para mayores de 18 años","url":"","nuevo":false},{"titulo":"XXV CONCURSO NACIONAL DE CUENTO JUAN JOSÉ ARREOLA","organizacion":"México","categoria":"Relato corto","premio":"150.000 pesos mexicanos y publicación","fecha_limite":"30/04/2026","descripcion":"Cuento para escritores mexicanos mayores de edad","url":"","nuevo":false},{"titulo":"XXXV PREMIO REINA SOFÍA DE POESÍA IBEROAMERICANA","organizacion":"España","categoria":"Poesia","premio":"42.100€ y diploma","fecha_limite":"30/04/2026","descripcion":"Poesía iberoamericana por propuesta de Academias y Filología","url":"","nuevo":false},{"titulo":"IV EDICIÓN PREMIO DE NOVELA FUNDACIÓN MEDITERRÁNEO","organizacion":"España","categoria":"Novela","premio":"20.000€ y edición","fecha_limite":"30/04/2026","descripcion":"Novela para mayores de edad","url":"","nuevo":false},{"titulo":"27.º EDICIÓN DEL PREMIO DE ENSAYO MIGUEL DE UNAMUNO","organizacion":"España","categoria":"Otro","premio":"6.000€","fecha_limite":"30/04/2026","descripcion":"Ensayo para mayores de 18 años","url":"","nuevo":false},{"titulo":"XXX PREMIO INTERNACIONAL DE POESÍA ANTONIO MACHADO EN BAEZA","organizacion":"España","categoria":"Poesia","premio":"6.000€, publicación, 50 ejemplares y trofeo","fecha_limite":"01/05/2026","descripcion":"Poesía para mayores de 18 años","url":"","nuevo":false},{"titulo":"XXI PREMIO EUROSTARS HOTELS DE NARRATIVA DE VIAJES","organizacion":"España","categoria":"Otro","premio":"35.000€","fecha_limite":"16/05/2026","descripcion":"Narrativa de viajes sin restricciones","url":"","nuevo":false},{"titulo":"39ª EDICIÓN DEL PREMIO INTERNACIONAL DE POESÍA FUNDACIÓN LOEWE","organizacion":"España","categoria":"Poesia","premio":"30.000€ y publicación","fecha_limite":"20/05/2026","descripcion":"Poesía sin restricciones de participación","url":"","nuevo":false}];
 
@@ -448,7 +430,6 @@ const CONCURSOS_BASE = [{"titulo":"SEXTO CERTAMEN IBEROAMERICANO DE DRAMATURGIA 
 const EDITORIALES=[{id:'alfaguara',nombre:'Alfaguara',ciudad:'Madrid',web:'https://www.alfaguara.com',contacto:'alfaguara@prh.com',generos:['Narrativa','Novela','Ensayo'],descripcion:'Sello del grupo Penguin Random House España, Alfaguara es una de las editoriales de referencia en el mundo hispanohablante. Fundada en 1964, ha publicado a los grandes nombres de la literatura en español, desde Mario Vargas Llosa hasta Javier Marías.',catalogo:['Javier Marías','Mario Vargas Llosa','Isabel Allende','Arturo Pérez-Reverte'],envio:'Alfaguara no acepta manuscritos no solicitados directamente. La vía recomendada es presentarse a través de un agente literario.',notas:'Premio Alfaguara de Novela: convocatoria anual con 175.000 dólares de dotación.'},{id:'anagrama',nombre:'Anagrama',ciudad:'Barcelona',web:'https://www.anagrama-ed.es',contacto:'info@anagrama-ed.es',generos:['Narrativa','Ensayo','Crónica'],descripcion:'Fundada en 1969 por Jorge Herralde, Anagrama es sinónimo de literatura de calidad y pensamiento crítico en España. Ha sido pionera en introducir en España a autores como Roberto Bolaño, Paul Auster o W.G. Sebald.',catalogo:['Roberto Bolaño','Enrique Vila-Matas','Antonio Orejudo','Rodrigo Fresán'],envio:'Anagrama acepta manuscritos por correo postal. Incluye sinopsis de una página, primeros tres capítulos y nota biográfica. Tiempo de respuesta: 3-6 meses.',notas:'Premio Herralde de Novela: uno de los más prestigiosos de España, dotado con 18.000 euros.'},{id:'tusquets',nombre:'Tusquets Editores',ciudad:'Barcelona',web:'https://www.tusquetseditores.com',contacto:'tusquets@tusquets.com',generos:['Narrativa','Poesía','Ensayo'],descripcion:'Tusquets combina la narrativa de calidad con la poesía y el ensayo desde 1969. Sigue siendo un referente para la narrativa literaria en español.',catalogo:['Eduardo Mendoza','Juan Marsé','Álvaro Pombo','Rosa Montero'],envio:'Tusquets acepta propuestas a través de agente preferentemente. Para nuevos autores, carta de presentación con sinopsis y primeros capítulos por correo postal.',notas:'Colección Andanzas para narrativa adulta.'},{id:'siruela',nombre:'Siruela',ciudad:'Madrid',web:'https://www.siruela.com',contacto:'siruela@siruela.com',generos:['Fantasía','Terror','Misterio'],descripcion:'La editorial de referencia para la literatura fantástica, de terror y el misterio en España desde 1982.',catalogo:['H.P. Lovecraft','Edgar Allan Poe','Peter Straub','Carlos Ruiz Zafón'],envio:'Aceptan manuscritos de novela y relato en los géneros que publican. Enviar sinopsis detallada y primeros tres capítulos por email.',notas:'Especialmente interesados en literatura fantástica literaria.'},{id:'nordica',nombre:'Nórdica Libros',ciudad:'Madrid',web:'https://www.nordicalibros.com',contacto:'info@nordicalibros.com',generos:['Literatura internacional','Ilustrado','Narrativa'],descripcion:'Fundada en 2006, especializada en literatura escandinava y centroeuropea. Sus ediciones ilustradas son referencia en calidad editorial.',catalogo:['Selma Lagerlöf','Tove Jansson','Hans Christian Andersen','Hermann Hesse'],envio:'Trabajan principalmente con literatura en traducción. Para autores españoles, aceptan propuestas con componente ilustrado.',notas:'Premio al mejor libro ilustrado en múltiples ocasiones.'},{id:'impedimenta',nombre:'Impedimenta',ciudad:'Madrid',web:'https://www.impedimenta.es',contacto:'info@impedimenta.es',generos:['Narrativa literaria','Clásicos','Novela negra'],descripcion:'Editorial independiente fundada en 2007, referente de la literatura exigente y los clásicos recuperados.',catalogo:['Saki','Ronald Firbank','Stella Gibbons','Jane Gardam'],envio:'Aceptan propuestas de narrativa literaria adulta. Primeros 50 páginas con sinopsis por email. Muy selectivos. Respuesta: hasta 4 meses.',notas:'No publican ensayo, poesía ni libros infantiles.'}];
 const AGENTES=[{id:'balcells',nombre:'Agencia Carmen Balcells',ciudad:'Barcelona',web:'https://www.agenciabalcells.com',contacto:'info@agenciabalcells.com',especialidades:['Narrativa literaria','Ensayo','Poesía'],descripcion:'La agencia literaria más legendaria del mundo hispanohablante, fundada en 1960. Su fundadora fue quien impulsó a García Márquez, Vargas Llosa y Cortázar en el boom latinoamericano.',buscan:'Narrativa literaria con ambición y originalidad. No representan literatura de género comercial.',como_contactar:'Carta de presentación personalizada con sinopsis, nota biográfica y primeros tres capítulos por correo postal. No aceptan email. Respuesta: 3 meses mínimo.'},{id:'kerrigan',nombre:'Antonia Kerrigan Literary Agency',ciudad:'Barcelona',web:'https://www.antoniokerrigan.com',contacto:'info@antoniokerrigan.com',especialidades:['Derechos internacionales','Narrativa','No ficción'],descripcion:'Fundada en 1992, especialista en la venta de derechos de traducción para autores españoles e iberoamericanos en mercados internacionales.',buscan:'Narrativa literaria y no ficción de calidad con potencial de venta internacional.',como_contactar:'Email con sinopsis de dos páginas, nota biográfica y primeros dos capítulos. Respuesta: 6-8 semanas.'},{id:'iese',nombre:"International Editors' Co.",ciudad:'Barcelona',web:'https://www.internationaleditors.com',contacto:'info@internationaleditors.com',especialidades:['Narrativa','Literatura de autor','Internacional'],descripcion:'Una de las agencias más activas en España para la narrativa de autor. Gestionan derechos en España y en el extranjero.',buscan:'Narrativa con voz propia, primera novela o autores con trayectoria. También no ficción narrativa.',como_contactar:'Email con sinopsis detallada, primeros capítulos, nota biográfica e historial de publicaciones. Responden en 4-6 semanas.'},{id:'schavelzon',nombre:'Schavelzon Graham',ciudad:'Barcelona / Buenos Aires',web:'https://www.schavelzongrahama.com',contacto:'info@schavelzongrahama.com',especialidades:['Latinoamérica','Narrativa contemporánea','No ficción'],descripcion:'Con oficinas en Barcelona y Buenos Aires, representan a autores de toda la América Latina y España.',buscan:'Narrativa latinoamericana y española, no ficción narrativa, crónica y ensayo de ideas.',como_contactar:'Email con sinopsis, capítulos de muestra y breve bio. Responden en 6-8 semanas.'},{id:'ella-sher',nombre:'The Ella Sher Literary Agency',ciudad:'Madrid',web:'https://www.ellasher.com',contacto:'info@ellasher.com',especialidades:['Infantil','Juvenil','Narrativa adulta'],descripcion:'Agencia boutique especializada en literatura infantil y juvenil, además de narrativa para adultos.',buscan:'Literatura infantil y juvenil con potencial internacional. En narrativa adulta, voces frescas con propuestas originales.',como_contactar:'Email con sinopsis, nota biográfica y primeros tres capítulos. Responden en 8 semanas.'}];
 const REVISTAS=[{id:'quimera',nombre:'Quimera — Revista de Literatura',ciudad:'Barcelona',web:'https://www.quimerarevista.com',frecuencia:'Mensual',generos:['Narrativa','Poesía','Crítica'],descripcion:'La revista literaria más veterana de España, fundada en 1980. Escaparate de la narrativa y la poesía española e iberoamericana durante más de cuatro décadas.',como_enviar:'Texto inédito por email con asunto "Colaboración + género". Narrativa: hasta 8.000 palabras. Poesía: entre 3 y 8 poemas. Nota biográfica breve.',plazos:'Responden en 6-10 semanas. No pagan por colaboraciones espontáneas pero ofrecen ejemplares de autor.'},{id:'clarin',nombre:'Clarín — Revista de Nueva Literatura',ciudad:'Asturias',web:'https://www.revistaclarin.com',frecuencia:'Bimestral',generos:['Poesía','Ensayo poético'],descripcion:'Revista de referencia para la poesía española contemporánea. Fundada en 1996, publica poemas inéditos, ensayos sobre poética y entrevistas a poetas.',como_enviar:'Entre 4 y 10 poemas inéditos por email. Nota biográfica y declaración breve sobre el proceso poético. También ensayos sobre poesía hasta 3.000 palabras.',plazos:'Responden en 8-12 semanas. Pagan un mínimo por colaboraciones seleccionadas.'},{id:'cuento',nombre:'El Cuento de Nunca Acabar',ciudad:'Digital',web:'https://www.elcuentodenuncaacabar.com',frecuencia:'Trimestral',generos:['Relato corto','Microrrelato'],descripcion:'Publicación digital especializada en relato corto y microrrelato desde 2010. Comunidad fiel de escritores y lectores.',como_enviar:'Relatos inéditos hasta 5.000 palabras. Microrrelato: máximo 300 palabras. Formulario web en períodos de convocatoria abierta.',plazos:'Responden en 4-6 semanas. Pagan tarifa mínima por relatos publicados.'},{id:'bem',nombre:'Revista BEM',ciudad:'Digital',web:'https://www.revistabem.es',frecuencia:'Cuatrimestral',generos:['Ciencia ficción','Fantasía','Terror'],descripcion:'La publicación de referencia para la literatura fantástica, CF y terror en España.',como_enviar:'Relatos inéditos de CF, fantasía o terror, entre 3.000 y 15.000 palabras. Formulario web durante convocatorias abiertas.',plazos:'Selección de 8-16 semanas. Pagan por relatos publicados.'},{id:'letras-libres',nombre:'Letras Libres',ciudad:'Madrid',web:'https://www.letraslibres.com',frecuencia:'Mensual',generos:['Ensayo','Política cultural','Narrativa'],descripcion:'Revista cultural de referencia fundada en México en 1999, con edición española desde 2001.',como_enviar:'Colaboraciones principalmente por encargo. Para propuestas espontáneas, enviar al director editorial propuesta de artículo, no el texto completo.',plazos:'Solo responden si hay interés. Pagan por todas las colaboraciones publicadas.'}];
-// Los artículos se cargan desde articulos.js (ver carpeta raíz)
 
 // ══════════════════════════════════════════════
 // NAVEGACIÓN
@@ -480,9 +461,7 @@ function renderDir(id,data,tipo){
     return`<div class="dir-item" onclick="showDetalle('${tipo}','${item.id}')"><div class="dir-name">${item.nombre}</div><div class="dir-desc">${item.descripcion.substring(0,180)}...</div><div class="dir-footer"><div class="dir-tags">${tags}</div><span class="dir-link">${item.ciudad} · Ver ficha →</span></div></div>`;
   }).join('');
 }
-// Proxies para leer webs externas — intenta varios si falla
 async function fetchUrl(url){
-  // Usar el Worker de Cloudflare para leer URLs externas — fiable y sin restricciones CORS
   try{
     const r = await fetch(PROXY_URL, {
       method: 'POST',
@@ -504,7 +483,6 @@ function parseCSV(text){
   if(lines.length < 2) return [];
   const headers = lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,''));
   return lines.slice(1).map(line=>{
-    // Parsear CSV respetando campos entre comillas
     const cols = [];
     let cur = '', inQ = false;
     for(let i=0;i<line.length;i++){
@@ -520,12 +498,9 @@ function parseCSV(text){
   }).filter(r=>Object.values(r).some(v=>v!==''));
 }
 
-let concursosSheets = []; // concursos manuales desde Sheets
+let concursosSheets = [];
 
 async function cargarSheets(){
-  // Artículos: ahora son páginas HTML externas (ver articulos.js)
-
-  // Cargar concursos manuales desde Sheets
   try{
     const r = await fetch(SHEETS_CONCURSOS);
     const csv = await r.text();
@@ -544,7 +519,6 @@ async function cargarSheets(){
       })).filter(c=>c.titulo);
     }
   }catch(e){ console.warn('Error cargando concursos de Sheets:', e); }
-
   renderArt();
 }
 
@@ -607,9 +581,7 @@ function getCacheAge(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return 
 
 async function init(){
   renderDirectorios();
-  // Cargar Sheets en paralelo (artículos + concursos manuales)
   cargarSheets();
-  // Limpiar caché si tiene datos de 2025
   try{
     const r=localStorage.getItem(CACHE_KEY);
     if(r){
@@ -622,7 +594,6 @@ async function init(){
   const cached=getCache();
   if(cached){
     concursos=cached;
-    // Mezclar con concursos manuales de Sheets si los hay
     setTimeout(()=>{ if(concursosSheets.length>0){ mezclarConcursosSheets(); } },2000);
     renderAll();
     const age=getCacheAge();
@@ -632,13 +603,11 @@ async function init(){
     concursos=[...CONCURSOS_BASE];renderAll();
     setStatus(true,'Buscando nuevas convocatorias...');
     buscarEnFondo();
-    // Mezclar con concursos manuales de Sheets cuando carguen
     setTimeout(()=>{ if(concursosSheets.length>0){ mezclarConcursosSheets(); } },3000);
   }
 }
 
 function mezclarConcursosSheets(){
-  // Añadir concursos de Sheets que no estén ya en la lista
   const nuevos = concursosSheets.filter(s=>!concursos.find(c=>c.titulo===s.titulo));
   if(nuevos.length>0){
     concursos = [...nuevos, ...concursos];
@@ -655,17 +624,13 @@ function setStatus(searching,text){
 async function buscarEnFondo(){
   setStatus(true,'Buscando nuevas convocatorias...');
   let html='';
-
-  // Usar el Worker para leer las fuentes directamente
   for(const url of FUENTES){
     try{
       const contents = await fetchUrl(url);
       if(contents) html+='\nFUENTE: '+url+'\n'+contents.substring(0,8000);
     }catch(e){ console.warn(e); }
   }
-
   if(!html){ setStatus(false,`${concursos.length} concursos · Sin conexión`); return; }
-
   try{
     const res=await fetch(PROXY_URL,{
       method:'POST',
@@ -716,26 +681,21 @@ function aplicarNuevos(){
 // ══════════════════════════════════════════════
 function diasHasta(f){if(!f)return 999;try{const p=f.split('/');if(p.length!==3)return 999;return Math.ceil((new Date(p[2],p[1]-1,p[0])-new Date())/86400000);}catch{return 999;}}
 
-function renderAll(){renderCards();renderStats();renderSidebar();}
+function renderAll(){renderCards();renderStats();renderSidebar();injectSchemas(concursos);}
 
 function renderCards(){
   const q=document.getElementById('search').value.toLowerCase();
-  const LIMITE_DIAS=61; // máximo 2 meses (~61 días)
-
+  const LIMITE_DIAS=61;
   const lista=concursos
     .filter(c=>{
       const dias=diasHasta(c.fecha_limite);
-      // Eliminar cerrados y los que superan el límite de 2 meses
       if(dias<=0||dias>LIMITE_DIAS) return false;
-      // Filtro de categoría
       if(filtroActivo==='urgentes') return dias<=14;
       if(filtroActivo!=='todos'){const cat=(c.categoria||'').toLowerCase();return cat.includes(filtroActivo==='poesia'?'poesía':filtroActivo==='relato'?'relato':filtroActivo);}
       return true;
     })
     .filter(c=>!q||(c.titulo+c.organizacion+c.categoria+c.descripcion).toLowerCase().includes(q))
-    // Ordenar de más próximo a más lejano
     .sort((a,b)=>diasHasta(a.fecha_limite)-diasHasta(b.fecha_limite));
-
   const cont=document.getElementById('cards');
   if(!lista.length){
     cont.innerHTML='<div class="empty"><p style="font-family:Playfair Display,serif;font-size:1.3rem;font-style:italic;margin-bottom:4px">Sin concursos activos</p><p style="font-size:12px;margin-top:4px">No hay convocatorias abiertas en los próximos 2 meses</p></div>';
@@ -776,6 +736,41 @@ function setFiltro(f){
 }
 
 // ══════════════════════════════════════════════
+// SCHEMA.ORG EVENT — inyección automática
+// ══════════════════════════════════════════════
+function injectSchemas(lista){
+  // Borrar schemas anteriores para no duplicar al actualizar la lista
+  document.querySelectorAll('script[data-schema-event]').forEach(s=>s.remove());
+  lista
+    .filter(c=>diasHasta(c.fecha_limite)>0 && diasHasta(c.fecha_limite)<=61)
+    .forEach(c=>{
+      if(!c.fecha_limite) return;
+      const p=c.fecha_limite.split('/');
+      if(p.length!==3) return;
+      const fechaISO=`${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;
+      const urlFinal=esUrlEspecifica(c.url)?c.url:'https://letrasespanolas.org';
+      const schema={
+        "@context":"https://schema.org",
+        "@type":"Event",
+        "name":c.titulo,
+        "description":c.descripcion||"",
+        "url":urlFinal,
+        "endDate":fechaISO,
+        "eventStatus":"https://schema.org/EventScheduled",
+        "eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode",
+        "location":{"@type":"VirtualLocation","url":urlFinal},
+        "organizer":{"@type":"Organization","name":c.organizacion||""},
+        "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
+      };
+      const s=document.createElement('script');
+      s.type='application/ld+json';
+      s.dataset.schemaEvent='1';
+      s.textContent=JSON.stringify(schema);
+      document.head.appendChild(s);
+    });
+}
+
+// ══════════════════════════════════════════════
 // MODAL CON RESOLUCIÓN DE URL EN 3 NIVELES
 // ══════════════════════════════════════════════
 async function openModal(idx){
@@ -786,18 +781,13 @@ async function openModal(idx){
   document.getElementById('m-premio').textContent=c.premio||'Sin especificar';
   document.getElementById('m-fecha').textContent=c.fecha_limite||'Sin especificar';
   document.getElementById('m-desc').textContent=c.descripcion||'Sin descripción.';
-
   const actions=document.getElementById('m-actions');
   const statusEl=document.getElementById('url-status');
   const googleUrl=`<a href="${urlBusquedaGoogle(c.titulo,c.organizacion||'')}" target="_blank" class="modal-btn modal-btn-secondary">Buscar en Google</a>`;
-
-  // Mostrar botón Google inmediatamente mientras buscamos URL específica
   actions.innerHTML=googleUrl;
   statusEl.textContent='';statusEl.classList.remove('visible');
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
-
-  // Intentar encontrar URL específica en segundo plano
   try{
     const resultado=await resolverUrl(c);
     if(resultado.nivel===1){
@@ -809,10 +799,7 @@ async function openModal(idx){
       statusEl.textContent='Enlace encontrado automáticamente';
       statusEl.classList.add('visible');
     }
-    // nivel 3 ya tiene Google por defecto
-  }catch(e){
-    // Ya tiene el botón de Google visible
-  }
+  }catch(e){}
 }
 
 function closeModal(e){
