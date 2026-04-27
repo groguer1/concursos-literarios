@@ -628,13 +628,21 @@ const META_CATEGORIAS = {
 
 function aplicarParametroCategoria(){
   const params = new URLSearchParams(window.location.search);
+
+  // Navegación directa a sección
+  const seccion = params.get('seccion');
+  if(seccion){
+    const btn = document.querySelector(`.nav-btn[href="/?seccion=${seccion}"]`);
+    showPage(seccion, btn);
+    return;
+  }
+
+  // Filtro por categoría de concurso
   const cat = (params.get('categoria')||'').toLowerCase();
   if(!cat || !META_CATEGORIAS[cat]) return;
   const meta = META_CATEGORIAS[cat];
-  // Actualizar title y meta description para que Google los indexe correctamente
   document.title = meta.title;
   document.querySelector('meta[name="description"]').setAttribute('content', meta.desc);
-  // Activar el filtro correspondiente
   setFiltro(meta.filtro);
 }
 
