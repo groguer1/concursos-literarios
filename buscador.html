@@ -649,17 +649,37 @@ function updateAlertPreview(){
   document.getElementById('alert-preview').innerHTML=`<strong>Filtros activos:</strong> ${parts.join(' · ')}`;
 }
 
-function suscribir(){
+const WORKER_URL = 'https://TU-WORKER.TU-USUARIO.workers.dev'; // ← cambia esto tras desplegar el worker
+
+async function suscribir(){
   const email=document.getElementById('alert-email').value.trim();
   if(!email||!email.includes('@')){
     document.getElementById('alert-email').style.borderColor='var(--accent)';return;
   }
   document.getElementById('alert-email').style.borderColor='';
-  // TODO: POST a Brevo/Resend con { email, filtros: state }
-  console.log('Alerta:', {email, filtros:state});
-  document.getElementById('alert-ok').style.display='block';
-  document.getElementById('alert-email').value='';
-  setTimeout(()=>document.getElementById('alert-ok').style.display='none',5000);
+
+  const btn=document.querySelector('.alert-btn');
+  btn.textContent='Guardando...';
+  btn.disabled=true;
+
+  try{
+    const res = await fetch(WORKER_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, filtros: state })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error||'Error');
+    document.getElementById('alert-ok').style.display='block';
+    document.getElementById('alert-email').value='';
+    setTimeout(()=>document.getElementById('alert-ok').style.display='none',6000);
+  }catch(e){
+    alert('Ha habido un error. Por favor inténtalo de nuevo.');
+    console.error(e);
+  }finally{
+    btn.textContent='Quiero que me avisen';
+    btn.disabled=false;
+  }
 }
 </script>
 </body>
