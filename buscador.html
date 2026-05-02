@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuentra tu concurso literario ideal | Letras Españolas</title>
+<meta name="description" content="Buscador avanzado de concursos literarios en España. Filtra por género, dotación y fecha. Activa alertas y te avisamos cuando salga el tuyo.">
+<meta property="og:title" content="¿Te avisamos cuando salga tu concurso? | Letras Españolas">
+<meta property="og:description" content="Buscador avanzado de concursos literarios. Filtra, guarda y recibe alertas personalizadas.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;
+  --gold:#b8860b;--muted:#7a7670;--border:#d4cfc5;--white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+
+/* ── HEADER ── */
+header{border-bottom:2px solid var(--ink)}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.75rem 2rem 1.25rem}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border);overflow-x:auto}
+.nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;display:inline-block}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover{color:var(--ink);background:var(--cream)}
+.nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
+
+/* ── HERO ── */
+.hero{
+  background:var(--ink);
+  padding:3.5rem 2rem 3rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 110%, rgba(200,57,43,.15) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-block;
+  border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.6);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  padding:4px 16px;margin-bottom:1.5rem;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,5vw,3.2rem);
+  color:var(--paper);
+  line-height:1.1;
+  margin-bottom:1rem;
+  max-width:680px;margin-left:auto;margin-right:auto;
+}
+.hero h1 em{color:#e8a84a;font-style:italic}
+.hero p{color:rgba(255,255,255,.5);font-size:14px;max-width:440px;margin:0 auto 2rem;font-weight:300;line-height:1.7}
+
+/* Stats en hero */
+.hero-stats{
+  display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.1);
+  padding-top:1.75rem;margin-top:.5rem;
+  max-width:600px;margin-left:auto;margin-right:auto;
+}
+.hstat-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:#e8a84a;display:block;line-height:1}
+.hstat-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:3px}
+
+/* ── CONTAINER ── */
+.container{max-width:1160px;margin:0 auto;padding:0 2rem}
+
+/* Ad */
+.ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.ad-h{width:100%;height:90px;margin:1.25rem 0}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:260px 1fr;gap:2.5rem;padding:2rem 0 4rem;align-items:start}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:1rem}
+.panel{background:var(--white);border:1px solid var(--border)}
+.panel-head{background:var(--ink);color:var(--paper);padding:10px 16px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:500}
+.psec{padding:14px 16px;border-bottom:1px solid var(--border)}
+.psec:last-child{border-bottom:none}
+.plabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block;font-weight:500}
+
+.genre-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.gpill{
+  padding:5px 8px;border:1px solid var(--border);
+  font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  cursor:pointer;color:var(--muted);background:var(--white);
+  text-align:center;transition:all .15s;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.gpill:hover{border-color:var(--ink);color:var(--ink)}
+.gpill.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.fselect{
+  width:100%;padding:7px 10px;border:1px solid var(--border);
+  font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--ink);
+  background:var(--white);cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7670' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+}
+.fselect:focus{outline:none;border-color:var(--ink)}
+
+.range-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px}
+.range-val{color:var(--ink);font-weight:500}
+input[type=range]{width:100%;accent-color:var(--ink);cursor:pointer}
+
+.fcheck{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;cursor:pointer}
+.fcheck input{accent-color:var(--ink);width:13px;height:13px;cursor:pointer;flex-shrink:0}
+
+.btn-reset{
+  width:100%;padding:8px;background:none;border:1px solid var(--border);
+  font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.btn-reset:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── ALERTA BOX ── */
+.alert-box{background:#FEF9F0;border:1px solid var(--gold);padding:18px;margin-top:16px}
+.alert-box h3{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:5px;color:var(--ink)}
+.alert-box p{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6}
+.alert-preview{
+  font-size:11px;color:var(--muted);background:rgba(184,134,11,.08);
+  padding:7px 9px;margin-bottom:12px;line-height:1.6;border-left:2px solid var(--gold);
+}
+.alert-preview strong{color:#7a5a00}
+.alert-input{
+  width:100%;padding:8px 10px;border:1px solid var(--border);
+  font-family:'IBM Plex Sans',sans-serif;font-size:13px;margin-bottom:7px;
+  background:var(--white);
+}
+.alert-input:focus{outline:none;border-color:var(--gold)}
+.alert-btn{
+  width:100%;padding:9px;background:var(--ink);color:var(--paper);border:none;
+  font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;cursor:pointer;transition:background .15s;
+}
+.alert-btn:hover{background:var(--accent)}
+.alert-ok{
+  display:none;background:#EAF3DE;border:1px solid #97C459;
+  color:#27500A;padding:9px;font-size:12px;text-align:center;margin-top:7px;
+}
+
+/* ── RESULTADOS ── */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.count-txt{font-size:12px;color:var(--muted)}
+.count-txt strong{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);margin-right:3px}
+.sort-sel{
+  padding:5px 24px 5px 8px;border:1px solid var(--border);
+  font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--ink);
+  background:var(--white);cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 24 24' fill='none' stroke='%237a7670' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;
+}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;min-height:0}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#FEF9F0;border:1px solid var(--gold);
+  color:#7a5a00;font-size:11px;padding:3px 9px;letter-spacing:.03em;
+}
+.chip-x{cursor:pointer;color:var(--gold);font-weight:700;font-size:13px;line-height:1}
+.chip-x:hover{color:var(--accent)}
+
+/* Cards */
+.cards{display:flex;flex-direction:column}
+.card{
+  border:1px solid var(--border);border-top:none;
+  padding:1rem 1.25rem;background:var(--white);
+  display:grid;grid-template-columns:1fr auto;gap:1rem;
+  align-items:start;transition:background .15s;cursor:pointer;
+}
+.card:first-child{border-top:1px solid var(--border)}
+.card:hover{background:var(--cream)}
+.card.urgent{border-left:3px solid var(--accent)}
+.card.isnew::after{
+  content:'NUEVO';background:var(--accent);color:var(--white);
+  font-size:9px;letter-spacing:.1em;padding:1px 5px;
+  margin-left:8px;vertical-align:middle;font-weight:500;
+}
+
+.card-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:4px}
+.cat-poesia{color:#534AB7}.cat-relato{color:#0F6E56}.cat-novela{color:#993C1D}
+.cat-infantil{color:#854F0B}.cat-teatro{color:#1a5c8a}.cat-otro{color:var(--muted)}
+
+.card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:3px;line-height:1.3}
+.card-org{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.card-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);padding-top:7px;border-top:1px solid var(--border)}
+
+.card-right{text-align:right;min-width:110px;display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.card-premio{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold)}
+.card-badge{font-size:11px;padding:3px 8px;font-weight:500;display:inline-block}
+.badge-urgent{background:#FDECEA;color:var(--accent)}
+.badge-soon{background:#FEF9F0;color:#7a5a00}
+.badge-ok{background:#EAF3DE;color:#27500A}
+.card-link{
+  display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);padding:4px 10px;transition:all .15s;
+}
+.card-link:hover{background:var(--accent);color:var(--white)}
+
+.empty{text-align:center;padding:3rem;color:var(--muted);border:1px solid var(--border);background:var(--white)}
+.empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+.empty p{font-size:13px;margin-top:5px}
+
+/* MODAL (igual que index) */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.7);z-index:100;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--paper);max-width:640px;width:100%;margin:auto;border:2px solid var(--ink);padding:2rem;position:relative;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1}
+.modal-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.5rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1.2;margin-bottom:.4rem}
+.modal-org{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1.25rem}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.mfl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px}
+.mfv{font-weight:500;font-size:14px}
+.mfv.premio{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold)}
+.modal-desc{font-size:13px;line-height:1.7;color:#3a3a38;margin-bottom:1.25rem;border-top:1px solid var(--border);padding-top:1rem}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap}
+.mbtn{display:inline-block;padding:9px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:background .15s;cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif}
+.mbtn-p{background:var(--ink);color:var(--paper)}
+.mbtn-p:hover{background:var(--accent)}
+.mbtn-s{background:transparent;color:var(--ink);border:1px solid var(--border)}
+.mbtn-s:hover{background:var(--cream)}
+
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.05em}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .hero-stats{gap:1.5rem}
+  .card{grid-template-columns:1fr}
+  .card-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+  .modal-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <span id="fecha-hoy"></span>
+    <span>Recursos para escritores de España</span>
+    <span>Actualizado hoy</span>
+  </div>
+  <div class="header-main">
+    <a href="index.html">
+      <h1 class="site-title">Letras <span>Españolas</span></h1>
+    </a>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+  </div>
+  <nav class="header-nav">
+    <a class="nav-btn" href="index.html">Concursos</a>
+    <a class="nav-btn" href="editoriales.html">Editoriales</a>
+    <a class="nav-btn" href="agentes.html">Agentes literarios</a>
+    <a class="nav-btn" href="revistas.html">Revistas</a>
+    <a class="nav-btn active" href="buscador.html">🔍 Buscador avanzado</a>
+    <a class="nav-btn" href="libros.html">Novedades</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Buscador avanzado · Actualizado diariamente</div>
+  <h1>¿Te avisamos cuando salga <em>tu</em> concurso?</h1>
+  <p>Filtra por género, dotación y plazo. Activa una alerta y serás el primero en enterarte cuando salga uno que encaje contigo.</p>
+  <div class="hero-stats">
+    <div><span class="hstat-num" id="stat-total">—</span><span class="hstat-label">Concursos activos</span></div>
+    <div><span class="hstat-num" id="stat-nuevos">—</span><span class="hstat-label">Nuevos esta semana</span></div>
+    <div><span class="hstat-num" id="stat-cierran">—</span><span class="hstat-label">Cierran en 7 días</span></div>
+    <div><span class="hstat-num" id="stat-dotacion">—</span><span class="hstat-label">Mayor dotación</span></div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="ad-slot ad-h">Publicidad 728×90 — Google AdSense</div>
+</div>
+
+<div class="container">
+  <div class="layout">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="panel">
+        <div class="panel-head">⚙ Filtros de búsqueda</div>
+
+        <div class="psec">
+          <span class="plabel">Género literario</span>
+          <div class="genre-grid">
+            <div class="gpill active" data-genre="todos" onclick="toggleGenre(this)">Todos</div>
+            <div class="gpill" data-genre="poesia" onclick="toggleGenre(this)">Poesía</div>
+            <div class="gpill" data-genre="relato" onclick="toggleGenre(this)">Relato</div>
+            <div class="gpill" data-genre="novela" onclick="toggleGenre(this)">Novela</div>
+            <div class="gpill" data-genre="infantil" onclick="toggleGenre(this)">Infantil</div>
+            <div class="gpill" data-genre="teatro" onclick="toggleGenre(this)">Teatro</div>
+            <div class="gpill" data-genre="otro" onclick="toggleGenre(this)">Otro</div>
+          </div>
+        </div>
+
+        <div class="psec">
+          <span class="plabel">Dotación mínima</span>
+          <div class="range-row">
+            <span>Sin mínimo</span>
+            <span class="range-val" id="range-val">0 €</span>
+          </div>
+          <input type="range" id="range-dot" min="0" max="6000" step="100" value="0" oninput="updateRange(this)">
+          <div class="range-row" style="margin-top:3px"><span>0 €</span><span>6.000 €</span></div>
+        </div>
+
+        <div class="psec">
+          <span class="plabel">Plazo de presentación</span>
+          <select class="fselect" id="sel-plazo" onchange="apply()">
+            <option value="todos">Cualquier fecha</option>
+            <option value="7">Próximos 7 días</option>
+            <option value="15">Próximos 15 días</option>
+            <option value="30">Próximos 30 días</option>
+            <option value="60">Próximos 2 meses</option>
+            <option value="90">Próximos 3 meses</option>
+          </select>
+        </div>
+
+        <div class="psec">
+          <span class="plabel">Más opciones</span>
+          <label class="fcheck"><input type="checkbox" id="chk-nuevos" onchange="apply()"> Solo nuevos (última semana)</label>
+          <label class="fcheck"><input type="checkbox" id="chk-urgentes" onchange="apply()"> Cierran pronto (≤ 7 días)</label>
+        </div>
+
+        <div class="psec">
+          <button class="btn-reset" onclick="resetAll()">✕ Limpiar todos los filtros</button>
+        </div>
+      </div>
+
+      <!-- ALERTA -->
+      <div class="alert-box">
+        <h3>🔔 Activa tu alerta</h3>
+        <p>Introduce tu email y te avisamos en cuanto salga un concurso que coincida con tus filtros actuales.</p>
+        <div class="alert-preview" id="alert-preview">
+          <strong>Filtros activos:</strong> Todos los géneros · Sin dotación mínima
+        </div>
+        <input type="email" class="alert-input" id="alert-email" placeholder="tu@email.com">
+        <button class="alert-btn" onclick="suscribir()">Quiero que me avisen</button>
+        <div class="alert-ok" id="alert-ok">✓ ¡Perfecto! Te avisaremos cuando salga tu concurso.</div>
+      </div>
+    </aside>
+
+    <!-- ── RESULTADOS ── -->
+    <section>
+      <div class="toolbar">
+        <div class="count-txt"><strong id="count-num">0</strong> concursos encontrados</div>
+        <select class="sort-sel" id="sort-sel" onchange="apply()">
+          <option value="fecha">Ordenar por fecha límite</option>
+          <option value="dotacion">Mayor dotación primero</option>
+          <option value="nuevo">Más recientes primero</option>
+        </select>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-cat" id="m-cat"></div>
+    <h2 class="modal-title" id="m-title"></h2>
+    <div class="modal-org" id="m-org"></div>
+    <div class="modal-grid">
+      <div><div class="mfl">Premio</div><div class="mfv premio" id="m-premio"></div></div>
+      <div><div class="mfl">Fecha límite</div><div class="mfv" id="m-fecha"></div></div>
+    </div>
+    <div class="modal-desc" id="m-desc"></div>
+    <div class="modal-actions" id="m-actions"></div>
+  </div>
+</div>
+
+<footer>
+  <p>© <span id="year"></span> Letras Españolas · Para escritores de España</p>
+  <p style="margin-top:6px">
+    <a href="index.html#legal">Aviso legal</a> ·
+    <a href="index.html#privacidad">Privacidad</a> ·
+    <a href="index.html#contacto">Contacto</a>
+  </p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+// DATOS — mismos que index.html (CONCURSOS_BASE)
+// En producción: reemplazar con fetch() a tu Google Sheet
+// ══════════════════════════════════════════
+const CONCURSOS_BASE = [{"titulo":"XXX PREMIO INTERNACIONAL DE POESÍA \"ANTONIO MACHADO EN BAEZA\"","organizacion":"España","categoria":"Poesia","premio":"6.000 euros, publicación, 50 ejemplares para el autor, trofeo","fecha_limite":"20/05/2026","descripcion":"Premio internacional de poesía para mayores de 18 años","url":"","nuevo":false},{"titulo":"3ª EDICIÓN - CERTAMEN LITERARIO \"ORTEGA SAGRISTA\"","organizacion":"España","categoria":"Otro","premio":"350 euros","fecha_limite":"22/05/2026","descripcion":"Relato corto, poesía, artículo de investigación sin restricciones","url":"","nuevo":false},{"titulo":"VI CONCURSO \"NUESTRO FUTURO ES NUESTRA HISTORIA\"","organizacion":"España","categoria":"Otro","premio":"850 euros y publicación","fecha_limite":"25/05/2026","descripcion":"Microrrelato, poemas, ensayo histórico, audiovisual para residentes en España","url":"","nuevo":false},{"titulo":"PREMIOS DE ENSAYO CASA ÁFRICA 2026","organizacion":"España","categoria":"Otro","premio":"2.000 euros","fecha_limite":"10/06/2026","descripcion":"Concurso de ensayo para mayores de 18 años","url":"","nuevo":false},{"titulo":"XXXII CERTAMEN LITERARIO \"VILLA DE ERMUA\"","organizacion":"España","categoria":"Otro","premio":"500 euros","fecha_limite":"03/06/2026","descripcion":"Narrativa y poesía para nacidos en 2009 o anteriores","url":"","nuevo":false},{"titulo":"XIII PREMIO DE RELATOS CORTOS \"ANTONIO REYES HUERTAS\"","organizacion":"España","categoria":"Relato corto","premio":"1.100 euros, diploma y publicación","fecha_limite":"15/06/2026","descripcion":"Relatos cortos para mayores de 18 años","url":"","nuevo":false},{"titulo":"XVIII PREMIO DE POESÍA JOVEN RNE-FUNDACIÓN MONTEMADRID","organizacion":"España","categoria":"Poesia","premio":"5.000 euros, publicación, 25 ejemplares","fecha_limite":"04/06/2026","descripcion":"Poesía para escritores menores de 35 años","url":"","nuevo":true},{"titulo":"III CONCURSO DE NANORRELATOS \"LA IMAGEN ESCRITA\"","organizacion":"España","categoria":"Relato corto","premio":"50 euros, diploma, entradas y publicación","fecha_limite":"12/06/2026","descripcion":"Nanorrelatos para residentes en Comunidad de Madrid","url":"","nuevo":false},{"titulo":"XXXII CONCURSO DE POESÍA DE PRIMAVERA DE LES CLOTES","organizacion":"España","categoria":"Poesia","premio":"500 euros","fecha_limite":"05/06/2026","descripcion":"Premio de poesía de primavera sin restricciones","url":"","nuevo":false},{"titulo":"II CONCURSO LITERARIO \"VIRGEN MARÍA\"","organizacion":"España","categoria":"Relato corto","premio":"200 euros en libros","fecha_limite":"20/06/2026","descripcion":"Microrrelatos sin restricciones de edad ni procedencia","url":"","nuevo":true},{"titulo":"CONCURSO MICRORRELATOS CCRL SOBRE LA REINA URRACA I DE LEÓN","organizacion":"España","categoria":"Relato corto","premio":"100 euros, trofeo y diploma","fecha_limite":"08/06/2026","descripcion":"Microrrelatos para mayores de 18 años residentes en España","url":"","nuevo":false},{"titulo":"XIII EDICIÓN DEL PREMIO INTERNACIONAL DE POESÍA 'PILAR FERNÁNDEZ LABRADOR'","organizacion":"España","categoria":"Poesia","premio":"Publicación y 25 ejemplares para el autor","fecha_limite":"08/07/2026","descripcion":"Premio internacional de poesía sin restricciones","url":"","nuevo":false},{"titulo":"XXV CERTAMEN LITERARIO DEL ATENEO CULTURAL PATERNA","organizacion":"España","categoria":"Otro","premio":"900 euros y publicación","fecha_limite":"30/06/2026","descripcion":"Poesía y prosa sin restricciones","url":"","nuevo":false},{"titulo":"IV PREMIOS ASTARTÉ","organizacion":"España","categoria":"Otro","premio":"400 euros y 1 ejemplar publicado","fecha_limite":"09/06/2026","descripcion":"Relato corto, poesía y microrrelato para mayores de 16 años","url":"","nuevo":true}];
+
+const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=450389386&single=true&output=csv';
+
+let concursos = [...CONCURSOS_BASE];
+let state = { generos:[], dotMin:0, plazo:'todos', nuevos:false, urgentes:false, sort:'fecha' };
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('year').textContent = new Date().getFullYear();
+  cargarSheets();
+  apply();
+});
+
+async function cargarSheets(){
+  try{
+    const r = await fetch(SHEETS_URL);
+    const csv = await r.text();
+    const rows = parseCSV(csv);
+    if(rows.length>0){
+      const extras = rows.map(r=>({
+        titulo:r.titulo||'',organizacion:r.organizacion||'',
+        categoria:r.categoria||'Otro',premio:r.premio||'',
+        fecha_limite:r.fecha_limite||'',descripcion:r.descripcion||'',
+        url:r.url||'',nuevo:r.nuevo==='true'||r.nuevo==='TRUE'||r.nuevo==='1',
+        fromSheets:true
+      })).filter(c=>c.titulo);
+      // Mezclar sin duplicados por título
+      const titulos = new Set(concursos.map(c=>c.titulo));
+      extras.forEach(e=>{ if(!titulos.has(e.titulo)){ concursos.push(e); titulos.add(e.titulo); } });
+      apply();
+    }
+  }catch(e){ console.warn('Sheets:', e); }
+}
+
+function parseCSV(text){
+  const lines=text.trim().split('\n');
+  if(lines.length<2) return [];
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,''));
+  return lines.slice(1).map(line=>{
+    const cols=[];let cur='',inQ=false;
+    for(let i=0;i<line.length;i++){
+      const c=line[i];
+      if(c==='"'){inQ=!inQ;}
+      else if(c===','&&!inQ){cols.push(cur.trim());cur='';}
+      else{cur+=c;}
+    }
+    cols.push(cur.trim());
+    const obj={};
+    headers.forEach((h,i)=>{obj[h]=cols[i]||'';});
+    return obj;
+  }).filter(r=>Object.values(r).some(v=>v!==''));
+}
+
+// ── HELPERS ──
+function dias(fechaStr){
+  if(!fechaStr) return 999;
+  const p=fechaStr.split('/');
+  if(p.length!==3) return 999;
+  return Math.ceil((new Date(p[2],p[1]-1,p[0])-new Date())/86400000);
+}
+
+function catClass(cat){
+  if(!cat) return 'otro';
+  const c=cat.toLowerCase();
+  if(c.includes('poes')) return 'poesia';
+  if(c.includes('relato')||c.includes('cuento')||c.includes('nano')||c.includes('micro')) return 'relato';
+  if(c.includes('novela')) return 'novela';
+  if(c.includes('infantil')||c.includes('juvenil')) return 'infantil';
+  if(c.includes('teatro')||c.includes('dram')) return 'teatro';
+  return 'otro';
+}
+
+function dotNum(c){
+  if(!c.premio) return 0;
+  const m=c.premio.match(/[\d.]+/);
+  if(!m) return 0;
+  return parseFloat(m[0].replace('.',''))||0;
+}
+
+function updateStats(){
+  const total=concursos.length;
+  const nuevos=concursos.filter(c=>c.nuevo).length;
+  const cierran=concursos.filter(c=>dias(c.fecha_limite)<=7&&dias(c.fecha_limite)>=0).length;
+  const maxDot=Math.max(0,...concursos.map(c=>dotNum(c)));
+  anim('stat-total',total);
+  anim('stat-nuevos',nuevos);
+  anim('stat-cierran',cierran);
+  document.getElementById('stat-dotacion').textContent = maxDot>0 ? maxDot.toLocaleString('es')+'€' : '—';
+}
+
+function anim(id,target){
+  const el=document.getElementById(id);
+  if(!el) return;
+  let cur=0;const step=Math.max(1,Math.ceil(target/20));
+  const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(t);},40);
+}
+
+// ── FILTROS ──
+function toggleGenre(el){
+  const g=el.dataset.genre;
+  if(g==='todos'){
+    document.querySelectorAll('.gpill').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');state.generos=[];
+  } else {
+    document.querySelector('.gpill[data-genre="todos"]').classList.remove('active');
+    el.classList.toggle('active');
+    state.generos=[...document.querySelectorAll('.gpill.active')].map(p=>p.dataset.genre);
+    if(!state.generos.length) document.querySelector('.gpill[data-genre="todos"]').classList.add('active');
+  }
+  apply();
+}
+
+function updateRange(el){
+  state.dotMin=parseInt(el.value);
+  document.getElementById('range-val').textContent=state.dotMin>0?state.dotMin.toLocaleString('es')+' €':'0 €';
+  apply();
+}
+
+function apply(){
+  state.plazo=document.getElementById('sel-plazo').value;
+  state.nuevos=document.getElementById('chk-nuevos').checked;
+  state.urgentes=document.getElementById('chk-urgentes').checked;
+  state.sort=document.getElementById('sort-sel').value;
+
+  let res=concursos.filter(c=>{
+    const cat=catClass(c.categoria||'');
+    if(state.generos.length>0&&!state.generos.includes(cat)) return false;
+    if(state.dotMin>0&&dotNum(c)<state.dotMin) return false;
+    if(state.plazo!=='todos'){const d=dias(c.fecha_limite);if(d>parseInt(state.plazo)||d<0) return false;}
+    if(state.urgentes&&dias(c.fecha_limite)>7) return false;
+    if(state.nuevos&&!c.nuevo) return false;
+    return true;
+  });
+
+  if(state.sort==='fecha') res.sort((a,b)=>dias(a.fecha_limite)-dias(b.fecha_limite));
+  if(state.sort==='dotacion') res.sort((a,b)=>dotNum(b)-dotNum(a));
+  if(state.sort==='nuevo') res.sort((a,b)=>(b.nuevo?1:0)-(a.nuevo?1:0));
+
+  document.getElementById('count-num').textContent=res.length;
+  renderChips();
+  renderCards(res);
+  updateAlertPreview();
+  updateStats();
+}
+
+function renderChips(){
+  const cont=document.getElementById('chips');
+  let html='';
+  if(state.generos.length>0) state.generos.forEach(g=>{html+=`<div class="chip">${g} <span class="chip-x" onclick="removeGenre('${g}')">×</span></div>`;});
+  if(state.dotMin>0) html+=`<div class="chip">Mín. ${state.dotMin.toLocaleString('es')} € <span class="chip-x" onclick="removeDot()">×</span></div>`;
+  if(state.plazo!=='todos') html+=`<div class="chip">Plazo ≤ ${state.plazo}d <span class="chip-x" onclick="removePlazo()">×</span></div>`;
+  if(state.urgentes) html+=`<div class="chip">Urgentes <span class="chip-x" onclick="removeChk('chk-urgentes')">×</span></div>`;
+  if(state.nuevos) html+=`<div class="chip">Solo nuevos <span class="chip-x" onclick="removeChk('chk-nuevos')">×</span></div>`;
+  cont.innerHTML=html;
+}
+
+function removeGenre(g){document.querySelector(`.gpill[data-genre="${g}"]`).classList.remove('active');state.generos=state.generos.filter(x=>x!==g);if(!state.generos.length)document.querySelector('.gpill[data-genre="todos"]').classList.add('active');apply();}
+function removeDot(){state.dotMin=0;document.getElementById('range-dot').value=0;document.getElementById('range-val').textContent='0 €';apply();}
+function removePlazo(){document.getElementById('sel-plazo').value='todos';apply();}
+function removeChk(id){document.getElementById(id).checked=false;apply();}
+
+function resetAll(){
+  state={generos:[],dotMin:0,plazo:'todos',nuevos:false,urgentes:false,sort:'fecha'};
+  document.querySelectorAll('.gpill').forEach(p=>p.classList.remove('active'));
+  document.querySelector('.gpill[data-genre="todos"]').classList.add('active');
+  document.getElementById('range-dot').value=0;document.getElementById('range-val').textContent='0 €';
+  document.getElementById('sel-plazo').value='todos';
+  document.getElementById('chk-nuevos').checked=false;document.getElementById('chk-urgentes').checked=false;
+  document.getElementById('sort-sel').value='fecha';
+  apply();
+}
+
+function renderCards(res){
+  const cont=document.getElementById('cards');
+  if(!res.length){
+    cont.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><p>No hay concursos con esos filtros.</p><p style="margin-top:6px">Prueba a ampliarlos o activa una alerta para cuando salga uno.</p></div>`;
+    return;
+  }
+  cont.innerHTML=res.map(c=>{
+    const cat=catClass(c.categoria||'');
+    const d=dias(c.fecha_limite);
+    const urgente=d>=0&&d<=7,pronto=d>=0&&d<=15;
+    const badgeCls=urgente?'badge-urgent':pronto?'badge-soon':'badge-ok';
+    const badgeTxt=d<0?'Cerrado':urgente?`⚠ Cierra en ${d}d`:pronto?`${d} días`:c.fecha_limite||'Sin fecha';
+    const isNew=c.nuevo?'isnew':'';
+    const isUrgent=urgente?'urgent':'';
+    const safeC=JSON.stringify(c).replace(/"/g,'&quot;');
+    return `<div class="card ${isUrgent} ${isNew}" onclick='openModal(${safeC})'>
+      <div>
+        <div class="card-cat cat-${cat}">${(c.categoria||'Otro').toUpperCase()}</div>
+        <div class="card-title">${c.titulo}</div>
+        <div class="card-org">${c.organizacion||''}</div>
+        <div class="card-meta">
+          📅 ${c.fecha_limite||'Sin fecha'}
+          ${c.descripcion?'· '+c.descripcion.substring(0,80)+'…':''}
+        </div>
+      </div>
+      <div class="card-right">
+        <div class="card-premio">${c.premio||'Sin dotación'}</div>
+        <span class="card-badge ${badgeCls}">${badgeTxt}</span>
+        <a class="card-link" href="${c.url||'#'}" target="_blank" onclick="event.stopPropagation()" ${!c.url?'style="opacity:.4;cursor:default"':''}>Ver bases</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── MODAL ──
+let currentC=null;
+function openModal(c){
+  currentC=c;
+  document.getElementById('m-cat').textContent=(c.categoria||'Otro').toUpperCase();
+  document.getElementById('m-title').textContent=c.titulo;
+  document.getElementById('m-org').textContent=c.organizacion||'';
+  document.getElementById('m-premio').textContent=c.premio||'Sin dotación';
+  document.getElementById('m-fecha').textContent=c.fecha_limite||'Sin fecha';
+  document.getElementById('m-desc').textContent=c.descripcion||'Sin descripción disponible.';
+  const actions=document.getElementById('m-actions');
+  if(c.url){
+    actions.innerHTML=`<a href="${c.url}" target="_blank" class="mbtn mbtn-p">Ver convocatoria oficial</a><button class="mbtn mbtn-s" onclick="closeModal()">Cerrar</button>`;
+  } else {
+    const q=encodeURIComponent(c.titulo+' bases convocatoria');
+    actions.innerHTML=`<a href="https://www.google.com/search?q=${q}" target="_blank" class="mbtn mbtn-p">Buscar en Google</a><button class="mbtn mbtn-s" onclick="closeModal()">Cerrar</button>`;
+  }
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal')) return;
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ── ALERTA ──
+function updateAlertPreview(){
+  const parts=[];
+  if(state.generos.length>0) parts.push(state.generos.join(', '));
+  else parts.push('Todos los géneros');
+  if(state.dotMin>0) parts.push(`Mín. ${state.dotMin.toLocaleString('es')} €`);
+  if(state.plazo!=='todos') parts.push(`Plazo ≤ ${state.plazo} días`);
+  if(state.urgentes) parts.push('Solo urgentes');
+  if(state.nuevos) parts.push('Solo nuevos');
+  document.getElementById('alert-preview').innerHTML=`<strong>Filtros activos:</strong> ${parts.join(' · ')}`;
+}
+
+function suscribir(){
+  const email=document.getElementById('alert-email').value.trim();
+  if(!email||!email.includes('@')){
+    document.getElementById('alert-email').style.borderColor='var(--accent)';return;
+  }
+  document.getElementById('alert-email').style.borderColor='';
+  // TODO: POST a Brevo/Resend con { email, filtros: state }
+  console.log('Alerta:', {email, filtros:state});
+  document.getElementById('alert-ok').style.display='block';
+  document.getElementById('alert-email').value='';
+  setTimeout(()=>document.getElementById('alert-ok').style.display='none',5000);
+}
+</script>
+</body>
+</html>
