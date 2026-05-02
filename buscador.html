@@ -649,8 +649,8 @@ function updateAlertPreview(){
   document.getElementById('alert-preview').innerHTML=`<strong>Filtros activos:</strong> ${parts.join(' · ')}`;
 }
 
-const WORKER_URL = 'https://TU-WORKER.TU-USUARIO.workers.dev'; // ← cambia esto tras desplegar el worker
-
+const WORKER_URL = 'https://concursos-literarios.dmateos-pascual.workers.dev/
+  
 async function suscribir(){
   const email=document.getElementById('alert-email').value.trim();
   if(!email||!email.includes('@')){
