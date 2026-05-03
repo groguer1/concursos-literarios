@@ -120,7 +120,7 @@ async function main() {
   if (!regex.test(html_file)) { console.error('No se encontro CONCURSOS_BASE'); process.exit(1); }
 
   fs.writeFileSync('index.html', html_file.replace(regex, concursosJS), 'utf8');
-  fs.writeFileSync('concursos.json', JSON.stringify(filtrados), 'utf8');
+  fs.writeFileSync('concursos.json', JSON.stringify(filtrados.length ? filtrados : JSON.parse(html_file.match(/const CONCURSOS_BASE = (\[[\s\S]*?\]);/)[1])), 'utf8');
   console.log('Actualizado con ' + filtrados.length + ' concursos:');
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
