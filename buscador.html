@@ -317,14 +317,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarDatos(){
   try{
-    const r=await fetch(DATOS_URL);
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const rows=await r.json();
-    todos = rows;
-    console.log('Concursos cargados:', todos.length);
+    // Intenta primero concursos.json (más rápido)
+    // Si no existe, extrae los datos del index.html directamente
+    let loaded = false;
+    try{
+      const r=await fetch('concursos.json?v='+Date.now());
+      if(r.ok){
+        const data=await r.json();
+        if(data && data.length){
+          todos=data;
+          loaded=true;
+          console.log('Cargados de concursos.json:', todos.length);
+        }
+      }
+    }catch(e){}
+
+    if(!loaded){
+      const r=await fetch('index.html');
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      const html=await r.text();
+      const match=html.match(/const CONCURSOS_BASE = (\[[\s\S]*?\]);/);
+      if(!match) throw new Error('CONCURSOS_BASE no encontrado');
+      todos=JSON.parse(match[1]);
+      console.log('Cargados de index.html:', todos.length);
+    }
   }catch(e){
-    console.error('Error cargando Sheet:', e);
-    document.getElementById('cards').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div><p>Error al cargar los concursos.</p><p style="font-size:12px;margin-top:5px">Comprueba tu conexión e inténtalo de nuevo.</p></div>';
+    console.error('Error cargando datos:', e);
+    document.getElementById('cards').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div><p>Error al cargar los concursos.</p><p style="font-size:12px;margin-top:5px">Inténtalo de nuevo.</p></div>';
   }finally{
     apply();
   }
