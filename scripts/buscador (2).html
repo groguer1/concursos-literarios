@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuentra tu concurso literario ideal | Letras Españolas</title>
+<meta name="description" content="Buscador avanzado de concursos literarios en España. Filtra por género, dotación y fecha. Activa alertas y te avisamos cuando salga el tuyo.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;--gold:#b8860b;--muted:#7a7670;--border:#d4cfc5;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+
+/* HEADER */
+header{border-bottom:2px solid var(--ink)}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.5rem 2rem 1rem}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--ink)}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border);overflow-x:auto}
+.nav-btn{padding:.65rem 1.1rem;font-size:11px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;display:inline-block}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover{color:var(--ink);background:var(--cream)}
+.nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
+
+/* HERO */
+.hero{background:var(--ink);padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 120%,rgba(200,57,43,.18) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:4px 14px;margin-bottom:1.2rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4.5vw,3rem);color:var(--paper);line-height:1.15;margin-bottom:.9rem;max-width:640px;margin-left:auto;margin-right:auto}
+.hero h1 em{color:#e8a84a;font-style:italic}
+.hero-sub{color:rgba(255,255,255,.48);font-size:14px;max-width:480px;margin:0 auto 2rem;font-weight:300;line-height:1.7}
+.hero-stats{display:flex;justify-content:center;gap:0;border-top:1px solid rgba(255,255,255,.1);padding-top:1.75rem;max-width:640px;margin:0 auto}
+.hstat{flex:1;text-align:center;padding:0 1rem;border-right:1px solid rgba(255,255,255,.08)}
+.hstat:last-child{border-right:none}
+.hstat-num{font-family:'Playfair Display',serif;font-size:1.9rem;color:#e8a84a;display:block;line-height:1}
+.hstat-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px;display:block}
+
+/* FILTROS BAR */
+.filtros-bar{background:var(--white);border-bottom:2px solid var(--ink);padding:.9rem 2rem;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.filtros-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.filtro-grupo{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.filtro-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap;margin-right:2px}
+.fpill{padding:4px 11px;border:1px solid var(--border);font-size:11px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;color:var(--muted);background:var(--white);transition:all .15s;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;user-select:none}
+.fpill:hover{border-color:var(--ink);color:var(--ink)}
+.fpill.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fpill.on-accent{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.fselect{padding:5px 26px 5px 9px;border:1px solid var(--border);font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--ink);background:var(--white);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a7670' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.fselect:focus{outline:none;border-color:var(--ink)}
+.fdiv{width:1px;height:26px;background:var(--border);flex-shrink:0}
+.dot-range{display:flex;align-items:center;gap:7px}
+.dot-range input[type=range]{width:90px;accent-color:var(--ink);cursor:pointer}
+.rval{font-size:11px;color:var(--ink);font-weight:500;min-width:44px}
+.btn-limpiar{padding:4px 10px;border:1px solid var(--border);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.btn-limpiar:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ALERTA BAR */
+.alerta-bar{background:#FEF9F0;border-bottom:1px solid #e8d5a0;padding:.75rem 2rem}
+.alerta-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.alerta-txt{font-size:13px;color:#7a5a00;flex:1;line-height:1.5}
+.alerta-txt strong{font-family:'Playfair Display',serif;font-size:14px}
+.alerta-form{display:flex;gap:6px;flex-shrink:0}
+.alerta-input{padding:7px 12px;border:1px solid #d4b96a;font-family:'IBM Plex Sans',sans-serif;font-size:13px;background:var(--white);min-width:210px}
+.alerta-input:focus{outline:none;border-color:var(--gold)}
+.alerta-btn{padding:7px 18px;background:var(--ink);color:var(--paper);border:none;font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .15s;white-space:nowrap}
+.alerta-btn:hover{background:var(--accent)}
+.alerta-btn:disabled{opacity:.55;cursor:not-allowed}
+
+/* MAIN */
+.container{max-width:1160px;margin:0 auto;padding:0 2rem}
+.ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase;width:100%;height:90px;margin:1.25rem 0}
+.results-wrap{padding:1.5rem 0 4rem}
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.count-txt{font-size:12px;color:var(--muted)}
+.count-txt strong{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ink);margin-right:4px}
+.sort-sel{padding:5px 24px 5px 8px;border:1px solid var(--border);font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--ink);background:var(--white);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 24 24' fill='none' stroke='%237a7670' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem}
+.chip{display:inline-flex;align-items:center;gap:5px;background:#FEF9F0;border:1px solid var(--gold);color:#7a5a00;font-size:11px;padding:3px 9px}
+.chip-x{cursor:pointer;color:var(--gold);font-weight:700;font-size:13px;line-height:1}
+.chip-x:hover{color:var(--accent)}
+
+/* cards */
+.cards{display:flex;flex-direction:column}
+.card{border:1px solid var(--border);border-top:none;padding:1rem 1.25rem;background:var(--white);display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;transition:background .15s;cursor:pointer}
+.card:first-child{border-top:1px solid var(--border)}
+.card:hover{background:var(--cream)}
+.card.urgent{border-left:3px solid var(--accent)}
+.card-top{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap}
+.card-cat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:1px 7px;border:1px solid currentColor}
+.cat-poesia{color:#534AB7}.cat-relato{color:#0F6E56}.cat-novela{color:#993C1D}.cat-infantil{color:#854F0B}.cat-teatro{color:#1a5c8a}.cat-otro{color:var(--muted)}
+.badge-new{background:var(--accent);color:var(--white);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:1px 5px;font-weight:500}
+.card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:3px;line-height:1.3}
+.card-org{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:7px;border-top:1px solid var(--border);font-size:12px;gap:1rem;flex-wrap:wrap}
+.card-premio{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--gold)}
+.card-fecha{color:var(--muted)}
+.card-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.dbadge{display:inline-block;font-size:11px;padding:4px 10px;font-weight:500}
+.db-u{background:#FDECEA;color:var(--accent)}
+.db-s{background:#FEF9F0;color:#7a5a00}
+.db-ok{background:#EAF3DE;color:#27500A}
+.db-c{background:var(--cream);color:var(--muted)}
+.card-link{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 10px;transition:all .15s}
+.card-link:hover{background:var(--accent);color:var(--white)}
+.card-link.dis{color:var(--muted);border-color:var(--border);pointer-events:none;opacity:.5}
+.empty{text-align:center;padding:3rem;color:var(--muted);border:1px solid var(--border);background:var(--white)}
+.empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+.empty p{font-size:13px;margin-top:5px}
+
+/* MODAL DETALLE */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(26,26,24,.75);z-index:200;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
+.modal-ov.open{display:flex}
+.modal{background:var(--paper);max-width:600px;width:100%;margin:auto;border:2px solid var(--ink);padding:2rem;position:relative;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.modal-x{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1;padding:4px}
+.modal-x:hover{color:var(--ink)}
+.m-cat{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.4rem}
+.m-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1.2;margin-bottom:.3rem}
+.m-org{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1.25rem}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;background:var(--cream);padding:1rem;border:1px solid var(--border)}
+.mfl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px}
+.mfv{font-weight:500;font-size:14px}
+.mfv.gold{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold)}
+.m-desc{font-size:14px;line-height:1.7;color:#3a3a38;margin-bottom:1.25rem;border-top:1px solid var(--border);padding-top:1rem}
+.m-actions{display:flex;gap:8px;flex-wrap:wrap}
+.mbtn{display:inline-block;padding:9px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:background .15s;cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif}
+.mbtn-p{background:var(--ink);color:var(--paper)}.mbtn-p:hover{background:var(--accent)}
+.mbtn-s{background:transparent;color:var(--ink);border:1px solid var(--border)}.mbtn-s:hover{background:var(--cream)}
+
+/* MODAL GRACIAS */
+.gracias-ov{display:none;position:fixed;inset:0;background:rgba(26,26,24,.85);z-index:300;align-items:center;justify-content:center;padding:2rem}
+.gracias-ov.open{display:flex}
+.gracias-box{background:var(--white);max-width:460px;width:100%;border:2px solid var(--ink);padding:2.5rem;text-align:center;animation:mIn .25s ease}
+.gracias-icon{font-size:3rem;margin-bottom:1rem;display:block}
+.gracias-box h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:.75rem}
+.gracias-box p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem}
+.gracias-filtros{background:var(--cream);border-left:3px solid var(--gold);padding:10px 14px;font-size:12px;color:#7a5a00;text-align:left;margin-bottom:1.5rem;line-height:1.7}
+.gracias-filtros strong{color:#5a3a00;display:block;margin-bottom:2px}
+.gracias-ok{padding:10px 28px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:none;transition:background .15s}
+.gracias-ok:hover{background:var(--accent)}
+
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.05em}
+footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  .filtros-inner{gap:.5rem}
+  .fdiv{display:none}
+  .alerta-inner{flex-direction:column;align-items:flex-start}
+  .alerta-form{width:100%}
+  .alerta-input{min-width:0;flex:1}
+  .card{grid-template-columns:1fr}
+  .card-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+  .m-grid{grid-template-columns:1fr}
+  .hstat{padding:0 .5rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <span id="fecha-hoy"></span>
+    <span>Recursos para escritores de España</span>
+    <span>Actualizado hoy</span>
+  </div>
+  <div class="header-main">
+    <a href="index.html"><h1 class="site-title">Letras <span>Españolas</span></h1></a>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+  </div>
+  <nav class="header-nav">
+    <a class="nav-btn" href="index.html">Concursos</a>
+    <a class="nav-btn" href="editoriales.html">Editoriales</a>
+    <a class="nav-btn" href="agentes.html">Agentes literarios</a>
+    <a class="nav-btn" href="revistas.html">Revistas</a>
+    <a class="nav-btn active" href="buscador.html">🔍 Buscador</a>
+    <a class="nav-btn" href="libros.html">Novedades</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Buscador avanzado · Actualizado diariamente</div>
+  <h1>¿Te avisamos cuando salga <em>tu</em> concurso?</h1>
+  <p class="hero-sub">Filtra por género, dotación y plazo. Activa una alerta y serás el primero en saberlo.</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-num" id="stat-total">—</span><span class="hstat-label">Activos</span></div>
+    <div class="hstat"><span class="hstat-num" id="stat-nuevos">—</span><span class="hstat-label">Nuevos</span></div>
+    <div class="hstat"><span class="hstat-num" id="stat-cierran">—</span><span class="hstat-label">Cierran pronto</span></div>
+    <div class="hstat"><span class="hstat-num" id="stat-dotacion">—</span><span class="hstat-label">Mayor premio</span></div>
+  </div>
+</section>
+
+<!-- FILTROS BAR sticky -->
+<div class="filtros-bar">
+  <div class="filtros-inner">
+    <div class="filtro-grupo">
+      <span class="filtro-label">Género</span>
+      <div class="fpill on" data-g="todos" onclick="tg(this)">Todos</div>
+      <div class="fpill" data-g="poesia" onclick="tg(this)">Poesía</div>
+      <div class="fpill" data-g="relato" onclick="tg(this)">Relato</div>
+      <div class="fpill" data-g="novela" onclick="tg(this)">Novela</div>
+      <div class="fpill" data-g="infantil" onclick="tg(this)">Infantil</div>
+      <div class="fpill" data-g="teatro" onclick="tg(this)">Teatro</div>
+      <div class="fpill" data-g="otro" onclick="tg(this)">Otro</div>
+    </div>
+    <div class="fdiv"></div>
+    <div class="filtro-grupo">
+      <span class="filtro-label">Plazo</span>
+      <select class="fselect" id="sel-plazo" onchange="apply()">
+        <option value="todos">Cualquiera</option>
+        <option value="7">7 días</option>
+        <option value="15">15 días</option>
+        <option value="30">1 mes</option>
+        <option value="60">2 meses</option>
+        <option value="90">3 meses</option>
+      </select>
+    </div>
+    <div class="fdiv"></div>
+    <div class="filtro-grupo">
+      <span class="filtro-label">Premio mín.</span>
+      <div class="dot-range">
+        <input type="range" id="range-dot" min="0" max="6000" step="100" value="0" oninput="ur(this)">
+        <span class="rval" id="rval">0 €</span>
+      </div>
+    </div>
+    <div class="fdiv"></div>
+    <div class="filtro-grupo">
+      <div class="fpill" id="p-urg" onclick="tc('p-urg')">⚠ Urgentes</div>
+      <div class="fpill" id="p-new" onclick="tc('p-new')">★ Nuevos</div>
+    </div>
+    <button class="btn-limpiar" onclick="resetAll()">✕ Limpiar</button>
+  </div>
+</div>
+
+<!-- ALERTA BAR -->
+<div class="alerta-bar">
+  <div class="alerta-inner">
+    <div class="alerta-txt">🔔 <strong>¿Te avisamos?</strong> Dinos tu email y te mandamos un aviso cuando salga un concurso con tus filtros.</div>
+    <div class="alerta-form">
+      <input type="email" class="alerta-input" id="alert-email" placeholder="tu@email.com">
+      <button class="alerta-btn" id="alert-btn" onclick="suscribir()">Avisadme</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="ad-slot">Publicidad 728×90 — Google AdSense</div>
+  <div class="results-wrap">
+    <div class="toolbar">
+      <div class="count-txt"><strong id="count-num">0</strong> concursos encontrados</div>
+      <select class="sort-sel" id="sort-sel" onchange="apply()">
+        <option value="fecha">Por fecha límite</option>
+        <option value="dotacion">Mayor dotación</option>
+        <option value="nuevo">Más recientes</option>
+      </select>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="cards" id="cards"></div>
+  </div>
+</div>
+
+<!-- Modal detalle -->
+<div class="modal-ov" id="modal-ov" onclick="cModal(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="cModal()">×</button>
+    <div class="m-cat" id="m-cat"></div>
+    <div class="m-title" id="m-title"></div>
+    <div class="m-org" id="m-org"></div>
+    <div class="m-grid">
+      <div><div class="mfl">Premio</div><div class="mfv gold" id="m-premio"></div></div>
+      <div><div class="mfl">Fecha límite</div><div class="mfv" id="m-fecha"></div></div>
+    </div>
+    <div class="m-desc" id="m-desc"></div>
+    <div class="m-actions" id="m-actions"></div>
+  </div>
+</div>
+
+<!-- Modal gracias -->
+<div class="gracias-ov" id="gracias-ov">
+  <div class="gracias-box">
+    <span class="gracias-icon">✉️</span>
+    <h2>¡Alerta activada!</h2>
+    <p>Te avisaremos en cuanto salga un concurso con tus preferencias. Revisa tu bandeja de entrada.</p>
+    <div class="gracias-filtros" id="gracias-filtros"></div>
+    <button class="gracias-ok" onclick="cGracias()">Perfecto, ¡gracias!</button>
+  </div>
+</div>
+
+<footer>
+  <p>© <span id="year"></span> Letras Españolas · Para escritores de España</p>
+  <p style="margin-top:6px"><a href="index.html">Inicio</a> · <a href="editoriales.html">Editoriales</a> · <a href="agentes.html">Agentes</a> · <a href="revistas.html">Revistas</a></p>
+</footer>
+
+<script>
+const WORKER_URL = 'https://TU-WORKER.TU-USUARIO.workers.dev';
+const DATOS_URL = 'concursos.json';
+
+const CONCURSOS_BASE = []; // Los datos vienen exclusivamente del Google Sheet
+
+let todos = [...CONCURSOS_BASE];
+let state = {generos:[], dotMin:0, plazo:'todos', urg:false, nuevo:false, sort:'fecha'};
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // Mostrar estado de carga
+  document.getElementById('cards').innerHTML = '<div class="empty"><div class="empty-icon">⏳</div><p>Cargando concursos...</p></div>';
+  document.getElementById('count-num').textContent = '...';
+  cargarDatos();
+});
+
+async function cargarDatos(){
+  try{
+    const r=await fetch(DATOS_URL);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const rows=await r.json();
+    todos = rows;
+    console.log('Concursos cargados:', todos.length);
+  }catch(e){
+    console.error('Error cargando Sheet:', e);
+    document.getElementById('cards').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div><p>Error al cargar los concursos.</p><p style="font-size:12px;margin-top:5px">Comprueba tu conexión e inténtalo de nuevo.</p></div>';
+  }finally{
+    apply();
+  }
+}
+
+function parseCSV(t){
+  const lines=t.trim().split('\n');if(lines.length<2)return[];
+  const h=lines[0].split(',').map(x=>x.trim().replace(/^"|"$/g,''));
+  return lines.slice(1).map(line=>{
+    const c=[];let cur='',q=false;
+    for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){q=!q;}else if(ch===','&&!q){c.push(cur.trim());cur='';}else cur+=ch;}
+    c.push(cur.trim());
+    const o={};h.forEach((k,i)=>{o[k]=c[i]||'';});return o;
+  }).filter(r=>Object.values(r).some(v=>v));
+}
+
+function d(f){
+  if(!f)return 999;const p=f.split('/');if(p.length!==3)return 999;
+  return Math.ceil((new Date(+p[2],+p[1]-1,+p[0])-new Date())/86400000);
+}
+function catK(c){
+  if(!c)return 'otro';const s=c.toLowerCase();
+  if(s.includes('poes'))return 'poesia';
+  if(s.includes('relato')||s.includes('cuento')||s.includes('nano')||s.includes('micro'))return 'relato';
+  if(s.includes('novela'))return 'novela';
+  if(s.includes('infantil')||s.includes('juvenil'))return 'infantil';
+  if(s.includes('teatro')||s.includes('dram'))return 'teatro';
+  return 'otro';
+}
+function dotN(c){if(!c.premio)return 0;const m=c.premio.match(/[\d.]+/);return m?parseFloat(m[0].replace('.',''))||0:0;}
+
+function updateStats(){
+  const n=todos.filter(c=>c.nuevo).length;
+  const ci=todos.filter(c=>{const x=d(c.fecha_limite);return x>=0&&x<=7;}).length;
+  const mx=Math.max(0,...todos.map(c=>dotN(c)));
+  anim('stat-total',todos.length);anim('stat-nuevos',n);anim('stat-cierran',ci);
+  document.getElementById('stat-dotacion').textContent=mx>0?mx.toLocaleString('es')+'€':'—';
+}
+function anim(id,t){
+  const el=document.getElementById(id);if(!el)return;
+  let c=0;const s=Math.max(1,Math.ceil(t/20));
+  const x=setInterval(()=>{c=Math.min(c+s,t);el.textContent=c;if(c>=t)clearInterval(x);},40);
+}
+
+// GENRE TOGGLE
+function tg(el){
+  const g=el.dataset.g;
+  if(g==='todos'){
+    document.querySelectorAll('.fpill[data-g]').forEach(p=>p.classList.remove('on'));
+    el.classList.add('on');state.generos=[];
+  }else{
+    document.querySelector('.fpill[data-g="todos"]').classList.remove('on');
+    el.classList.toggle('on');
+    state.generos=[...document.querySelectorAll('.fpill[data-g].on')].map(p=>p.dataset.g).filter(x=>x!=='todos');
+    if(!state.generos.length)document.querySelector('.fpill[data-g="todos"]').classList.add('on');
+  }
+  apply();
+}
+
+// CHECK TOGGLE (urgentes/nuevos)
+function tc(pillId){
+  const el=document.getElementById(pillId);
+  const isOn=el.classList.toggle('on-accent');
+  if(pillId==='p-urg') state.urg=isOn;
+  else state.nuevo=isOn;
+  apply();
+}
+
+function ur(el){
+  state.dotMin=+el.value;
+  document.getElementById('rval').textContent=state.dotMin>0?state.dotMin.toLocaleString('es')+' €':'0 €';
+  apply();
+}
+
+function apply(){
+  state.plazo=document.getElementById('sel-plazo').value;
+  state.sort=document.getElementById('sort-sel').value;
+
+  let res=todos.filter(c=>{
+    const cat=catK(c.categoria||'');
+    if(state.generos.length>0&&!state.generos.includes(cat))return false;
+    if(state.dotMin>0&&dotN(c)<state.dotMin)return false;
+    if(state.plazo!=='todos'){const x=d(c.fecha_limite);if(x>+state.plazo||x<0)return false;}
+    if(state.urg){const x=d(c.fecha_limite);if(x>7||x<0)return false;}
+    if(state.nuevo&&!c.nuevo)return false;
+    return true;
+  });
+
+  if(state.sort==='fecha')res.sort((a,b)=>d(a.fecha_limite)-d(b.fecha_limite));
+  if(state.sort==='dotacion')res.sort((a,b)=>dotN(b)-dotN(a));
+  if(state.sort==='nuevo')res.sort((a,b)=>(b.nuevo?1:0)-(a.nuevo?1:0));
+
+  document.getElementById('count-num').textContent=res.length;
+  renderChips();renderCards(res);updateStats();
+}
+
+function renderChips(){
+  let h='';
+  if(state.generos.length)state.generos.forEach(g=>{h+=`<div class="chip">${g}<span class="chip-x" onclick="rg('${g}')">×</span></div>`;});
+  if(state.dotMin>0)h+=`<div class="chip">Mín. ${state.dotMin.toLocaleString('es')} €<span class="chip-x" onclick="rdot()">×</span></div>`;
+  if(state.plazo!=='todos')h+=`<div class="chip">≤${state.plazo}d<span class="chip-x" onclick="rplazo()">×</span></div>`;
+  if(state.urg)h+=`<div class="chip">Urgentes<span class="chip-x" onclick="rurg()">×</span></div>`;
+  if(state.nuevo)h+=`<div class="chip">Nuevos<span class="chip-x" onclick="rnuevo()">×</span></div>`;
+  document.getElementById('chips').innerHTML=h;
+}
+function rg(g){document.querySelector(`.fpill[data-g="${g}"]`).classList.remove('on');state.generos=state.generos.filter(x=>x!==g);if(!state.generos.length)document.querySelector('.fpill[data-g="todos"]').classList.add('on');apply();}
+function rdot(){state.dotMin=0;document.getElementById('range-dot').value=0;document.getElementById('rval').textContent='0 €';apply();}
+function rplazo(){document.getElementById('sel-plazo').value='todos';apply();}
+function rurg(){state.urg=false;document.getElementById('p-urg').classList.remove('on-accent');apply();}
+function rnuevo(){state.nuevo=false;document.getElementById('p-new').classList.remove('on-accent');apply();}
+
+function resetAll(){
+  state={generos:[],dotMin:0,plazo:'todos',urg:false,nuevo:false,sort:'fecha'};
+  document.querySelectorAll('.fpill[data-g]').forEach(p=>p.classList.remove('on'));
+  document.querySelector('.fpill[data-g="todos"]').classList.add('on');
+  document.getElementById('range-dot').value=0;document.getElementById('rval').textContent='0 €';
+  document.getElementById('sel-plazo').value='todos';document.getElementById('sort-sel').value='fecha';
+  document.getElementById('p-urg').classList.remove('on-accent');
+  document.getElementById('p-new').classList.remove('on-accent');
+  apply();
+}
+
+function renderCards(res){
+  const cont=document.getElementById('cards');
+  if(!res.length){
+    cont.innerHTML='<div class="empty"><div class="empty-icon">🔍</div><p>No hay concursos con esos filtros.</p><p style="margin-top:6px;font-size:12px">Prueba a ampliarlos o activa una alerta para cuando salga uno.</p></div>';
+    return;
+  }
+  cont.innerHTML=res.map((c,i)=>{
+    const cat=catK(c.categoria||'');
+    const dd=d(c.fecha_limite);
+    const urg=dd>=0&&dd<=7,pronto=dd>=0&&dd<=15,cerr=dd<0;
+    const dbc=cerr?'db-c':urg?'db-u':pronto?'db-s':'db-ok';
+    const dbt=cerr?'Cerrado':urg?`⚠ ${dd}d`:pronto?`${dd} días`:c.fecha_limite||'Sin fecha';
+    const safe=JSON.stringify(c).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="card${urg?' urgent':''}" onclick='openM(${JSON.stringify(c)})'>
+      <div>
+        <div class="card-top">
+          <span class="card-cat cat-${cat}">${(c.categoria||'Otro').toUpperCase()}</span>
+          ${c.nuevo?'<span class="badge-new">Nuevo</span>':''}
+        </div>
+        <div class="card-title">${c.titulo}</div>
+        <div class="card-org">${c.organizacion||''}</div>
+        <div class="card-footer">
+          <span class="card-premio">${c.premio||'Sin dotación'}</span>
+          <span class="card-fecha">📅 ${c.fecha_limite||'Sin fecha'}</span>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="dbadge ${dbc}">${dbt}</span>
+        <a class="card-link${!c.url?' dis':''}" href="${c.url||'#'}" target="_blank" onclick="event.stopPropagation()">Ver bases</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// MODAL DETALLE
+function openM(c){
+  document.getElementById('m-cat').textContent=(c.categoria||'Otro').toUpperCase();
+  document.getElementById('m-title').textContent=c.titulo;
+  document.getElementById('m-org').textContent=c.organizacion||'';
+  document.getElementById('m-premio').textContent=c.premio||'Sin dotación';
+  document.getElementById('m-fecha').textContent=c.fecha_limite||'Sin fecha';
+  document.getElementById('m-desc').textContent=c.descripcion||'Sin descripción disponible.';
+  const q=encodeURIComponent(c.titulo+' bases convocatoria');
+  document.getElementById('m-actions').innerHTML=c.url
+    ?`<a href="${c.url}" target="_blank" class="mbtn mbtn-p">Ver convocatoria oficial</a><button class="mbtn mbtn-s" onclick="cModal()">Cerrar</button>`
+    :`<a href="https://www.google.com/search?q=${q}" target="_blank" class="mbtn mbtn-p">Buscar en Google</a><button class="mbtn mbtn-s" onclick="cModal()">Cerrar</button>`;
+  document.getElementById('modal-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function cModal(e){
+  if(e&&e.target!==document.getElementById('modal-ov'))return;
+  document.getElementById('modal-ov').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// MODAL GRACIAS
+function mostrarGracias(email){
+  const p=[];
+  if(state.generos.length)p.push(state.generos.join(', '));else p.push('Todos los géneros');
+  if(state.dotMin>0)p.push(`Premio mínimo: ${state.dotMin.toLocaleString('es')} €`);
+  if(state.plazo!=='todos')p.push(`Plazo: ≤ ${state.plazo} días`);
+  if(state.urg)p.push('Solo urgentes');
+  if(state.nuevo)p.push('Solo nuevos');
+  document.getElementById('gracias-filtros').innerHTML=`<strong>Tus filtros activos:</strong>${p.join(' · ')}<br><strong>Tu email:</strong> ${email}`;
+  document.getElementById('gracias-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function cGracias(){
+  document.getElementById('gracias-ov').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// SUSCRIBIR
+async function suscribir(){
+  const emailEl=document.getElementById('alert-email');
+  const email=emailEl.value.trim();
+  if(!email||!email.includes('@')){emailEl.style.borderColor='var(--accent)';emailEl.focus();return;}
+  emailEl.style.borderColor='';
+  const btn=document.getElementById('alert-btn');
+  btn.textContent='Guardando...';btn.disabled=true;
+  try{
+    if(WORKER_URL.includes('TU-WORKER')){
+      await new Promise(r=>setTimeout(r,700));
+    }else{
+      const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,filtros:state})});
+      if(!res.ok)throw new Error('Error');
+    }
+    emailEl.value='';
+    mostrarGracias(email);
+  }catch(e){alert('Ha habido un error. Inténtalo de nuevo.');console.error(e);}
+  finally{btn.textContent='Avisadme';btn.disabled=false;}
+}
+</script>
+</body>
+</html>
