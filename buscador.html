@@ -538,25 +538,54 @@ function cGracias(){
   document.body.style.overflow='';
 }
 
-// SUSCRIBIR
-async function suscribir(){
-  const emailEl=document.getElementById('alert-email');
-  const email=emailEl.value.trim();
-  if(!email||!email.includes('@')){emailEl.style.borderColor='var(--accent)';emailEl.focus();return;}
-  emailEl.style.borderColor='';
-  const btn=document.getElementById('alert-btn');
-  btn.textContent='Guardando...';btn.disabled=true;
-  try{
-    if(WORKER_URL.includes('TU-WORKER')){
-      await new Promise(r=>setTimeout(r,700));
-    }else{
-      const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,filtros:state})});
-      if(!res.ok)throw new Error('Error');
+async function suscribir() {
+  const emailEl = document.getElementById('alert-email');
+  const email = emailEl.value.trim();
+
+  if (!email || !email.includes('@')) {
+    emailEl.style.borderColor = 'var(--accent)';
+    emailEl.focus();
+    return;
+  }
+
+  emailEl.style.borderColor = '';
+  const btn = document.getElementById('alert-btn');
+  btn.textContent = 'Guardando...';
+  btn.disabled = true;
+
+  try {
+    if (WORKER_URL.includes('TU-WORKER')) {
+      await new Promise(r => setTimeout(r, 700));
+    } else {
+      // Enviamos los datos construyendo el objeto filtros desde 'state'
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          filtros: {
+            generos: state.generos || [],
+            dotMin: state.dotMin || 0,
+            plazo: state.plazo || 'todos',
+            urgentes: !!state.urgentes,
+            nuevos: !!state.nuevos
+          }
+        })
+      });
+
+      if (!res.ok) throw new Error('Error en el servidor');
     }
-    emailEl.value='';
+
+    emailEl.value = '';
     mostrarGracias(email);
-  }catch(e){alert('Ha habido un error. Inténtalo de nuevo.');console.error(e);}
-  finally{btn.textContent='Avisadme';btn.disabled=false;}
+
+  } catch (e) {
+    alert('Ha habido un error. Inténtalo de nuevo.');
+    console.error('Error al suscribir:', e);
+  } finally {
+    btn.textContent = 'Avisadme';
+    btn.disabled = false;
+  }
 }
 </script>
 </body>
