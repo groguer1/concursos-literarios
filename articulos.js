@@ -106,6 +106,46 @@ const ARTICULOS = [
     excerpt: 'Para qué sirve el registro, dónde y cómo registrar en cada comunidad autónoma, cuánto cuesta y las alternativas gratuitas que son jurídicamente válidas.',
     tiempo: '9 min',
     url: 'articulos/registrar-obra-literaria-espana.html'
+  },
+  {
+    id: 'como-publicar-primera-novela-espana',
+    cat: 'Publicación',
+    titulo: 'Cómo publicar tu primera novela en España: guía paso a paso',
+    excerpt: 'Desde terminar el manuscrito hasta firmar el contrato: editoriales, agentes, autopublicación y los errores que debes evitar en el mercado editorial español.',
+    tiempo: '18 min',
+    url: 'articulos/como-publicar-primera-novela-espana.html'
+  },
+  {
+    id: 'cuanto-cobra-escritor-regalias-espana',
+    cat: 'El oficio',
+    titulo: 'Cuánto cobra un escritor por regalías en España: cifras reales',
+    excerpt: 'Porcentajes de regalías, anticipos, liquidaciones y lo que nadie te dice sobre vivir de la escritura en el mercado editorial español.',
+    tiempo: '16 min',
+    url: 'articulos/cuanto-cobra-escritor-regalias-espana.html'
+  },
+  {
+    id: 'editoriales-que-aceptan-manuscritos-sin-agente',
+    cat: 'Publicación',
+    titulo: 'Editoriales que aceptan manuscritos sin agente en España (2026)',
+    excerpt: 'Lista actualizada de editoriales españolas con propuestas directas: Anagrama, Impedimenta, Siruela, Valdemar y muchas más, con sus requisitos y tiempos de respuesta.',
+    tiempo: '17 min',
+    url: 'articulos/editoriales-que-aceptan-manuscritos-sin-agente.html'
+  },
+  {
+    id: 'como-escribir-novela-historica',
+    cat: 'Técnica narrativa',
+    titulo: 'Cómo escribir una novela histórica: técnica, documentación y errores frecuentes',
+    excerpt: 'Cómo investigar sin ahogar la narrativa, qué licencias son aceptables y cómo evitar los anacronismos que delatan al escritor novel en el género histórico.',
+    tiempo: '20 min',
+    url: 'articulos/como-escribir-novela-historica.html'
+  },
+  {
+    id: 'autopublicacion-vs-editorial-tradicional-espana',
+    cat: 'Publicación',
+    titulo: 'Autopublicación vs editorial tradicional en España: comparativa honesta 2026',
+    excerpt: 'Ingresos, control, visibilidad y distribución: comparativa real de los dos modelos para que decidas cuál encaja con tu proyecto y tu momento como escritor.',
+    tiempo: '19 min',
+    url: 'articulos/autopublicacion-vs-editorial-tradicional-espana.html'
   }
 ];
 
