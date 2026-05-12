@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de derechos de autor — Letras Españolas</title>
+<meta name="description" content="Calcula cuánto cobrarás como autor por tu libro. Derechos de autor según precio, tirada, porcentaje y tipo de contrato editorial. Gratis y sin registro.">
+<meta name="google-site-verification" content="yIGT3ZQujBl7hF7lcUu2BQr7d1MGXeIMDnXAu7GFFTM">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NCS6BXJS');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;--gold:#b8860b;--muted:#7a7670;--border:#d4cfc5;--green:#2a7a4b}
+*{box-sizing:border-box;margin:0;padding:0}a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+header{border-bottom:2px solid var(--ink);position:relative}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.75rem 2rem 1.25rem;position:relative}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border)}
+.nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;text-decoration:none;display:flex;align-items:center}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover{color:var(--ink);background:var(--cream)}
+.nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
+.hamburger{display:none;position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;flex-direction:column;gap:4px;z-index:200}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);transition:all .2s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:700px){
+  .header-top{display:none}
+  .header-main{padding:1.25rem 1rem 1rem}
+  .hamburger{display:flex}
+  .header-nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .header-nav.open{display:flex}
+  .nav-btn{border-right:none;border-bottom:1px solid var(--border);padding:.85rem 1.5rem;font-size:13px;justify-content:flex-start}
+  .nav-btn:last-child{border-bottom:none}
+  .nav-btn.active{border-left:3px solid var(--accent);padding-left:calc(1.5rem - 3px)}
+  .container{padding:0 1rem}
+  .layout{padding:1.25rem 0 2rem}
+  .calc-grid{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+  .tab-group{flex-direction:column}
+  .results-grid{grid-template-columns:1fr}
+}
+.section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
+.section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+
+/* CALCULADORA */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:600px){.calc-grid{grid-template-columns:1fr}}
+.calc-panel{background:white;border:1px solid var(--border);padding:1.5rem}
+.calc-panel-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:1.25rem;font-weight:500}
+.field{margin-bottom:1.25rem}
+.field label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;font-weight:500}
+.field input[type=number], .field select{width:100%;border:1px solid var(--border);padding:8px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;background:var(--paper);color:var(--ink);outline:none;appearance:none;-webkit-appearance:none}
+.field input[type=number]:focus, .field select:focus{border-color:var(--ink)}
+.field .hint{font-size:11px;color:var(--muted);margin-top:3px}
+.range-wrap{display:flex;align-items:center;gap:10px}
+.range-wrap input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:var(--border);outline:none}
+.range-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;background:var(--ink);cursor:pointer;border-radius:0}
+.range-val{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;min-width:52px;text-align:right}
+.tab-group{display:flex;margin-bottom:1.5rem;border:1px solid var(--border)}
+.tab-btn{flex:1;padding:.6rem;font-size:11px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;background:transparent;border:none;color:var(--muted);font-family:'IBM Plex Sans',sans-serif;transition:all .15s;border-right:1px solid var(--border)}
+.tab-btn:last-child{border-right:none}
+.tab-btn.active{background:var(--ink);color:var(--paper)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* RESULTADOS */
+.results-panel{background:var(--ink);color:var(--paper);padding:1.5rem;margin-top:1.5rem}
+.results-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:1.25rem;font-weight:500}
+.result-main{margin-bottom:1.5rem}
+.result-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px}
+.result-value{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--paper);line-height:1}
+.result-value.accent{color:#e8a89a}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.result-item{border-top:1px solid rgba(255,255,255,.15);padding-top:.75rem}
+.result-item-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:3px}
+.result-item-value{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700}
+.result-breakdown{border-top:1px solid rgba(255,255,255,.15);padding-top:1rem}
+.result-breakdown-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.75rem}
+.breakdown-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.breakdown-row:last-child{border-bottom:none}
+.breakdown-row.total{font-weight:700;border-top:1px solid rgba(255,255,255,.3);padding-top:8px;margin-top:4px}
+.disclaimer{font-size:11px;color:rgba(255,255,255,.35);margin-top:1rem;line-height:1.5}
+
+/* INFO */
+.info-box{background:var(--cream);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;line-height:1.6}
+.info-box strong{font-weight:500}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr}}
+.info-card{background:white;border:1px solid var(--border);padding:1.25rem}
+.info-card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.info-card-body{font-size:13px;color:var(--muted);line-height:1.6}
+.info-card-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--accent);display:block;margin-bottom:.25rem}
+
+.ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.ad-horizontal{width:100%;height:90px;margin:1rem 0}
+.ad-square{width:100%;height:250px;margin-bottom:1.5rem}
+.sidebar-section{margin-bottom:2rem}
+.sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
+.sidebar-link{display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);transition:color .15s}
+.sidebar-link:last-child{border-bottom:none}
+.sidebar-link:hover{color:var(--accent)}
+.sidebar-link::before{content:'→ ';color:var(--accent);font-size:11px}
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+footer a{color:var(--muted);margin:0 .75rem}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<header>
+  <div class="header-top">
+    <span id="fecha-hoy"></span>
+    <span>Recursos para escritores de España</span>
+    <span>Directorio actualizado 2026</span>
+  </div>
+  <div class="header-main">
+    <h1 class="site-title"><a href="index.html">Letras <span>Españolas</span></a></h1>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+    <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="header-nav">
+    <a class="nav-btn" href="index.html">Concursos</a>
+    <a class="nav-btn" href="editoriales.html">Editoriales</a>
+    <a class="nav-btn" href="agentes.html">Agentes</a>
+    <a class="nav-btn" href="revistas.html">Revistas</a>
+    <a class="nav-btn" href="index.html#articulos">Artículos</a>
+    <a class="nav-btn active" href="calculadora.html">Calculadora</a>
+    <a class="nav-btn" href="checklist.html">Checklist</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="layout">
+    <main>
+      <div class="ad-slot ad-horizontal">Publicidad</div>
+
+      <div class="section-title">Calculadora de derechos de autor</div>
+      <div class="section-sub">Calcula cuánto cobrarás por tu libro según el tipo de contrato · 2026</div>
+
+      <div class="info-box">
+        <strong>¿Cómo funciona?</strong> Introduce los datos de tu contrato o los que estés negociando. La calculadora te muestra cuánto cobrarías en función del número de ejemplares vendidos, el precio de venta, el porcentaje de regalías y el anticipo pactado.
+      </div>
+
+      <div class="tab-group">
+        <button class="tab-btn active" onclick="setTab('contrato',this)">Contrato editorial</button>
+        <button class="tab-btn" onclick="setTab('autopublicacion',this)">Autopublicación</button>
+        <button class="tab-btn" onclick="setTab('comparar',this)">Comparar opciones</button>
+      </div>
+
+      <!-- TAB 1: CONTRATO EDITORIAL -->
+      <div class="tab-content active" id="tab-contrato">
+        <div class="calc-grid">
+          <div class="calc-panel">
+            <div class="calc-panel-title">Datos del libro</div>
+            <div class="field">
+              <label>Precio de venta al público (PVP)</label>
+              <div class="range-wrap">
+                <input type="range" id="pvp" min="5" max="40" step="0.5" value="20" oninput="sync('pvp','pvp-val');calcContrato()">
+                <span class="range-val" id="pvp-val">20,00 €</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>Tirada inicial (ejemplares)</label>
+              <div class="range-wrap">
+                <input type="range" id="tirada" min="500" max="20000" step="500" value="3000" oninput="sync('tirada','tirada-val');calcContrato()">
+                <span class="range-val" id="tirada-val">3.000</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>% de venta estimado de la tirada</label>
+              <div class="range-wrap">
+                <input type="range" id="ventas-pct" min="10" max="100" step="5" value="50" oninput="sync('ventas-pct','ventas-pct-val');calcContrato()">
+                <span class="range-val" id="ventas-pct-val">50%</span>
+              </div>
+              <div class="hint">Un debut suele vender entre el 20% y el 50% de la tirada</div>
+            </div>
+          </div>
+          <div class="calc-panel">
+            <div class="calc-panel-title">Condiciones del contrato</div>
+            <div class="field">
+              <label>Porcentaje de regalías sobre PVP</label>
+              <div class="range-wrap">
+                <input type="range" id="royalty" min="5" max="20" step="0.5" value="10" oninput="sync('royalty','royalty-val');calcContrato()">
+                <span class="range-val" id="royalty-val">10%</span>
+              </div>
+              <div class="hint">Lo habitual en España: 8-10% para noveles, 10-15% para consolidados</div>
+            </div>
+            <div class="field">
+              <label>Anticipo (€)</label>
+              <div class="range-wrap">
+                <input type="range" id="anticipo" min="0" max="30000" step="500" value="2000" oninput="sync('anticipo','anticipo-val');calcContrato()">
+                <span class="range-val" id="anticipo-val">2.000 €</span>
+              </div>
+              <div class="hint">El anticipo se descuenta de las regalías futuras</div>
+            </div>
+            <div class="field">
+              <label>Tipo de base de cálculo</label>
+              <select id="base-calculo" onchange="calcContrato()">
+                <option value="pvp">Sobre PVP (precio de venta al público)</option>
+                <option value="neto">Sobre precio neto (PVP menos descuento librero ~40%)</option>
+              </select>
+              <div class="hint">Las grandes editoriales suelen calcular sobre PVP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-panel" id="results-contrato">
+          <div class="results-title">Resultado del cálculo</div>
+          <div class="result-main">
+            <div class="result-label">Ingresos totales por derechos</div>
+            <div class="result-value" id="res-total">—</div>
+          </div>
+          <div class="results-grid">
+            <div class="result-item">
+              <div class="result-item-label">Ejemplares vendidos</div>
+              <div class="result-item-value" id="res-ejemplares">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Regalía por ejemplar</div>
+              <div class="result-item-value" id="res-por-ejemplar">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Anticipo cubierto en</div>
+              <div class="result-item-value" id="res-break-anticipo">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Ingresos netos tras anticipo</div>
+              <div class="result-item-value" id="res-neto">—</div>
+            </div>
+          </div>
+          <div class="result-breakdown">
+            <div class="result-breakdown-title">Desglose</div>
+            <div class="breakdown-row"><span>Regalías brutas</span><span id="bd-brutas">—</span></div>
+            <div class="breakdown-row"><span>Anticipo recibido (ya cobrado)</span><span id="bd-anticipo">—</span></div>
+            <div class="breakdown-row"><span>Regalías devengadas pendientes</span><span id="bd-pendiente">—</span></div>
+            <div class="breakdown-row total"><span>TOTAL cobrado (anticipo + pendiente)</span><span id="bd-total">—</span></div>
+          </div>
+          <p class="disclaimer">Cálculo orientativo. El resultado real depende del contrato firmado, el IVA, la retención del IRPF (15% en España), y otras cláusulas. Consulta siempre a un gestor especializado en propiedad intelectual.</p>
+        </div>
+      </div>
+
+      <!-- TAB 2: AUTOPUBLICACIÓN -->
+      <div class="tab-content" id="tab-autopublicacion">
+        <div class="calc-grid">
+          <div class="calc-panel">
+            <div class="calc-panel-title">Datos del libro</div>
+            <div class="field">
+              <label>Precio de venta (ebook o papel)</label>
+              <div class="range-wrap">
+                <input type="range" id="ap-precio" min="1" max="30" step="0.5" value="4.99" oninput="syncAP('ap-precio','ap-precio-val');calcAuto()">
+                <span class="range-val" id="ap-precio-val">4,99 €</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>Ejemplares / descargas mensuales</label>
+              <div class="range-wrap">
+                <input type="range" id="ap-ventas" min="10" max="5000" step="10" value="200" oninput="syncAP('ap-ventas','ap-ventas-val');calcAuto()">
+                <span class="range-val" id="ap-ventas-val">200</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>Plataforma</label>
+              <select id="ap-plataforma" onchange="calcAuto()">
+                <option value="0.70">Amazon KDP — 70% regalía (precio 2,99€–9,99€)</option>
+                <option value="0.35">Amazon KDP — 35% regalía (precio fuera de rango)</option>
+                <option value="0.60">Kobo Writing Life — 70% (menos costes)</option>
+                <option value="0.60">Google Play Books — 52% aprox.</option>
+                <option value="0.55">Apple Books — 70% (sobre precio neto)</option>
+                <option value="0.65">Lektu (solo ebook, sin DRM) — 65%</option>
+                <option value="0.50">Distribuidor (IngramSpark, PubliBook) — ~50%</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-panel">
+            <div class="calc-panel-title">Costes de producción</div>
+            <div class="field">
+              <label>Corrección de estilo (€)</label>
+              <div class="range-wrap">
+                <input type="range" id="coste-corr" min="0" max="3000" step="100" value="800" oninput="syncAP('coste-corr','coste-corr-val');calcAuto()">
+                <span class="range-val" id="coste-corr-val">800 €</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>Diseño de portada (€)</label>
+              <div class="range-wrap">
+                <input type="range" id="coste-portada" min="0" max="1500" step="50" value="300" oninput="syncAP('coste-portada','coste-portada-val');calcAuto()">
+                <span class="range-val" id="coste-portada-val">300 €</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>Maquetación (€)</label>
+              <div class="range-wrap">
+                <input type="range" id="coste-maq" min="0" max="1000" step="50" value="200" oninput="syncAP('coste-maq','coste-maq-val');calcAuto()">
+                <span class="range-val" id="coste-maq-val">200 €</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-panel">
+          <div class="results-title">Resultado mensual y proyección anual</div>
+          <div class="results-grid">
+            <div class="result-item">
+              <div class="result-item-label">Ingreso mensual bruto</div>
+              <div class="result-item-value" id="ap-mensual">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Ingreso anual bruto</div>
+              <div class="result-item-value" id="ap-anual">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Inversión inicial total</div>
+              <div class="result-item-value" id="ap-inversion">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Meses para recuperar inversión</div>
+              <div class="result-item-value" id="ap-break-even">—</div>
+            </div>
+          </div>
+          <p class="disclaimer">Cálculo orientativo. Los porcentajes varían según precio, país y plataforma. Revisa siempre las condiciones actuales de cada plataforma antes de publicar.</p>
+        </div>
+      </div>
+
+      <!-- TAB 3: COMPARAR -->
+      <div class="tab-content" id="tab-comparar">
+        <div class="info-box">Introduce los mismos datos del libro en ambas opciones para comparar qué te conviene más según los ejemplares que esperas vender.</div>
+        <div class="calc-grid">
+          <div class="calc-panel">
+            <div class="calc-panel-title">Opción A — Contrato editorial</div>
+            <div class="field"><label>PVP (€)</label>
+              <div class="range-wrap"><input type="range" id="ca-pvp" min="5" max="40" step="0.5" value="20" oninput="syncC('ca-pvp','ca-pvp-val');calcComparar()"><span class="range-val" id="ca-pvp-val">20,00 €</span></div></div>
+            <div class="field"><label>Regalía (%)</label>
+              <div class="range-wrap"><input type="range" id="ca-royalty" min="5" max="20" step="0.5" value="10" oninput="syncC('ca-royalty','ca-royalty-val');calcComparar()"><span class="range-val" id="ca-royalty-val">10%</span></div></div>
+            <div class="field"><label>Anticipo (€)</label>
+              <div class="range-wrap"><input type="range" id="ca-anticipo" min="0" max="30000" step="500" value="2000" oninput="syncC('ca-anticipo','ca-anticipo-val');calcComparar()"><span class="range-val" id="ca-anticipo-val">2.000 €</span></div></div>
+          </div>
+          <div class="calc-panel">
+            <div class="calc-panel-title">Opción B — Autopublicación</div>
+            <div class="field"><label>Precio ebook/libro (€)</label>
+              <div class="range-wrap"><input type="range" id="cb-precio" min="1" max="30" step="0.5" value="4.99" oninput="syncC('cb-precio','cb-precio-val');calcComparar()"><span class="range-val" id="cb-precio-val">4,99 €</span></div></div>
+            <div class="field"><label>% regalía plataforma</label>
+              <div class="range-wrap"><input type="range" id="cb-royalty" min="30" max="80" step="5" value="70" oninput="syncC('cb-royalty','cb-royalty-val');calcComparar()"><span class="range-val" id="cb-royalty-val">70%</span></div></div>
+            <div class="field"><label>Inversión inicial (€)</label>
+              <div class="range-wrap"><input type="range" id="cb-inversion" min="0" max="5000" step="100" value="1300" oninput="syncC('cb-inversion','cb-inversion-val');calcComparar()"><span class="range-val" id="cb-inversion-val">1.300 €</span></div></div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:1.5rem">
+          <label>Ejemplares/descargas vendidos (simulación)</label>
+          <div class="range-wrap">
+            <input type="range" id="comp-ventas" min="100" max="20000" step="100" value="2000" oninput="syncC('comp-ventas','comp-ventas-val');calcComparar()">
+            <span class="range-val" id="comp-ventas-val">2.000</span>
+          </div>
+        </div>
+
+        <div class="results-panel">
+          <div class="results-title">Comparativa a <span id="comp-ventas-label">2.000</span> ejemplares vendidos</div>
+          <div class="results-grid">
+            <div class="result-item">
+              <div class="result-item-label">Opción A — Contrato editorial</div>
+              <div class="result-item-value" id="comp-a">—</div>
+            </div>
+            <div class="result-item">
+              <div class="result-item-label">Opción B — Autopublicación</div>
+              <div class="result-item-value" id="comp-b">—</div>
+            </div>
+          </div>
+          <div id="comp-conclusion" style="font-size:14px;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.2)"></div>
+          <p class="disclaimer">Comparativa simplificada. No tiene en cuenta visibilidad, distribución, derechos subsidiarios, traducciones u otros factores que suelen favorecer a las editoriales tradicionales.</p>
+        </div>
+      </div>
+
+      <!-- INFO EXTRA -->
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-card-num">8–10%</span>
+          <div class="info-card-title">Regalía habitual para noveles</div>
+          <div class="info-card-body">La mayoría de contratos con editoriales medianas y grandes en España ofrecen entre el 8% y el 10% sobre PVP para autores que publican por primera vez.</div>
+        </div>
+        <div class="info-card">
+          <span class="info-card-num">15%</span>
+          <div class="info-card-title">Retención IRPF en España</div>
+          <div class="info-card-body">Los derechos de autor tributan como rendimientos del trabajo. La retención habitual en España es del 15% (7% en los dos primeros años de actividad).</div>
+        </div>
+        <div class="info-card">
+          <span class="info-card-num">70%</span>
+          <div class="info-card-title">Regalía en Amazon KDP</div>
+          <div class="info-card-body">Amazon ofrece hasta el 70% de regalía para ebooks con precio entre 2,99€ y 9,99€. Para precios fuera de ese rango, la regalía baja al 35%.</div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="ad-slot ad-square">Publicidad</div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Herramientas</div>
+        <a class="sidebar-link" href="checklist.html">¿Está listo mi manuscrito?</a>
+        <a class="sidebar-link" href="buscador.html">Buscador de concursos</a>
+        <a class="sidebar-link" href="editoriales.html">Directorio de editoriales</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Artículos relacionados</div>
+        <a class="sidebar-link" href="index.html#articulos">Cómo negociar tu contrato</a>
+        <a class="sidebar-link" href="index.html#articulos">Autopublicación vs editorial</a>
+        <a class="sidebar-link" href="agentes.html">Agentes literarios en España</a>
+      </div>
+      <div class="ad-slot ad-square">Publicidad</div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <a href="index.html">Inicio</a>
+    <a href="index.html#legal">Aviso legal</a>
+    <a href="index.html#privacidad">Privacidad</a>
+    <span>© 2026 Letras Españolas</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function fmt(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function fmtN(n){return n.toLocaleString('es-ES')}
+function fmtPct(n){return n.toFixed(1)+'%'}
+
+function sync(id, valId) {
+  const v = parseFloat(document.getElementById(id).value);
+  const el = document.getElementById(valId);
+  if(id==='pvp') el.textContent = fmt(v);
+  else if(id==='royalty') el.textContent = fmtPct(v);
+  else if(id==='anticipo') el.textContent = fmt(v);
+  else if(id==='tirada') el.textContent = fmtN(v);
+  else if(id==='ventas-pct') el.textContent = v+'%';
+}
+function syncAP(id, valId) {
+  const v = parseFloat(document.getElementById(id).value);
+  const el = document.getElementById(valId);
+  if(id==='ap-precio') el.textContent = fmt(v);
+  else if(id==='ap-ventas') el.textContent = fmtN(v);
+  else el.textContent = fmt(v);
+}
+function syncC(id, valId) {
+  const v = parseFloat(document.getElementById(id).value);
+  const el = document.getElementById(valId);
+  if(id.includes('pvp')||id.includes('precio')||id.includes('anticipo')||id.includes('inversion')) el.textContent = fmt(v);
+  else if(id.includes('royalty')) el.textContent = v+'%';
+  else el.textContent = fmtN(v);
+}
+
+function setTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function calcContrato() {
+  const pvp = parseFloat(document.getElementById('pvp').value);
+  const tirada = parseInt(document.getElementById('tirada').value);
+  const ventasPct = parseInt(document.getElementById('ventas-pct').value)/100;
+  const royalty = parseFloat(document.getElementById('royalty').value)/100;
+  const anticipo = parseFloat(document.getElementById('anticipo').value);
+  const base = document.getElementById('base-calculo').value;
+
+  const precioBase = base === 'neto' ? pvp * 0.60 : pvp;
+  const ejemplares = Math.round(tirada * ventasPct);
+  const porEjemplar = precioBase * royalty;
+  const brutas = ejemplares * porEjemplar;
+  const breakEjemplares = anticipo > 0 ? Math.ceil(anticipo / porEjemplar) : 0;
+  const pendiente = Math.max(0, brutas - anticipo);
+  const total = anticipo + pendiente;
+
+  document.getElementById('res-total').textContent = fmt(total);
+  document.getElementById('res-ejemplares').textContent = fmtN(ejemplares);
+  document.getElementById('res-por-ejemplar').textContent = fmt(porEjemplar);
+  document.getElementById('res-break-anticipo').textContent = anticipo > 0 ? fmtN(breakEjemplares)+' ejemplares' : 'Sin anticipo';
+  document.getElementById('res-neto').textContent = fmt(pendiente);
+  document.getElementById('bd-brutas').textContent = fmt(brutas);
+  document.getElementById('bd-anticipo').textContent = fmt(anticipo);
+  document.getElementById('bd-pendiente').textContent = fmt(pendiente);
+  document.getElementById('bd-total').textContent = fmt(total);
+}
+
+function calcAuto() {
+  const precio = parseFloat(document.getElementById('ap-precio').value);
+  const ventas = parseInt(document.getElementById('ap-ventas').value);
+  const royaltyPct = parseFloat(document.getElementById('ap-plataforma').value);
+  const corrCost = parseFloat(document.getElementById('coste-corr').value);
+  const portadaCost = parseFloat(document.getElementById('coste-portada').value);
+  const maqCost = parseFloat(document.getElementById('coste-maq').value);
+
+  const mensual = precio * royaltyPct * ventas;
+  const anual = mensual * 12;
+  const inversion = corrCost + portadaCost + maqCost;
+  const breakEven = mensual > 0 ? (inversion / mensual) : Infinity;
+
+  document.getElementById('ap-mensual').textContent = fmt(mensual);
+  document.getElementById('ap-anual').textContent = fmt(anual);
+  document.getElementById('ap-inversion').textContent = fmt(inversion);
+  document.getElementById('ap-break-even').textContent = isFinite(breakEven) ? breakEven.toFixed(1)+' meses' : '—';
+}
+
+function calcComparar() {
+  const ventas = parseInt(document.getElementById('comp-ventas').value);
+  document.getElementById('comp-ventas-label').textContent = fmtN(ventas);
+  document.getElementById('comp-ventas-val').textContent = fmtN(ventas);
+
+  const aPvp = parseFloat(document.getElementById('ca-pvp').value);
+  const aRoyalty = parseFloat(document.getElementById('ca-royalty').value)/100;
+  const aAnticipo = parseFloat(document.getElementById('ca-anticipo').value);
+  const aGanancia = Math.max(aAnticipo, ventas * aPvp * aRoyalty);
+
+  const bPrecio = parseFloat(document.getElementById('cb-precio').value);
+  const bRoyalty = parseFloat(document.getElementById('cb-royalty').value)/100;
+  const bInversion = parseFloat(document.getElementById('cb-inversion').value);
+  const bGanancia = Math.max(0, ventas * bPrecio * bRoyalty - bInversion);
+
+  document.getElementById('comp-a').textContent = fmt(aGanancia);
+  document.getElementById('comp-b').textContent = fmt(bGanancia);
+
+  const diff = bGanancia - aGanancia;
+  const winner = diff > 0 ? 'B (autopublicación)' : 'A (contrato editorial)';
+  document.getElementById('comp-conclusion').textContent = `Con ${fmtN(ventas)} ejemplares vendidos, la opción ${winner} genera ${fmt(Math.abs(diff))} más. Recuerda que la editorial ofrece distribución, visibilidad y respaldo que no aparecen en este cálculo.`;
+}
+
+// Inicializar
+calcContrato(); calcAuto(); calcComparar();
+
+// Menú hamburguesa
+(function(){
+  var btn=document.querySelector('.hamburger');
+  var nav=document.querySelector('.header-nav');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',function(){btn.classList.toggle('open');nav.classList.toggle('open');btn.setAttribute('aria-expanded',nav.classList.contains('open'));});
+  nav.querySelectorAll('.nav-btn').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');nav.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
+})();
+</script>
+</body>
+</html>

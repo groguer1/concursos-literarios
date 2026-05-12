@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Está listo mi manuscrito? — Letras Españolas</title>
+<meta name="description" content="Checklist interactivo para escritores. Comprueba si tu manuscrito está listo para enviar a editoriales o autopublicar. 40 preguntas en 6 categorías.">
+<meta name="google-site-verification" content="yIGT3ZQujBl7hF7lcUu2BQr7d1MGXeIMDnXAu7GFFTM">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NCS6BXJS');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;--gold:#b8860b;--muted:#7a7670;--border:#d4cfc5;--green:#2a7a4b;--orange:#c8601a}
+*{box-sizing:border-box;margin:0;padding:0}a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+header{border-bottom:2px solid var(--ink);position:relative}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.75rem 2rem 1.25rem;position:relative}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border)}
+.nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;text-decoration:none;display:flex;align-items:center}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover{color:var(--ink);background:var(--cream)}
+.nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
+.hamburger{display:none;position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;flex-direction:column;gap:4px;z-index:200}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);transition:all .2s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:700px){
+  .header-top{display:none}
+  .header-main{padding:1.25rem 1rem 1rem}
+  .hamburger{display:flex}
+  .header-nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .header-nav.open{display:flex}
+  .nav-btn{border-right:none;border-bottom:1px solid var(--border);padding:.85rem 1.5rem;font-size:13px;justify-content:flex-start}
+  .nav-btn:last-child{border-bottom:none}
+  .nav-btn.active{border-left:3px solid var(--accent);padding-left:calc(1.5rem - 3px)}
+  .container{padding:0 1rem}
+  .layout{padding:1.25rem 0 2rem}
+  .calc-grid{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+  .tab-group{flex-direction:column}
+  .results-grid{grid-template-columns:1fr}
+}
+.section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
+.section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+
+/* PROGRESS */
+.progress-bar-wrap{background:var(--border);height:6px;margin-bottom:.5rem}
+.progress-bar-fill{height:6px;background:var(--ink);transition:width .3s}
+.progress-label{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2rem}
+
+/* CATEGORÍAS */
+.cat-block{background:white;border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden}
+.cat-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.cat-header:hover{background:var(--cream)}
+.cat-header-left{display:flex;align-items:center;gap:.75rem}
+.cat-icon{font-size:1.2rem}
+.cat-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.cat-progress{font-size:11px;color:var(--muted);letter-spacing:.06em}
+.cat-mini-bar{width:80px;height:4px;background:var(--border)}
+.cat-mini-fill{height:4px;background:var(--green);transition:width .3s}
+.cat-body{padding:1.25rem}
+.cat-body.collapsed{display:none}
+
+/* ITEMS */
+.check-item{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.check-item:last-child{border-bottom:none}
+.check-item:hover{background:var(--cream);margin:0 -1.25rem;padding-left:1.25rem;padding-right:1.25rem}
+.check-box{width:20px;height:20px;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;background:white}
+.check-item.checked .check-box{background:var(--ink);border-color:var(--ink)}
+.check-item.checked .check-box::after{content:'✓';color:white;font-size:12px;font-weight:700}
+.check-item.na .check-box{background:var(--muted);border-color:var(--muted)}
+.check-item.na .check-box::after{content:'N/A';color:white;font-size:8px;font-weight:700}
+.check-text{flex:1}
+.check-label{font-size:14px;font-weight:400;line-height:1.4}
+.check-item.checked .check-label{color:var(--muted);text-decoration:line-through}
+.check-hint{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
+.check-importance{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;margin-top:4px;display:inline-block}
+.imp-critical{background:#fdecea;color:#c0392b;border:1px solid #f5c6c2}
+.imp-important{background:#fdf6e3;color:var(--gold);border:1px solid #e8d8a0}
+.imp-nice{background:#e8f5ee;color:var(--green);border:1px solid #b8ddc9}
+.check-actions{display:flex;gap:5px}
+.na-btn{font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-family:'IBM Plex Sans',sans-serif;transition:all .15s;margin-top:2px}
+.na-btn:hover{border-color:var(--muted);color:var(--ink)}
+
+/* RESULTADO */
+.result-panel{background:var(--ink);color:var(--paper);padding:2rem;margin-top:2rem}
+.result-panel.hidden{display:none}
+.result-score{font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;line-height:1}
+.result-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:1rem}
+.result-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:.75rem}
+.result-body{font-size:14px;line-height:1.7;color:rgba(255,255,255,.8);margin-bottom:1.5rem}
+.result-items{margin-bottom:1.5rem}
+.result-item-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
+.result-item-row:last-child{border-bottom:none}
+.result-item-label{color:rgba(255,255,255,.6)}
+.result-item-score{font-weight:600}
+.result-item-score.good{color:#7ee8a2}
+.result-item-score.mid{color:#f6d860}
+.result-item-score.bad{color:#f08080}
+.btn-reset{display:inline-block;padding:9px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--paper);color:var(--ink);cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif;margin-top:1rem;transition:background .15s}
+.btn-reset:hover{background:var(--cream)}
+.btn-check{display:inline-block;padding:9px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--paper);cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif;margin-top:1rem;transition:background .15s;margin-right:.5rem}
+.btn-check:hover{opacity:.9}
+
+.info-box{background:var(--cream);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;line-height:1.6}
+.ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.ad-horizontal{width:100%;height:90px;margin:1rem 0}
+.ad-square{width:100%;height:250px;margin-bottom:1.5rem}
+.sidebar-section{margin-bottom:2rem}
+.sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
+.sidebar-link{display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);transition:color .15s}
+.sidebar-link:last-child{border-bottom:none}
+.sidebar-link:hover{color:var(--accent)}
+.sidebar-link::before{content:'→ ';color:var(--accent);font-size:11px}
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+footer a{color:var(--muted);margin:0 .75rem}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<header>
+  <div class="header-top">
+    <span id="fecha-hoy"></span>
+    <span>Recursos para escritores de España</span>
+    <span>Directorio actualizado 2026</span>
+  </div>
+  <div class="header-main">
+    <h1 class="site-title"><a href="index.html">Letras <span>Españolas</span></a></h1>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+    <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="header-nav">
+    <a class="nav-btn" href="index.html">Concursos</a>
+    <a class="nav-btn" href="editoriales.html">Editoriales</a>
+    <a class="nav-btn" href="agentes.html">Agentes</a>
+    <a class="nav-btn" href="revistas.html">Revistas</a>
+    <a class="nav-btn" href="index.html#articulos">Artículos</a>
+    <a class="nav-btn" href="calculadora.html">Calculadora</a>
+    <a class="nav-btn active" href="checklist.html">Checklist</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="layout">
+    <main>
+      <div class="ad-slot ad-horizontal">Publicidad</div>
+      <div class="section-title">¿Está listo mi manuscrito?</div>
+      <div class="section-sub">Checklist profesional para escritores · 42 puntos en 6 categorías</div>
+
+      <div class="info-box">
+        Marca cada punto que hayas completado. Puedes marcar <strong>N/A</strong> si un punto no aplica a tu tipo de obra. Al final obtendrás una valoración y recomendaciones personalizadas.
+      </div>
+
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-label" id="progress-label">0 de 42 puntos completados</div>
+
+      <div id="checklist-container"></div>
+
+      <div style="text-align:center;margin:1.5rem 0">
+        <button class="btn-check" onclick="verResultado()">Ver mi resultado →</button>
+        <button class="btn-reset" onclick="resetChecklist()">Reiniciar</button>
+      </div>
+
+      <div class="result-panel hidden" id="result-panel">
+        <div class="result-label">Tu puntuación</div>
+        <div class="result-score" id="res-score">—</div>
+        <div class="result-title" id="res-title">—</div>
+        <div class="result-body" id="res-body">—</div>
+        <div class="result-items" id="res-items"></div>
+        <button class="btn-reset" onclick="resetChecklist()">Reiniciar checklist</button>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="ad-slot ad-square">Publicidad</div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Herramientas</div>
+        <a class="sidebar-link" href="calculadora.html">Calculadora de derechos</a>
+        <a class="sidebar-link" href="buscador.html">Buscador de concursos</a>
+        <a class="sidebar-link" href="editoriales.html">Directorio de editoriales</a>
+      </div>
+      <div class="ad-slot ad-square">Publicidad</div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <a href="index.html">Inicio</a>
+    <a href="index.html#legal">Aviso legal</a>
+    <a href="index.html#privacidad">Privacidad</a>
+    <span>© 2026 Letras Españolas</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+const CATEGORIAS = [
+  {
+    id:'estructura', icon:'📐', titulo:'Estructura y trama',
+    items:[
+      {id:'e1', label:'La historia tiene un inicio, nudo y desenlace claros', hint:'El lector debe sentir que la historia "termina", no que se corta.', imp:'critical'},
+      {id:'e2', label:'El conflicto principal está bien definido desde el principio', hint:'El lector sabe qué está en juego antes de llegar al 20% del libro.', imp:'critical'},
+      {id:'e3', label:'El ritmo es equilibrado (sin secciones aburridas prolongadas)', hint:'Revisa si hay capítulos donde no avanza ni la trama ni el personaje.', imp:'important'},
+      {id:'e4', label:'Los giros narrativos están bien preparados (no son arbitrarios)', hint:'Cada sorpresa tiene semillas plantadas antes en el texto.', imp:'important'},
+      {id:'e5', label:'El final es satisfactorio y coherente con lo prometido al inicio', hint:'No tiene que ser feliz, pero sí coherente con el tono y las expectativas generadas.', imp:'critical'},
+      {id:'e6', label:'Las subtramas están resueltas o intencionalmente abiertas', hint:'Ningún hilo narrativo importante queda olvidado sin justificación.', imp:'important'},
+      {id:'e7', label:'La extensión es adecuada para el género (ni muy corta ni muy larga)', hint:'Narrativa adulta: 70.000-100.000 palabras. Juvenil: 50.000-80.000. Infantil: 10.000-30.000.', imp:'nice'},
+    ]
+  },
+  {
+    id:'personajes', icon:'👤', titulo:'Personajes',
+    items:[
+      {id:'p1', label:'El protagonista tiene un arco de transformación claro', hint:'¿Ha cambiado algo en él al final? ¿Ha aprendido algo, perdido algo, ganado algo?', imp:'critical'},
+      {id:'p2', label:'El antagonista (o conflicto) tiene motivaciones comprensibles', hint:'Los villanos planos debilitan la historia. Aunque sea una fuerza natural, debe tener lógica interna.', imp:'important'},
+      {id:'p3', label:'Los personajes secundarios tienen voz propia (no son todos iguales)', hint:'Si tapas el nombre, ¿sabrías quién habla? Cada personaje debe sonar diferente.', imp:'important'},
+      {id:'p4', label:'Los personajes toman decisiones (no son arrastrados por la trama)', hint:'Los personajes reactivos que no eligen nada son frustrantes de leer.', imp:'critical'},
+      {id:'p5', label:'No hay personajes superfluos que se puedan eliminar sin perder nada', hint:'Cada personaje relevante debe tener una función narrativa o temática.', imp:'nice'},
+      {id:'p6', label:'Los personajes tienen coherencia interna (actúan según su naturaleza)', hint:'Si un personaje hace algo sorprendente, la sorpresa debe estar justificada.', imp:'important'},
+    ]
+  },
+  {
+    id:'estilo', icon:'✍️', titulo:'Estilo y escritura',
+    items:[
+      {id:'s1', label:'He revisado la ortografía y gramática al menos una vez con calma', hint:'Usa un corrector, pero no confíes solo en él. Léelo en voz alta.', imp:'critical'},
+      {id:'s2', label:'He eliminado muletillas y repeticiones excesivas de palabras', hint:'Busca en el texto tus palabras favoritas. ¿Las usas demasiado?', imp:'important'},
+      {id:'s3', label:'Los diálogos suenan naturales (no son discursos ni exposición disfrazada)', hint:'¿Hablaría así una persona real? Los diálogos no son para explicar el mundo.', imp:'critical'},
+      {id:'s4', label:'Los párrafos varían en longitud (hay ritmo en la prosa)', hint:'Alternar párrafos cortos y largos crea tensión y respiro. La monotonía agota.', imp:'important'},
+      {id:'s5', label:'La voz narrativa es consistente a lo largo de todo el texto', hint:'Si narras en 1ª persona, no se puede "colar" información que el narrador no podría saber.', imp:'critical'},
+      {id:'s6', label:'He eliminado adverbios innecesarios en -mente y adjetivos vacíos', hint:'"Dijo enfadadamente" → "espetó". "Una cosa muy bonita" → "una cosa hermosa".', imp:'nice'},
+      {id:'s7', label:'El comienzo engancha (las primeras páginas son las mejores del libro)', hint:'El editor y el lector deciden en las primeras páginas. No guardes lo mejor para el final.', imp:'critical'},
+    ]
+  },
+  {
+    id:'revision', icon:'🔍', titulo:'Revisión y proceso',
+    items:[
+      {id:'r1', label:'He dejado reposar el texto al menos 2 semanas antes de la revisión final', hint:'La distancia temporal te permite leerlo con ojos nuevos, casi como un lector ajeno.', imp:'important'},
+      {id:'r2', label:'Al menos una persona de confianza ha leído el manuscrito completo', hint:'Un lector beta no tiene que ser escritor. Solo necesitas saber qué siente al leerlo.', imp:'important'},
+      {id:'r3', label:'He incorporado (o evaluado conscientemente) el feedback recibido', hint:'No tienes que aplicar todo, pero sí reflexionar sobre cada crítica.', imp:'important'},
+      {id:'r4', label:'He leído el manuscrito en voz alta (al menos parcialmente)', hint:'El oído detecta errores de ritmo y diálogos forzados que el ojo pasa por alto.', imp:'nice'},
+      {id:'r5', label:'He impreso o cambiado de formato para la revisión final', hint:'Leer en papel o en un dispositivo diferente revela errores que en pantalla no ves.', imp:'nice'},
+      {id:'r6', label:'He hecho una lectura dedicada solo a la coherencia interna', hint:'¿El personaje que perdió el brazo en el capítulo 3 lo recupera en el 15?', imp:'important'},
+    ]
+  },
+  {
+    id:'presentacion', icon:'📄', titulo:'Presentación y materiales',
+    items:[
+      {id:'pr1', label:'El manuscrito está formateado según los estándares editoriales', hint:'Times New Roman o Arial 12pt, interlineado 1.5 o 2, márgenes estándar, número de página.', imp:'important'},
+      {id:'pr2', label:'Tengo escrita una sinopsis de 1 página (aprox. 400-500 palabras)', hint:'La sinopsis cuenta TODA la historia, incluido el final. No es el texto de la contraportada.', imp:'critical'},
+      {id:'pr3', label:'Tengo escrita una sinopsis corta de 3-5 líneas (para emails)', hint:'Para el asunto o primer párrafo de un email de presentación.', imp:'important'},
+      {id:'pr4', label:'Tengo preparada una carta de presentación o email tipo', hint:'Incluye: quién eres, de qué trata el libro, por qué esa editorial, extensión y género.', imp:'critical'},
+      {id:'pr5', label:'He investigado qué editoriales publican libros similares al mío', hint:'Enviar al lugar equivocado es perder el tiempo de todos. Busca en el directorio de editoriales.', imp:'critical'},
+      {id:'pr6', label:'Tengo preparada una breve biografía del autor (3-5 líneas)', hint:'Incluye: formación relevante, publicaciones previas, premios si los hay.', imp:'important'},
+      {id:'pr7', label:'Sé el género exacto y el público objetivo de mi libro', hint:'Las editoriales necesitan saber dónde catalogarlo. "Es para todo el mundo" no es una respuesta válida.', imp:'critical'},
+    ]
+  },
+  {
+    id:'extra', icon:'⭐', titulo:'Para ir más lejos',
+    items:[
+      {id:'x1', label:'He leído al menos 10 libros recientes del mismo género que el mío', hint:'Conocer el mercado actual es fundamental. No puedes competir en lo que no conoces.', imp:'important'},
+      {id:'x2', label:'He investigado qué se está publicando ahora en mi género', hint:'Las modas del mercado importan. Un editor preguntará: ¿encaja esto ahora?', imp:'nice'},
+      {id:'x3', label:'Tengo claro si quiero editorial tradicional, autopublicación o ambas', hint:'No hay una respuesta correcta, pero sí que debes tenerla antes de empezar a enviar.', imp:'important'},
+      {id:'x4', label:'He investigado si necesito (o conviene) un agente literario', hint:'Para las grandes editoriales es prácticamente imprescindible. Ver directorio de agentes.', imp:'important'},
+      {id:'x5', label:'He revisado la primera y la última línea del libro', hint:'Son las más recordadas. Si no te emocionan a ti, difícilmente emocionarán al lector.', imp:'nice'},
+      {id:'x6', label:'El título es definitivo (o al menos tengo varias opciones sólidas)', hint:'El título puede cambiarlo la editorial, pero debes llegar con uno que funcione.', imp:'nice'},
+      {id:'x7', label:'Tengo preparada una idea para el segundo libro (si es narrativa)', hint:'Si te piden el siguiente, conviene tener al menos una idea desarrollada.', imp:'nice'},
+    ]
+  }
+];
+
+let estado = {};
+
+function buildChecklist() {
+  const container = document.getElementById('checklist-container');
+  container.innerHTML = '';
+  CATEGORIAS.forEach((cat, ci) => {
+    const div = document.createElement('div');
+    div.className = 'cat-block';
+    div.innerHTML = `
+      <div class="cat-header" onclick="toggleCat('cat-body-${cat.id}')">
+        <div class="cat-header-left">
+          <span class="cat-icon">${cat.icon}</span>
+          <div>
+            <div class="cat-title">${cat.titulo}</div>
+            <div class="cat-progress" id="cat-prog-${cat.id}">0 / ${cat.items.length}</div>
+          </div>
+        </div>
+        <div>
+          <div class="cat-mini-bar"><div class="cat-mini-fill" id="cat-bar-${cat.id}" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="cat-body${ci === 0 ? '' : ' collapsed'}" id="cat-body-${cat.id}">
+        ${cat.items.map(item => `
+          <div class="check-item" id="item-${item.id}" onclick="toggleItem('${item.id}')">
+            <div class="check-box"></div>
+            <div class="check-text">
+              <div class="check-label">${item.label}</div>
+              <div class="check-hint">${item.hint}</div>
+              <span class="check-importance imp-${item.imp}">${item.imp === 'critical' ? '⚠ Crítico' : item.imp === 'important' ? '★ Importante' : '+ Recomendado'}</span>
+            </div>
+            <div class="check-actions">
+              <button class="na-btn" onclick="event.stopPropagation();toggleNA('${item.id}')">N/A</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function toggleCat(id) {
+  const body = document.getElementById(id);
+  body.classList.toggle('collapsed');
+}
+
+function toggleItem(id) {
+  const el = document.getElementById('item-'+id);
+  if (el.classList.contains('na')) { el.classList.remove('na'); estado[id] = null; }
+  else if (el.classList.contains('checked')) { el.classList.remove('checked'); estado[id] = false; }
+  else { el.classList.add('checked'); estado[id] = true; }
+  updateProgress();
+}
+
+function toggleNA(id) {
+  const el = document.getElementById('item-'+id);
+  if (el.classList.contains('na')) { el.classList.remove('na'); estado[id] = null; }
+  else { el.classList.remove('checked'); el.classList.add('na'); estado[id] = 'na'; }
+  updateProgress();
+}
+
+function updateProgress() {
+  let total = 0, done = 0;
+  CATEGORIAS.forEach(cat => {
+    let catDone = 0, catTotal = 0;
+    cat.items.forEach(item => {
+      if (estado[item.id] !== 'na') { catTotal++; total++; }
+      if (estado[item.id] === true) { catDone++; done++; }
+    });
+    document.getElementById('cat-prog-'+cat.id).textContent = `${catDone} / ${catTotal}`;
+    const pct = catTotal > 0 ? (catDone/catTotal*100) : 0;
+    document.getElementById('cat-bar-'+cat.id).style.width = pct+'%';
+  });
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-label').textContent = `${done} de ${total} puntos completados (${pct}%)`;
+}
+
+function verResultado() {
+  let critDone = 0, critTotal = 0;
+  let total = 0, done = 0;
+  const catScores = [];
+
+  CATEGORIAS.forEach(cat => {
+    let cd = 0, ct = 0;
+    cat.items.forEach(item => {
+      if (estado[item.id] !== 'na') {
+        ct++; total++;
+        if (estado[item.id] === true) { cd++; done++; }
+        if (item.imp === 'critical') { critTotal++; if (estado[item.id] === true) critDone++; }
+      }
+    });
+    catScores.push({titulo: cat.titulo, done: cd, total: ct, pct: ct > 0 ? Math.round(cd/ct*100) : 0});
+  });
+
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  const critPct = critTotal > 0 ? Math.round(critDone/critTotal*100) : 0;
+
+  let title, body;
+  if (pct >= 90 && critPct >= 90) {
+    title = '🎉 Tu manuscrito está listo para volar';
+    body = 'Has completado más del 90% de los puntos, incluyendo los críticos. Tu manuscrito está en muy buen estado para enviarlo a editoriales o publicarlo. Ahora solo falta dar el paso: investiga qué editoriales publican libros similares al tuyo y prepara tu carta de presentación.';
+  } else if (pct >= 70) {
+    title = '👍 Muy buen camino, últimos retoques';
+    body = 'Tu manuscrito está en buena forma, pero quedan algunos puntos importantes pendientes. Revisa especialmente los marcados como "Críticos" que no hayas completado. Con unas últimas revisiones, estarás listo para enviar.';
+  } else if (pct >= 50) {
+    title = '🔧 En progreso — queda trabajo importante';
+    body = 'Llevas un buen avance, pero hay áreas significativas que necesitan atención antes de enviar a editoriales. Céntrate primero en los puntos "Críticos" pendientes, ya que son los que más pesan en la decisión de un editor.';
+  } else if (pct >= 30) {
+    title = '📝 Aún en proceso — no te rindas';
+    body = 'Tu manuscrito necesita más trabajo antes de estar listo para las editoriales. Eso es normal, especialmente en una primera novela. Usa este checklist como hoja de ruta y avanza de categoría en categoría.';
+  } else {
+    title = '🌱 Al inicio del camino';
+    body = 'Todavía hay mucho camino por recorrer, pero eso es parte del proceso. Escribe, revisa, comparte con lectores de confianza y vuelve a este checklist en cada etapa. Cada autor publicado empezó exactamente donde estás tú.';
+  }
+
+  document.getElementById('res-score').textContent = pct+'%';
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-body').textContent = body;
+
+  const itemsEl = document.getElementById('res-items');
+  itemsEl.innerHTML = catScores.map(c => {
+    const cls = c.pct >= 80 ? 'good' : c.pct >= 50 ? 'mid' : 'bad';
+    return `<div class="result-item-row"><span class="result-item-label">${c.titulo}</span><span class="result-item-score ${cls}">${c.done}/${c.total} (${c.pct}%)</span></div>`;
+  }).join('');
+
+  const panel = document.getElementById('result-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetChecklist() {
+  estado = {};
+  document.querySelectorAll('.check-item').forEach(el => el.classList.remove('checked','na'));
+  document.getElementById('result-panel').classList.add('hidden');
+  updateProgress();
+}
+
+buildChecklist();
+updateProgress();
+
+// Menú hamburguesa
+(function(){
+  var btn=document.querySelector('.hamburger');
+  var nav=document.querySelector('.header-nav');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',function(){btn.classList.toggle('open');nav.classList.toggle('open');btn.setAttribute('aria-expanded',nav.classList.contains('open'));});
+  nav.querySelectorAll('.nav-btn').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');nav.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
+})();
+</script>
+</body>
+</html>
