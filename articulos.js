@@ -4,6 +4,86 @@
 
 const ARTICULOS = [
   {
+    id: 'como-escribir-novela-negra',
+    cat: 'Escritura creativa',
+    titulo: 'Cómo escribir una novela negra: estructura, ritmo y los errores del género',
+    excerpt: 'Los mecanismos narrativos que hacen funcionar una novela negra: gestión de la información, el protagonista del género, el ritmo de los capítulos y los errores que delatan al escritor novel.',
+    tiempo: '14 min',
+    url: 'articulos/como-escribir-novela-negra.html'
+  },
+  {
+    id: 'beta-readers-lectores-cero',
+    cat: 'El oficio',
+    titulo: 'Qué es un beta reader y cómo encontrar lectores cero en España',
+    excerpt: 'Para qué sirve un beta reader, cuántos necesitas, dónde encontrarlos en España y cómo pedirles el feedback que realmente te sirve.',
+    tiempo: '11 min',
+    url: 'articulos/beta-readers-lectores-cero.html'
+  },
+  {
+    id: 'como-enviar-manuscrito-editorial',
+    cat: 'Publicación',
+    titulo: 'Cómo enviar un manuscrito a una editorial: formato, canales y tiempos de respuesta',
+    excerpt: 'El formato estándar, la portada, los canales de envío, si puedes mandar a varias editoriales a la vez y los tiempos de respuesta reales en el mercado español.',
+    tiempo: '12 min',
+    url: 'articulos/como-enviar-manuscrito-editorial.html'
+  },
+  {
+    id: 'fiscalidad-escritor-autonomo-espana',
+    cat: 'El oficio',
+    titulo: 'Fiscalidad del escritor en España: IRPF, IVA y lo que necesitas saber antes de cobrar',
+    excerpt: 'Cuándo darte de alta como autónomo, cómo tributan las regalías, el IVA en los servicios del escritor, el modelo 130 y los gastos deducibles.',
+    tiempo: '15 min',
+    url: 'articulos/fiscalidad-escritor-autonomo-espana.html'
+  },
+  {
+    id: 'como-escribir-poesia-concurso',
+    cat: 'Concursos',
+    titulo: 'Cómo escribir poesía para concursos literarios: técnica y criterios de selección',
+    excerpt: 'Qué valoran los jurados de poesía, el debate entre métrica y verso libre, la imagen poética, la extensión óptima y los errores técnicos que eliminan un poema.',
+    tiempo: '12 min',
+    url: 'articulos/como-escribir-poesia-concurso.html'
+  },
+  {
+    id: 'escribir-segunda-novela-sindrome',
+    cat: 'El oficio',
+    titulo: 'El síndrome de la segunda novela: qué es y cómo superarlo',
+    excerpt: 'Por qué la segunda novela es diferente, las tres trampas más comunes, cómo volver a escribir después del primer libro y qué te enseña este proceso sobre tu oficio.',
+    tiempo: '11 min',
+    url: 'articulos/escribir-segunda-novela-sindrome.html'
+  },
+  {
+    id: 'como-titular-novela',
+    cat: 'Técnica narrativa',
+    titulo: 'Cómo titular tu novela: técnicas, criterios y errores frecuentes',
+    excerpt: 'Qué tiene que hacer un buen título, los tipos que funcionan, los errores más frecuentes y lo que opinan los editores sobre cambiar el título que tú has elegido.',
+    tiempo: '10 min',
+    url: 'articulos/como-titular-novela.html'
+  },
+  {
+    id: 'crowdfunding-libro-espana',
+    cat: 'Publicación',
+    titulo: 'Crowdfunding para publicar un libro en España: guía práctica 2026',
+    excerpt: 'Plataformas disponibles, cómo calcular el objetivo de financiación, qué recompensas funcionan y qué determina el éxito o el fracaso de una campaña editorial.',
+    tiempo: '13 min',
+    url: 'articulos/crowdfunding-libro-espana.html'
+  },
+  {
+    id: 'punto-de-vista-narrativo',
+    cat: 'Técnica narrativa',
+    titulo: 'Punto de vista narrativo: cuál elegir y cómo no cambiar sin querer',
+    excerpt: 'Primera persona, tercera limitada y omnisciente: cómo elegir el punto de vista para tu novela y cómo detectar y corregir el head hopping en tu propio texto.',
+    tiempo: '13 min',
+    url: 'articulos/punto-de-vista-narrativo.html'
+  },
+  {
+    id: 'como-escribir-dialogo-novela',
+    cat: 'Técnica narrativa',
+    titulo: 'Cómo escribir diálogos en una novela: técnica, ritmo y puntuación en español',
+    excerpt: 'Para qué sirve el diálogo, cómo crear voces individuales, el subtexto, la puntuación correcta con rayas en español y cómo modular el ritmo entre narración y diálogo.',
+    tiempo: '13 min',
+    url: 'articulos/como-escribir-dialogo-novela.html'
+  },
+  {
     id: 'como-escribir-sinopsis-editorial',
     cat: 'Publicación',
     titulo: 'Cómo escribir una sinopsis que conquiste a editores y agentes',
@@ -146,7 +226,7 @@ const ARTICULOS = [
     excerpt: 'Ingresos, control, visibilidad y distribución: comparativa real de los dos modelos para que decidas cuál encaja con tu proyecto y tu momento como escritor.',
     tiempo: '19 min',
     url: 'articulos/autopublicacion-vs-editorial-tradicional-espana.html'
-  }
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
