@@ -656,6 +656,16 @@ function getCache(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return nul
 function setCache(d){try{localStorage.setItem(CACHE_KEY,JSON.stringify({data:d,ts:Date.now()}));}catch{}}
 function getCacheAge(){try{const r=localStorage.getItem(CACHE_KEY);if(!r)return 25;const{ts}=JSON.parse(r);return Math.round((Date.now()-ts)/3600000);}catch{return 25;}}
 
+async function cargarDesdeJSON(){
+  try{
+    const r = await fetch('https://raw.githubusercontent.com/groguer1/concursos-literarios/main/concursos.json');
+    if(!r.ok) return null;
+    const data = await r.json();
+    if(Array.isArray(data) && data.length > 0) return data;
+    return null;
+  }catch(e){ console.warn('JSON error:', e); return null; }
+}
+
 async function init(){
   renderDirectorios();
   cargarSheets();
@@ -678,8 +688,16 @@ async function init(){
     if(age>12) buscarEnFondo();
   }else{
     concursos=[...CONCURSOS_BASE];renderAll();
-    setStatus(true,'Buscando nuevas convocatorias...');
-    buscarEnFondo();
+    setStatus(true,'Cargando concursos...');
+    const desdeJSON = await cargarDesdeJSON();
+    if(desdeJSON){
+      concursos=desdeJSON;
+      setCache(desdeJSON);
+      renderAll();
+      setStatus(false,`${concursos.length} concursos · Actualizado hoy`);
+    } else {
+      buscarEnFondo();
+    }
     setTimeout(()=>{ if(concursosSheets.length>0){ mezclarConcursosSheets(); } },3000);
   }
   // Leer parámetro ?categoria= de la URL para SEO
