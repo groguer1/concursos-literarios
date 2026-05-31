@@ -888,7 +888,7 @@ function injectSchemas(lista){
       const p=c.fecha_limite.split('/');
       if(p.length!==3) return;
       const fechaISO=`${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;
-      const urlFinal=esUrlEspecifica(c.url)?c.url:'https://letrasespanolas.org';
+      const urlFinal=esUrlEspecifica(c.url)?c.url:('https://letrasespanolas.org/?q='+encodeURIComponent(c.titulo));
       const schema={
         "@context":"https://schema.org",
         "@type":"Event",
