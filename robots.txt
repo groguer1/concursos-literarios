@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /concursos.json
+
+Sitemap: https://letrasespanolas.org/sitemap.xml
