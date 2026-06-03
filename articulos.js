@@ -227,6 +227,31 @@ const ARTICULOS = [
     tiempo: '19 min',
     url: 'articulos/autopublicacion-vs-editorial-tradicional-espana.html'
   },
+,
+{
+id: 'como-leer-bases-concurso-literario',
+cat: 'Concursos',
+titulo: 'Cómo leer las bases de un concurso literario: guía para no descalificarte',
+excerpt: 'Los once apartados que debes revisar en cualquier convocatoria: extensión, seudonóimo, derechos cedidos, plazo y los errores que descalifican automáticamente.',
+tiempo: '12 min',
+url: 'articulos/como-leer-bases-concurso-literario.html'
+},
+{
+id: 'concursos-literarios-escritores-ineditos-espana',
+cat: 'Concursos',
+titulo: 'Concursos literarios para escritores inéditos en España 2026: dónde buscarlos y cómo presentarse',
+excerpt: 'Guía completa para escritores sin obra publicada: dónde encontrar concursos, qué significa inédito en las bases, qué formatos son más accesibles y cómo preparar tu primera presentación.',
+tiempo: '14 min',
+url: 'articulos/concursos-literarios-escritores-ineditos-espana.html'
+},
+{
+id: 'seudonimo-concurso-literario',
+cat: 'Concursos',
+titulo: 'El seudonóimo en concursos literarios: qué es, por qué existe y cómo elegirlo',
+excerpt: 'Por qué los concursos usan seudonóimo, cómo funciona el sistema de sobre cerrado, cómo elegir el tuyo y los errores que rompen el anonimato sin querer (propiedades del documento, historial de cambios).',
+tiempo: '10 min',
+url: 'articulos/seudonimo-concurso-literario.html'
+}
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
