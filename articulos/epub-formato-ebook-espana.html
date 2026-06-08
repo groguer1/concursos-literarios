@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo crear un epub: herramientas, formato y distribución de ebooks en España — Letras Españolas</title>
+<meta name="description" content="Guía completa para crear un epub correctamente: herramientas gratuitas y de pago, requisitos de formato, validación y cómo distribuirlo en España y el mundo hispanohablante.">
+<meta property="og:title" content="Cómo crear un epub: herramientas, formato y distribución de ebooks en España">
+<meta property="og:description" content="Guía práctica para crear y distribuir ebooks en formato epub: herramientas, validación y plataformas de distribución.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Letras Españolas">
+<meta name="author" content="Letras Españolas">
+<link rel="canonical" href="https://letrasespanolas.org/articulos/epub-formato-ebook-espana.html">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NCS6BXJS');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;--gold:#b8860b;--muted:#7a7670;--border:#d4cfc5}
+*{box-sizing:border-box;margin:0;padding:0}a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+header{border-bottom:2px solid var(--ink);position:relative}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.5rem 2rem 1rem;position:relative}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-.02em}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border)}
+.nav-btn{padding:.6rem 1.1rem;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center}
+.nav-btn:hover,.nav-btn.active{color:var(--accent);background:var(--cream)}
+.nav-btn:last-child{border-right:none}
+.hamburger{display:none;position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;flex-direction:column;gap:4px;z-index:200}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);transition:all .2s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.ad-horizontal{width:100%;height:90px;margin:1rem 0}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--muted)}.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{margin:0 .4rem;opacity:.5}
+.art-header{border-bottom:2px solid var(--ink);padding-bottom:1.5rem;margin-bottom:2rem}
+.art-cat{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.5rem}
+.art-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.15;margin-bottom:.75rem}
+.art-meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.art-body{font-size:15px;line-height:1.85;color:#2a2a28}
+.art-body h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin:2.5rem 0 .85rem;padding-top:2rem;border-top:1px solid var(--border)}
+.art-body h3{font-size:1rem;font-weight:600;margin:1.75rem 0 .5rem;letter-spacing:.02em}
+.art-body p{margin-bottom:1.1rem}
+.art-body ul,.art-body ol{margin:0 0 1.1rem 1.75rem}
+.art-body li{margin-bottom:.5rem;line-height:1.7}
+.art-body strong{font-weight:600}
+.art-body .highlight{background:var(--cream);border-left:3px solid var(--accent);padding:.85rem 1.1rem;margin:1.75rem 0;font-size:14px;line-height:1.7}
+.art-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:13.5px}
+.art-body th{background:var(--ink);color:var(--paper);padding:8px 12px;text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.art-body td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.art-body tr:nth-child(even) td{background:var(--cream)}
+.sidebar-section{margin-bottom:2rem}
+.sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
+.related-item{display:block;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink)}
+.related-item:last-child{border-bottom:none}
+.related-item:hover{color:var(--accent)}
+.related-item::before{content:'→ ';color:var(--accent);font-size:11px}
+.ad-square{width:100%;height:250px;margin-bottom:1.5rem}
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.05em}
+footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:700px){.header-top{display:none}.header-main{padding:1rem}.hamburger{display:flex}.header-nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);z-index:100}.header-nav.open{display:flex}.nav-btn{border-right:none;border-bottom:1px solid var(--border);padding:.85rem 1.5rem;font-size:13px;justify-content:flex-start;width:100%}.container{padding:0 1rem}.layout{padding:1.25rem 0 2rem}}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<header>
+<div class="header-top"><span id="fecha"></span><span>Recursos para escritores de España</span><span>letrasespanolas.org</span></div>
+<div class="header-main">
+<a href="https://letrasespanolas.org"><h1 class="site-title">Letras <span>Españolas</span></h1></a>
+<p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+<button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+</div>
+<nav class="header-nav">
+<a class="nav-btn" href="https://letrasespanolas.org">Concursos</a>
+<a class="nav-btn" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+<a class="nav-btn" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+<a class="nav-btn" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+<a class="nav-btn" href="https://letrasespanolas.org/libros.html">Novedades</a>
+<a class="nav-btn" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+<a class="nav-btn" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+<a class="nav-btn" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+</nav>
+</header>
+<div class="container"><div class="ad-slot ad-horizontal">Publicidad</div></div>
+<div class="container">
+<div class="layout">
+<main>
+<div class="breadcrumb">
+<a href="https://letrasespanolas.org">Inicio</a><span>›</span>
+<a href="https://letrasespanolas.org/#articulos">Artículos</a><span>›</span>
+Autopublicación
+</div>
+<div class="art-header">
+<div class="art-cat">Autopublicación</div>
+<h1 class="art-title">Cómo crear un epub: herramientas, formato y distribución de ebooks</h1>
+<div class="art-meta">Lectura: 13 min · Actualizado en 2026</div>
+</div>
+<div class="art-body">
+<p>El epub es el formato estándar del ebook y el que utilizan la mayoría de las plataformas de distribución: Apple Books, Kobo, Google Play Books, la mayoría de bibliotecas digitales y muchas librerías en línea. Amazon KDP tiene su propio formato (KFX), pero acepta epub y lo convierte internamente. Entender cómo funciona el epub y cómo crearlo correctamente es imprescindible para cualquier escritor que quiera autopublicarse o distribuir su obra en digital.</p>
+<p>Esta guía cubre el proceso completo: desde el manuscrito en Word hasta el archivo epub validado y listo para subir a las plataformas de distribución.</p>
+
+<h2>Qué es un epub y por qué importa la calidad del archivo</h2>
+<p>Un epub (Electronic Publication) es esencialmente un sitio web empaquetado: contiene archivos HTML con el texto, hojas de estilo CSS que controlan el aspecto visual, imágenes y un conjunto de archivos de metadatos que indican al lector electrónico cómo interpretar el contenido. A diferencia de un PDF, el epub es un formato fluido: el texto se adapta al tamaño de pantalla y las preferencias del lector.</p>
+<p>Un epub mal construido puede generar problemas de visualización en algunos dispositivos, ser rechazado por plataformas de distribución o producir una experiencia de lectura deficiente. Las plataformas como Apple Books son especialmente exigentes con la calidad del epub.</p>
+
+<h2>El flujo de trabajo recomendado</h2>
+
+<h3>Paso 1: preparar el manuscrito en Word o LibreOffice</h3>
+<p>Antes de crear el epub, el manuscrito debe estar correctamente formateado. Los errores más comunes en esta fase son el uso de espacios para indentar párrafos en lugar de estilos de párrafo, el uso de saltos de línea manuales en lugar de saltos de página, y la falta de estilos consistentes para los diferentes niveles de encabezado (H1, H2, H3).</p>
+<p>Lo más importante es usar estilos de párrafo de forma sistemática: "Normal" para el texto corriente, "Título 1" para los títulos de capítulo, "Título 2" para las secciones dentro del capítulo. Estos estilos son los que el software de conversión utilizará para generar la tabla de contenidos y la estructura del epub.</p>
+
+<h3>Paso 2: convertir a epub</h3>
+<p>Hay dos enfoques principales:</p>
+<ul>
+<li><strong>Calibre:</strong> software gratuito y de código abierto que convierte desde Word, PDF u otros formatos a epub. Es la herramienta más usada y permite personalizar el CSS del epub resultante. El proceso de conversión puede generar un epub funcional pero con algunos problemas de formato que requieren corrección manual.</li>
+<li><strong>Sigil:</strong> editor de epub gratuito que permite crear y editar el archivo directamente en HTML y CSS. Es la opción más potente para quienes quieren control total, pero requiere conocimientos básicos de HTML.</li>
+<li><strong>Vellum (Mac):</strong> software de pago (alrededor de 200 dólares) que genera epubs y PDFs de calidad editorial profesional con muy poco esfuerzo. Es la opción preferida por muchos escritores anglosajones, pero funciona únicamente en Mac.</li>
+<li><strong>InDesign:</strong> la herramienta de maquetación profesional de Adobe, con plugin de exportación a epub. Orientada a diseñadores o a proyectos con necesidades de maquetación avanzada.</li>
+</ul>
+
+<h3>Paso 3: añadir metadatos</h3>
+<p>Los metadatos del epub son los datos que describen el libro: título, autor, idioma, ISBN, descripción, editorial. Estos datos son los que aparecen en las plataformas de venta y en la biblioteca del lector. Es importante rellenarlos correctamente antes de subir el archivo.</p>
+<p>El ISBN no es obligatorio para la mayoría de las plataformas de distribución, pero sí es necesario si quieres que tu ebook aparezca en el sistema de distribución del comercio del libro español. En España, los ISBN son gratuitos y los gestiona la Agencia del ISBN del Ministerio de Cultura.</p>
+
+<h3>Paso 4: validar el epub</h3>
+<p>Antes de distribuir, valida el epub con EPUBCheck, la herramienta de validación oficial del consorcio IDPF. Calibre incluye una versión integrada. Apple Books y algunas otras plataformas rechazan epubs con errores de validación. La validación no tarda más de unos segundos y puede ahorrarte rechazos en la distribución.</p>
+
+<h2>Portada: requisitos técnicos</h2>
+<p>La portada del epub es una imagen que debe cumplir ciertos requisitos técnicos. El estándar más habitual es 1600 × 2400 píxeles en formato JPG o PNG. La relación de aspecto es 2:3 (alto × ancho). Algunas plataformas tienen requisitos específicos: Apple Books exige un mínimo de 1400 píxeles en el lado más corto; Amazon KDP recomienda 2560 × 1600 píxeles.</p>
+
+<h2>Distribución: dónde subir tu epub</h2>
+<p>Para distribuir un ebook en España y en los mercados de habla hispana, las principales opciones son:</p>
+<table>
+<thead><tr><th>Plataforma</th><th>Mercado principal</th><th>Comisión</th><th>Gestión</th></tr></thead>
+<tbody>
+<tr><td>Amazon KDP</td><td>Global</td><td>30–65%</td><td>Directa</td></tr>
+<tr><td>Kobo Writing Life</td><td>Europa, Canadá</td><td>30–45%</td><td>Directa</td></tr>
+<tr><td>Google Play Books</td><td>Global</td><td>48%</td><td>Directa</td></tr>
+<tr><td>Apple Books</td><td>Global (iOS)</td><td>30%</td><td>Directa (Mac) o distribuidor</td></tr>
+<tr><td>PublishDrive / StreetLib</td><td>Agregadores globales</td><td>10–15% adicional</td><td>Distribución a múltiples tiendas</td></tr>
+</tbody>
+</table>
+<p>Los agregadores como StreetLib o PublishDrive te permiten subir el epub una sola vez y distribuirlo a docenas de tiendas simultáneamente, incluyendo las bibliotecas digitales españolas. A cambio cobran una comisión adicional o una tarifa fija anual.</p>
+
+<h2>Epub vs Amazon KDP: ¿cuál elegir?</h2>
+<p>Si tu prioridad es vender en Amazon, la <a href="amazon-kdp-vs-editorial-tradicional.html">comparativa entre Amazon KDP y la editorial tradicional</a> te ayudará a decidir el modelo más adecuado para tu proyecto. Amazon KDP convierte el epub a su formato interno, así que puedes subir epub directamente. Sin embargo, si quieres distribuir en otros canales además de Amazon —lo cual es recomendable— necesitas mantener un epub limpio y bien formateado.</p>
+<p>Para la <a href="autopublicacion-papel-kdp-print.html">autopublicación en papel</a>, el proceso es diferente: el epub es solo para el ebook, y el papel requiere un PDF maquetado.</p>
+
+<div class="highlight"><strong>Recomendación práctica:</strong> si es tu primer ebook y no tienes experiencia con herramientas de maquetación, empieza con Calibre para convertir y Sigil para corregir los problemas de formato más básicos. Si el resultado no te satisface, considera contratar a un maquetador profesional: los precios para un epub de novela sin ilustraciones oscilan entre 80 y 200 euros.</div>
+</div>
+</main>
+<aside class="sidebar">
+<div class="sidebar-section"><div class="ad-slot ad-square">Publicidad 300×250</div></div>
+<div class="sidebar-section">
+<div class="sidebar-title">Artículos relacionados</div>
+<a class="related-item" href="amazon-kdp-vs-editorial-tradicional.html">Amazon KDP vs editorial tradicional</a>
+<a class="related-item" href="autopublicacion-papel-kdp-print.html">Autopublicación en papel con KDP Print</a>
+<a class="related-item" href="autopublicacion-vs-editorial-tradicional-espana.html">Autopublicación vs editorial tradicional</a>
+<a class="related-item" href="cuanto-cobra-escritor-regalias-espana.html">Cuánto cobra un escritor por regalías</a>
+</div>
+<div class="sidebar-section"><div class="ad-slot ad-square">Publicidad 300×250</div></div>
+</aside>
+</div>
+</div>
+<footer>
+<p>© <span id="year"></span> Letras Españolas · Para escritores de España</p>
+<p style="margin-top:6px"><a href="https://letrasespanolas.org">Inicio</a> · <a href="https://letrasespanolas.org/#articulos">Artículos</a> · <a href="mailto:dmateos.pascual@gmail.com">Contacto</a></p>
+</footer>
+<script>
+document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('year').textContent = new Date().getFullYear();
+(function(){var btn=document.querySelector('.hamburger');var nav=document.querySelector('.header-nav');if(!btn||!nav)return;btn.addEventListener('click',function(){btn.classList.toggle('open');nav.classList.toggle('open');btn.setAttribute('aria-expanded',nav.classList.contains('open'));});nav.querySelectorAll('.nav-btn').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');nav.classList.remove('open');});});document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});})();
+</script>
+</body>
+</html>
