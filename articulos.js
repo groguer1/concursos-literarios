@@ -252,6 +252,86 @@ excerpt: 'Por qué los concursos usan seudonóimo, cómo funciona el sistema de 
 tiempo: '10 min',
 url: 'articulos/seudonimo-concurso-literario.html'
 }
+  {
+    id: 'sinopsis-novela-editorial',
+    cat: 'Publicación',
+    titulo: 'Cómo escribir una sinopsis para editoriales y agentes literarios',
+    excerpt: 'Estructura exacta, extensión estándar, los cinco párrafos imprescindibles y los errores que arruinan la sinopsis antes de que el agente pase a la segunda página.',
+    tiempo: '12 min',
+    url: 'articulos/sinopsis-novela-editorial.html'
+  },
+  {
+    id: 'taller-escritura-creativa-espana',
+    cat: 'El oficio',
+    titulo: 'Talleres de escritura creativa en España: cómo elegir el que te conviene',
+    excerpt: 'Cómo evaluar un taller de escritura: el currículum del docente, la metodología, el número de alumnos y las preguntas que debes hacer antes de inscribirte.',
+    tiempo: '11 min',
+    url: 'articulos/taller-escritura-creativa-espana.html'
+  },
+  {
+    id: 'correccion-estilo-manuscrito',
+    cat: 'El oficio',
+    titulo: 'Corrector de estilo para manuscritos: qué hace, cuánto cuesta y cuándo lo necesitas',
+    excerpt: 'Diferencias entre los tipos de corrección, tarifas en España 2026 y cuándo es realmente necesario contratar un corrector antes de enviar a editoriales.',
+    tiempo: '10 min',
+    url: 'articulos/correccion-estilo-manuscrito.html'
+  },
+  {
+    id: 'epub-formato-ebook-espana',
+    cat: 'Autopublicación',
+    titulo: 'Cómo crear un epub: herramientas, formato y distribución de ebooks',
+    excerpt: 'Flujo de trabajo completo para crear un epub: desde Word hasta el archivo validado listo para distribuir en Amazon KDP, Kobo, Apple Books y Google Play.',
+    tiempo: '13 min',
+    url: 'articulos/epub-formato-ebook-espana.html'
+  },
+  {
+    id: 'punto-de-vista-narrativo',
+    cat: 'Técnica narrativa',
+    titulo: 'Punto de vista narrativo: cuál elegir y cómo evitar el head hopping',
+    excerpt: 'Primera persona, tercera limitada y omnisciente: criterios para elegir el punto de vista de tu novela y cómo detectar y corregir el head hopping.',
+    tiempo: '13 min',
+    url: 'articulos/punto-de-vista-narrativo.html'
+  },
+  {
+    id: 'escritura-literatura-infantil-juvenil',
+    cat: 'Escritura creativa',
+    titulo: 'Cómo escribir literatura infantil y juvenil: guía para autores',
+    excerpt: 'El mapa del género por edades, los errores más comunes al escribir para niños, el protagonista con agencia y las editoriales de LIJ en España.',
+    tiempo: '14 min',
+    url: 'articulos/escritura-literatura-infantil-juvenil.html'
+  },
+  {
+    id: 'becas-residencias-escritura-espana',
+    cat: 'El oficio',
+    titulo: 'Becas y residencias de escritura en España: guía completa',
+    excerpt: 'Tipos de ayudas, programas del Ministerio de Cultura, residencias autonómicas, fundaciones privadas y residencias internacionales para escritores.',
+    tiempo: '11 min',
+    url: 'articulos/becas-residencias-escritura-espana.html'
+  },
+  {
+    id: 'como-escribir-ciencia-ficcion',
+    cat: 'Escritura creativa',
+    titulo: 'Cómo escribir ciencia ficción: guía técnica para escritores',
+    excerpt: 'Subgéneros de la CF, worldbuilding coherente, extrañamiento cognitivo, los errores más frecuentes y cómo publicar CF en el mercado editorial español.',
+    tiempo: '14 min',
+    url: 'articulos/como-escribir-ciencia-ficcion.html'
+  },
+  {
+    id: 'como-escribir-fantasia',
+    cat: 'Escritura creativa',
+    titulo: 'Cómo escribir fantasía: worldbuilding, magia y estructura en el género',
+    excerpt: 'Subgéneros de la fantasía, las Leyes de Sanderson para sistemas de magia, la worldbuilder\'s disease y cómo publicar fantasía en España.',
+    tiempo: '15 min',
+    url: 'articulos/como-escribir-fantasia.html'
+  },
+  {
+    id: 'bloqueo-escritor-tecnicas',
+    cat: 'El oficio',
+    titulo: 'Cómo superar el bloqueo del escritor: técnicas que funcionan',
+    excerpt: 'Los cinco tipos de bloqueo del escritor y las soluciones específicas: perfeccionismo paralizante, desorientación narrativa, miedo al fracaso y agotamiento.',
+    tiempo: '12 min',
+    url: 'articulos/bloqueo-escritor-tecnicas.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
