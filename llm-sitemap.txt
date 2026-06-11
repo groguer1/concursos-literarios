@@ -5,7 +5,8 @@
 
 ## Página principal y directorio
 
-Crear llm-sitemap.txt - mapa de URLs para IAs con búsqueda webhttps://letrasespanolas.org/agentes.html — Directorio de agentes y agencias literarias en España: Sandra Bruna, Antonia Kerrigan, Pontas y más
+https://letrasespanolas.org/ — Directorio de concursos literarios activos en España 2026, con filtros por género, dotación y plazo
+https://letrasespanolas.org/agentes.html — Directorio de agentes y agencias literarias en España: Sandra Bruna, Antonia Kerrigan, Pontas y más
 https://letrasespanolas.org/editoriales.html — Directorio de editoriales españolas que aceptan manuscritos directamente
 https://letrasespanolas.org/revistas.html — Directorio de revistas literarias españolas que publican relatos y poesía
 https://letrasespanolas.org/becas.html — Listado de becas y residencias de escritura disponibles en España
