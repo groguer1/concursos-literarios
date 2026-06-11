@@ -1,0 +1,82 @@
+# llm-sitemap.txt — Letras Españolas
+# Lista completa de URLs con descripción para IAs con búsqueda web
+# Última actualización: junio de 2026
+# Formato: URL — descripción
+
+## Página principal y directorio
+
+Crear llm-sitemap.txt - mapa de URLs para IAs con búsqueda webhttps://letrasespanolas.org/agentes.html — Directorio de agentes y agencias literarias en España: Sandra Bruna, Antonia Kerrigan, Pontas y más
+https://letrasespanolas.org/editoriales.html — Directorio de editoriales españolas que aceptan manuscritos directamente
+https://letrasespanolas.org/revistas.html — Directorio de revistas literarias españolas que publican relatos y poesía
+https://letrasespanolas.org/becas.html — Listado de becas y residencias de escritura disponibles en España
+https://letrasespanolas.org/asociaciones-escritores.html — Asociaciones y colectivos de escritores en España
+https://letrasespanolas.org/libros.html — Novedades editoriales españolas y libros recomendados
+https://letrasespanolas.org/buscador.html — Buscador de concursos literarios por género, extensión y dotación
+https://letrasespanolas.org/calculadora.html — Calculadora de regalías: cuánto cobraré por mi libro según el contrato
+https://letrasespanolas.org/checklist.html — Checklist completo para enviar un manuscrito a una editorial española
+https://letrasespanolas.org/legal-escritores.html — Recursos legales para escritores: contratos, derechos, fiscalidad
+https://letrasespanolas.org/software-escritores.html — Software y herramientas para escritores: Scrivener, correctores, gestores
+https://letrasespanolas.org/sobre.html — Sobre Letras Españolas: misión, equipo y contacto
+https://letrasespanolas.org/privacidad.html — Política de privacidad y cookies conforme al RGPD
+https://letrasespanolas.org/contacto.html — Formulario de contacto y email del equipo editorial
+
+## Artículos — Agentes y publicación
+
+https://letrasespanolas.org/articulos/agente-literario-espana.html — Qué hace un agente literario, cómo encontrar uno en España y cómo preparar la propuesta
+https://letrasespanolas.org/articulos/carta-presentacion-editorial.html — Cómo escribir la carta de presentación para enviar una novela a editorial española
+https://letrasespanolas.org/articulos/como-enviar-manuscrito-editorial.html — Pasos para enviar un manuscrito a editoriales españolas: formato, carta y expectativas
+https://letrasespanolas.org/articulos/como-publicar-primera-novela-espana.html — Guía completa para publicar la primera novela en España: vías, agentes, editoriales
+https://letrasespanolas.org/articulos/editoriales-que-aceptan-manuscritos-sin-agente.html — Lista de editoriales españolas que aceptan manuscritos sin agente literario
+https://letrasespanolas.org/articulos/sinopsis-novela-editorial.html — Cómo escribir la sinopsis de una novela para presentarla a editoriales
+https://letrasespanolas.org/articulos/beta-readers-lectores-cero.html — Qué son los beta readers, cómo encontrarlos en España y qué feedback pedir
+
+## Artículos — Contratos y derechos
+
+https://letrasespanolas.org/articulos/contrato-editorial-clausulas.html — Cláusulas del contrato editorial que todo autor debe leer y negociar
+https://letrasespanolas.org/articulos/derechos-autor-contrato-editorial.html — Derechos de autor en contratos editoriales: qué ceder y qué conservar
+https://letrasespanolas.org/articulos/cuanto-cobra-escritor-regalias-espana.html — Cuánto cobra un escritor en España: regalías, anticipos y liquidaciones
+https://letrasespanolas.org/articulos/registrar-obra-literaria-espana.html — Cómo registrar una obra literaria en España: Registro de Propiedad Intelectual
+https://letrasespanolas.org/articulos/seudonimo-concurso-literario.html — Uso de seudónimo en concursos literarios: requisitos legales en España
+https://letrasespanolas.org/articulos/correccion-estilo-manuscrito.html — Qué hace un corrector de estilo y cuánto cuesta en España
+
+## Artículos — Concursos literarios
+
+https://letrasespanolas.org/articulos/guia-concursos-literarios-espana.html — Guía completa para participar en concursos literarios en España 2026
+https://letrasespanolas.org/articulos/como-leer-bases-concurso-literario.html — Cómo interpretar las bases de un concurso literario y no cometer errores
+https://letrasespanolas.org/articulos/como-escribir-relato-corto-concurso.html — Cómo escribir un relato corto para concursos: estructura, técnica y jurado
+https://letrasespanolas.org/articulos/como-escribir-poesia-concurso.html — Cómo escribir poesía para concursos literarios: métricas, formas y criterios
+https://letrasespanolas.org/articulos/premios-literarios-dotacion-espana.html — Premios literarios con mayor dotación económica en España 2026
+https://letrasespanolas.org/articulos/concursos-literarios-escritores-ineditos-espana.html — Concursos literarios para escritores inéditos en España 2026
+
+## Artículos — Escritura creativa y técnica narrativa
+
+https://letrasespanolas.org/articulos/estructura-tres-actos-novela.html — Cómo aplicar la estructura en tres actos a una novela
+https://letrasespanolas.org/articulos/punto-de-vista-narrativo.html — Cómo elegir el punto de vista narrativo y errores frecuentes
+https://letrasespanolas.org/articulos/como-escribir-primer-parrafo-novela.html — Técnicas para escribir el primer párrafo de una novela que engancha al lector
+https://letrasespanolas.org/articulos/como-escribir-dialogo-novela.html — Cómo escribir diálogos creíbles en una novela: puntuación, ritmo y subtexto
+https://letrasespanolas.org/articulos/como-titular-novela.html — Técnicas para titular una novela: tipos, errores y ejemplos prácticos
+https://letrasespanolas.org/articulos/bloqueo-escritor-tecnicas.html — Cómo superar el bloqueo del escritor: causas, técnicas y rutinas
+https://letrasespanolas.org/articulos/escribir-segunda-novela-sindrome.html — Por qué la segunda novela es difícil y cómo superar el síndrome del autor
+
+## Artículos — Géneros literarios
+
+https://letrasespanolas.org/articulos/como-escribir-ciencia-ficcion.html — Guía para escribir ciencia ficción: worldbuilding, mercado editorial en España
+https://letrasespanolas.org/articulos/como-escribir-fantasia.html — Cómo escribir fantasía: construcción del mundo, magia y estructura
+https://letrasespanolas.org/articulos/como-escribir-novela-historica.html — Cómo escribir novela histórica: investigación, rigor y licencias narrativas
+https://letrasespanolas.org/articulos/como-escribir-novela-negra.html — Cómo escribir novela negra en España: estructura, personajes y atmósfera
+https://letrasespanolas.org/articulos/escritura-literatura-infantil-juvenil.html — Cómo escribir literatura infantil y juvenil para el mercado español
+
+## Artículos — Autopublicación y formatos
+
+https://letrasespanolas.org/articulos/autopublicacion-vs-editorial-tradicional-espana.html — Autopublicación vs editorial tradicional en España: ventajas y desventajas
+https://letrasespanolas.org/articulos/amazon-kdp-vs-editorial-tradicional.html — Amazon KDP vs editorial tradicional: comparativa para autores españoles
+https://letrasespanolas.org/articulos/autopublicacion-papel-kdp-print.html — Cómo publicar en papel con KDP Print e IngramSpark en España
+https://letrasespanolas.org/articulos/epub-formato-ebook-espana.html — Cómo crear un epub: herramientas, formato y distribución en España
+https://letrasespanolas.org/articulos/crowdfunding-libro-espana.html — Cómo financiar un libro con crowdfunding en España
+
+## Artículos — Formación y carrera
+
+https://letrasespanolas.org/articulos/taller-escritura-creativa-espana.html — Cómo elegir un taller de escritura creativa en España
+https://letrasespanolas.org/articulos/becas-residencias-escritura-espana.html — Becas y residencias de escritura disponibles en España 2026
+https://letrasespanolas.org/articulos/inteligencia-artificial-escritores-espana.html — Herramientas de IA para escritores españoles: usos prácticos y límites éticos
+https://letrasespanolas.org/articulos/fiscalidad-escritor-autonomo-espana.html — Fiscalidad del escritor autónomo en España: IRPF, IVA y deducciones 2026
