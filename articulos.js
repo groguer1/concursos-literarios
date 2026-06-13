@@ -332,6 +332,22 @@ url: 'articulos/seudonimo-concurso-literario.html'
     tiempo: '12 min',
     url: 'articulos/bloqueo-escritor-tecnicas.html'
   },
+  {
+    id: 'cursos-online-escritores',
+    cat: 'El oficio',
+    titulo: 'Cursos online para escritores: ¿merecen la pena?',
+    excerpt: 'Análisis de los tipos de cursos online útiles para escritores: escritura creativa, autopublicación, marketing de autor y edición. Cuándo merece la pena pagar y dónde encontrarlos.',
+    tiempo: '13 min',
+    url: 'articulos/cursos-online-escritores.html'
+  },
+  {
+    id: 'cursos-online-escritores',
+    cat: 'El oficio',
+    titulo: 'Cursos online para escritores: ¿merecen la pena?',
+    excerpt: 'Análisis de los tipos de cursos online útiles para escritores: escritura creativa, autopublicación, marketing de autor y edición. Cuándo merece la pena pagar y dónde encontrarlos.',
+    tiempo: '13 min',
+    url: 'articulos/cursos-online-escritores.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
