@@ -348,6 +348,14 @@ url: 'articulos/seudonimo-concurso-literario.html'
     tiempo: '13 min',
     url: 'articulos/cursos-online-escritores.html'
   },
+  {
+    id: 'aprender-escribir-novela-recursos',
+    cat: 'Escritura creativa',
+    titulo: 'Cómo aprender a escribir una novela: recursos gratis y de pago en España',
+    excerpt: 'Comparativa de recursos para aprender a escribir una novela: gratuitos vs de pago. Qué funciona de verdad y cuándo merece la pena invertir en formación.',
+    tiempo: '14 min',
+    url: 'articulos/aprender-escribir-novela-recursos.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
