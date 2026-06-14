@@ -356,6 +356,22 @@ url: 'articulos/seudonimo-concurso-literario.html'
     tiempo: '14 min',
     url: 'articulos/aprender-escribir-novela-recursos.html'
   },
+  {
+    id: 'honorarios-agente-literario-espana',
+    cat: 'Agentes literarios',
+    titulo: 'Cuanto cobra un agente literario en Espana? Porcentajes, contratos y que debes saber',
+    excerpt: 'Un agente literario en Espana cobra entre el 10% y el 15% de tus ingresos. Descubre como funciona, que incluye y cuando compensa tener uno.',
+    tiempo: '10 min',
+    url: 'articulos/honorarios-agente-literario-espana.html'
+  },
+  {
+    id: 'carta-presentacion-escritor-ejemplos',
+    cat: 'Publicacion',
+    titulo: 'Carta de presentacion para editorial o agente literario: ejemplos y estructura',
+    excerpt: 'Como escribir una carta de presentacion literaria para editoriales y agentes. Estructura, ejemplos reales y errores que debes evitar en 2026.',
+    tiempo: '12 min',
+    url: 'articulos/carta-presentacion-escritor-ejemplos.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
