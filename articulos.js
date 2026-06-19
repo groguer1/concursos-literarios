@@ -372,6 +372,22 @@ url: 'articulos/seudonimo-concurso-literario.html'
     tiempo: '12 min',
     url: 'articulos/carta-presentacion-escritor-ejemplos.html'
   },
+  {
+    id: 'portada-libro-autopublicacion',
+    cat: 'Autopublicación',
+    titulo: 'Portada libro autopublicación: Canva, Reedsy o diseñador profesional',
+    excerpt: 'Cómo diseñar o contratar la portada de tu libro autopublicado: Canva Pro, Reedsy, 99designs y Fiverr con precios reales. Criterios de Amazon KDP y los errores más comunes.',
+    tiempo: '13 min',
+    url: 'articulos/portada-libro-autopublicacion.html'
+  },
+  {
+    id: 'conseguir-resenas-libro-espana',
+    cat: 'Marketing literario',
+    titulo: 'Cómo conseguir reseñas para tu libro autopublicado en España',
+    excerpt: 'Estrategia ARC, NetGalley, clubes de lectura, bloggers literarios y lectores beta para conseguir las primeras reseñas en Amazon y Goodreads. Cómo evitar las reseñas falsas.',
+    tiempo: '12 min',
+    url: 'articulos/conseguir-resenas-libro-espana.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
