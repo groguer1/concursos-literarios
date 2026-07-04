@@ -36,7 +36,7 @@ header{border-bottom:2px solid var(--ink);position:relative}
 .nav-btn:hover{color:var(--ink);background:var(--cream)}
 .nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
 .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-.layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+.layout{display:grid;grid-template-columns:1fr;gap:3rem;padding:2rem 0 3rem}
 @media(max-width:768px){.layout{grid-template-columns:1fr}}
 @media(max-width:700px){
   .header-top{display:none}
@@ -70,9 +70,6 @@ header{border-bottom:2px solid var(--ink);position:relative}
 .book-genre{font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--border);color:var(--muted);display:inline-block;margin-bottom:.6rem}
 .book-search-btn{width:100%;padding:6px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;transition:background .15s}
 .book-search-btn:hover{background:var(--accent)}
-.ad-slot{background:var(--cream);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
-.ad-horizontal{width:100%;height:90px;margin:1rem 0}
-.ad-square{width:100%;height:250px;margin-bottom:1.5rem}
 .empty{text-align:center;padding:3rem;color:var(--muted);border:1px solid var(--border);background:white}
 .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
 .stat{display:flex;align-items:baseline;gap:6px}
@@ -117,8 +114,6 @@ footer a:hover{color:var(--ink)}
 <div class="container">
   <div class="layout">
     <main>
-      <div class="ad-slot ad-horizontal">Publicidad</div>
-
       <div class="section-title">Últimas novedades editoriales</div>
       <div class="section-sub">Libros recién publicados en España · Todos los géneros · Actualizado semanalmente</div>
 
@@ -143,10 +138,6 @@ footer a:hover{color:var(--ink)}
       <div class="books-grid" id="books-grid"></div>
     </main>
 
-    <aside>
-      <div class="ad-slot ad-square">Publicidad</div>
-      <div class="ad-slot ad-square">Publicidad</div>
-    </aside>
   </div>
 </div>
 
