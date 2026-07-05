@@ -68,6 +68,43 @@ async function llamarIA(texto) {
   return respuesta;
 }
 
+function escHtml(s) {
+return String(s == null ? '' : s)
+.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function jsEsc(s) {
+return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+const NO_RESULTS_DIV = '<div class="empty" id="no-results" style="display:none;grid-column:1/-1">No se encontraron libros con esos criterios</div>';
+
+function generarTarjetas(libros) {
+return libros.map(l => {
+const searchData = ((l.titulo || '') + ' ' + (l.autor || '') + ' ' + (l.editorial || '')).toLowerCase();
+const generoAttr = (l.genero || '').toLowerCase();
+const coverBlock = l.portada
+? '<img class="book-cover" src="' + escHtml(l.portada) + '" alt="' + escHtml(l.titulo) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+: '';
+return '<div class="book-card" data-genero="' + escHtml(generoAttr) + '" data-search="' + escHtml(searchData) + '">\n' +
+coverBlock + '\n' +
+'<div class="book-cover-placeholder" style="' + (l.portada ? 'display:none' : '') + '">\n' +
+'<div>\n' +
+'<div style="font-weight:700;margin-bottom:.5rem">' + escHtml(l.titulo) + '</div>\n' +
+'<div style="font-size:.7rem">' + escHtml(l.autor) + '</div>\n' +
+'</div>\n' +
+'</div>\n' +
+'<div class="book-info">\n' +
+'<div class="book-title">' + escHtml(l.titulo) + '</div>\n' +
+'<div class="book-author">' + escHtml(l.autor) + '</div>\n' +
+'<div class="book-editorial">' + escHtml(l.editorial) + ' · ' + escHtml(l.fecha) + '</div>\n' +
+'<div class="book-genre">' + escHtml(l.genero) + '</div>\n' +
+'<button class="book-search-btn" onclick="buscarEnGoogle(\'' + jsEsc(l.titulo) + '\',\'' + jsEsc(l.autor) + '\')">🔍 Buscar en Google</button>\n' +
+'</div>\n' +
+'</div>';
+}).join('\n');
+}
+
 async function main() {
   console.log('Iniciando busqueda de libros...');
   if (!ANTHROPIC_KEY) { console.error('ANTHROPIC_KEY no configurado'); process.exit(1); }
@@ -95,7 +132,21 @@ async function main() {
 
   if (!regex.test(html_file)) { console.error('No se encontro LIBROS_BASE'); process.exit(1); }
 
-  fs.writeFileSync('libros.html', html_file.replace(regex, librosJS), 'utf8');
+  html_file = html_file.replace(regex, librosJS);
+
+const gridStartTag = '<div class="books-grid" id="books-grid">';
+const gridStartIdx = html_file.indexOf(gridStartTag);
+const mainCloseIdx = html_file.indexOf('</main>', gridStartIdx);
+
+if (gridStartIdx === -1 || mainCloseIdx === -1) {
+console.error('No se encontro books-grid o </main>, se actualiza solo LIBROS_BASE');
+} else {
+const cardsHtml = generarTarjetas(libros);
+const newGridBlock = gridStartTag + '\n' + cardsHtml + '\n' + NO_RESULTS_DIV + '\n</div>\n';
+html_file = html_file.substring(0, gridStartIdx) + newGridBlock + html_file.substring(mainCloseIdx);
+}
+
+fs.writeFileSync('libros.html', html_file, 'utf8');
   console.log('Actualizado con ' + libros.length + ' libros:');
   libros.forEach(l => console.log('  - ' + l.titulo + ' (' + l.autor + ')'));
 }
