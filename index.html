@@ -113,6 +113,9 @@ header{border-bottom:2px solid var(--ink);position:relative}
 .art-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:5px;line-height:1.3}
 .art-excerpt{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px}
 .art-meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.home-art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin-top:1rem}
+.home-art-card{background:white;border:1px solid var(--border);padding:1rem 1.25rem;display:block;transition:background .15s}
+.home-art-card:hover{background:var(--cream)}
 .detail-back{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-bottom:1.5rem;transition:color .15s}
 .detail-back:hover{color:var(--accent)}
 .detail-header{border-bottom:2px solid var(--ink);padding-bottom:1.5rem;margin-bottom:2rem}
@@ -237,6 +240,16 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
           <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
         </div>
         <div class="cards" id="cards"></div>
+<div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+<h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:.75rem">Concursos literarios en España: cómo funcionan</h2>
+<div class="detail-body">
+<p>Cada año se convocan en España cientos de concursos literarios, desde certámenes municipales con una dotación simbólica hasta premios nacionales de varias decenas de miles de euros. Conocer las diferencias entre ellos ayuda a elegir mejor dónde presentarte y a no perder tiempo en convocatorias que no encajan con tu obra.</p>
+<p>Los concursos se dividen principalmente por género (poesía, relato corto, novela, infantil, teatro), por el tipo de obra que aceptan (inédita, publicada o autopublicada) y por el colectivo al que van dirigidos (autores noveles, residentes en una comunidad autónoma, menores de cierta edad). Antes de presentarte conviene revisar también si el premio incluye publicación, si retiene derechos sobre la obra o si exige pseudónimo, algo habitual en concursos con jurado.</p>
+<p>Leer las bases con atención es el paso que más escritores se saltan, y el que más descalificaciones provoca. Presta especial atención a la extensión máxima y mínima, el formato de entrega, el plazo exacto (algunas convocatorias cierran a medianoche del día indicado, otras exigen matasellos de correos) y las cláusulas sobre cesión de derechos. Nuestra guía sobre <a href="articulos/como-leer-bases-concurso-literario.html">cómo leer las bases de un concurso literario</a> explica cláusula por cláusula qué debes revisar antes de enviar tu obra.</p>
+<p>Entre los errores más comunes están enviar la obra fuera de plazo, no anonimizar el archivo cuando el concurso exige plica, superar el límite de palabras sin darse cuenta, y presentarse con la misma obra a varios concursos simultáneos sin comprobar si eso está permitido. También es habitual descartar convocatorias por desconocer su prestigio real: consulta nuestra <a href="articulos/guia-concursos-literarios-espana.html">guía completa para presentarte a concursos literarios</a> y el listado de <a href="articulos/premios-literarios-dotacion-espana.html">premios literarios con mayor dotación en España</a> si buscas convocatorias serias y bien remuneradas.</p>
+<p>Usa el buscador y los filtros de arriba para encontrar convocatorias abiertas por género o por plazo de cierre, y vuelve regularmente: la lista se actualiza a diario.</p>
+</div>
+</div>
       </div>
 
       <div class="page" id="page-editoriales">
@@ -392,47 +405,63 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
   </div>
 </div>
 
-<!-- Enlaces estáticos para crawlers -->
-<div style="display:none" aria-hidden="true">
-  <h2>Artículos para escritores</h2>
-  <ul>
-    <li><a href="articulos/agente-literario-espana.html">Cómo encontrar un agente literario en España</a></li>
-    <li><a href="articulos/amazon-kdp-vs-editorial-tradicional.html">Amazon KDP vs editorial tradicional</a></li>
-    <li><a href="articulos/autopublicacion-papel-kdp-print.html">Autopublicación en papel: KDP Print e IngramSpark</a></li>
-    <li><a href="articulos/autopublicacion-vs-editorial-tradicional-espana.html">Autopublicación vs editorial tradicional en España</a></li>
-    <li><a href="articulos/beta-readers-lectores-cero.html">Qué es un beta reader y cómo encontrar lectores cero</a></li>
-    <li><a href="articulos/carta-presentacion-editorial.html">La carta de presentación a una editorial</a></li>
-    <li><a href="articulos/como-enviar-manuscrito-editorial.html">Cómo enviar un manuscrito a una editorial</a></li>
-    <li><a href="articulos/como-escribir-dialogo-novela.html">Cómo escribir diálogos en una novela</a></li>
-    <li><a href="articulos/como-escribir-novela-historica.html">Cómo escribir una novela histórica</a></li>
-    <li><a href="articulos/como-escribir-novela-negra.html">Cómo escribir una novela negra</a></li>
-    <li><a href="articulos/como-escribir-poesia-concurso.html">Cómo escribir poesía para un concurso</a></li>
-    <li><a href="articulos/como-escribir-primer-parrafo-novela.html">El primer párrafo: cómo atrapar al lector</a></li>
-    <li><a href="articulos/como-escribir-relato-corto-concurso.html">Cómo escribir un relato corto para un concurso</a></li>
-    <li><a href="articulos/como-publicar-primera-novela-espana.html">Cómo publicar tu primera novela en España</a></li>
-    <li><a href="articulos/como-titular-novela.html">Cómo titular una novela</a></li>
-    <li><a href="articulos/contrato-editorial-clausulas.html">El contrato editorial: cláusulas que negociar</a></li>
-    <li><a href="articulos/crowdfunding-libro-espana.html">Crowdfunding para publicar un libro en España</a></li>
-    <li><a href="articulos/cuanto-cobra-escritor-regalias-espana.html">Cuánto cobra un escritor por regalías</a></li>
-    <li><a href="articulos/derechos-autor-contrato-editorial.html">Derechos de autor en contratos editoriales</a></li>
-    <li><a href="articulos/editoriales-que-aceptan-manuscritos-sin-agente.html">Editoriales que aceptan manuscritos sin agente</a></li>
-    <li><a href="articulos/escribir-segunda-novela-sindrome.html">El síndrome de la segunda novela</a></li>
-    <li><a href="articulos/estructura-tres-actos-novela.html">Estructura en tres actos para novelistas</a></li>
-    <li><a href="articulos/fiscalidad-escritor-autonomo-espana.html">Fiscalidad del escritor autónomo en España</a></li>
-    <li><a href="articulos/guia-concursos-literarios-espana.html">Guía para presentarte a concursos literarios</a></li>
-    <li><a href="articulos/premios-literarios-dotacion-espana.html">Los grandes premios literarios de España</a></li>
-    <li><a href="articulos/registrar-obra-literaria-espana.html">Cómo registrar tu obra literaria en España</a></li>
-    <li><a href="articulos/cursos-online-escritores.html">Cursos online para escritores: ¿merecen la pena?</a></li>
-    <li><a href="articulos/aprender-escribir-novela-recursos.html">Cómo aprender a escribir una novela: recursos gratis y de pago</a></li>
-    <li><a href="articulos/honorarios-agente-literario-espana.html">Cuanto cobra un agente literario en Espana</a></li>
-    <li><a href="articulos/carta-presentacion-escritor-ejemplos.html">Carta de presentacion para editorial o agente: ejemplos</a></li>
-      <li><a href="articulos/portada-libro-autopublicacion.html">Portada libro autopublicación: Canva, Reedsy o diseñador</a></li>
-    <li><a href="articulos/conseguir-resenas-libro-espana.html">Cómo conseguir reseñas para tu libro autopublicado</a></li>
-    <li><a href="articulos/isbn-gratis-autopublicar-libro-espana.html">ISBN gratis para autopublicar tu libro en España</a></li>
- <li><a href="articulos/promocionar-libro-booktok-instagram-espana.html">Promocionar tu libro en BookTok e Instagram</a></li>
-<li><a href="articulos/cuanto-cuesta-autopublicar-libro-espana.html">Cuánto cuesta autopublicar un libro en España</a></li>
-</ul>
+<section class="container" style="padding-top:2rem;padding-bottom:2rem;border-top:2px solid var(--ink)">
+<div class="section-title">Últimos artículos para escritores</div>
+<div class="section-sub">Guías sobre concursos, publicación y el oficio de escribir</div>
+<div class="home-art-grid">
+<a class="home-art-card" href="articulos/guia-concursos-literarios-espana.html">
+<div class="art-cat">Concursos</div>
+<div class="art-title">Guía completa para presentarte a concursos literarios</div>
+<div class="art-excerpt">Tipos de concursos, cómo leer las bases, el seudónimo y los errores que descalifican automáticamente.</div>
+<div class="art-meta">Lectura · 13 min</div>
+</a>
+<a class="home-art-card" href="articulos/como-leer-bases-concurso-literario.html">
+<div class="art-cat">Concursos</div>
+<div class="art-title">Cómo leer las bases de un concurso literario</div>
+<div class="art-excerpt">Extensión, formato, derechos cedidos y las cláusulas que debes revisar antes de enviar tu obra.</div>
+<div class="art-meta">Lectura · 12 min</div>
+</a>
+<a class="home-art-card" href="articulos/como-escribir-relato-corto-concurso.html">
+<div class="art-cat">Concursos</div>
+<div class="art-title">Cómo escribir un relato corto para un concurso</div>
+<div class="art-excerpt">Estructura, apertura, el giro final y qué diferencia a los finalistas del resto.</div>
+<div class="art-meta">Lectura · 13 min</div>
+</a>
+<a class="home-art-card" href="articulos/como-enviar-manuscrito-editorial.html">
+<div class="art-cat">Publicación</div>
+<div class="art-title">Cómo enviar un manuscrito a una editorial</div>
+<div class="art-excerpt">Qué incluir, cómo presentarlo y qué esperar después de enviarlo. Guía paso a paso.</div>
+<div class="art-meta">Lectura · 10 min</div>
+</a>
+<a class="home-art-card" href="articulos/autopublicacion-vs-editorial-tradicional-espana.html">
+<div class="art-cat">Publicación</div>
+<div class="art-title">Autopublicación vs editorial tradicional en España</div>
+<div class="art-excerpt">Control, ingresos, distribución y visibilidad: compara las dos opciones con datos reales.</div>
+<div class="art-meta">Lectura · 12 min</div>
+</a>
+<a class="home-art-card" href="articulos/cuanto-cobra-escritor-regalias-espana.html">
+<div class="art-cat">Derechos de autor</div>
+<div class="art-title">Cuánto cobra un escritor en España</div>
+<div class="art-excerpt">Los porcentajes reales de regalías por tipo de editorial y cómo calcular tus ingresos.</div>
+<div class="art-meta">Lectura · 11 min</div>
+</a>
+<a class="home-art-card" href="articulos/agente-literario-espana.html">
+<div class="art-cat">Publicación</div>
+<div class="art-title">Cómo encontrar un agente literario en España</div>
+<div class="art-excerpt">Qué hace un agente, cuándo buscarlo y qué agencias encajan con tu género.</div>
+<div class="art-meta">Lectura · 14 min</div>
+</a>
+<a class="home-art-card" href="articulos/premios-literarios-dotacion-espana.html">
+<div class="art-cat">Concursos</div>
+<div class="art-title">Premios literarios con mayor dotación en España</div>
+<div class="art-excerpt">Planeta, Alfaguara, Herralde, Nadal: dotaciones, convocatorias y cómo evitar premios trampa.</div>
+<div class="art-meta">Lectura · 11 min</div>
+</a>
 </div>
+<div style="text-align:center;margin-top:1.5rem">
+<a href="articulos" class="modal-btn modal-btn-primary">Ver todos los artículos →</a>
+</div>
+</section>
 
 <footer>
   <p>© <span id="year"></span> Letras Españolas · Para escritores de España</p>
