@@ -404,6 +404,14 @@ url: 'articulos/seudonimo-concurso-literario.html'
       tiempo: '13 min',
       url: 'articulos/promocionar-libro-booktok-instagram-espana.html'
   },
+  {
+    id: 'cuanto-cuesta-autopublicar-libro-espana',
+      cat: 'Autopublicación',
+      titulo: 'Cuánto cuesta autopublicar un libro en España en 2026: presupuesto real',
+      excerpt: 'Desglose completo de costes para autopublicar un libro en España en 2026: corrección, portada, maquetación, ISBN y marketing, con cifras reales.',
+      tiempo: '14 min',
+      url: 'articulos/cuanto-cuesta-autopublicar-libro-espana.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
