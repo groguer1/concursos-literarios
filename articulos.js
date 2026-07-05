@@ -396,6 +396,14 @@ url: 'articulos/seudonimo-concurso-literario.html'
     tiempo: '13 min',
     url: 'articulos/isbn-gratis-autopublicar-libro-espana.html'
   },
+  {
+    id: 'promocionar-libro-booktok-instagram-espana',
+      cat: 'Marketing literario',
+      titulo: 'Promocionar tu libro en BookTok e Instagram: guía 2026',
+      excerpt: 'Estrategia paso a paso para promocionar tu libro en BookTok e Instagram siendo autor novel: contenido que funciona, hashtags y errores frecuentes.',
+      tiempo: '13 min',
+      url: 'articulos/promocionar-libro-booktok-instagram-espana.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
