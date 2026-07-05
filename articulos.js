@@ -388,6 +388,14 @@ url: 'articulos/seudonimo-concurso-literario.html'
     tiempo: '12 min',
     url: 'articulos/conseguir-resenas-libro-espana.html'
   },
+  {
+    id: 'isbn-gratis-autopublicar-libro-espana',
+    cat: 'Autopublicación',
+    titulo: 'ISBN gratis para autopublicar tu libro en España: guía 2026',
+    excerpt: 'Cómo conseguir el ISBN gratuito en España como autor autopublicado: quién puede pedirlo, el trámite paso a paso, ISBN propio vs el de Amazon KDP y el depósito legal.',
+    tiempo: '13 min',
+    url: 'articulos/isbn-gratis-autopublicar-libro-espana.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
