@@ -79,6 +79,19 @@ function diasHasta(fechaStr) {
   return Math.ceil((new Date(parts[2], parts[1]-1, parts[0]) - new Date()) / 86400000);
 }
 
+function escapeHtml(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function buildStaticCardsHTML(arr) {
+  return arr.map(c => {
+    const cat = escapeHtml(c.categoria || 'Otro');
+    const premio = escapeHtml(c.premio || 'Sin especificar');
+    const fecha = c.fecha_limite ? ('Hasta ' + escapeHtml(c.fecha_limite)) : '';
+    return '<div class="card"><div class="card-meta"><span class="card-cat">' + cat + '</span></div><h3 class="card-title">' + escapeHtml(c.titulo) + '</h3><div class="card-org">' + escapeHtml(c.organizacion || '') + '</div><div class="card-footer"><span class="card-premio">' + premio + '</span><span class="card-fecha">' + fecha + '</span></div></div>';
+  }).join('');
+}
+
 async function main() {
   console.log('Iniciando busqueda de concursos...');
   if (!ANTHROPIC_KEY) { console.error('ANTHROPIC_KEY no configurado'); process.exit(1); }
@@ -119,7 +132,18 @@ async function main() {
   const regex = /const CONCURSOS_BASE = \[[\s\S]*?\];/;
   if (!regex.test(html_file)) { console.error('No se encontro CONCURSOS_BASE'); process.exit(1); }
 
-  fs.writeFileSync('index.html', html_file.replace(regex, concursosJS), 'utf8');
+  const htmlConDatos = html_file.replace(regex, concursosJS);
+
+  const staticRegex = /<!-- CONCURSOS-STATIC-START -->[\s\S]*?<!-- CONCURSOS-STATIC-END -->/;
+  let htmlFinal = htmlConDatos;
+  if (staticRegex.test(htmlConDatos)) {
+    const staticHTML = '<!-- CONCURSOS-STATIC-START -->' + buildStaticCardsHTML(filtrados) + '<!-- CONCURSOS-STATIC-END -->';
+    htmlFinal = htmlConDatos.replace(staticRegex, staticHTML);
+  } else {
+    console.warn('No se encontraron los marcadores CONCURSOS-STATIC-START/END; se omite la actualizacion del bloque estatico');
+  }
+
+  fs.writeFileSync('index.html', htmlFinal, 'utf8');
   fs.writeFileSync('concursos.json', JSON.stringify(filtrados.length ? filtrados : JSON.parse(html_file.match(/const CONCURSOS_BASE = (\[[\s\S]*?\]);/)[1])), 'utf8');
   console.log('Actualizado con ' + filtrados.length + ' concursos:');
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
