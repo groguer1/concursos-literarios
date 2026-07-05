@@ -62,6 +62,8 @@ header{border-bottom:2px solid var(--ink);position:relative}
 }
 .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
 .section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.dir-intro{font-size:14px;line-height:1.75;color:#3a3a38;margin-bottom:1.5rem}
+.dir-intro a{color:var(--accent);text-decoration:underline}
 .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
 .stat{display:flex;align-items:baseline;gap:6px}
 .stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
@@ -178,7 +180,8 @@ footer a:hover{color:var(--ink)}
       <div class="list-view" id="list-view">
         <h1 class="section-title">Editoriales españolas</h1>
         <div class="section-sub">Directorio completo con información para envío de originales · 2026</div>
-        <div class="stats-bar">
+        <p class="dir-intro">Este directorio reúne 55 editoriales españolas activas en 2026, desde grandes grupos como Planeta o Penguin Random House hasta sellos independientes especializados en poesía, ciencia ficción o cuento literario. Cada ficha indica la ciudad y el año de fundación, los géneros que publica, si acepta manuscritos sin necesidad de agente literario, si convoca algún premio propio y si está especialmente abierta a autores noveles. Puedes recorrer el listado completo o filtrarlo por género con los botones superiores, y combinarlo con los filtros especiales para ver solo las editoriales que aceptan envíos directos, las que convocan premio, las independientes o las más receptivas a nuevas voces. El buscador permite localizar una editorial concreta escribiendo su nombre, ciudad o género. Al pulsar sobre cualquier tarjeta se abre una ficha ampliada con la vía de contacto recomendada, autores destacados, colecciones y una nota orientativa para decidir si encaja con tu manuscrito. Antes de enviar nada conviene preparar bien la propuesta: en <a href="articulos/como-enviar-manuscrito-editorial.html">cómo enviar un manuscrito a una editorial</a> explicamos qué debe incluir tu envío y cómo aumentar las opciones de que lo lean. Si prefieres evitar intermediarios, consulta también nuestro artículo sobre <a href="articulos/editoriales-que-aceptan-manuscritos-sin-agente.html">editoriales que aceptan manuscritos sin agente literario</a>, con recomendaciones específicas por género.</p>
+<div class="stats-bar">
           <div class="stat"><span class="stat-num" id="stat-total">55</span><span class="stat-label">Editoriales</span></div>
           <div class="stat"><span class="stat-num" id="stat-sinagente">—</span><span class="stat-label">Aceptan sin agente</span></div>
           <div class="stat"><span class="stat-num" id="stat-premio">—</span><span class="stat-label">Con premio convocado</span></div>
@@ -220,8 +223,835 @@ footer a:hover{color:var(--ink)}
         </div>
 
         <div class="filter-sep"></div>
-        <div class="results-count" id="results-count"></div>
-        <div class="dir-grid" id="editoriales-list"></div>
+        <div class="results-count" id="results-count">Mostrando 55 editoriales</div>
+        <div class="dir-grid" id="editoriales-list">
+<div class="dir-item" data-id="anagrama" data-generos="narrativa,ensayo,poesia" data-sinagente="false" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="anagrama una de las editoriales independientes más prestigiosas de españa. narrativa española e internacional, ensayo y poesía de alta calidad literaria. narrativa ensayo poesia barcelona independiente roberto bolaño, paul auster, javier marías, enrique vila-matas" onclick="verDetalle('anagrama')">
+<div class="dir-item-top">
+<div class="dir-name">Anagrama</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Una de las editoriales independientes más prestigiosas de España. Narrativa española e internacional, ensayo y poesía de alta calidad literaria.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">poesia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1969</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="tusquets" data-generos="narrativa,ensayo" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="tusquets editores editorial de referencia en narrativa contemporánea española e internacional. pertenece al grupo planeta desde 2012 pero mantiene su sello editorial propio. narrativa ensayo barcelona grande isabel allende, almudena grandes, fernando aramburu, yasmina reza" onclick="verDetalle('tusquets')">
+<div class="dir-item-top">
+<div class="dir-name">Tusquets Editores</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">Editorial de referencia en narrativa contemporánea española e internacional. Pertenece al Grupo Planeta desde 2012 pero mantiene su sello editorial propio.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1969</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="planeta" data-generos="narrativa,ensayo,infantil" data-sinagente="premio" data-premio="true" data-tipo="grande" data-noveles="true" data-search="planeta el mayor grupo editorial en español del mundo. convoca el premio planeta, uno de los galardones literarios más dotados de españa. narrativa ensayo infantil barcelona grande ken follett, ildefonso falcones, arturo pérez-reverte, juan eslava galán" onclick="verDetalle('planeta')">
+<div class="dir-item-top">
+<div class="dir-name">Planeta</div>
+<div class="dir-badges"><span class="badge badge-gold">🏆 Vía premio</span><span class="badge badge-gold">🏆 Premio propio</span></div>
+</div>
+<div class="dir-desc">El mayor grupo editorial en español del mundo. Convoca el Premio Planeta, uno de los galardones literarios más dotados de España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">infantil</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1949</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="alfaguara" data-generos="narrativa,infantil" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="alfaguara sello de penguin random house. referente en literatura en español, publica a los autores más importantes de habla hispana. narrativa infantil madrid grande mario vargas llosa, gabriel garcía márquez, javier cercas, antonio muñoz molina" onclick="verDetalle('alfaguara')">
+<div class="dir-item-top">
+<div class="dir-name">Alfaguara</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello de Penguin Random House. Referente en literatura en español, publica a los autores más importantes de habla hispana.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span>
+<span class="tag">Madrid</span>
+<span class="tag">1964</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="siruela" data-generos="narrativa,fantasia,ensayo" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="siruela editorial independiente especializada en literatura fantástica, terror, misterio y géneros de aventura. reconocida internacionalmente por sus ediciones cuidadas. narrativa fantasia ensayo madrid independiente h.p. lovecraft, arto paasilinna, stefan grabinski" onclick="verDetalle('siruela')">
+<div class="dir-item-top">
+<div class="dir-name">Siruela</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en literatura fantástica, terror, misterio y géneros de aventura. Reconocida internacionalmente por sus ediciones cuidadas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">fantasia</span><span class="tag">ensayo</span>
+<span class="tag">Madrid</span>
+<span class="tag">1982</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="impedimenta" data-generos="narrativa,ensayo" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="impedimenta editorial independiente que recupera clásicos olvidados y publica nueva literatura internacional de calidad. premio a la mejor editorial independiente europea 2014. narrativa ensayo madrid independiente patrick hamilton, stella gibbons, tove jansson, elizabeth taylor" onclick="verDetalle('impedimenta')">
+<div class="dir-item-top">
+<div class="dir-name">Impedimenta</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente que recupera clásicos olvidados y publica nueva literatura internacional de calidad. Premio a la mejor editorial independiente europea 2014.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span>
+<span class="tag">Madrid</span>
+<span class="tag">2007</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="blackie" data-generos="narrativa,ensayo,humor" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="blackie books editorial independiente con una propuesta fresca y contemporánea. cuidan mucho el diseño y la experiencia de lectura. muy activos en redes sociales. narrativa ensayo humor barcelona independiente david safier, ryu murakami, naomi alderman" onclick="verDetalle('blackie')">
+<div class="dir-item-top">
+<div class="dir-name">Blackie Books</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente con una propuesta fresca y contemporánea. Cuidan mucho el diseño y la experiencia de lectura. Muy activos en redes sociales.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">humor</span>
+<span class="tag">Barcelona</span>
+<span class="tag">2008</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="sextopiso" data-generos="narrativa,ensayo,poesia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="sexto piso editorial independiente con sello propio en méxico y españa. publica literatura contemporánea internacional y autores emergentes de calidad. narrativa ensayo poesia madrid independiente yuri herrera, fernanda melchor, jon fosse" onclick="verDetalle('sextopiso')">
+<div class="dir-item-top">
+<div class="dir-name">Sexto Piso</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente con sello propio en México y España. Publica literatura contemporánea internacional y autores emergentes de calidad.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">poesia</span>
+<span class="tag">Madrid</span>
+<span class="tag">2003</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="nordica" data-generos="narrativa,infantil,ilustrado" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="nórdica libros editorial independiente especializada en literatura nórdica y libros ilustrados. reconocida por sus ediciones cuidadísimas y diseño gráfico de alto nivel. narrativa infantil ilustrado madrid independiente astrid lindgren, tove jansson, hans christian andersen" onclick="verDetalle('nordica')">
+<div class="dir-item-top">
+<div class="dir-name">Nórdica Libros</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en literatura nórdica y libros ilustrados. Reconocida por sus ediciones cuidadísimas y diseño gráfico de alto nivel.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span><span class="tag">ilustrado</span>
+<span class="tag">Madrid</span>
+<span class="tag">2006</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="pretextos" data-generos="narrativa,poesia,ensayo" data-sinagente="false" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="pre-textos una de las editoriales literarias independientes más importantes de españa. especializada en poesía, narrativa y ensayo de alta calidad literaria. narrativa poesia ensayo valencia independiente josé ángel valente, rafael cadenas, guillermo cabrera infante" onclick="verDetalle('pretextos')">
+<div class="dir-item-top">
+<div class="dir-name">Pre-Textos</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Una de las editoriales literarias independientes más importantes de España. Especializada en poesía, narrativa y ensayo de alta calidad literaria.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span><span class="tag">ensayo</span>
+<span class="tag">Valencia</span>
+<span class="tag">1976</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="galaxia" data-generos="narrativa,ensayo,poesia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="galaxia gutenberg editorial independiente de referencia. publica literatura española e internacional, ensayo intelectual y poesía. conocida por sus ediciones de lujo y su exigente criterio. narrativa ensayo poesia barcelona independiente javier marías, peter handke, claudio magris" onclick="verDetalle('galaxia')">
+<div class="dir-item-top">
+<div class="dir-name">Galaxia Gutenberg</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente de referencia. Publica literatura española e internacional, ensayo intelectual y poesía. Conocida por sus ediciones de lujo y su exigente criterio.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">poesia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1993</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="alianza" data-generos="narrativa,ensayo,ciencia" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="alianza editorial editorial histórica española, referente en ensayo, ciencia y humanidades. pertenece al grupo anaya. muy fuerte en texto universitario y divulgación. narrativa ensayo ciencia madrid grande jorge luis borges, franz kafka, sigmund freud" onclick="verDetalle('alianza')">
+<div class="dir-item-top">
+<div class="dir-name">Alianza Editorial</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">Editorial histórica española, referente en ensayo, ciencia y humanidades. Pertenece al Grupo Anaya. Muy fuerte en texto universitario y divulgación.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">ciencia</span>
+<span class="tag">Madrid</span>
+<span class="tag">1966</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="espasa" data-generos="narrativa,ensayo,historia" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="espasa una de las editoriales más antiguas de españa. especializada en narrativa comercial, historia, divulgación y libros de referencia. pertenece al grupo planeta. narrativa ensayo historia madrid grande arturo pérez-reverte, ángeles mastretta, santiago posteguillo" onclick="verDetalle('espasa')">
+<div class="dir-item-top">
+<div class="dir-name">Espasa</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Una de las editoriales más antiguas de España. Especializada en narrativa comercial, historia, divulgación y libros de referencia. Pertenece al Grupo Planeta.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">historia</span>
+<span class="tag">Madrid</span>
+<span class="tag">1860</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="destino" data-generos="narrativa,infantil" data-sinagente="premio" data-premio="true" data-tipo="grande" data-noveles="true" data-search="destino editorial histórica que convoca el premio nadal, uno de los más antiguos de españa. publica narrativa española e internacional. pertenece al grupo planeta. narrativa infantil barcelona grande carmen laforet, miguel delibes, juan marsé" onclick="verDetalle('destino')">
+<div class="dir-item-top">
+<div class="dir-name">Destino</div>
+<div class="dir-badges"><span class="badge badge-gold">🏆 Vía premio</span><span class="badge badge-gold">🏆 Premio propio</span></div>
+</div>
+<div class="dir-desc">Editorial histórica que convoca el Premio Nadal, uno de los más antiguos de España. Publica narrativa española e internacional. Pertenece al Grupo Planeta.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1942</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="lumen" data-generos="narrativa,poesia,infantil" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="lumen sello de penguin random house con larga tradición en poesía y narrativa literaria. publica a autores consagrados de literatura en español. narrativa poesia infantil barcelona grande elvira sastre, pablo neruda, gioconda belli" onclick="verDetalle('lumen')">
+<div class="dir-item-top">
+<div class="dir-name">Lumen</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello de Penguin Random House con larga tradición en poesía y narrativa literaria. Publica a autores consagrados de literatura en español.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span><span class="tag">infantil</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1960</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="paidos" data-generos="ensayo,psicologia,ciencias sociales" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="paidós editorial especializada en psicología, filosofía, ciencias sociales y divulgación. referente en pensamiento contemporáneo. pertenece al grupo planeta. ensayo psicologia ciencias sociales barcelona grande edgar morin, zygmunt bauman, daniel goleman" onclick="verDetalle('paidos')">
+<div class="dir-item-top">
+<div class="dir-name">Paidós</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">Editorial especializada en psicología, filosofía, ciencias sociales y divulgación. Referente en pensamiento contemporáneo. Pertenece al Grupo Planeta.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">psicologia</span><span class="tag">ciencias sociales</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1945</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="caballo" data-generos="narrativa,poesia" data-sinagente="false" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="caballo de troya sello de penguin random house especializado en narrativa española contemporánea y voces nuevas. ha publicado a muchos autores emergentes importantes. narrativa poesia barcelona independiente agustín fernández mallo, isaac rosa, manuel vilas" onclick="verDetalle('caballo')">
+<div class="dir-item-top">
+<div class="dir-name">Caballo de Troya</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Sello de Penguin Random House especializado en narrativa española contemporánea y voces nuevas. Ha publicado a muchos autores emergentes importantes.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">2003</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="periferica" data-generos="narrativa,ensayo" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="periférica editorial independiente extremeña con gran reconocimiento nacional. publica narrativa y ensayo de calidad, con especial atención a voces femeninas. narrativa ensayo cáceres independiente flannery o'connor, zona gale, mary mccarthy" onclick="verDetalle('periferica')">
+<div class="dir-item-top">
+<div class="dir-name">Periférica</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente extremeña con gran reconocimiento nacional. Publica narrativa y ensayo de calidad, con especial atención a voces femeninas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span>
+<span class="tag">Cáceres</span>
+<span class="tag">2005</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="pepitas" data-generos="narrativa,ensayo" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="pepitas de calabaza editorial independiente riojana especializada en pensamiento crítico, anarquismo, feminismo y literaturas disidentes. referente en edición comprometida. narrativa ensayo logroño independiente emma goldman, paul goodman, guy debord" onclick="verDetalle('pepitas')">
+<div class="dir-item-top">
+<div class="dir-name">Pepitas de Calabaza</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente riojana especializada en pensamiento crítico, anarquismo, feminismo y literaturas disidentes. Referente en edición comprometida.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span>
+<span class="tag">Logroño</span>
+<span class="tag">2004</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="acantilado" data-generos="narrativa,ensayo,clasicos" data-sinagente="false" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="acantilado editorial independiente de altísimo prestigio literario. publica clásicos europeos y contemporáneos de calidad, con ediciones cuidadísimas. narrativa ensayo clasicos barcelona independiente stefan zweig, joseph roth, w.g. sebald, sandor marai" onclick="verDetalle('acantilado')">
+<div class="dir-item-top">
+<div class="dir-name">Acantilado</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente de altísimo prestigio literario. Publica clásicos europeos y contemporáneos de calidad, con ediciones cuidadísimas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">clasicos</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1999</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="lengua" data-generos="narrativa,poesia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="lengua de trapo editorial independiente madrileña especializada en narrativa experimental y poesía. ha publicado a autores fundamentales de la literatura española actual. narrativa poesia madrid independiente ray loriga, juan manuel de prada, lorenzo silva" onclick="verDetalle('lengua')">
+<div class="dir-item-top">
+<div class="dir-name">Lengua de Trapo</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente madrileña especializada en narrativa experimental y poesía. Ha publicado a autores fundamentales de la literatura española actual.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span>
+<span class="tag">Madrid</span>
+<span class="tag">1995</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="edhasa" data-generos="narrativa,historia,fantasia" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="edhasa editorial histórica especializada en ciencia ficción, fantasía, thriller histórico y narrativa de género. pionera de la ciencia ficción en españa. narrativa historia fantasia barcelona grande isaac asimov, arthur c. clarke, ken follett" onclick="verDetalle('edhasa')">
+<div class="dir-item-top">
+<div class="dir-name">Edhasa</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">Editorial histórica especializada en ciencia ficción, fantasía, thriller histórico y narrativa de género. Pionera de la ciencia ficción en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">historia</span><span class="tag">fantasia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1946</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="sm" data-generos="infantil,juvenil" data-sinagente="premio" data-premio="true" data-tipo="grande" data-noveles="true" data-search="sm editorial especializada en literatura infantil y juvenil y material educativo. convoca el premio barco de vapor y el premio gran angular. infantil juvenil madrid grande elvira lindo, jordi sierra i fabra, alfredo gómez cerdá" onclick="verDetalle('sm')">
+<div class="dir-item-top">
+<div class="dir-name">SM</div>
+<div class="dir-badges"><span class="badge badge-gold">🏆 Vía premio</span><span class="badge badge-gold">🏆 Premio propio</span></div>
+</div>
+<div class="dir-desc">Editorial especializada en literatura infantil y juvenil y material educativo. Convoca el Premio Barco de Vapor y el Premio Gran Angular.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">infantil</span><span class="tag">juvenil</span>
+<span class="tag">Madrid</span>
+<span class="tag">1958</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="salamandra" data-generos="narrativa,fantasia,infantil" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="salamandra editorial independiente conocida por publicar la saga de harry potter en españa. especializada en narrativa fantástica y literatura juvenil de calidad. narrativa fantasia infantil barcelona independiente j.k. rowling, patrick ness, rainbow rowell" onclick="verDetalle('salamandra')">
+<div class="dir-item-top">
+<div class="dir-name">Salamandra</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente conocida por publicar la saga de Harry Potter en España. Especializada en narrativa fantástica y literatura juvenil de calidad.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">fantasia</span><span class="tag">infantil</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1989</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="ariel" data-generos="ensayo,historia" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="ariel editorial especializada en ciencias sociales, humanidades e historia. referente universitario y académico. pertenece al grupo planeta. ensayo historia barcelona grande hannah arendt, umberto eco, jürgen habermas" onclick="verDetalle('ariel')">
+<div class="dir-item-top">
+<div class="dir-name">Ariel</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">Editorial especializada en ciencias sociales, humanidades e historia. Referente universitario y académico. Pertenece al Grupo Planeta.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">historia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1942</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="visor" data-generos="poesia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="visor libros la editorial de poesía más importante de españa. publica a los poetas más relevantes en español, tanto clásicos como contemporáneos. poesia madrid independiente pablo neruda, rafael alberti, elvira sastre, luis garcía montero" onclick="verDetalle('visor')">
+<div class="dir-item-top">
+<div class="dir-name">Visor Libros</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">La editorial de poesía más importante de España. Publica a los poetas más relevantes en español, tanto clásicos como contemporáneos.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">poesia</span>
+<span class="tag">Madrid</span>
+<span class="tag">1969</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="hiperion" data-generos="poesia,narrativa" data-sinagente="true" data-premio="true" data-tipo="independiente" data-noveles="true" data-search="hiperión editorial independiente especializada en poesía y literatura comparada. convoca el premio hiperión de poesía, uno de los más importantes del género en españa. poesia narrativa madrid independiente ana rossetti, luis antonio de villena, ángel gonzález" onclick="verDetalle('hiperion')">
+<div class="dir-item-top">
+<div class="dir-name">Hiperión</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-gold">🏆 Premio propio</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en poesía y literatura comparada. Convoca el Premio Hiperión de Poesía, uno de los más importantes del género en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">poesia</span><span class="tag">narrativa</span>
+<span class="tag">Madrid</span>
+<span class="tag">1976</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="debate" data-generos="ensayo,historia" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="debate sello de penguin random house especializado en ensayo político, historia contemporánea y divulgación. publica a los grandes pensadores y analistas actuales. ensayo historia madrid grande yuval noah harari, thomas piketty, naomi klein" onclick="verDetalle('debate')">
+<div class="dir-item-top">
+<div class="dir-name">Debate</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello de Penguin Random House especializado en ensayo político, historia contemporánea y divulgación. Publica a los grandes pensadores y analistas actuales.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">historia</span>
+<span class="tag">Madrid</span>
+<span class="tag">1980</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="roca" data-generos="narrativa,thriller,historia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="roca editorial editorial independiente especializada en thriller, novela negra, narrativa histórica y romántica. una de las editoriales independientes más comerciales de españa. narrativa thriller historia barcelona independiente ken bruen, camilla läckberg, césar mallorquí" onclick="verDetalle('roca')">
+<div class="dir-item-top">
+<div class="dir-name">Roca Editorial</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en thriller, novela negra, narrativa histórica y romántica. Una de las editoriales independientes más comerciales de España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">thriller</span><span class="tag">historia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">2003</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="edaf" data-generos="narrativa,ensayo,espiritualidad" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="edaf editorial independiente madrileña con amplio catálogo en esoterismo, espiritualidad, autoayuda, narrativa y ensayo. gran presencia en latinoamérica. narrativa ensayo espiritualidad madrid independiente varios autores de espiritualidad y narrativa" onclick="verDetalle('edaf')">
+<div class="dir-item-top">
+<div class="dir-name">EDAF</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente madrileña con amplio catálogo en esoterismo, espiritualidad, autoayuda, narrativa y ensayo. Gran presencia en Latinoamérica.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">espiritualidad</span>
+<span class="tag">Madrid</span>
+<span class="tag">1965</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="destino-juvenil" data-generos="infantil,juvenil" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="destino juvenil / planeta junior sello infantil y juvenil del grupo planeta. publica algunos de los títulos más vendidos del sector, incluyendo series y sagas de gran éxito. infantil juvenil barcelona grande jeff kinney, rick riordan, julia donaldson" onclick="verDetalle('destino-juvenil')">
+<div class="dir-item-top">
+<div class="dir-name">Destino Juvenil / Planeta Junior</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello infantil y juvenil del Grupo Planeta. Publica algunos de los títulos más vendidos del sector, incluyendo series y sagas de gran éxito.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">infantil</span><span class="tag">juvenil</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1990</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="nube" data-generos="juvenil,romance,fantasia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="nube de tinta editorial especializada en literatura juvenil, romance y fantasía para jóvenes adultos (new adult y young adult). muy activa en redes sociales y booktok. juvenil romance fantasia barcelona independiente anna todd, tahereh mafi, lauren oliver" onclick="verDetalle('nube')">
+<div class="dir-item-top">
+<div class="dir-name">Nube de Tinta</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial especializada en literatura juvenil, romance y fantasía para jóvenes adultos (New Adult y Young Adult). Muy activa en redes sociales y BookTok.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">juvenil</span><span class="tag">romance</span><span class="tag">fantasia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">2014</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="crossbooks" data-generos="juvenil,fantasia,romance" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="crossbooks sello de plaza &amp; janés / penguin random house enfocado en literatura juvenil, fantasía y romance. nació de la comunidad lectora digital. juvenil fantasia romance barcelona independiente elísabet benavent, blue jeans, anabel botella" onclick="verDetalle('crossbooks')">
+<div class="dir-item-top">
+<div class="dir-name">Crossbooks</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Sello de Plaza &amp; Janés / Penguin Random House enfocado en literatura juvenil, fantasía y romance. Nació de la comunidad lectora digital.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">juvenil</span><span class="tag">fantasia</span><span class="tag">romance</span>
+<span class="tag">Barcelona</span>
+<span class="tag">2015</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="temas-hoy" data-generos="ensayo,historia,politica" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="temas de hoy sello de planeta especializado en actualidad, política, historia reciente y autobiografías. publica a protagonistas de la vida pública española. ensayo historia politica madrid grande líderes políticos, periodistas y personajes públicos españoles" onclick="verDetalle('temas-hoy')">
+<div class="dir-item-top">
+<div class="dir-name">Temas de Hoy</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello de Planeta especializado en actualidad, política, historia reciente y autobiografías. Publica a protagonistas de la vida pública española.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">historia</span><span class="tag">politica</span>
+<span class="tag">Madrid</span>
+<span class="tag">1989</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="trotta" data-generos="ensayo,filosofia,teologia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="trotta editorial independiente especializada en filosofía, teología, ciencias sociales y pensamiento contemporáneo. gran prestigio académico. ensayo filosofia teologia madrid independiente jürgen habermas, walter benjamin, paul ricoeur" onclick="verDetalle('trotta')">
+<div class="dir-item-top">
+<div class="dir-name">Trotta</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en filosofía, teología, ciencias sociales y pensamiento contemporáneo. Gran prestigio académico.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">filosofia</span><span class="tag">teologia</span>
+<span class="tag">Madrid</span>
+<span class="tag">1993</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="herder" data-generos="ensayo,filosofia,psicologia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="herder editorial especializada en filosofía, psicología, religión y ciencias humanas. de origen alemán, lleva décadas siendo referente académico en españa. ensayo filosofia psicologia barcelona independiente karl jaspers, romano guardini, hans-georg gadamer" onclick="verDetalle('herder')">
+<div class="dir-item-top">
+<div class="dir-name">Herder</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial especializada en filosofía, psicología, religión y ciencias humanas. De origen alemán, lleva décadas siendo referente académico en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">filosofia</span><span class="tag">psicologia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1948</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="montena" data-generos="infantil,juvenil" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="montena sello infantil y juvenil de penguin random house. publica algunos de los títulos juveniles más vendidos en español, incluyendo grandes éxitos internacionales. infantil juvenil barcelona grande suzanne collins, veronica roth, john green" onclick="verDetalle('montena')">
+<div class="dir-item-top">
+<div class="dir-name">Montena</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello infantil y juvenil de Penguin Random House. Publica algunos de los títulos juveniles más vendidos en español, incluyendo grandes éxitos internacionales.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">infantil</span><span class="tag">juvenil</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1977</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="punto-lectura" data-generos="narrativa,ensayo" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="punto de lectura sello de bolsillo de alfaguara / santillana. reedita en formato económico los títulos más exitosos del catálogo del grupo. narrativa ensayo madrid grande autores del catálogo alfaguara y santillana" onclick="verDetalle('punto-lectura')">
+<div class="dir-item-top">
+<div class="dir-name">Punto de Lectura</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello de bolsillo de Alfaguara / Santillana. Reedita en formato económico los títulos más exitosos del catálogo del grupo.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span>
+<span class="tag">Madrid</span>
+<span class="tag">2000</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="alba" data-generos="narrativa,clasicos,historia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="alba editorial editorial independiente especializada en clásicos de la literatura universal, narrativa histórica y novela negra. ediciones cuidadas y traducciones de calidad. narrativa clasicos historia barcelona independiente émile zola, wilkie collins, alexandre dumas" onclick="verDetalle('alba')">
+<div class="dir-item-top">
+<div class="dir-name">Alba Editorial</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en clásicos de la literatura universal, narrativa histórica y novela negra. Ediciones cuidadas y traducciones de calidad.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">clasicos</span><span class="tag">historia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1993</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="berenice" data-generos="narrativa,thriller,historia" data-sinagente="true" data-premio="true" data-tipo="independiente" data-noveles="true" data-search="berenice editorial andaluza independiente especializada en narrativa, thriller y novela negra. convoca el premio internacional de novela negra ciudad de córdoba. narrativa thriller historia córdoba independiente varios autores de novela negra española" onclick="verDetalle('berenice')">
+<div class="dir-item-top">
+<div class="dir-name">Berenice</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-gold">🏆 Premio propio</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial andaluza independiente especializada en narrativa, thriller y novela negra. Convoca el Premio Internacional de Novela Negra Ciudad de Córdoba.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">thriller</span><span class="tag">historia</span>
+<span class="tag">Córdoba</span>
+<span class="tag">2005</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="menoscuarto" data-generos="narrativa,cuento" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="menoscuarto editorial independiente especializada en cuento literario y narrativa breve. una de las pocas editoriales españolas que apuesta decididamente por el relato corto. narrativa cuento palencia independiente varios autores de cuento literario español" onclick="verDetalle('menoscuarto')">
+<div class="dir-item-top">
+<div class="dir-name">Menoscuarto</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en cuento literario y narrativa breve. Una de las pocas editoriales españolas que apuesta decididamente por el relato corto.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">cuento</span>
+<span class="tag">Palencia</span>
+<span class="tag">2003</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="baile-del-sol" data-generos="narrativa,poesia,teatro" data-sinagente="true" data-premio="true" data-tipo="independiente" data-noveles="true" data-search="baile del sol editorial canaria independiente con amplio catálogo en narrativa, poesía y teatro. muy abierta a autores noveles y propuestas diversas. narrativa poesia teatro tenerife independiente varios autores canarios y nacionales" onclick="verDetalle('baile-del-sol')">
+<div class="dir-item-top">
+<div class="dir-name">Baile del Sol</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-gold">🏆 Premio propio</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial canaria independiente con amplio catálogo en narrativa, poesía y teatro. Muy abierta a autores noveles y propuestas diversas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span><span class="tag">teatro</span>
+<span class="tag">Tenerife</span>
+<span class="tag">1990</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="calambur" data-generos="poesia,narrativa,teatro" data-sinagente="true" data-premio="true" data-tipo="independiente" data-noveles="true" data-search="calambur editorial independiente madrileña especializada en poesía, teatro y narrativa experimental. convoca el premio ojo crítico de poesía. poesia narrativa teatro madrid independiente varios poetas españoles contemporáneos" onclick="verDetalle('calambur')">
+<div class="dir-item-top">
+<div class="dir-name">Calambur</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-gold">🏆 Premio propio</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente madrileña especializada en poesía, teatro y narrativa experimental. Convoca el Premio Ojo Crítico de Poesía.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">poesia</span><span class="tag">narrativa</span><span class="tag">teatro</span>
+<span class="tag">Madrid</span>
+<span class="tag">1993</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="planeta-comics" data-generos="comics,ilustrado" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="planeta cómic el mayor editor de cómics en español. publica a marvel, dc y los grandes autores europeos e independientes. referente del sector en españa. comics ilustrado barcelona grande stan lee, alan moore, moebius" onclick="verDetalle('planeta-comics')">
+<div class="dir-item-top">
+<div class="dir-name">Planeta Cómic</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">El mayor editor de cómics en español. Publica a Marvel, DC y los grandes autores europeos e independientes. Referente del sector en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">comics</span><span class="tag">ilustrado</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1983</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="grafito" data-generos="thriller,novela negra,narrativa" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="grafito editorial editorial independiente vasca especializada en thriller, novela negra y narrativa de género. muy activa en la escena del crimen literario en españa. thriller novela negra narrativa bilbao independiente varios autores de novela negra vasca y española" onclick="verDetalle('grafito')">
+<div class="dir-item-top">
+<div class="dir-name">Grafito Editorial</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente vasca especializada en thriller, novela negra y narrativa de género. Muy activa en la escena del crimen literario en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">thriller</span><span class="tag">novela negra</span><span class="tag">narrativa</span>
+<span class="tag">Bilbao</span>
+<span class="tag">2012</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="sexta-planta" data-generos="narrativa,humor,ensayo" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="sexta planta editorial independiente madrileña con catálogo variado en narrativa, humor gráfico y ensayo de actualidad. propuesta fresca y contemporánea. narrativa humor ensayo madrid independiente varios autores contemporáneos españoles" onclick="verDetalle('sexta-planta')">
+<div class="dir-item-top">
+<div class="dir-name">Sexta Planta</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente madrileña con catálogo variado en narrativa, humor gráfico y ensayo de actualidad. Propuesta fresca y contemporánea.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">humor</span><span class="tag">ensayo</span>
+<span class="tag">Madrid</span>
+<span class="tag">2010</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="ediciones-b" data-generos="narrativa,thriller,historia" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="ediciones b sello de penguin random house con amplio catálogo en narrativa comercial, thriller y no-ficción. gran distribución en toda hispanoamérica. narrativa thriller historia barcelona grande michael connelly, patricia cornwell, carlos ruiz zafón" onclick="verDetalle('ediciones-b')">
+<div class="dir-item-top">
+<div class="dir-name">Ediciones B</div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
+</div>
+<div class="dir-desc">Sello de Penguin Random House con amplio catálogo en narrativa comercial, thriller y no-ficción. Gran distribución en toda Hispanoamérica.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">thriller</span><span class="tag">historia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1987</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="trea" data-generos="ensayo,historia,arte" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="trea editorial asturiana independiente especializada en humanidades, historia local, arte, biblioteconomía y documentación. referente académico regional y nacional. ensayo historia arte gijón independiente varios especialistas en historia y humanidades" onclick="verDetalle('trea')">
+<div class="dir-item-top">
+<div class="dir-name">Trea</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial asturiana independiente especializada en humanidades, historia local, arte, biblioteconomía y documentación. Referente académico regional y nacional.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">historia</span><span class="tag">arte</span>
+<span class="tag">Gijón</span>
+<span class="tag">1992</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="funambulista" data-generos="infantil,ilustrado,poesia" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="funambulista editorial independiente especializada en álbum ilustrado, literatura infantil de calidad y poesía visual. ediciones cuidadas y premiadas internacionalmente. infantil ilustrado poesia madrid independiente varios ilustradores y autores de álbum" onclick="verDetalle('funambulista')">
+<div class="dir-item-top">
+<div class="dir-name">Funambulista</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en álbum ilustrado, literatura infantil de calidad y poesía visual. Ediciones cuidadas y premiadas internacionalmente.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">infantil</span><span class="tag">ilustrado</span><span class="tag">poesia</span>
+<span class="tag">Madrid</span>
+<span class="tag">2004</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="espiral" data-generos="fantasia,ciencia-ficcion" data-sinagente="true" data-premio="true" data-tipo="independiente" data-noveles="true" data-search="espiral ciencia ficción editorial especializada exclusivamente en ciencia ficción y fantasía española. convoca el premio domingo santos, el más importante del género en españa. fantasia ciencia-ficcion barcelona independiente varios autores españoles de cf y fantasía" onclick="verDetalle('espiral')">
+<div class="dir-item-top">
+<div class="dir-name">Espiral Ciencia Ficción</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-gold">🏆 Premio propio</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial especializada exclusivamente en ciencia ficción y fantasía española. Convoca el Premio Domingo Santos, el más importante del género en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">fantasia</span><span class="tag">ciencia-ficcion</span>
+<span class="tag">Barcelona</span>
+<span class="tag">2001</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="hidra" data-generos="fantasia,juvenil,romance" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="hidra editorial independiente especializada en fantasía épica, fantasía urbana y romance paranormal. muy activa en la comunidad lectora digital y booktok. fantasia juvenil romance madrid independiente varios autores de fantasía juvenil y romance" onclick="verDetalle('hidra')">
+<div class="dir-item-top">
+<div class="dir-name">Hidra</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada en fantasía épica, fantasía urbana y romance paranormal. Muy activa en la comunidad lectora digital y BookTok.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">fantasia</span><span class="tag">juvenil</span><span class="tag">romance</span>
+<span class="tag">Madrid</span>
+<span class="tag">2013</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="destino-ciencia" data-generos="ensayo,historia,ciencia" data-sinagente="true" data-premio="false" data-tipo="grande" data-noveles="false" data-search="crítica sello de planeta especializado en historia, ciencia y humanidades académicas. referente en divulgación histórica de calidad en españa. ensayo historia ciencia barcelona grande eric hobsbawm, felipe fernández-armesto, jared diamond" onclick="verDetalle('destino-ciencia')">
+<div class="dir-item-top">
+<div class="dir-name">Crítica</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span></div>
+</div>
+<div class="dir-desc">Sello de Planeta especializado en historia, ciencia y humanidades académicas. Referente en divulgación histórica de calidad en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">historia</span><span class="tag">ciencia</span>
+<span class="tag">Barcelona</span>
+<span class="tag">1970</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="tres-hermanas" data-generos="narrativa,feminismo" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="true" data-search="tres hermanas editorial independiente madrileña nacida en 2018, especializada en voces femeninas, feminismo y literaturas disidentes. de las editoriales más activas y comprometidas. narrativa feminismo madrid independiente varias autoras contemporáneas" onclick="verDetalle('tres-hermanas')">
+<div class="dir-item-top">
+<div class="dir-name">Tres Hermanas</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente madrileña nacida en 2018, especializada en voces femeninas, feminismo y literaturas disidentes. De las editoriales más activas y comprometidas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">feminismo</span>
+<span class="tag">Madrid</span>
+<span class="tag">2018</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="renacimiento" data-generos="poesia,narrativa,ensayo" data-sinagente="true" data-premio="true" data-tipo="independiente" data-noveles="true" data-search="renacimiento editorial sevillana independiente con larga trayectoria en poesía española e iberoamericana, narrativa y ensayo literario. convoca varios premios de poesía. poesia narrativa ensayo sevilla independiente varios poetas españoles e iberoamericanos" onclick="verDetalle('renacimiento')">
+<div class="dir-item-top">
+<div class="dir-name">Renacimiento</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-gold">🏆 Premio propio</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial sevillana independiente con larga trayectoria en poesía española e iberoamericana, narrativa y ensayo literario. Convoca varios premios de poesía.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">poesia</span><span class="tag">narrativa</span><span class="tag">ensayo</span>
+<span class="tag">Sevilla</span>
+<span class="tag">1981</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="papaelespuma" data-generos="narrativa,cuento" data-sinagente="true" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="páginas de espuma editorial independiente especializada exclusivamente en cuento literario. una de las más reconocidas del mundo en el género del relato breve en español. narrativa cuento madrid independiente julio cortázar, abelardo castillo, cristina fernández cubas" onclick="verDetalle('papaelespuma')">
+<div class="dir-item-top">
+<div class="dir-name">Páginas de Espuma</div>
+<div class="dir-badges"><span class="badge badge-green">Sin agente</span><span class="badge badge-blue">Independiente</span></div>
+</div>
+<div class="dir-desc">Editorial independiente especializada exclusivamente en cuento literario. Una de las más reconocidas del mundo en el género del relato breve en español.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">cuento</span>
+<span class="tag">Madrid</span>
+<span class="tag">1999</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+</div>
+<div id="no-results" style="display:none;padding:2rem;text-align:center;color:var(--muted);border:1px solid var(--border);background:white">No se encontraron editoriales con esos criterios</div>
       </div>
 
       <!-- DETALLE -->
@@ -730,53 +1560,24 @@ function toggleEspecial(tipo, btn) {
 }
 
 function filtrar() {
-  const texto = document.getElementById('search-edit').value.toLowerCase().trim();
-  const lista = EDITORIALES.filter(e => {
-    if (filtros.genero !== 'todos' && !e.generos.includes(filtros.genero)) return false;
-    if (filtros.sinagente && !e.sinAgente) return false;
-    if (filtros.premio && !e.premio) return false;
-    if (filtros.independiente && e.tipo !== 'independiente') return false;
-    if (filtros.noveles && !e.noveles) return false;
-    if (texto) {
-      const haystack = [e.nombre, e.desc, ...e.generos, e.ciudad, e.tipo, e.autores||''].join(' ').toLowerCase();
-      if (!haystack.includes(texto)) return false;
-    }
-    return true;
-  });
-  renderLista(lista);
-}
-
-function renderLista(lista) {
-  const el = document.getElementById('editoriales-list');
-  document.getElementById('results-count').textContent = `Mostrando ${lista.length} editorial${lista.length !== 1 ? 'es' : ''}`;
-  if (!lista.length) {
-    el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);border:1px solid var(--border);background:white">No se encontraron editoriales con esos criterios</div>';
-    return;
-  }
-  el.innerHTML = lista.map(e => {
-    const badges = [];
-    if (e.sinAgente === true) badges.push('<span class="badge badge-green">Sin agente</span>');
-    else if (e.sinAgente === 'premio') badges.push('<span class="badge badge-gold">🏆 Vía premio</span>');
-    else if (e.sinAgente === false) badges.push('<span class="badge badge-red">Solo agente</span>');
-    if (e.premio) badges.push('<span class="badge badge-gold">🏆 Premio propio</span>');
-    if (e.tipo === 'independiente') badges.push('<span class="badge badge-blue">Independiente</span>');
-    return `
-    <div class="dir-item" onclick="verDetalle('${e.id}')">
-      <div class="dir-item-top">
-        <div class="dir-name">${e.nombre}</div>
-        <div class="dir-badges">${badges.join('')}</div>
-      </div>
-      <div class="dir-desc">${e.desc}</div>
-      <div class="dir-footer">
-        <div class="dir-tags">
-          ${e.generos.slice(0,3).map(g => `<span class="tag">${g}</span>`).join('')}
-          <span class="tag">${e.ciudad}</span>
-          <span class="tag">${e.fundada}</span>
-        </div>
-        <span class="dir-link">Ver más →</span>
-      </div>
-    </div>`;
-  }).join('');
+const texto = document.getElementById('search-edit').value.toLowerCase().trim();
+const items = document.querySelectorAll('#editoriales-list .dir-item');
+let visibles = 0;
+items.forEach(item => {
+let show = true;
+const generos = (item.dataset.generos || '').split(',');
+if (filtros.genero !== 'todos' && !generos.includes(filtros.genero)) show = false;
+if (filtros.sinagente && item.dataset.sinagente === 'false') show = false;
+if (filtros.premio && item.dataset.premio !== 'true') show = false;
+if (filtros.independiente && item.dataset.tipo !== 'independiente') show = false;
+if (filtros.noveles && item.dataset.noveles !== 'true') show = false;
+if (texto && !item.dataset.search.includes(texto)) show = false;
+item.style.display = show ? '' : 'none';
+if (show) visibles++;
+});
+document.getElementById('results-count').textContent = `Mostrando ${visibles} editorial${visibles !== 1 ? 'es' : ''}`;
+const noResults = document.getElementById('no-results');
+if (noResults) noResults.style.display = visibles ? 'none' : 'block';
 }
 
 function verDetalle(id) {
@@ -835,7 +1636,6 @@ function calcStats() {
 }
 
 calcStats();
-renderLista(EDITORIALES);
 
 // Menú hamburguesa
 (function(){
