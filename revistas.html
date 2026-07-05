@@ -30,6 +30,8 @@ header{border-bottom:2px solid var(--ink)}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
 .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
 .section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.dir-intro{font-size:14px;line-height:1.75;color:#3a3a38;margin-bottom:1.5rem}
+.dir-intro a{color:var(--accent);text-decoration:underline}
 .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
 .stat{display:flex;align-items:baseline;gap:6px}
 .stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
@@ -119,7 +121,8 @@ footer a:hover{color:var(--ink)}
       <div class="list-view" id="list-view">
         <h1 class="section-title">Revistas literarias en España</h1>
         <div class="section-sub">Publicaciones donde puedes enviar tu obra · Crítica, narrativa, poesía y ensayo · 2026</div>
-        <div class="stats-bar">
+        <p class="dir-intro">Este directorio reúne 22 revistas literarias españolas que publican crítica, narrativa, poesía y ensayo, indicando en cada ficha si aceptan colaboraciones externas de autores no habituales. Verás desde publicaciones centenarias como Revista de Occidente, fundada por Ortega y Gasset en 1923, hasta proyectos digitales más recientes como Zenda o Jot Down, junto con revistas especializadas en poesía, crítica académica o literatura de un territorio concreto. Cada tarjeta muestra el tipo de contenido que publica, la periodicidad y una etiqueta verde o roja que indica de un vistazo si acepta o no colaboraciones de fuera de su equipo habitual. Usa los filtros superiores para ver solo crítica, narrativa o poesía, o el filtro "Acepta colaboraciones" para centrarte en las que sí abren sus páginas a nuevos autores. El buscador te permite localizar una revista por nombre o género. Al pulsar sobre una tarjeta accedes a la ficha completa con la dirección de envío recomendada y una nota orientativa sobre el perfil de colaborador que buscan. Antes de enviar un relato o un poema conviene trabajarlo bien: en <a href="articulos/como-escribir-relato-corto-concurso.html">cómo escribir un relato corto para un concurso literario</a> explicamos estructura, extensión y errores frecuentes que también aplican a las colaboraciones en revistas, y en <a href="articulos/carta-presentacion-escritor-ejemplos.html">carta de presentación para editorial o agente</a> encontrarás un modelo de texto que puedes adaptar al enviar tu propuesta a cualquier redacción.</p>
+<div class="stats-bar">
           <div class="stat"><span class="stat-num">22</span><span class="stat-label">Revistas</span></div>
           <div class="stat"><span class="stat-num">14</span><span class="stat-label">Aceptan colaboraciones</span></div>
         </div>
@@ -133,7 +136,251 @@ footer a:hover{color:var(--ink)}
           <button class="filter-btn" onclick="setFiltro('poesia',this)">Poesía</button>
           <button class="filter-btn" onclick="setFiltro('acepta',this)">Acepta colaboraciones</button>
         </div>
-        <div class="dir-grid" id="revistas-list"></div>
+        <div class="dir-grid" id="revistas-list">
+<div class="dir-item" data-id="quimera" data-tipo="critica,narrativa,poesia" data-acepta="true" data-search="quimera la revista literaria española de referencia. publica crítica, narrativa breve, poesía y entrevistas con autores. tiene más de 40 años de historia ininterrumpida. critica narrativa poesia barcelona" onclick="verDetalle('quimera')">
+<div class="dir-name">Quimera</div>
+<div class="dir-desc">La revista literaria española de referencia. Publica crítica, narrativa breve, poesía y entrevistas con autores. Tiene más de 40 años de historia ininterrumpida.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">narrativa</span><span class="tag">poesia</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="zenda" data-tipo="critica,narrativa,entrevistas" data-acepta="true" data-search="zenda revista literaria digital fundada por arturo pérez-reverte. combina crítica, relatos, entrevistas y artículos de opinión. gran audiencia digital. critica narrativa entrevistas madrid" onclick="verDetalle('zenda')">
+<div class="dir-name">Zenda</div>
+<div class="dir-desc">Revista literaria digital fundada por Arturo Pérez-Reverte. Combina crítica, relatos, entrevistas y artículos de opinión. Gran audiencia digital.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">narrativa</span><span class="tag">entrevistas</span>
+<span class="tag">Diaria (digital)</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="el-cultural" data-tipo="critica,ensayo" data-acepta="false" data-search="el cultural suplemento cultural del diario el mundo. la publicación de crítica literaria más influyente de españa. sus reseñas tienen gran impacto en ventas. critica ensayo madrid" onclick="verDetalle('el-cultural')">
+<div class="dir-name">El Cultural</div>
+<div class="dir-desc">Suplemento cultural del diario El Mundo. La publicación de crítica literaria más influyente de España. Sus reseñas tienen gran impacto en ventas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">ensayo</span>
+<span class="tag">Semanal</span>
+</div>
+<span class="acepta-badge acepta-no">No acepta</span>
+</div>
+</div>
+<div class="dir-item" data-id="clarin" data-tipo="critica,narrativa,poesia" data-acepta="true" data-search="clarín. revista de nueva literatura revista bimestral asturiana de referencia en nueva literatura española. publica crítica, narrativa y poesía inédita. muy valorada en el circuito literario independiente. critica narrativa poesia oviedo" onclick="verDetalle('clarin')">
+<div class="dir-name">Clarín. Revista de Nueva Literatura</div>
+<div class="dir-desc">Revista bimestral asturiana de referencia en nueva literatura española. Publica crítica, narrativa y poesía inédita. Muy valorada en el circuito literario independiente.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">narrativa</span><span class="tag">poesia</span>
+<span class="tag">Bimestral</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="letras-libres" data-tipo="ensayo,critica,politica" data-acepta="true" data-search="letras libres revista de ensayo, política y cultura. la publicación intelectual de referencia en españa. publica ensayos sobre literatura, política, historia y sociedad. ensayo critica politica madrid" onclick="verDetalle('letras-libres')">
+<div class="dir-name">Letras Libres</div>
+<div class="dir-desc">Revista de ensayo, política y cultura. La publicación intelectual de referencia en España. Publica ensayos sobre literatura, política, historia y sociedad.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">critica</span><span class="tag">politica</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="cuadernos-hispanoamericanos" data-tipo="critica,ensayo,poesia" data-acepta="true" data-search="cuadernos hispanoamericanos publicación del ministerio de cultura de españa. una de las revistas literarias más longevas del mundo hispano. publica ensayo, crítica y poesía. critica ensayo poesia madrid" onclick="verDetalle('cuadernos-hispanoamericanos')">
+<div class="dir-name">Cuadernos Hispanoamericanos</div>
+<div class="dir-desc">Publicación del Ministerio de Cultura de España. Una de las revistas literarias más longevas del mundo hispano. Publica ensayo, crítica y poesía.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">ensayo</span><span class="tag">poesia</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="babelia" data-tipo="critica" data-acepta="false" data-search="babelia suplemento literario del diario el país. la publicación de crítica con mayor circulación de españa. sus reseñas influyen enormemente en el mercado editorial. critica madrid" onclick="verDetalle('babelia')">
+<div class="dir-name">Babelia</div>
+<div class="dir-desc">Suplemento literario del diario El País. La publicación de crítica con mayor circulación de España. Sus reseñas influyen enormemente en el mercado editorial.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span>
+<span class="tag">Semanal</span>
+</div>
+<span class="acepta-badge acepta-no">No acepta</span>
+</div>
+</div>
+<div class="dir-item" data-id="insula" data-tipo="critica,ensayo" data-acepta="true" data-search="ínsula una de las revistas literarias más antiguas de españa. especializada en crítica literaria, estudios literarios y ensayo académico sobre literatura española e hispanoamericana. critica ensayo madrid" onclick="verDetalle('insula')">
+<div class="dir-name">Ínsula</div>
+<div class="dir-desc">Una de las revistas literarias más antiguas de España. Especializada en crítica literaria, estudios literarios y ensayo académico sobre literatura española e hispanoamericana.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">ensayo</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="jot-down" data-tipo="critica,cultura,entrevistas" data-acepta="true" data-search="jot down revista cultural de largo aliento. publica artículos extensos, entrevistas en profundidad y reportajes culturales. gran audiencia digital y versión en papel. critica cultura entrevistas madrid" onclick="verDetalle('jot-down')">
+<div class="dir-name">Jot Down</div>
+<div class="dir-desc">Revista cultural de largo aliento. Publica artículos extensos, entrevistas en profundidad y reportajes culturales. Gran audiencia digital y versión en papel.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">cultura</span><span class="tag">entrevistas</span>
+<span class="tag">Trimestral en papel, diaria en digital</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="nayagua" data-tipo="poesia" data-acepta="true" data-search="nayagua revista especializada exclusivamente en poesía. publica poemas inéditos, crítica poética y entrevistas con poetas. referente en el mundo de la poesía española actual. poesia madrid" onclick="verDetalle('nayagua')">
+<div class="dir-name">Nayagua</div>
+<div class="dir-desc">Revista especializada exclusivamente en poesía. Publica poemas inéditos, crítica poética y entrevistas con poetas. Referente en el mundo de la poesía española actual.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">poesia</span>
+<span class="tag">Semestral</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="turia" data-tipo="critica,narrativa,poesia" data-acepta="true" data-search="turia revista literaria aragonesa con proyección nacional. publica crítica, narrativa, poesía y ensayo. muy valorada en el circuito literario español por su rigor y apertura. critica narrativa poesia teruel" onclick="verDetalle('turia')">
+<div class="dir-name">Turia</div>
+<div class="dir-desc">Revista literaria aragonesa con proyección nacional. Publica crítica, narrativa, poesía y ensayo. Muy valorada en el circuito literario español por su rigor y apertura.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">narrativa</span><span class="tag">poesia</span>
+<span class="tag">Cuatrimestral</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="sibila" data-tipo="poesia,musica" data-acepta="true" data-search="sibila revista de poesía y creación artística. relaciona la poesía con la música, las artes plásticas y el pensamiento. una publicación singular en el panorama español. poesia musica sevilla" onclick="verDetalle('sibila')">
+<div class="dir-name">Sibila</div>
+<div class="dir-desc">Revista de poesía y creación artística. Relaciona la poesía con la música, las artes plásticas y el pensamiento. Una publicación singular en el panorama español.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">poesia</span><span class="tag">musica</span>
+<span class="tag">Trimestral</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="campo-de-agramante" data-tipo="critica,narrativa,poesia" data-acepta="true" data-search="campo de agramante revista de literatura del sur de españa. publica crítica, poesía y narrativa breve con especial atención a las voces andaluzas y mediterráneas. critica narrativa poesia jerez de la frontera" onclick="verDetalle('campo-de-agramante')">
+<div class="dir-name">Campo de Agramante</div>
+<div class="dir-desc">Revista de literatura del sur de España. Publica crítica, poesía y narrativa breve con especial atención a las voces andaluzas y mediterráneas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">narrativa</span><span class="tag">poesia</span>
+<span class="tag">Semestral</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="ano-cero" data-tipo="ciencia,misterio,paranormal" data-acepta="false" data-search="año cero revista de divulgación sobre ciencia, misterio y fenómenos paranormales. no es estrictamente literaria pero publica narrativa especulativa y ensayo divulgativo. ciencia misterio paranormal madrid" onclick="verDetalle('ano-cero')">
+<div class="dir-name">Año Cero</div>
+<div class="dir-desc">Revista de divulgación sobre ciencia, misterio y fenómenos paranormales. No es estrictamente literaria pero publica narrativa especulativa y ensayo divulgativo.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ciencia</span><span class="tag">misterio</span><span class="tag">paranormal</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-no">No acepta</span>
+</div>
+</div>
+<div class="dir-item" data-id="ellos-y-nosotros" data-tipo="narrativa,poesia,ilustracion" data-acepta="true" data-search="ellos y nosotros revista literaria vasca con proyección nacional. publica narrativa, poesía e ilustración. bilingüe español-euskera. muy activa en el circuito cultural vasco. narrativa poesia ilustracion bilbao" onclick="verDetalle('ellos-y-nosotros')">
+<div class="dir-name">Ellos y Nosotros</div>
+<div class="dir-desc">Revista literaria vasca con proyección nacional. Publica narrativa, poesía e ilustración. Bilingüe español-euskera. Muy activa en el circuito cultural vasco.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span><span class="tag">ilustracion</span>
+<span class="tag">Trimestral</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="archiletras" data-tipo="critica,lengua,ensayo" data-acepta="true" data-search="archiletras revista digital sobre la lengua española y la literatura. publica artículos sobre uso del español, crítica literaria y ensayo lingüístico. gran presencia en redes sociales. critica lengua ensayo madrid" onclick="verDetalle('archiletras')">
+<div class="dir-name">Archiletras</div>
+<div class="dir-desc">Revista digital sobre la lengua española y la literatura. Publica artículos sobre uso del español, crítica literaria y ensayo lingüístico. Gran presencia en redes sociales.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">lengua</span><span class="tag">ensayo</span>
+<span class="tag">Diaria (digital)</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="culturamas" data-tipo="critica,narrativa,cine" data-acepta="true" data-search="culturamas revista cultural digital con sección literaria importante. publica crítica de libros, entrevistas y artículos culturales. gran audiencia digital. critica narrativa cine madrid" onclick="verDetalle('culturamas')">
+<div class="dir-name">Culturamas</div>
+<div class="dir-desc">Revista cultural digital con sección literaria importante. Publica crítica de libros, entrevistas y artículos culturales. Gran audiencia digital.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">narrativa</span><span class="tag">cine</span>
+<span class="tag">Diaria (digital)</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="revista-de-libros" data-tipo="critica,ensayo" data-acepta="true" data-search="revista de libros publicación especializada en crítica de libros de ensayo, ciencias sociales y humanidades. referente para intelectuales y académicos. critica ensayo madrid" onclick="verDetalle('revista-de-libros')">
+<div class="dir-name">Revista de Libros</div>
+<div class="dir-desc">Publicación especializada en crítica de libros de ensayo, ciencias sociales y humanidades. Referente para intelectuales y académicos.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">ensayo</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="leer" data-tipo="critica" data-acepta="false" data-search="leer revista cultural mensual con amplia sección de crítica literaria. una de las publicaciones de divulgación cultural con mayor trayectoria en españa. critica madrid" onclick="verDetalle('leer')">
+<div class="dir-name">Leer</div>
+<div class="dir-desc">Revista cultural mensual con amplia sección de crítica literaria. Una de las publicaciones de divulgación cultural con mayor trayectoria en España.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-no">No acepta</span>
+</div>
+</div>
+<div class="dir-item" data-id="mercurio" data-tipo="critica,entrevistas" data-acepta="false" data-search="mercurio revista de la fundación josé manuel lara. publica crítica literaria, entrevistas y reportajes sobre el mundo del libro. distribución gratuita en librerías. critica entrevistas sevilla" onclick="verDetalle('mercurio')">
+<div class="dir-name">Mercurio</div>
+<div class="dir-desc">Revista de la Fundación José Manuel Lara. Publica crítica literaria, entrevistas y reportajes sobre el mundo del libro. Distribución gratuita en librerías.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">critica</span><span class="tag">entrevistas</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-no">No acepta</span>
+</div>
+</div>
+<div class="dir-item" data-id="hermano-lobo" data-tipo="narrativa,humor,satira" data-acepta="true" data-search="el hermano lobo revista literaria de humor y sátira. publica narrativa breve con componente humorístico, artículos satíricos y crítica literaria con tono desenfadado. narrativa humor satira madrid" onclick="verDetalle('hermano-lobo')">
+<div class="dir-name">El Hermano Lobo</div>
+<div class="dir-desc">Revista literaria de humor y sátira. Publica narrativa breve con componente humorístico, artículos satíricos y crítica literaria con tono desenfadado.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">humor</span><span class="tag">satira</span>
+<span class="tag">Semanal (digital)</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+<div class="dir-item" data-id="revista-occidente" data-tipo="ensayo,critica,filosofia" data-acepta="true" data-search="revista de occidente una de las publicaciones intelectuales más antiguas y prestigiosas de españa. fundada por ortega y gasset. publica ensayo filosófico, político y cultural de alto nivel. ensayo critica filosofia madrid" onclick="verDetalle('revista-occidente')">
+<div class="dir-name">Revista de Occidente</div>
+<div class="dir-desc">Una de las publicaciones intelectuales más antiguas y prestigiosas de España. Fundada por Ortega y Gasset. Publica ensayo filosófico, político y cultural de alto nivel.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">ensayo</span><span class="tag">critica</span><span class="tag">filosofia</span>
+<span class="tag">Mensual</span>
+</div>
+<span class="acepta-badge acepta-si">Acepta colaboraciones</span>
+</div>
+</div>
+</div>
+<div id="no-results" style="display:none;padding:2rem;text-align:center;color:var(--muted);border:1px solid var(--border);background:white">No se encontraron revistas con esos criterios</div>
       </div>
 
       <div class="detail-view" id="detail-view">
@@ -377,36 +624,21 @@ function setFiltro(f, btn) {
 }
 
 function filtrar() {
-  const texto = document.getElementById('search-rev').value.toLowerCase();
-  const lista = REVISTAS.filter(r => {
-    const matchFiltro = filtroActivo === 'todos'
-      || r.tipo.includes(filtroActivo)
-      || (filtroActivo === 'acepta' && r.acepta);
-    const matchTexto = !texto || r.nombre.toLowerCase().includes(texto) || r.desc.toLowerCase().includes(texto) || r.tipo.join(' ').includes(texto);
-    return matchFiltro && matchTexto;
-  });
-  renderLista(lista);
-}
-
-function renderLista(lista) {
-  const el = document.getElementById('revistas-list');
-  if (!lista.length) {
-    el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);border:1px solid var(--border);background:white">No se encontraron revistas con esos criterios</div>';
-    return;
-  }
-  el.innerHTML = lista.map(r => `
-    <div class="dir-item" onclick="verDetalle('${r.id}')">
-      <div class="dir-name">${r.nombre}</div>
-      <div class="dir-desc">${r.desc}</div>
-      <div class="dir-footer">
-        <div class="dir-tags">
-          ${r.tipo.map(t => `<span class="tag">${t}</span>`).join('')}
-          <span class="tag">${r.periodicidad}</span>
-        </div>
-        <span class="acepta-badge ${r.acepta ? 'acepta-si' : 'acepta-no'}">${r.acepta ? 'Acepta colaboraciones' : 'No acepta'}</span>
-      </div>
-    </div>
-  `).join('');
+const texto = document.getElementById('search-rev').value.toLowerCase().trim();
+const items = document.querySelectorAll('#revistas-list .dir-item');
+let visibles = 0;
+items.forEach(item => {
+const tipos = (item.dataset.tipo || '').split(',');
+const matchFiltro = filtroActivo === 'todos'
+|| tipos.includes(filtroActivo)
+|| (filtroActivo === 'acepta' && item.dataset.acepta === 'true');
+const matchTexto = !texto || item.dataset.search.includes(texto);
+const show = matchFiltro && matchTexto;
+item.style.display = show ? '' : 'none';
+if (show) visibles++;
+});
+const noResults = document.getElementById('no-results');
+if (noResults) noResults.style.display = visibles ? 'none' : 'block';
 }
 
 function verDetalle(id) {
@@ -453,7 +685,7 @@ function volverLista() {
   window.scrollTo(0,0);
 }
 
-renderLista(REVISTAS);
+
 </script>
 </body>
 </html>
