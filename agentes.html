@@ -41,6 +41,8 @@ header{border-bottom:2px solid var(--ink)}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
 .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
 .section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.dir-intro{font-size:14px;line-height:1.75;color:#3a3a38;margin-bottom:1.5rem}
+.dir-intro a{color:var(--accent);text-decoration:underline}
 .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
 .stat{display:flex;align-items:baseline;gap:6px}
 .stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
@@ -128,7 +130,8 @@ footer a:hover{color:var(--ink)}
       <div class="list-view" id="list-view">
         <h1 class="section-title">Agentes literarios en España</h1>
         <div class="section-sub">Directorio de agencias literarias · Información de contacto y especialidades · 2026</div>
-        <div class="stats-bar">
+        <p class="dir-intro">Este directorio recoge 20 agencias y agentes literarios activos en España, con su ciudad, año de fundación, especialidades y vía de contacto recomendada. Encontrarás desde agencias históricas como Carmen Balcells, que representó a Gabriel García Márquez y Mario Vargas Llosa, hasta agencias más jóvenes especializadas en géneros populares como el thriller, la fantasía o la novela romántica. Usa los botones de filtro para acotar por especialidad (narrativa, ensayo, infantil o proyección internacional) o escribe en el buscador el nombre de una agencia o un género concreto. Cada tarjeta resume la especialidad principal y la ciudad; al pulsar sobre ella se abre una ficha con la forma de enviar tu propuesta, los autores que representa y una nota orientativa sobre el perfil de autor que suele aceptar. Ten en cuenta que la mayoría de agencias reciben cientos de propuestas al mes y solo responden a las que encajan con su catálogo, así que reservar esta vía para manuscritos ya trabajados y bien presentados aumenta las posibilidades de respuesta. Si es la primera vez que buscas representación, el artículo <a href="articulos/agente-literario-espana.html">qué hace un agente literario en España</a> explica cómo funciona la relación entre autor y agencia, y en <a href="articulos/honorarios-agente-literario-espana.html">cuánto cobra un agente literario en España</a> detallamos los porcentajes habituales de comisión antes de firmar cualquier contrato.</p>
+<div class="stats-bar">
           <div class="stat"><span class="stat-num">20</span><span class="stat-label">Agencias</span></div>
           <div class="stat"><span class="stat-num">8</span><span class="stat-label">Géneros</span></div>
         </div>
@@ -142,7 +145,229 @@ footer a:hover{color:var(--ink)}
           <button class="filter-btn" onclick="setFiltro('infantil',this)">Infantil</button>
           <button class="filter-btn" onclick="setFiltro('internacional',this)">Internacional</button>
         </div>
-        <div class="dir-grid" id="agentes-list"></div>
+        <div class="dir-grid" id="agentes-list">
+<div class="dir-item" data-id="sandra-bruna" data-especialidades="narrativa,infantil,juvenil,internacional" data-search="sandra bruna agencia literaria una de las agencias literarias más importantes de españa. representa a autores de narrativa, literatura infantil y juvenil, y gestiona derechos internacionales en más de 40 países. narrativa infantil juvenil internacional barcelona" onclick="verDetalle('sandra-bruna')">
+<div class="dir-name">Sandra Bruna Agencia Literaria</div>
+<div class="dir-desc">Una de las agencias literarias más importantes de España. Representa a autores de narrativa, literatura infantil y juvenil, y gestiona derechos internacionales en más de 40 países.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span><span class="tag">juvenil</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="antonia-kerrigan" data-especialidades="narrativa,ensayo,internacional" data-search="antonia kerrigan literary agency agencia especializada en la venta de derechos internacionales de autores españoles y latinoamericanos. gran presencia en ferias internacionales como frankfurt y londres. narrativa ensayo internacional barcelona" onclick="verDetalle('antonia-kerrigan')">
+<div class="dir-name">Antonia Kerrigan Literary Agency</div>
+<div class="dir-desc">Agencia especializada en la venta de derechos internacionales de autores españoles y latinoamericanos. Gran presencia en ferias internacionales como Frankfurt y Londres.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="pontas" data-especialidades="narrativa,derechos audiovisuales,internacional" data-search="pontas agency agencia literaria y de derechos audiovisuales. especializada en convertir novelas en proyectos cinematográficos y televisivos. presencia internacional muy fuerte. narrativa derechos audiovisuales internacional barcelona" onclick="verDetalle('pontas')">
+<div class="dir-name">Pontas Agency</div>
+<div class="dir-desc">Agencia literaria y de derechos audiovisuales. Especializada en convertir novelas en proyectos cinematográficos y televisivos. Presencia internacional muy fuerte.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">derechos audiovisuales</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="mb-agencia" data-especialidades="narrativa,ensayo,no ficcion" data-search="mb agencia literaria agencia fundada por mònica baró. trabaja con autores españoles y extranjeros en narrativa literaria, ensayo y no ficción. reconocida por su atención personalizada. narrativa ensayo no ficcion barcelona" onclick="verDetalle('mb-agencia')">
+<div class="dir-name">MB Agencia Literaria</div>
+<div class="dir-desc">Agencia fundada por Mònica Baró. Trabaja con autores españoles y extranjeros en narrativa literaria, ensayo y no ficción. Reconocida por su atención personalizada.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">no ficcion</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="balcells" data-especialidades="narrativa,poesia,latinoamerica" data-search="agencia literaria carmen balcells la agencia literaria más legendaria de españa y américa latina. representó a garcía márquez, vargas llosa y los grandes del boom latinoamericano. continúa activa. narrativa poesia latinoamerica barcelona" onclick="verDetalle('balcells')">
+<div class="dir-name">Agencia Literaria Carmen Balcells</div>
+<div class="dir-desc">La agencia literaria más legendaria de España y América Latina. Representó a García Márquez, Vargas Llosa y los grandes del Boom latinoamericano. Continúa activa.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">poesia</span><span class="tag">latinoamerica</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="casanovas-lynch" data-especialidades="narrativa,ensayo,infantil,internacional" data-search="casanovas &amp; lynch agencia literaria con fuerte presencia internacional. trabaja tanto con autores españoles como con traducciones. especializada en derechos de traducción. narrativa ensayo infantil internacional barcelona" onclick="verDetalle('casanovas-lynch')">
+<div class="dir-name">Casanovas &amp; Lynch</div>
+<div class="dir-desc">Agencia literaria con fuerte presencia internacional. Trabaja tanto con autores españoles como con traducciones. Especializada en derechos de traducción.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">infantil</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="schavelzon" data-especialidades="narrativa,ensayo,latinoamerica" data-search="schavelzon graham agencia literaria agencia con fuerte presencia en el mercado latinoamericano y europeo. representa a autores de narrativa literaria y ensayo en ambos lados del atlántico. narrativa ensayo latinoamerica barcelona" onclick="verDetalle('schavelzon')">
+<div class="dir-name">Schavelzon Graham Agencia Literaria</div>
+<div class="dir-desc">Agencia con fuerte presencia en el mercado latinoamericano y europeo. Representa a autores de narrativa literaria y ensayo en ambos lados del Atlántico.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">latinoamerica</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="literarisk" data-especialidades="narrativa,thriller,genero" data-search="literarisk agencia madrileña especializada en narrativa de género: thriller, novela negra, ciencia ficción y fantasía. trabaja con autores españoles y traducciones. narrativa thriller genero madrid" onclick="verDetalle('literarisk')">
+<div class="dir-name">Literarisk</div>
+<div class="dir-desc">Agencia madrileña especializada en narrativa de género: thriller, novela negra, ciencia ficción y fantasía. Trabaja con autores españoles y traducciones.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">thriller</span><span class="tag">genero</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="dos-passos" data-especialidades="narrativa,ensayo,no ficcion" data-search="dos passos agencia literaria agencia madrileña que trabaja con narrativa literaria, ensayo y no ficción. atiende especialmente a autores emergentes con proyectos sólidos. narrativa ensayo no ficcion madrid" onclick="verDetalle('dos-passos')">
+<div class="dir-name">Dos Passos Agencia Literaria</div>
+<div class="dir-desc">Agencia madrileña que trabaja con narrativa literaria, ensayo y no ficción. Atiende especialmente a autores emergentes con proyectos sólidos.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">no ficcion</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="alexander-wald" data-especialidades="narrativa,infantil,internacional" data-search="alexander wald agencia literaria agencia con fuerte presencia en el mercado alemán y centroeuropeo. especializada en venta de derechos de traducción al alemán y otras lenguas europeas. narrativa infantil internacional barcelona" onclick="verDetalle('alexander-wald')">
+<div class="dir-name">Alexander Wald Agencia Literaria</div>
+<div class="dir-desc">Agencia con fuerte presencia en el mercado alemán y centroeuropeo. Especializada en venta de derechos de traducción al alemán y otras lenguas europeas.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="acer" data-especialidades="narrativa,ensayo,teatro" data-search="acer agencia literaria agencia histórica madrileña que trabaja con narrativa, ensayo y teatro. una de las más veteranas del mercado español. narrativa ensayo teatro madrid" onclick="verDetalle('acer')">
+<div class="dir-name">ACER Agencia Literaria</div>
+<div class="dir-desc">Agencia histórica madrileña que trabaja con narrativa, ensayo y teatro. Una de las más veteranas del mercado español.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">teatro</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="indent" data-especialidades="narrativa,no ficcion,internacional" data-search="indent literary agency agencia joven pero muy activa en el mercado internacional. especializada en no ficción narrativa y narrativa literaria con proyección global. narrativa no ficcion internacional barcelona" onclick="verDetalle('indent')">
+<div class="dir-name">Indent Literary Agency</div>
+<div class="dir-desc">Agencia joven pero muy activa en el mercado internacional. Especializada en no ficción narrativa y narrativa literaria con proyección global.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">no ficcion</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="uwe-luserke" data-especialidades="narrativa,infantil,aleman" data-search="uwe luserke agencia literaria agencia especializada en derechos de traducción entre el mercado hispanohablante y el alemán. puente cultural entre españa y los países de habla alemana. narrativa infantil aleman barcelona" onclick="verDetalle('uwe-luserke')">
+<div class="dir-name">Uwe Luserke Agencia Literaria</div>
+<div class="dir-desc">Agencia especializada en derechos de traducción entre el mercado hispanohablante y el alemán. Puente cultural entre España y los países de habla alemana.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span><span class="tag">aleman</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="carmen-rio" data-especialidades="narrativa,romance,juvenil" data-search="carmen río agencia literaria agencia especializada en narrativa romántica, juvenil y literatura popular. trabaja activamente con plataformas digitales y el mercado de autoedición profesional. narrativa romance juvenil madrid" onclick="verDetalle('carmen-rio')">
+<div class="dir-name">Carmen Río Agencia Literaria</div>
+<div class="dir-desc">Agencia especializada en narrativa romántica, juvenil y literatura popular. Trabaja activamente con plataformas digitales y el mercado de autoedición profesional.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">romance</span><span class="tag">juvenil</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="literary-management" data-especialidades="narrativa,ensayo,no ficcion,internacional" data-search="literary management spain agencia con enfoque internacional. trabaja con autores españoles que buscan proyección global y con autores extranjeros que quieren entrar en el mercado español. narrativa ensayo no ficcion internacional madrid" onclick="verDetalle('literary-management')">
+<div class="dir-name">Literary Management Spain</div>
+<div class="dir-desc">Agencia con enfoque internacional. Trabaja con autores españoles que buscan proyección global y con autores extranjeros que quieren entrar en el mercado español.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">no ficcion</span><span class="tag">internacional</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="editabundo" data-especialidades="narrativa,infantil,no ficcion" data-search="editabundo agencia joven y dinámica que trabaja con autores nuevos y consolidados. especializada en narrativa para adultos, literatura infantojuvenil y no ficción. narrativa infantil no ficcion madrid" onclick="verDetalle('editabundo')">
+<div class="dir-name">Editabundo</div>
+<div class="dir-desc">Agencia joven y dinámica que trabaja con autores nuevos y consolidados. Especializada en narrativa para adultos, literatura infantojuvenil y no ficción.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">infantil</span><span class="tag">no ficcion</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="agencia-riff" data-especialidades="narrativa,ensayo,latinoamerica,internacional" data-search="agencia riff agencia con larga trayectoria en el mercado editorial español e internacional. trabaja con autores consolidados de narrativa y ensayo en españa y latinoamérica. narrativa ensayo latinoamerica internacional barcelona" onclick="verDetalle('agencia-riff')">
+<div class="dir-name">Agencia Riff</div>
+<div class="dir-desc">Agencia con larga trayectoria en el mercado editorial español e internacional. Trabaja con autores consolidados de narrativa y ensayo en España y Latinoamérica.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">latinoamerica</span><span class="tag">internacional</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="nueva-narrativa" data-especialidades="narrativa,thriller,fantasia,juvenil" data-search="nueva narrativa agencia especializada en géneros populares: thriller, fantasía, ciencia ficción y juvenil. muy activa en redes sociales y en la comunidad lectora digital. narrativa thriller fantasia juvenil madrid" onclick="verDetalle('nueva-narrativa')">
+<div class="dir-name">Nueva Narrativa</div>
+<div class="dir-desc">Agencia especializada en géneros populares: thriller, fantasía, ciencia ficción y juvenil. Muy activa en redes sociales y en la comunidad lectora digital.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">thriller</span><span class="tag">fantasia</span><span class="tag">juvenil</span>
+<span class="tag">Madrid</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="zarauz" data-especialidades="narrativa,euskera,bilingue" data-search="zarauz literary agency agencia especializada en literatura vasca y autores bilingües español-euskera. referente en la representación de la literatura del país vasco a nivel nacional e internacional. narrativa euskera bilingue san sebastián" onclick="verDetalle('zarauz')">
+<div class="dir-name">Zarauz Literary Agency</div>
+<div class="dir-desc">Agencia especializada en literatura vasca y autores bilingües español-euskera. Referente en la representación de la literatura del País Vasco a nivel nacional e internacional.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">euskera</span><span class="tag">bilingue</span>
+<span class="tag">San Sebastián</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+<div class="dir-item" data-id="piquer-ruiz" data-especialidades="narrativa,ensayo,ilustracion" data-search="piquer &amp; ruiz agencia literaria agencia con especial atención a la literatura ilustrada, álbum infantil y narrativa gráfica. también trabaja narrativa y ensayo para adultos. narrativa ensayo ilustracion barcelona" onclick="verDetalle('piquer-ruiz')">
+<div class="dir-name">Piquer &amp; Ruiz Agencia Literaria</div>
+<div class="dir-desc">Agencia con especial atención a la literatura ilustrada, álbum infantil y narrativa gráfica. También trabaja narrativa y ensayo para adultos.</div>
+<div class="dir-footer">
+<div class="dir-tags">
+<span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">ilustracion</span>
+<span class="tag">Barcelona</span>
+</div>
+<span class="dir-link">Ver más →</span>
+</div>
+</div>
+</div>
+<div id="no-results" style="display:none;padding:2rem;text-align:center;color:var(--muted);border:1px solid var(--border);background:white">No se encontraron agencias con esos criterios</div>
       </div>
 
       <div class="detail-view" id="detail-view">
@@ -368,34 +593,19 @@ function setFiltro(f, btn) {
 }
 
 function filtrar() {
-  const texto = document.getElementById('search-agentes').value.toLowerCase();
-  const lista = AGENTES.filter(a => {
-    const matchFiltro = filtroActivo === 'todos' || a.especialidades.includes(filtroActivo);
-    const matchTexto = !texto || a.nombre.toLowerCase().includes(texto) || a.desc.toLowerCase().includes(texto) || a.especialidades.join(' ').includes(texto);
-    return matchFiltro && matchTexto;
-  });
-  renderLista(lista);
-}
-
-function renderLista(lista) {
-  const el = document.getElementById('agentes-list');
-  if (!lista.length) {
-    el.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);border:1px solid var(--border);background:white">No se encontraron agencias con esos criterios</div>';
-    return;
-  }
-  el.innerHTML = lista.map(a => `
-    <div class="dir-item" onclick="verDetalle('${a.id}')">
-      <div class="dir-name">${a.nombre}</div>
-      <div class="dir-desc">${a.desc}</div>
-      <div class="dir-footer">
-        <div class="dir-tags">
-          ${a.especialidades.map(e => `<span class="tag">${e}</span>`).join('')}
-          <span class="tag">${a.ciudad}</span>
-        </div>
-        <span class="dir-link">Ver más →</span>
-      </div>
-    </div>
-  `).join('');
+const texto = document.getElementById('search-agentes').value.toLowerCase().trim();
+const items = document.querySelectorAll('#agentes-list .dir-item');
+let visibles = 0;
+items.forEach(item => {
+const especialidades = (item.dataset.especialidades || '').split(',');
+const matchFiltro = filtroActivo === 'todos' || especialidades.includes(filtroActivo);
+const matchTexto = !texto || item.dataset.search.includes(texto);
+const show = matchFiltro && matchTexto;
+item.style.display = show ? '' : 'none';
+if (show) visibles++;
+});
+const noResults = document.getElementById('no-results');
+if (noResults) noResults.style.display = visibles ? 'none' : 'block';
 }
 
 function verDetalle(id) {
@@ -444,7 +654,7 @@ function volverLista() {
   window.scrollTo(0,0);
 }
 
-renderLista(AGENTES);
+
 </script>
 </body>
 </html>
