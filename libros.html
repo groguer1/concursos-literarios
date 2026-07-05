@@ -51,6 +51,8 @@ header{border-bottom:2px solid var(--ink);position:relative}
 }
 .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
 .section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.dir-intro{font-size:14px;line-height:1.7;color:var(--ink);margin-bottom:1.25rem;max-width:900px}
+.dir-intro a{color:var(--accent);text-decoration:underline}
 .filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem}
 .filter-btn{border:1px solid var(--border);background:transparent;padding:4px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all .15s}
 .filter-btn:hover{border-color:var(--ink);color:var(--ink)}
@@ -117,7 +119,9 @@ footer a:hover{color:var(--ink)}
       <div class="section-title">Últimas novedades editoriales</div>
       <div class="section-sub">Libros recién publicados en España · Todos los géneros · Actualizado semanalmente</div>
 
-      <div class="stats-bar">
+      <p class="dir-intro">Este directorio reúne las últimas novedades editoriales publicadas en España, con una lista que se actualiza automáticamente a partir de los lanzamientos más recientes del mercado del libro. Para cada título encontrarás autor, editorial, género, fecha aproximada de publicación y una breve sinopsis, junto con la portada cuando está disponible, de modo que puedas hacerte una idea rápida de la obra antes de buscarla en librerías o plataformas online. Puedes filtrar por género usando los botones superiores (narrativa, poesía, ensayo, infantil o teatro) o escribir directamente en el buscador el título, el autor o la editorial que te interesa. Cada ficha incluye además un botón para buscar el libro en Google y localizar dónde comprarlo. Este listado resulta útil tanto para lectores que quieren estar al día de las novedades como para escritores que quieren observar qué géneros y editoriales tienen más actividad en cada momento. Si estás valorando publicar tu propio libro, puede interesarte comparar antes las diferencias entre <a href="articulos/autopublicacion-vs-editorial-tradicional-espana.html">autopublicación y editorial tradicional</a>, o revisar <a href="articulos/cuanto-cuesta-autopublicar-libro-espana.html">cuánto cuesta autopublicar un libro en España</a> para calcular tu presupuesto con cifras reales antes de dar el paso.</p>
+
+<div class="stats-bar">
         <div class="stat"><span class="stat-num" id="total-libros">0</span><span class="stat-label">Novedades</span></div>
         <div class="stat"><span class="stat-num" id="total-editoriales">0</span><span class="stat-label">Editoriales</span></div>
       </div>
@@ -135,7 +139,329 @@ footer a:hover{color:var(--ink)}
         <button class="filter-btn" onclick="setGenero('teatro',this)">Teatro</button>
       </div>
 
-      <div class="books-grid" id="books-grid"></div>
+      <div class="books-grid" id="books-grid">
+<div class="book-card" data-genero="otro" data-search="murdoku: 80 acertijos de lógica y asesinatos manuel garand ediciones temas de hoy">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9791387/979138786938.gif" alt="Murdoku: 80 acertijos de lógica y asesinatos" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Murdoku: 80 acertijos de lógica y asesinatos</div>
+<div style="font-size:.7rem">Manuel Garand</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Murdoku: 80 acertijos de lógica y asesinatos</div>
+<div class="book-author">Manuel Garand</div>
+<div class="book-editorial">Ediciones Temas de Hoy · 06/2026</div>
+<div class="book-genre">Otro</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Murdoku: 80 acertijos de lógica y asesinatos','Manuel Garand')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="comerás flores lucía solla sobral libros del asteroide s.l.u.">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788410/978841017859.gif" alt="Comerás flores" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Comerás flores</div>
+<div style="font-size:.7rem">Lucía Solla Sobral</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Comerás flores</div>
+<div class="book-author">Lucía Solla Sobral</div>
+<div class="book-editorial">Libros del Asteroide S.L.U. · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Comerás flores','Lucía Solla Sobral')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="las gratitudes delphine de vigan / pablo martín sánchez editorial anagrama s.a.u.">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788433/978843398083.gif" alt="Las gratitudes" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Las gratitudes</div>
+<div style="font-size:.7rem">Delphine de Vigan / Pablo Martín Sánchez</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Las gratitudes</div>
+<div class="book-author">Delphine de Vigan / Pablo Martín Sánchez</div>
+<div class="book-editorial">Editorial Anagrama S.A.U. · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Las gratitudes','Delphine de Vigan / Pablo Martín Sánchez')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="la cámara de las maravillas maría oruña plaza &amp; janes">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788401/978840103863.gif" alt="La Cámara de las Maravillas" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">La Cámara de las Maravillas</div>
+<div style="font-size:.7rem">María Oruña</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">La Cámara de las Maravillas</div>
+<div class="book-author">María Oruña</div>
+<div class="book-editorial">PLAZA &amp; JANES · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('La Cámara de las Maravillas','María Oruña')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="otro" data-search="cuaderno blackie books. vol. 15 cristobal fortunez blackie books">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9791387/979138774836.gif" alt="Cuaderno Blackie Books. Vol. 15" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Cuaderno Blackie Books. Vol. 15</div>
+<div style="font-size:.7rem">Cristobal Fortunez</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Cuaderno Blackie Books. Vol. 15</div>
+<div class="book-author">Cristobal Fortunez</div>
+<div class="book-editorial">Blackie Books · 06/2026</div>
+<div class="book-genre">Otro</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Cuaderno Blackie Books. Vol. 15','Cristobal Fortunez')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="la intriga del funeral inconveniente eduardo mendoza seix barral">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788432/978843224974.gif" alt="La intriga del funeral inconveniente" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">La intriga del funeral inconveniente</div>
+<div style="font-size:.7rem">Eduardo Mendoza</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">La intriga del funeral inconveniente</div>
+<div class="book-author">Eduardo Mendoza</div>
+<div class="book-editorial">Seix Barral · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('La intriga del funeral inconveniente','Eduardo Mendoza')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="la península de las casas vacías david uclés siruela">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788419/978841942319.gif" alt="La península de las casas vacías" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">La península de las casas vacías</div>
+<div style="font-size:.7rem">David Uclés</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">La península de las casas vacías</div>
+<div class="book-author">David Uclés</div>
+<div class="book-editorial">Siruela · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('La península de las casas vacías','David Uclés')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="han cantado bingo lana corujo reservoir books">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788410/978841035201.gif" alt="Han cantado bingo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Han cantado bingo</div>
+<div style="font-size:.7rem">Lana Corujo</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Han cantado bingo</div>
+<div class="book-author">Lana Corujo</div>
+<div class="book-editorial">RESERVOIR BOOKS · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Han cantado bingo','Lana Corujo')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="otro" data-search="el viaje paco roca astiberri ediciones">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9791387/979138792726.gif" alt="El viaje" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">El viaje</div>
+<div style="font-size:.7rem">Paco Roca</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">El viaje</div>
+<div class="book-author">Paco Roca</div>
+<div class="book-editorial">ASTIBERRI EDICIONES · 06/2026</div>
+<div class="book-genre">Otro</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('El viaje','Paco Roca')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="principio, medio, fin valeria luiselli feltrinelli editores">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9791388/979138811100.gif" alt="Principio, medio, fin" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Principio, medio, fin</div>
+<div style="font-size:.7rem">Valeria Luiselli</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Principio, medio, fin</div>
+<div class="book-author">Valeria Luiselli</div>
+<div class="book-editorial">Feltrinelli Editores · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Principio, medio, fin','Valeria Luiselli')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="otro" data-search="persépolis marjane satrapi / carlos mayor ortega reservoir books">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788417/978841791014.gif" alt="Persépolis" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Persépolis</div>
+<div style="font-size:.7rem">Marjane Satrapi / Carlos Mayor Ortega</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Persépolis</div>
+<div class="book-author">Marjane Satrapi / Carlos Mayor Ortega</div>
+<div class="book-editorial">RESERVOIR BOOKS · 06/2026</div>
+<div class="book-genre">Otro</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Persépolis','Marjane Satrapi / Carlos Mayor Ortega')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="las cabras pilar asuero altamarea edición de libros sl">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788410/978841043532.gif" alt="Las cabras" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Las cabras</div>
+<div style="font-size:.7rem">Pilar Asuero</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Las cabras</div>
+<div class="book-author">Pilar Asuero</div>
+<div class="book-editorial">Altamarea Edición de Libros SL · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Las cabras','Pilar Asuero')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="dorayaki durian sukegawa / amalia sato chai editora">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788412/978841276362.gif" alt="Dorayaki" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Dorayaki</div>
+<div style="font-size:.7rem">Durian Sukegawa / Amalia Sato</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Dorayaki</div>
+<div class="book-author">Durian Sukegawa / Amalia Sato</div>
+<div class="book-editorial">Chai Editora · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Dorayaki','Durian Sukegawa / Amalia Sato')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="ríete de las bodas megan maxwell espasa">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788467/978846708264.gif" alt="Ríete de las bodas" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Ríete de las bodas</div>
+<div style="font-size:.7rem">Megan Maxwell</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Ríete de las bodas</div>
+<div class="book-author">Megan Maxwell</div>
+<div class="book-editorial">Espasa · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Ríete de las bodas','Megan Maxwell')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="yesteryear claire burke / mar garcía puig adn editorial grupo anaya">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9791387/979138759641.gif" alt="Yesteryear" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Yesteryear</div>
+<div style="font-size:.7rem">Claire Burke / Mar García Puig</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Yesteryear</div>
+<div class="book-author">Claire Burke / Mar García Puig</div>
+<div class="book-editorial">AdN Editorial Grupo Anaya · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Yesteryear','Claire Burke / Mar García Puig')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="ensayo" data-search="la respuesta juan luis arsuaga ediciones destino">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788423/978842336989.gif" alt="La respuesta" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">La respuesta</div>
+<div style="font-size:.7rem">Juan Luis Arsuaga</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">La respuesta</div>
+<div class="book-author">Juan Luis Arsuaga</div>
+<div class="book-editorial">Ediciones Destino · 06/2026</div>
+<div class="book-genre">Ensayo</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('La respuesta','Juan Luis Arsuaga')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="la víspera manuel jabois alfaguara">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788410/978841029988.gif" alt="La víspera" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">La víspera</div>
+<div style="font-size:.7rem">Manuel Jabois</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">La víspera</div>
+<div class="book-author">Manuel Jabois</div>
+<div class="book-editorial">ALFAGUARA · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('La víspera','Manuel Jabois')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="maite fernando aramburu tusquets editores s.a.">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788411/978841107748.gif" alt="Maite" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Maite</div>
+<div style="font-size:.7rem">Fernando Aramburu</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Maite</div>
+<div class="book-author">Fernando Aramburu</div>
+<div class="book-editorial">Tusquets Editores S.A. · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Maite','Fernando Aramburu')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="mentira juan gómez-jurado b">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788466/978846668308.gif" alt="Mentira" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Mentira</div>
+<div style="font-size:.7rem">Juan Gómez-Jurado</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Mentira</div>
+<div class="book-author">Juan Gómez-Jurado</div>
+<div class="book-editorial">B · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Mentira','Juan Gómez-Jurado')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="book-card" data-genero="narrativa" data-search="amiga mía raquel congosto blackie books">
+<img class="book-cover" src="https://static.cegal.es/imagenes/marcadas/9788410/978841032392.gif" alt="Amiga mía" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="book-cover-placeholder" style="display:none">
+<div>
+<div style="font-weight:700;margin-bottom:.5rem">Amiga mía</div>
+<div style="font-size:.7rem">Raquel Congosto</div>
+</div>
+</div>
+<div class="book-info">
+<div class="book-title">Amiga mía</div>
+<div class="book-author">Raquel Congosto</div>
+<div class="book-editorial">Blackie Books · 06/2026</div>
+<div class="book-genre">Narrativa</div>
+<button class="book-search-btn" onclick="buscarEnGoogle('Amiga mía','Raquel Congosto')">🔍 Buscar en Google</button>
+</div>
+</div>
+<div class="empty" id="no-results" style="display:none;grid-column:1/-1">No se encontraron libros con esos criterios</div>
+</div>
     </main>
 
   </div>
@@ -173,49 +499,29 @@ function buscarEnGoogle(titulo, autor) {
 }
 
 function filtrarLibros() {
-  const texto = document.getElementById('search-libros').value.toLowerCase();
-  const libros = LIBROS_BASE.filter(l => {
-    const matchGenero = generoActivo === 'todos' || l.genero.toLowerCase().includes(generoActivo);
-    const matchTexto = !texto || l.titulo.toLowerCase().includes(texto) || l.autor.toLowerCase().includes(texto) || l.editorial.toLowerCase().includes(texto);
-    return matchGenero && matchTexto;
-  });
-  renderLibros(libros);
+const texto = document.getElementById('search-libros').value.toLowerCase();
+const cards = document.querySelectorAll('#books-grid .book-card');
+let visibleCount = 0;
+cards.forEach(card => {
+const genero = card.dataset.genero || '';
+const search = card.dataset.search || '';
+const matchGenero = generoActivo === 'todos' || genero.includes(generoActivo);
+const matchTexto = !texto || search.includes(texto);
+const show = matchGenero && matchTexto;
+card.style.display = show ? '' : 'none';
+if (show) visibleCount++;
+});
+const noResults = document.getElementById('no-results');
+if (noResults) noResults.style.display = visibleCount ? 'none' : '';
 }
 
-function renderLibros(libros) {
-  const grid = document.getElementById('books-grid');
-  document.getElementById('total-libros').textContent = LIBROS_BASE.length;
-  const editoriales = [...new Set(LIBROS_BASE.map(l => l.editorial))];
-  document.getElementById('total-editoriales').textContent = editoriales.length;
-
-  if (!libros.length) {
-    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">No se encontraron libros con esos criterios</div>';
-    return;
-  }
-
-  grid.innerHTML = libros.map(l => `
-    <div class="book-card">
-      ${l.portada
-        ? `<img class="book-cover" src="${l.portada}" alt="${l.titulo}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-        : ''}
-      <div class="book-cover-placeholder" style="${l.portada ? 'display:none' : ''}">
-        <div>
-          <div style="font-weight:700;margin-bottom:.5rem">${l.titulo}</div>
-          <div style="font-size:.7rem">${l.autor}</div>
-        </div>
-      </div>
-      <div class="book-info">
-        <div class="book-title">${l.titulo}</div>
-        <div class="book-author">${l.autor}</div>
-        <div class="book-editorial">${l.editorial} · ${l.fecha}</div>
-        <div class="book-genre">${l.genero}</div>
-        <button class="book-search-btn" onclick="buscarEnGoogle('${l.titulo.replace(/'/g,"\\'")}','${l.autor.replace(/'/g,"\\'")}')">🔍 Buscar en Google</button>
-      </div>
-    </div>
-  `).join('');
+function calcStats() {
+document.getElementById('total-libros').textContent = LIBROS_BASE.length;
+const editoriales = [...new Set(LIBROS_BASE.map(l => l.editorial))];
+document.getElementById('total-editoriales').textContent = editoriales.length;
 }
 
-renderLibros(LIBROS_BASE);
+calcStats();
 
 // Menú hamburguesa
 (function(){
