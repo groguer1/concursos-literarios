@@ -116,12 +116,12 @@ const ARTICULOS = [
     url: 'articulos/guia-concursos-literarios-espana.html'
   },
   {
-    id: 'premios-literarios-espana-2026',
+    id: 'premios-literarios-dotacion-espana',
     cat: 'Concursos',
     titulo: 'Los grandes premios literarios de España en 2026: guía completa',
     excerpt: 'Premio Planeta, Herralde, Alfaguara, Nadal, Loewe y los Premios Nacionales: dotación, requisitos y qué tipo de obra busca cada jurado.',
     tiempo: '11 min',
-    url: 'articulos/premios-literarios-espana-2026.html'
+    url: 'articulos/premios-literarios-dotacion-espana.html'
   },
   {
     id: 'como-escribir-relato-corto-concurso',
