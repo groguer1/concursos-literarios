@@ -84,7 +84,7 @@ const ARTICULOS = [
     url: 'articulos/como-escribir-dialogo-novela.html'
   },
   {
-    id: 'como-escribir-sinopsis-editorial',
+    id: 'sinopsis-novela-editorial',
     cat: 'Publicación',
     titulo: 'Cómo escribir una sinopsis que conquiste a editores y agentes',
     excerpt: 'Guía completa para escribir la sinopsis de tu novela: estructura, los cinco elementos imprescindibles y los errores que la arruinan antes de que el agente pase a la segunda página.',
