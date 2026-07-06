@@ -89,7 +89,7 @@ const ARTICULOS = [
     titulo: 'Cómo escribir una sinopsis que conquiste a editores y agentes',
     excerpt: 'Guía completa para escribir la sinopsis de tu novela: estructura, los cinco elementos imprescindibles y los errores que la arruinan antes de que el agente pase a la segunda página.',
     tiempo: '12 min',
-    url: 'articulos/como-escribir-sinopsis-editorial.html'
+    url: 'articulos/sinopsis-novela-editorial.html'
   },
   {
     id: 'agente-literario-espana',
