@@ -412,6 +412,14 @@ url: 'articulos/seudonimo-concurso-literario.html'
       tiempo: '14 min',
       url: 'articulos/cuanto-cuesta-autopublicar-libro-espana.html'
   },
+  {
+    id: 'cuanto-cuesta-publicar-libro-espana',
+    cat: 'Publicación',
+    titulo: 'Cuánto cuesta publicar un libro en España: precios reales por cada vía en 2026',
+    excerpt: 'Comparativa de costes por vía: editorial tradicional (0 €), Amazon KDP, servicios profesionales y coedición, con tabla por partidas, qué es gratis y señales de coedición abusiva.',
+    tiempo: '12 min',
+    url: 'articulos/cuanto-cuesta-publicar-libro-espana.html'
+  },
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
