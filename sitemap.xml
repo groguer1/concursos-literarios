@@ -41,6 +41,32 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Herramientas -->
+  <url>
+    <loc>https://letrasespanolas.org/calculadora.html</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://letrasespanolas.org/checklist.html</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://letrasespanolas.org/cuanto-tardaras.html</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://letrasespanolas.org/generador-carta.html</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Recursos -->
   <url>
     <loc>https://letrasespanolas.org/becas.html</loc>

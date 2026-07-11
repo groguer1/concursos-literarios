@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de carta de presentación editorial — Letras Españolas</title>
+<meta name="description" content="Genera gratis tu carta de presentación para enviar tu manuscrito a editoriales y agentes literarios. Rellena el formulario y copia una carta profesional de menos de 300 palabras.">
+<meta name="google-site-verification" content="yIGT3ZQujBl7hF7lcUu2BQr7d1MGXeIMDnXAu7GFFTM">
+  <link rel="canonical" href="https://letrasespanolas.org/generador-carta.html">
+  <meta property="og:title" content="Generador de carta de presentación editorial — gratis">
+  <meta property="og:description" content="Rellena los datos de tu manuscrito y genera una carta de presentación profesional lista para copiar y enviar a editoriales o agentes literarios.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://letrasespanolas.org/generador-carta.html">
+  <meta property="og:site_name" content="Letras Españolas">
+<meta property="og:image" content="https://letrasespanolas.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://letrasespanolas.org/og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"¿Qué debe incluir una carta de presentación para una editorial?","acceptedAnswer":{"@type":"Answer","text":"Cuatro cosas, en este orden: qué envías (título, género y extensión en palabras), de qué va (un pitch de dos o tres frases que dé ganas de leer), quién eres (una bio breve, solo lo relevante) y tu disponibilidad y datos de contacto. Todo en menos de 300 palabras: el editor decide en una pantalla de móvil si sigue leyendo."}},
+{"@type":"Question","name":"¿Cuánto debe medir la carta de presentación?","acceptedAnswer":{"@type":"Answer","text":"Como máximo 300 palabras, idealmente 200-250. Debe leerse completa en una pantalla de móvil sin hacer scroll. Si necesitas más espacio, ese contenido pertenece a la sinopsis, no a la carta."}},
+{"@type":"Question","name":"¿Se envía la misma carta a editoriales y a agentes literarios?","acceptedAnswer":{"@type":"Answer","text":"La estructura es la misma, pero el enfoque cambia: al agente le interesa tu carrera y tu potencial comercial a largo plazo; a la editorial, que el libro encaje en su catálogo. Personaliza siempre una frase explicando por qué escribes precisamente a esa editorial o agencia."}}]}
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NCS6BXJS');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;--gold:#b8860b;--muted:#7a7670;--border:#d4cfc5;--green:#2a7a4b}
+*{box-sizing:border-box;margin:0;padding:0}a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+header{border-bottom:2px solid var(--ink);position:relative}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.75rem 2rem 1.25rem;position:relative}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.header-nav{display:flex;flex-wrap:wrap;justify-content:center;border-top:1px solid var(--border)}
+.nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;text-decoration:none;display:flex;align-items:center}
+.nav-btn:last-child{border-right:none}
+.nav-btn:hover{color:var(--ink);background:var(--cream)}
+.nav-btn.active{color:var(--accent);background:var(--cream);font-weight:500}
+.hamburger{display:none;position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;flex-direction:column;gap:4px;z-index:200}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);transition:all .2s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:700px){
+  .header-top{display:none}
+  .header-main{padding:1.25rem 1rem 1rem}
+  .hamburger{display:flex}
+  .header-nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .header-nav.open{display:flex}
+  .nav-btn{border-right:none;border-bottom:1px solid var(--border);padding:.85rem 1.5rem;font-size:13px;justify-content:flex-start}
+  .nav-btn:last-child{border-bottom:none}
+  .nav-btn.active{border-left:3px solid var(--accent);padding-left:calc(1.5rem - 3px)}
+  .container{padding:0 1rem}
+  .layout{padding:1.25rem 0 2rem}
+  .gen-grid{grid-template-columns:1fr}
+}
+.section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
+.section-sub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.gen-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+@media(max-width:600px){.gen-grid{grid-template-columns:1fr}}
+.calc-panel{background:white;border:1px solid var(--border);padding:1.5rem}
+.calc-panel-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:1.25rem;font-weight:500}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;font-weight:500}
+.field label .opt{color:var(--border);text-transform:none;letter-spacing:0}
+.field input[type=text], .field input[type=email], .field input[type=number], .field select, .field textarea{width:100%;border:1px solid var(--border);padding:8px 12px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;background:var(--paper);color:var(--ink);outline:none;appearance:none;-webkit-appearance:none}
+.field textarea{resize:vertical;min-height:64px;line-height:1.5}
+.field input:focus, .field select:focus, .field textarea:focus{border-color:var(--ink)}
+.field .hint{font-size:11px;color:var(--muted);margin-top:3px}
+.mode-group{display:flex;margin-bottom:1.25rem;border:1px solid var(--border)}
+.mode-btn{flex:1;padding:.55rem;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;background:transparent;border:none;color:var(--muted);font-family:'IBM Plex Sans',sans-serif;transition:all .15s;border-right:1px solid var(--border)}
+.mode-btn:last-child{border-right:none}
+.mode-btn.active{background:var(--ink);color:var(--paper)}
+.carta-panel{background:var(--ink);color:var(--paper);padding:1.5rem;position:sticky;top:1rem}
+.carta-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.carta-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:500}
+.contador{font-size:11px;letter-spacing:.05em}
+.contador.ok{color:#8fd0a5}
+.contador.warn{color:#e8a89a}
+.carta-out{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:1.25rem;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:'IBM Plex Sans',sans-serif;color:rgba(255,255,255,.92);max-height:520px;overflow-y:auto}
+.carta-actions{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+.cbtn{padding:9px 18px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif;transition:all .15s}
+.cbtn-p{background:var(--accent);color:var(--paper)}
+.cbtn-p:hover{background:#a52e22}
+.cbtn-s{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3)}
+.cbtn-s:hover{color:#fff;border-color:#fff}
+.disclaimer{font-size:11px;color:rgba(255,255,255,.35);margin-top:1rem;line-height:1.5}
+.info-box{background:var(--cream);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;line-height:1.6}
+.info-box strong{font-weight:500}
+.reglas{margin-top:2.5rem}
+.reglas h2{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:1rem}
+.regla{background:white;border:1px solid var(--border);padding:1.1rem 1.25rem;margin-bottom:.75rem;display:flex;gap:1rem;align-items:flex-start}
+.regla-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--accent);line-height:1}
+.regla-txt{font-size:13px;color:var(--muted);line-height:1.65}
+.regla-txt strong{color:var(--ink);font-weight:500;display:block;margin-bottom:2px}
+.sidebar-section{margin-bottom:2rem}
+.sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
+.sidebar-link{display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink);transition:color .15s}
+.sidebar-link:last-child{border-bottom:none}
+.sidebar-link:hover{color:var(--accent)}
+.sidebar-link::before{content:'→ ';color:var(--accent);font-size:11px}
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+footer a{color:var(--muted);margin:0 .75rem}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<header>
+  <div class="header-top">
+    <span id="fecha-hoy"></span>
+    <span>Recursos para escritores de España</span>
+    <span>Directorio actualizado 2026</span>
+  </div>
+  <div class="header-main">
+    <p class="site-title"><a href="index.html">Letras <span>Españolas</span></a></p>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+    <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="header-nav">
+    <a class="nav-btn" href="index.html">Concursos</a>
+    <a class="nav-btn" href="editoriales.html">Editoriales</a>
+    <a class="nav-btn" href="agentes.html">Agentes</a>
+    <a class="nav-btn" href="revistas.html">Revistas</a>
+    <a class="nav-btn" href="libros.html">Novedades</a>
+    <a class="nav-btn" href="buscador.html">Buscador</a>
+    <a class="nav-btn" href="calculadora.html">Calculadora</a>
+    <a class="nav-btn" href="checklist.html">Checklist</a>
+    <a class="nav-btn" href="cuanto-tardaras.html">Planificador</a>
+    <a class="nav-btn active" href="generador-carta.html">Carta editorial</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="layout">
+    <main>
+      <div class="section-title">Generador de carta de presentación</div>
+      <div class="section-sub">Para enviar tu manuscrito a editoriales y agentes · Máx. 300 palabras · 2026</div>
+
+      <div class="info-box">
+        <strong>¿Cómo funciona?</strong> Rellena los datos de tu obra y la carta se genera sola a la derecha, siguiendo la estructura que esperan los editores: qué envías, de qué va, quién eres y cómo contactarte. Todo en menos de 300 palabras — lo que un editor lee en una pantalla de móvil. Después, cópiala y ajústala a tu voz: la carta perfecta es la tuya, no la de una plantilla.
+      </div>
+
+      <div class="gen-grid">
+        <div class="calc-panel">
+          <div class="calc-panel-title">Datos de tu envío</div>
+          <div class="mode-group">
+            <button class="mode-btn active" id="dest-editorial" onclick="setDest('editorial')">A una editorial</button>
+            <button class="mode-btn" id="dest-agente" onclick="setDest('agente')">A un agente literario</button>
+          </div>
+          <div class="field">
+            <label>Nombre de la editorial o agencia <span class="opt">(opcional)</span></label>
+            <input type="text" id="f-dest" placeholder="Ej.: Editorial Páginas de Espuma" oninput="gen()">
+          </div>
+          <div class="field">
+            <label>Tu nombre y apellidos</label>
+            <input type="text" id="f-nombre" placeholder="Ej.: María Sánchez Ruiz" oninput="gen()">
+          </div>
+          <div class="field">
+            <label>Título de la obra</label>
+            <input type="text" id="f-titulo" placeholder="Ej.: La casa de las horas muertas" oninput="gen()">
+          </div>
+          <div class="field">
+            <label>Género</label>
+            <select id="f-genero" onchange="gen()">
+              <option>novela literaria</option>
+              <option>novela negra</option>
+              <option>novela histórica</option>
+              <option>novela romántica</option>
+              <option>novela de fantasía</option>
+              <option>novela de ciencia ficción</option>
+              <option>thriller</option>
+              <option>novela juvenil</option>
+              <option>novela infantil</option>
+              <option>libro de relatos</option>
+              <option>poemario</option>
+              <option>ensayo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Extensión (palabras)</label>
+            <input type="number" id="f-palabras" value="90000" min="1000" step="1000" oninput="gen()">
+          </div>
+          <div class="field">
+            <label>Tu pitch: de qué va (2–3 frases)</label>
+            <textarea id="f-pitch" maxlength="600" placeholder="Ej.: Cuando la restauradora Elena Vidal descubre un lienzo oculto bajo un cuadro del XVII, no imagina que la pintura la señala a ella. Una novela sobre la culpa heredada y los secretos que las familias entierran en el arte." oninput="gen()"></textarea>
+            <div class="hint">La parte más importante: conflicto + qué hace única a tu historia. Sin desvelar el final.</div>
+          </div>
+          <div class="field">
+            <label>Por qué esta editorial/agencia <span class="opt">(opcional, recomendado)</span></label>
+            <textarea id="f-porque" maxlength="300" placeholder="Ej.: Sigo su catálogo desde hace años y creo que mi novela dialoga con títulos como…" oninput="gen()"></textarea>
+          </div>
+          <div class="field">
+            <label>Tu bio en 1–2 frases</label>
+            <textarea id="f-bio" maxlength="400" placeholder="Ej.: He publicado relatos en las revistas X e Y y fui finalista del certamen Z. Esta es mi primera novela." oninput="gen()"></textarea>
+            <div class="hint">Solo lo relevante para un editor. Si no tienes publicaciones, tu oficio o tu vínculo con el tema también valen.</div>
+          </div>
+          <div class="field">
+            <label>Email de contacto <span class="opt">(opcional)</span></label>
+            <input type="email" id="f-email" placeholder="tu@email.com" oninput="gen()">
+          </div>
+        </div>
+
+        <div class="carta-panel">
+          <div class="carta-head">
+            <span class="carta-title">Tu carta</span>
+            <span class="contador ok" id="contador">0 palabras</span>
+          </div>
+          <div class="carta-out" id="carta-out"></div>
+          <div class="carta-actions">
+            <button class="cbtn cbtn-p" onclick="copiar()">Copiar carta</button>
+            <button class="cbtn cbtn-s" onclick="descargar()">Descargar .txt</button>
+          </div>
+          <p class="disclaimer">La carta se genera en tu navegador: no guardamos ni enviamos tus datos a ningún servidor. Revisa siempre el texto y dale tu voz antes de enviarlo.</p>
+        </div>
+      </div>
+
+      <div class="reglas">
+        <h2>Las 5 reglas de oro antes de enviar</h2>
+        <div class="regla"><div class="regla-num">1</div><div class="regla-txt"><strong>Una pantalla de móvil, máximo</strong>Si tu carta supera las 300 palabras, sobra texto. El editor decide en 30 segundos si pasa a la sinopsis; la carta solo tiene que ganarse esos 30 segundos.</div></div>
+        <div class="regla"><div class="regla-num">2</div><div class="regla-txt"><strong>El pitch no es un resumen</strong>No cuentes la trama: cuenta el conflicto y lo que hace única tu historia. «Una novela sobre la memoria» no vende; «una hija que descubre que su madre inventó su propia biografía» sí.</div></div>
+        <div class="regla"><div class="regla-num">3</div><div class="regla-txt"><strong>Personaliza o no envíes</strong>Una frase que demuestre que conoces el catálogo de esa editorial multiplica tus opciones. Los envíos masivos con «Estimados señores» se detectan a la primera línea.</div></div>
+        <div class="regla"><div class="regla-num">4</div><div class="regla-txt"><strong>Manuscrito terminado</strong>Nunca ofrezcas una obra sin acabar (salvo no ficción). Y antes de enviar, pásala por nuestro <a href="checklist.html" style="color:var(--accent)">checklist del manuscrito</a>.</div></div>
+        <div class="regla"><div class="regla-num">5</div><div class="regla-txt"><strong>Respeta las normas de envío</strong>Cada editorial publica sus condiciones: formato, extensión, si aceptan manuscritos no solicitados. Consulta nuestro <a href="editoriales.html" style="color:var(--accent)">directorio de editoriales</a> y su web oficial antes de enviar.</div></div>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Herramientas</div>
+        <a class="sidebar-link" href="checklist.html">¿Está listo mi manuscrito?</a>
+        <a class="sidebar-link" href="cuanto-tardaras.html">¿Cuánto tardarás en escribir tu novela?</a>
+        <a class="sidebar-link" href="calculadora.html">Calculadora de derechos de autor</a>
+        <a class="sidebar-link" href="buscador.html">Buscador de concursos</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Para leer antes de enviar</div>
+        <a class="sidebar-link" href="articulos/carta-presentacion-escritor-ejemplos.html">Carta de presentación: guía y ejemplos</a>
+        <a class="sidebar-link" href="editoriales.html">Directorio de editoriales</a>
+        <a class="sidebar-link" href="agentes.html">Agentes literarios en España</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <a href="index.html">Inicio</a>
+    <a href="aviso-legal.html">Aviso legal</a>
+    <a href="privacidad.html">Privacidad</a>
+    <span>© 2026 Letras Españolas</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+let dest = 'editorial';
+function setDest(d){
+  dest = d;
+  document.getElementById('dest-editorial').classList.toggle('active', d==='editorial');
+  document.getElementById('dest-agente').classList.toggle('active', d==='agente');
+  document.getElementById('f-dest').placeholder = d==='editorial' ? 'Ej.: Editorial Páginas de Espuma' : 'Ej.: Agencia Carmen Balcells';
+  gen();
+}
+
+const v = id => document.getElementById(id).value.trim();
+const fmtN = n => (+n).toLocaleString('es-ES');
+
+function gen(){
+  const destinatario = v('f-dest');
+  const nombre = v('f-nombre') || '[Tu nombre]';
+  const titulo = v('f-titulo') || '[Título de la obra]';
+  const genero = v('f-genero');
+  const palabras = v('f-palabras') ? fmtN(v('f-palabras')) : '[extensión]';
+  const pitch = v('f-pitch');
+  const porque = v('f-porque');
+  const bio = v('f-bio');
+  const email = v('f-email');
+
+  const saludo = destinatario
+    ? (dest==='editorial' ? `Estimado equipo de ${destinatario}:` : `Estimado/a ${destinatario}:`)
+    : (dest==='editorial' ? 'Estimado equipo editorial:' : 'Estimado/a agente:');
+
+  const asunto = dest==='editorial'
+    ? `Asunto: Propuesta de publicación — «${titulo}» (${genero})`
+    : `Asunto: Solicitud de representación — «${titulo}» (${genero})`;
+
+  let p1 = dest==='editorial'
+    ? `Me pongo en contacto con ustedes para presentarles «${titulo}», una ${genero} terminada de ${palabras} palabras.`
+    : `Me pongo en contacto contigo para ofrecerte la representación de «${titulo}», una ${genero} terminada de ${palabras} palabras.`;
+
+  const p2 = pitch || '[Tu pitch: dos o tres frases con el conflicto de la historia y lo que la hace única. Sin desvelar el final.]';
+
+  let p3 = '';
+  if(porque) p3 = porque;
+  else if(destinatario) p3 = dest==='editorial'
+    ? `Les escribo precisamente a ustedes porque creo que la obra encaja con la línea de su catálogo.`
+    : `Te escribo precisamente a ti porque creo que la obra encaja con los autores que representas.`;
+
+  const p4 = bio || '[Tu bio en una o dos frases: publicaciones, premios, o tu vínculo con el tema del libro.]';
+
+  const p5 = dest==='editorial'
+    ? `El manuscrito completo está disponible; puedo enviarlo en el formato que prefieran, junto con la sinopsis. Quedo a su disposición para cualquier consulta.`
+    : `El manuscrito completo y la sinopsis están disponibles; puedo enviártelos en el formato que prefieras. Quedo a tu disposición para cualquier consulta.`;
+
+  const firma = `Un cordial saludo,\n\n${nombre}${email ? '\n' + email : ''}`;
+
+  const cuerpo = [saludo, p1, p2, p3, p4, p5, firma].filter(Boolean).join('\n\n');
+  const carta = asunto + '\n\n' + cuerpo;
+
+  document.getElementById('carta-out').textContent = carta;
+
+  const n = cuerpo.replace(/\[[^\]]*\]/g,'').split(/\s+/).filter(Boolean).length;
+  const cont = document.getElementById('contador');
+  cont.textContent = n + ' palabras' + (n > 300 ? ' — demasiado larga, recorta' : '');
+  cont.className = 'contador ' + (n > 300 ? 'warn' : 'ok');
+}
+
+function copiar(){
+  navigator.clipboard.writeText(document.getElementById('carta-out').textContent).then(()=>{
+    const b = document.querySelector('.cbtn-p');
+    const t = b.textContent;
+    b.textContent = '¡Copiada!';
+    setTimeout(()=>{ b.textContent = t; }, 2000);
+  });
+}
+function descargar(){
+  const blob = new Blob([document.getElementById('carta-out').textContent], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'carta-presentacion.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+gen();
+
+// Menú hamburguesa
+(function(){
+  var btn=document.querySelector('.hamburger');
+  var nav=document.querySelector('.header-nav');
+  if(!btn||!nav)return;
+  btn.addEventListener('click',function(){btn.classList.toggle('open');nav.classList.toggle('open');btn.setAttribute('aria-expanded',nav.classList.contains('open'));});
+  nav.querySelectorAll('.nav-btn').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');nav.classList.remove('open');});});
+  document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
+})();
+</script>
+</body>
+</html>

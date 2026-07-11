@@ -194,6 +194,8 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
     <a class="nav-btn active" href="buscador.html">Buscador</a>
     <a class="nav-btn" href="calculadora.html">Calculadora</a>
     <a class="nav-btn" href="checklist.html">Checklist</a>
+    <a class="nav-btn" href="cuanto-tardaras.html">Planificador</a>
+    <a class="nav-btn" href="generador-carta.html">Carta editorial</a>
   </nav>
 </header>
 
@@ -247,6 +249,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
     <div class="filtro-grupo">
       <div class="fpill" id="p-urg" onclick="tc('p-urg')">⚠ Urgentes</div>
       <div class="fpill" id="p-new" onclick="tc('p-new')">★ Nuevos</div>
+      <div class="fpill" id="p-esp" onclick="tc('p-esp')">🇪🇸 Solo España</div>
     </div>
     <button class="btn-limpiar" onclick="resetAll()">✕ Limpiar</button>
   </div>
@@ -317,7 +320,7 @@ const DATOS_URL = 'concursos.json';
 const CONCURSOS_BASE = []; // Los datos vienen exclusivamente del Google Sheet
 
 let todos = [...CONCURSOS_BASE];
-let state = {generos:[], dotMin:0, plazo:'todos', urg:false, nuevo:false, sort:'fecha'};
+let state = {generos:[], dotMin:0, plazo:'todos', urg:false, nuevo:false, esp:false, sort:'fecha'};
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -388,6 +391,15 @@ function catK(c){
 }
 function dotN(c){if(!c.premio)return 0;const m=c.premio.match(/[\d.]+/);return m?parseFloat(m[0].replace('.',''))||0:0;}
 
+// ¿Es un concurso de España? Usa el campo pais si existe; si no, heurística:
+// moneda en dólares/pesos o mención de país hispanoamericano ⇒ no es de España.
+const RX_EXT=/m[eé]xic|colima|argentin|colombi|chilen|\bchile\b|per[uú]|uruguay|venezol|venezuela|ecuator|ecuador|bolivi|paraguay|guatemal|hondur|nicarag|salvador|panam[aá]|dominican|puerto rico|costa rica|cuban|\bcuba\b/i;
+function esES(c){
+  if(c.pais)return /espa/i.test(c.pais);
+  if(/\$|USD|MXN|ARS|COP|CLP|peso/i.test(c.premio||''))return false;
+  return !RX_EXT.test((c.titulo||'')+' '+(c.organizacion||'')+' '+(c.descripcion||''));
+}
+
 function updateStats(){
   const n=todos.filter(c=>c.nuevo).length;
   const ci=todos.filter(c=>{const x=d(c.fecha_limite);return x>=0&&x<=7;}).length;
@@ -421,6 +433,7 @@ function tc(pillId){
   const el=document.getElementById(pillId);
   const isOn=el.classList.toggle('on-accent');
   if(pillId==='p-urg') state.urg=isOn;
+  else if(pillId==='p-esp') state.esp=isOn;
   else state.nuevo=isOn;
   apply();
 }
@@ -442,6 +455,7 @@ function apply(){
     if(state.plazo!=='todos'){const x=d(c.fecha_limite);if(x>+state.plazo||x<0)return false;}
     if(state.urg){const x=d(c.fecha_limite);if(x>7||x<0)return false;}
     if(state.nuevo&&!c.nuevo)return false;
+    if(state.esp&&!esES(c))return false;
     return true;
   });
 
@@ -460,6 +474,7 @@ function renderChips(){
   if(state.plazo!=='todos')h+=`<div class="chip">≤${state.plazo}d<span class="chip-x" onclick="rplazo()">×</span></div>`;
   if(state.urg)h+=`<div class="chip">Urgentes<span class="chip-x" onclick="rurg()">×</span></div>`;
   if(state.nuevo)h+=`<div class="chip">Nuevos<span class="chip-x" onclick="rnuevo()">×</span></div>`;
+  if(state.esp)h+=`<div class="chip">🇪🇸 Solo España<span class="chip-x" onclick="resp()">×</span></div>`;
   document.getElementById('chips').innerHTML=h;
 }
 function rg(g){document.querySelector(`.fpill[data-g="${g}"]`).classList.remove('on');state.generos=state.generos.filter(x=>x!==g);if(!state.generos.length)document.querySelector('.fpill[data-g="todos"]').classList.add('on');apply();}
@@ -467,15 +482,17 @@ function rdot(){state.dotMin=0;document.getElementById('range-dot').value=0;docu
 function rplazo(){document.getElementById('sel-plazo').value='todos';apply();}
 function rurg(){state.urg=false;document.getElementById('p-urg').classList.remove('on-accent');apply();}
 function rnuevo(){state.nuevo=false;document.getElementById('p-new').classList.remove('on-accent');apply();}
+function resp(){state.esp=false;document.getElementById('p-esp').classList.remove('on-accent');apply();}
 
 function resetAll(){
-  state={generos:[],dotMin:0,plazo:'todos',urg:false,nuevo:false,sort:'fecha'};
+  state={generos:[],dotMin:0,plazo:'todos',urg:false,nuevo:false,esp:false,sort:'fecha'};
   document.querySelectorAll('.fpill[data-g]').forEach(p=>p.classList.remove('on'));
   document.querySelector('.fpill[data-g="todos"]').classList.add('on');
   document.getElementById('range-dot').value=0;document.getElementById('rval').textContent='0 €';
   document.getElementById('sel-plazo').value='todos';document.getElementById('sort-sel').value='fecha';
   document.getElementById('p-urg').classList.remove('on-accent');
   document.getElementById('p-new').classList.remove('on-accent');
+  document.getElementById('p-esp').classList.remove('on-accent');
   apply();
 }
 

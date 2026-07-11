@@ -20,7 +20,7 @@ header{border-bottom:2px solid var(--ink);position:relative}
 .site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
 .site-title span{color:var(--accent);font-style:italic}
 .site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
-.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border)}
+.header-nav{display:flex;flex-wrap:wrap;justify-content:center;border-top:1px solid var(--border)}
 .nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;text-decoration:none;display:flex;align-items:center}
 .nav-btn:last-child{border-right:none}
 .nav-btn:hover{color:var(--ink);background:var(--cream)}
@@ -148,6 +148,8 @@ footer a:hover{color:var(--ink)}
     <a class="nav-btn" href="buscador.html">Buscador</a>
     <a class="nav-btn" href="calculadora.html">Calculadora</a>
     <a class="nav-btn active" href="checklist.html">Checklist</a>
+    <a class="nav-btn" href="cuanto-tardaras.html">Planificador</a>
+    <a class="nav-btn" href="generador-carta.html">Carta editorial</a>
   </nav>
 </header>
 
@@ -158,7 +160,7 @@ footer a:hover{color:var(--ink)}
       <div class="section-sub">Checklist profesional para escritores · 42 puntos en 6 categorías</div>
 
       <div class="info-box">
-        Marca cada punto que hayas completado. Puedes marcar <strong>N/A</strong> si un punto no aplica a tu tipo de obra. Al final obtendrás una valoración y recomendaciones personalizadas.
+        Marca cada punto que hayas completado. Puedes marcar <strong>N/A</strong> si un punto no aplica a tu tipo de obra. Al final obtendrás una valoración y recomendaciones personalizadas. <strong>Tu progreso se guarda automáticamente en este navegador</strong>: puedes cerrar la página y continuar otro día.
       </div>
 
       <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
@@ -184,6 +186,8 @@ footer a:hover{color:var(--ink)}
     <aside class="sidebar">
       <div class="sidebar-section">
         <div class="sidebar-title">Herramientas</div>
+        <a class="sidebar-link" href="generador-carta.html">Generador de carta de presentación</a>
+        <a class="sidebar-link" href="cuanto-tardaras.html">¿Cuánto tardarás en escribir tu novela?</a>
         <a class="sidebar-link" href="calculadora.html">Calculadora de derechos</a>
         <a class="sidebar-link" href="buscador.html">Buscador de concursos</a>
         <a class="sidebar-link" href="editoriales.html">Directorio de editoriales</a>
@@ -278,6 +282,24 @@ const CATEGORIAS = [
 ];
 
 let estado = {};
+const LS_KEY = 'le-checklist-v1';
+
+function guardarEstado() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(estado)); } catch(e) {}
+}
+function cargarEstado() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    estado = JSON.parse(raw) || {};
+    Object.keys(estado).forEach(id => {
+      const el = document.getElementById('item-'+id);
+      if (!el) return;
+      if (estado[id] === true) el.classList.add('checked');
+      else if (estado[id] === 'na') el.classList.add('na');
+    });
+  } catch(e) { estado = {}; }
+}
 
 function buildChecklist() {
   const container = document.getElementById('checklist-container');
@@ -327,6 +349,7 @@ function toggleItem(id) {
   if (el.classList.contains('na')) { el.classList.remove('na'); estado[id] = null; }
   else if (el.classList.contains('checked')) { el.classList.remove('checked'); estado[id] = false; }
   else { el.classList.add('checked'); estado[id] = true; }
+  guardarEstado();
   updateProgress();
 }
 
@@ -334,6 +357,7 @@ function toggleNA(id) {
   const el = document.getElementById('item-'+id);
   if (el.classList.contains('na')) { el.classList.remove('na'); estado[id] = null; }
   else { el.classList.remove('checked'); el.classList.add('na'); estado[id] = 'na'; }
+  guardarEstado();
   updateProgress();
 }
 
@@ -409,12 +433,14 @@ function verResultado() {
 
 function resetChecklist() {
   estado = {};
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
   document.querySelectorAll('.check-item').forEach(el => el.classList.remove('checked','na'));
   document.getElementById('result-panel').classList.add('hidden');
   updateProgress();
 }
 
 buildChecklist();
+cargarEstado();
 updateProgress();
 
 // Menú hamburguesa

@@ -31,7 +31,7 @@ header{border-bottom:2px solid var(--ink);position:relative}
 .site-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;letter-spacing:-.02em;line-height:1}
 .site-title span{color:var(--accent);font-style:italic}
 .site-tagline{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
-.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border)}
+.header-nav{display:flex;flex-wrap:wrap;justify-content:center;border-top:1px solid var(--border)}
 .nav-btn{padding:.7rem 1.25rem;font-size:12px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;transition:all .15s;text-decoration:none;display:flex;align-items:center}
 .nav-btn:last-child{border-right:none}
 .nav-btn:hover{color:var(--ink);background:var(--cream)}
@@ -145,6 +145,8 @@ footer a:hover{color:var(--ink)}
     <a class="nav-btn" href="buscador.html">Buscador</a>
     <a class="nav-btn active" href="calculadora.html">Calculadora</a>
     <a class="nav-btn" href="checklist.html">Checklist</a>
+    <a class="nav-btn" href="cuanto-tardaras.html">Planificador</a>
+    <a class="nav-btn" href="generador-carta.html">Carta editorial</a>
   </nav>
 </header>
 
@@ -278,14 +280,17 @@ footer a:hover{color:var(--ink)}
             <div class="field">
               <label>Plataforma</label>
               <select id="ap-plataforma" onchange="calcAuto()">
-                <option value="0.70">Amazon KDP — 70% regalía (precio 2,99€–9,99€)</option>
-                <option value="0.35">Amazon KDP — 35% regalía (precio fuera de rango)</option>
+                <option value="0.70" data-kdp="ebook">Amazon KDP ebook España — 70% (precio 2,69€–9,99€ en Amazon.es)</option>
+                <option value="0.35">Amazon KDP ebook — 35% (precio fuera del rango 2,69€–9,99€)</option>
+                <option value="0.60" data-kdp="papel">Amazon KDP papel España — 60% si PVP ≥ 9,99€ (menos coste de impresión)</option>
+                <option value="0.50" data-kdp="papel">Amazon KDP papel España — 50% si PVP ≤ 9,98€ (menos coste de impresión)</option>
                 <option value="0.60">Kobo Writing Life — 70% (menos costes)</option>
                 <option value="0.60">Google Play Books — 52% aprox.</option>
                 <option value="0.55">Apple Books — 70% (sobre precio neto)</option>
                 <option value="0.65">Lektu (solo ebook, sin DRM) — 65%</option>
                 <option value="0.50">Distribuidor (IngramSpark, PubliBook) — ~50%</option>
               </select>
+              <div class="hint" id="kdp-aviso" style="display:none;color:var(--accent)"></div>
             </div>
           </div>
           <div class="calc-panel">
@@ -401,8 +406,8 @@ footer a:hover{color:var(--ink)}
         </div>
         <div class="info-card">
           <span class="info-card-num">70%</span>
-          <div class="info-card-title">Regalía en Amazon KDP</div>
-          <div class="info-card-body">Amazon ofrece hasta el 70% de regalía para ebooks con precio entre 2,99€ y 9,99€. Para precios fuera de ese rango, la regalía baja al 35%.</div>
+          <div class="info-card-title">Regalía en Amazon KDP (España)</div>
+          <div class="info-card-body">En Amazon.es, el 70% de regalía en ebook exige un precio entre 2,69€ y 9,99€ (fuera de ese rango se aplica el 35%; mínimo absoluto 0,89€). En papel, la regalía es del 60% si el PVP es de 9,99€ o más y del 50% si es igual o inferior a 9,98€, siempre tras restar el coste de impresión.</div>
         </div>
       </div>
     </main>
@@ -411,6 +416,8 @@ footer a:hover{color:var(--ink)}
       <div class="sidebar-section">
         <div class="sidebar-title">Herramientas</div>
         <a class="sidebar-link" href="checklist.html">¿Está listo mi manuscrito?</a>
+        <a class="sidebar-link" href="cuanto-tardaras.html">¿Cuánto tardarás en escribir tu novela?</a>
+        <a class="sidebar-link" href="generador-carta.html">Generador de carta de presentación</a>
         <a class="sidebar-link" href="buscador.html">Buscador de concursos</a>
         <a class="sidebar-link" href="editoriales.html">Directorio de editoriales</a>
       </div>
@@ -501,10 +508,32 @@ function calcContrato() {
 function calcAuto() {
   const precio = parseFloat(document.getElementById('ap-precio').value);
   const ventas = parseInt(document.getElementById('ap-ventas').value);
-  const royaltyPct = parseFloat(document.getElementById('ap-plataforma').value);
+  const sel = document.getElementById('ap-plataforma');
+  const opt = sel.selectedOptions[0];
+  let royaltyPct = parseFloat(sel.value);
   const corrCost = parseFloat(document.getElementById('coste-corr').value);
   const portadaCost = parseFloat(document.getElementById('coste-portada').value);
   const maqCost = parseFloat(document.getElementById('coste-maq').value);
+
+  // Reglas KDP España: el 70% en ebook exige precio entre 2,69€ y 9,99€ en Amazon.es;
+  // fuera de ese rango Amazon aplica el 35%. En papel el % depende del PVP (50%/60%).
+  const aviso = document.getElementById('kdp-aviso');
+  aviso.style.display = 'none';
+  if (opt.dataset.kdp === 'ebook' && (precio < 2.69 || precio > 9.99)) {
+    royaltyPct = 0.35;
+    aviso.textContent = '⚠ Con ' + fmt(precio) + ' estás fuera del rango 2,69€–9,99€ de Amazon.es: KDP aplica el 35%, no el 70%. El cálculo ya usa el 35%.';
+    aviso.style.display = 'block';
+  } else if (opt.dataset.kdp === 'papel') {
+    const pctPapel = precio >= 9.99 ? 0.60 : 0.50;
+    if (pctPapel !== royaltyPct) {
+      royaltyPct = pctPapel;
+      aviso.textContent = 'ℹ Con PVP de ' + fmt(precio) + ' el tramo de KDP papel es del ' + Math.round(pctPapel*100) + '%. El cálculo usa ese porcentaje. Recuerda restar el coste de impresión por ejemplar.';
+      aviso.style.display = 'block';
+    } else {
+      aviso.textContent = 'ℹ En papel, Amazon descuenta además el coste de impresión de cada ejemplar (depende de páginas y tinta). Este cálculo no lo incluye.';
+      aviso.style.display = 'block';
+    }
+  }
 
   const mensual = precio * royaltyPct * ventas;
   const anual = mensual * 12;
