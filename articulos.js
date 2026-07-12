@@ -247,11 +247,11 @@ url: 'articulos/concursos-literarios-escritores-ineditos-espana.html'
 {
 id: 'seudonimo-concurso-literario',
 cat: 'Concursos',
-titulo: 'El seudonóimo en concursos literarios: qué es, por qué existe y cómo elegirlo',
-excerpt: 'Por qué los concursos usan seudonóimo, cómo funciona el sistema de sobre cerrado, cómo elegir el tuyo y los errores que rompen el anonimato sin querer (propiedades del documento, historial de cambios).',
+titulo: 'El seudónimo en concursos literarios: qué es, por qué existe y cómo elegirlo',
+excerpt: 'Por qué los concursos usan seudónimo, cómo funciona el sistema de sobre cerrado, cómo elegir el tuyo y los errores que rompen el anonimato sin querer (propiedades del documento, historial de cambios).',
 tiempo: '10 min',
 url: 'articulos/seudonimo-concurso-literario.html'
-}
+},
   {
     id: 'sinopsis-novela-editorial',
     cat: 'Publicación',
