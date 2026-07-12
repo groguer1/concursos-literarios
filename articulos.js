@@ -365,14 +365,6 @@ url: 'articulos/seudonimo-concurso-literario.html'
     url: 'articulos/honorarios-agente-literario-espana.html'
   },
   {
-    id: 'carta-presentacion-escritor-ejemplos',
-    cat: 'Publicacion',
-    titulo: 'Carta de presentacion para editorial o agente literario: ejemplos y estructura',
-    excerpt: 'Como escribir una carta de presentacion literaria para editoriales y agentes. Estructura, ejemplos reales y errores que debes evitar en 2026.',
-    tiempo: '12 min',
-    url: 'articulos/carta-presentacion-escritor-ejemplos.html'
-  },
-  {
     id: 'portada-libro-autopublicacion',
     cat: 'Autopublicación',
     titulo: 'Portada libro autopublicación: Canva, Reedsy o diseñador profesional',
