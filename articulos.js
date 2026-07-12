@@ -359,8 +359,8 @@ url: 'articulos/seudonimo-concurso-literario.html'
   {
     id: 'honorarios-agente-literario-espana',
     cat: 'Agentes literarios',
-    titulo: 'Cuanto cobra un agente literario en Espana? Porcentajes, contratos y que debes saber',
-    excerpt: 'Un agente literario en Espana cobra entre el 10% y el 15% de tus ingresos. Descubre como funciona, que incluye y cuando compensa tener uno.',
+    titulo: '¿Cuánto cobra un agente literario en España? Porcentajes, contratos y qué debes saber',
+    excerpt: 'Un agente literario en España cobra entre el 10% y el 15% de tus ingresos. Descubre cómo funciona, qué incluye y cuándo compensa tener uno.',
     tiempo: '10 min',
     url: 'articulos/honorarios-agente-literario-espana.html'
   },
