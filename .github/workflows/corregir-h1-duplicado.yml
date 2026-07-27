@@ -1,0 +1,43 @@
+name: Corregir h1 duplicado
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  corregir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Convertir el h1 de cabecera en div cuando hay dos h1
+        run: |
+          python3 - <<'EOF'
+          import re, pathlib
+
+          patron = re.compile(r'<h1 class="site-title">(.*?)</h1>', re.S)
+          cambiados = []
+
+          for ruta in pathlib.Path(".").rglob("*.html"):
+              texto = ruta.read_text(encoding="utf-8")
+              if len(re.findall(r"<h1[\s>]", texto)) < 2:
+                  continue
+              nuevo = patron.sub(r'<div class="site-title">\1</div>', texto, count=1)
+              if nuevo != texto:
+                  ruta.write_text(nuevo, encoding="utf-8")
+                  cambiados.append(str(ruta))
+
+          print(f"Archivos corregidos: {len(cambiados)}")
+          for c in cambiados:
+              print(" -", c)
+          EOF
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "SEO: un solo h1 por pagina (cabecera pasa a div)"
+          git push
