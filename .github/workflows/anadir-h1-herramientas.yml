@@ -1,0 +1,54 @@
+name: Anadir h1 a paginas de herramienta
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  anadir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Promover el primer section-title a h1 en paginas sin h1
+        run: |
+          python3 - <<'EOF'
+          import re, pathlib
+
+          objetivo = [
+              "libros.html",
+              "calculadora.html",
+              "checklist.html",
+              "cuanto-tardaras.html",
+              "generador-carta.html",
+          ]
+
+          patron = re.compile(r'<div class="section-title">(.*?)</div>', re.S)
+          hechos = []
+
+          for nombre in objetivo:
+              ruta = pathlib.Path(nombre)
+              if not ruta.exists():
+                  print("No existe:", nombre); continue
+              texto = ruta.read_text(encoding="utf-8")
+              if re.search(r"<h1[\s>]", texto):
+                  print("Ya tiene h1:", nombre); continue
+              nuevo, n = patron.subn(r'<h1 class="section-title">\1</h1>', texto, count=1)
+              if n:
+                  ruta.write_text(nuevo, encoding="utf-8")
+                  hechos.append(nombre)
+
+          print("Paginas corregidas:", len(hechos))
+          for h in hechos:
+              print(" -", h)
+          EOF
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "SEO: h1 en las paginas de herramienta"
+          git push
