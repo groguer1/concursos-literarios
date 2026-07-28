@@ -227,14 +227,21 @@ const ARTICULOS = [
     tiempo: '19 min',
     url: 'articulos/autopublicacion-vs-editorial-tradicional-espana.html'
   },
-,
 {
 id: 'como-leer-bases-concurso-literario',
 cat: 'Concursos',
 titulo: 'Cómo leer las bases de un concurso literario: guía para no descalificarte',
-excerpt: 'Los once apartados que debes revisar en cualquier convocatoria: extensión, seudonóimo, derechos cedidos, plazo y los errores que descalifican automáticamente.',
+excerpt: 'Los once apartados que debes revisar en cualquier convocatoria: extensión, seudónimo, derechos cedidos, plazo y los errores que descalifican automáticamente.',
 tiempo: '12 min',
 url: 'articulos/como-leer-bases-concurso-literario.html'
+},
+{
+id: 'mismo-relato-varios-concursos',
+cat: 'Concursos',
+titulo: '¿Puedo presentar el mismo relato a varios concursos a la vez?',
+excerpt: 'Sí, salvo que las bases lo prohíban. Qué significa exactamente inédito, las tres cláusulas de exclusividad que vas a encontrar y qué hacer si ganas dos premios con el mismo texto.',
+tiempo: '8 min',
+url: 'articulos/mismo-relato-varios-concursos.html'
 },
 {
 id: 'concursos-literarios-escritores-ineditos-espana',
