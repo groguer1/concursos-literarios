@@ -95,6 +95,7 @@ footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;fon
 footer a{color:var(--muted);margin:0 .75rem}
 footer a:hover{color:var(--ink)}
 .dir-ficha{margin-top:.7rem;border-top:1px solid var(--border);padding-top:.5rem;font-size:13px;cursor:default}.dir-ficha summary{cursor:pointer;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);font-weight:500}.dir-ficha p{margin:.5rem 0;line-height:1.6;color:var(--muted)}.dir-ficha strong{color:var(--ink);font-weight:600}.ficha-web{color:var(--accent);text-decoration:underline}
+.sin-web{margin-top:1rem;font-size:13px;color:var(--muted);font-style:italic}
 </style>
 
 <script type="application/ld+json">
@@ -729,7 +730,7 @@ function verDetalle(id) {
       <p>${a.autores}</p>
       <h2>Nota para escritores</h2>
       <p>${a.nota}</p>
-      <a class="btn-web" href="${a.web}" target="_blank" rel="noopener">Visitar web oficial →</a>
+      ${a.web ? `<a class="btn-web" href="${a.web}" target="_blank" rel="noopener">Visitar web oficial →</a>` : `<p class="sin-web">No hemos podido verificar la web oficial de esta agencia. Búscala por su nombre antes de enviar nada.</p>`}
     </div>
   `;
   window.scrollTo(0,0);
