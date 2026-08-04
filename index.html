@@ -184,6 +184,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
   .modal{padding:1.25rem}
 }
 </style>
+<link rel="stylesheet" href="/nav.css">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -202,18 +203,29 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
     <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <nav class="header-nav">
-    <button class="nav-btn active" onclick="showPage('concursos',this)">Concursos</button>
-    <a class="nav-btn" href="editoriales.html">Editoriales</a>
-    <a class="nav-btn" href="agentes.html">Agentes</a>
-    <a class="nav-btn" href="revistas.html">Revistas</a>
-    <a class="nav-btn" href="libros.html">Novedades</a>
-    <a class="nav-btn" href="buscador.html">Buscador</a>
-    <a class="nav-btn" href="calculadora.html">Calculadora</a>
-    <a class="nav-btn" href="checklist.html">Checklist</a>
-    <a class="nav-btn" href="cuanto-tardaras.html">Planificador</a>
-    <a class="nav-btn" href="generador-carta.html">Carta editorial</a>
-    <a class="nav-btn" href="articulos">Artículos</a>
-  </nav>
+  <button class="nav-btn active" onclick="showPage('concursos',this)">Concursos</button>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+      <a class="" href="https://letrasespanolas.org/libros.html">Novedades</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+</nav>
 </header>
 
 <div class="container">
@@ -945,5 +957,6 @@ init();
   document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
 })();
 </script>
+<script src="/nav.js" defer></script>
 </body>
 </html>

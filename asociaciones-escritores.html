@@ -61,6 +61,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <meta property="og:image" content="https://letrasespanolas.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://letrasespanolas.org/og-image.png">
+<link rel="stylesheet" href="/nav.css">
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -75,18 +76,29 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
     <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
   </div>
   <nav class="header-nav">
-    <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/agentes.html">Agentes</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/revistas.html">Revistas</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/libros.html">Novedades</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/buscador.html">Buscador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/checklist.html">Checklist</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/articulos/">Artículos</a>
-  </nav>
+  <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+      <a class="" href="https://letrasespanolas.org/libros.html">Novedades</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+</nav>
 </header>
 <div class="container">
   <div class="layout">
@@ -193,5 +205,6 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
   <p>© <span id="year">2026</span> Letras Españolas · Para escritores de España</p>
   <p style="margin-top:6px"><a href="https://letrasespanolas.org/">Inicio</a> · <a href="https://letrasespanolas.org/articulos/">Artículos</a> · <a href="https://letrasespanolas.org/sobre.html">Sobre Letras Españolas</a> · <a href="https://letrasespanolas.org/contacto.html">Contacto</a> · <a href="https://letrasespanolas.org/aviso-legal.html">Aviso legal</a> · <a href="https://letrasespanolas.org/privacidad.html">Privacidad</a> · <a href="https://letrasespanolas.org/cookies.html">Cookies</a></p>
 </footer>
+<script src="/nav.js" defer></script>
 </body>
 </html>

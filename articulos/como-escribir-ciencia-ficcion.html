@@ -64,6 +64,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 @media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
 @media(max-width:700px){.header-top{display:none}.header-main{padding:1rem}.hamburger{display:flex}.header-nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);z-index:100}.header-nav.open{display:flex}.nav-btn{border-right:none;border-bottom:1px solid var(--border);padding:.85rem 1.5rem;font-size:13px;justify-content:flex-start;width:100%}.container{padding:0 1rem}.layout{padding:1.25rem 0 2rem}}
 </style>
+<link rel="stylesheet" href="/nav.css">
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -75,18 +76,29 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
 </div>
 <nav class="header-nav">
-    <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/agentes.html">Agentes</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/revistas.html">Revistas</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/libros.html">Novedades</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/buscador.html">Buscador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/checklist.html">Checklist</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
-    <a class="nav-btn active" href="https://letrasespanolas.org/articulos/">Artículos</a>
-  </nav>
+  <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+      <a class="" href="https://letrasespanolas.org/libros.html">Novedades</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn active" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+</nav>
 </header>
 <div class="container">
 <div class="layout">
@@ -177,5 +189,6 @@ document.getElementById('fecha').textContent = new Date().toLocaleDateString('es
 document.getElementById('year').textContent = new Date().getFullYear();
 (function(){var btn=document.querySelector('.hamburger');var nav=document.querySelector('.header-nav');if(!btn||!nav)return;btn.addEventListener('click',function(){btn.classList.toggle('open');nav.classList.toggle('open');btn.setAttribute('aria-expanded',nav.classList.contains('open'));});nav.querySelectorAll('.nav-btn').forEach(function(a){a.addEventListener('click',function(){btn.classList.remove('open');nav.classList.remove('open');});});document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});})();
 </script>
+<script src="/nav.js" defer></script>
 </body>
 </html>

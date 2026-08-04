@@ -83,6 +83,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Estructura en tres actos: la guía definitiva para novelistas","description":"Qué es la estructura en tres actos, cómo se reparte una novela (25-50-25), dónde van el detonante, el punto medio y el punto oscuro, y cómo usarla para diagnosticar tu borrador.","inLanguage":"es","author":{"@type":"Organization","name":"Letras Españolas"},"publisher":{"@type":"Organization","name":"Letras Españolas","url":"https://letrasespanolas.org"},"dateModified":"2026-07-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://letrasespanolas.org/articulos/estructura-tres-actos-novela.html"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://letrasespanolas.org/"},{"@type":"ListItem","position":2,"name":"Artículos","item":"https://letrasespanolas.org/articulos/"},{"@type":"ListItem","position":3,"name":"Estructura en tres actos: la guía definitiva para novelistas","item":"https://letrasespanolas.org/articulos/estructura-tres-actos-novela.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuántas palabras debe tener cada acto?","acceptedAnswer":{"@type":"Answer","text":"Con el reparto estándar de 25-50-25, en una novela de 80.000 palabras el Acto I ocupa unas 20.000, el Acto II unas 40.000 y el Acto III otras 20.000. En una de 60.000, 15.000-30.000-15.000. Son cifras orientativas: lo que importa no es clavar el porcentaje sino que el detonante llegue pronto y que el Acto II no se alargue sin escalar."}},{"@type":"Question","name":"¿Dónde va exactamente el detonante?","acceptedAnswer":{"@type":"Answer","text":"Entre el 10 % y el 15 % de la novela, y como muy tarde al final del primer cuarto. Si el lector llega al capítulo cinco y todavía no ha pasado nada que rompa la vida del protagonista, casi seguro que abandona. El detonante tiene que ser irreversible: si el protagonista puede ignorarlo y seguir con su vida, no es un detonante."}},{"@type":"Question","name":"¿Es lo mismo la estructura en tres actos que el viaje del héroe?","acceptedAnswer":{"@type":"Answer","text":"No, aunque son compatibles. La estructura en tres actos es un esqueleto de ritmo: cuánto dura cada parte y dónde van los giros. El viaje del héroe es un patrón de contenido concreto (la llamada, el mentor, las pruebas, el regreso), sobre todo para relatos de aventura y fantasía. Puedes usar los tres actos sin usar el viaje del héroe."}},{"@type":"Question","name":"¿Y si escribo sin planificar?","acceptedAnswer":{"@type":"Answer","text":"La estructura sirve igual, solo que en otro momento. Los escritores de brújula la usan en la revisión, no antes de empezar: terminan el borrador y entonces comprueban dónde cae el detonante, si hay punto medio y si el Acto II escala."}},{"@type":"Question","name":"¿Hay que respetar la estructura para presentarse a un concurso o a una editorial?","acceptedAnswer":{"@type":"Answer","text":"No hay ninguna norma que lo exija, pero sí influye: los lectores editoriales y los jurados leen muchos manuscritos y detectan enseguida un primer acto que no arranca o un segundo acto plano. Romper la estructura a conciencia funciona; romperla sin darse cuenta se lee como un problema de ritmo."}}]}</script>
+<link rel="stylesheet" href="/nav.css">
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -94,18 +95,29 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
     <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <nav class="header-nav">
-    <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/agentes.html">Agentes</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/revistas.html">Revistas</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/libros.html">Novedades</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/buscador.html">Buscador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/checklist.html">Checklist</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
-    <a class="nav-btn active" href="https://letrasespanolas.org/articulos/">Artículos</a>
-  </nav>
+  <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+      <a class="" href="https://letrasespanolas.org/libros.html">Novedades</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn active" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+</nav>
 </header>
 <div class="container">
   <div class="layout">
@@ -236,5 +248,6 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
   document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
 })();
 </script>
+<script src="/nav.js" defer></script>
 </body>
 </html>

@@ -86,6 +86,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cada cuánto se actualiza esta lista de concursos de relato corto?","acceptedAnswer":{"@type":"Answer","text":"A diario. Un sistema automático revisa cada día las convocatorias publicadas en fuentes públicas y añade los concursos de relato corto y microrrelato nuevos con su premio, plazo y organizador."}},{"@type":"Question","name":"¿Puedo presentar el mismo relato a varios concursos a la vez?","acceptedAnswer":{"@type":"Answer","text":"Depende de las bases de cada certamen. La mayoría exige obra inédita y muchas prohíben la presentación simultánea, así que conviene leer siempre las bases antes de enviar y llevar un registro de dónde tienes cada relato."}},{"@type":"Question","name":"¿Qué extensión suele pedirse en un concurso de relato corto?","acceptedAnswer":{"@type":"Answer","text":"Los certámenes de microrrelato suelen moverse entre 100 y 500 palabras, y los de relato corto entre 3 y 15 páginas. La extensión exacta la fijan las bases, y pasarse es motivo directo de descalificación."}}]}
 </script>
+<link rel="stylesheet" href="/nav.css">
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -97,18 +98,29 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
     <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <nav class="header-nav">
-    <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/agentes.html">Agentes</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/revistas.html">Revistas</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/libros.html">Novedades</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/buscador.html">Buscador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/checklist.html">Checklist</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
-    <a class="nav-btn active" href="https://letrasespanolas.org/articulos/">Artículos</a>
-  </nav>
+  <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+      <a class="" href="https://letrasespanolas.org/libros.html">Novedades</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+</nav>
 </header>
 <div class="container">
   <div class="layout">
@@ -193,5 +205,6 @@ document.getElementById('num-relato').textContent=rel.length;
   document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
 })();
 </script>
+<script src="/nav.js" defer></script>
 </body>
 </html>

@@ -84,6 +84,7 @@ footer a:hover{color:var(--ink)}
 <meta property="og:image" content="https://letrasespanolas.org/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://letrasespanolas.org/og-image.png">
+<link rel="stylesheet" href="/nav.css">
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -102,18 +103,29 @@ footer a:hover{color:var(--ink)}
     <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <nav class="header-nav">
-    <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/agentes.html">Agentes</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/revistas.html">Revistas</a>
-    <a class="nav-btn active" href="https://letrasespanolas.org/libros.html">Novedades</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/buscador.html">Buscador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/checklist.html">Checklist</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
-    <a class="nav-btn" href="https://letrasespanolas.org/articulos/">Artículos</a>
-  </nav>
+  <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
+  <div class="nav-grupo">
+    <button class="nav-toggle active" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+      <a class="active" href="https://letrasespanolas.org/libros.html">Novedades</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+</nav>
 </header>
 
 <div class="container">
@@ -532,5 +544,6 @@ calcStats();
   document.addEventListener('click',function(e){if(!btn.contains(e.target)&&!nav.contains(e.target)){btn.classList.remove('open');nav.classList.remove('open');}});
 })();
 </script>
+<script src="/nav.js" defer></script>
 </body>
 </html>

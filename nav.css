@@ -1,0 +1,56 @@
+/* Menú superior de Letras Españolas — agrupado en desplegables.
+   Vive aquí y no en el <style> de cada página: antes había 11 entradas repetidas
+   a mano en 73 archivos y cualquier cambio obligaba a tocarlos todos.
+   Se enlaza al final del <head> para ganar a los estilos en línea de cada página.
+
+   OJO: NO se toca `display` de .header-nav. En ≤700px cada página la oculta y la
+   despliega con el botón hamburguesa (.header-nav.open); pisarlo aquí rompería
+   el menú móvil de las 73 páginas. */
+
+.nav-grupo { position: relative; display: inline-flex; }
+
+/* El botón que abre un grupo imita a un enlace del menú.
+   Deliberadamente NO lleva la clase .nav-btn: el JS del menú móvil de cada página
+   cierra el cajón al pulsar cualquier .nav-btn, y eso impediría abrir el submenú. */
+.nav-toggle {
+  padding: .6rem 1.1rem; font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--muted, #7a7670); background: none; border: none; cursor: pointer;
+  font-family: inherit; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: .35rem;
+}
+.nav-toggle:hover, .nav-toggle.active { color: var(--accent, #c8392b); }
+.nav-flecha { font-size: 8px; line-height: 1; transition: transform .15s; }
+.nav-grupo.abierto .nav-flecha { transform: rotate(180deg); }
+
+.nav-sub {
+  display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  min-width: 190px; background: var(--paper, #f5f2eb);
+  border: 1px solid var(--border, #d4cfc8); border-top: 2px solid var(--ink, #1a1a18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .10); z-index: 160; padding: .35rem 0;
+}
+.nav-grupo:hover .nav-sub,
+.nav-grupo:focus-within .nav-sub,
+.nav-grupo.abierto .nav-sub { display: block; }
+
+.nav-sub a {
+  display: block; padding: .6rem 1.1rem; font-size: 12px; letter-spacing: .04em;
+  color: var(--ink, #1a1a18); white-space: nowrap; text-align: left;
+}
+.nav-sub a:hover, .nav-sub a.active { background: var(--cream, #ede9df); color: var(--accent, #c8392b); }
+
+/* La entrada de pago se distingue sin gritar */
+.header-nav .nav-destacado { color: var(--accent, #c8392b); }
+
+/* En el cajón móvil el desplegable flotante se saldría de la pantalla: pasa a acordeón */
+@media (max-width: 700px) {
+  .nav-grupo { position: static; display: block; width: 100%; }
+  .nav-toggle { width: 100%; justify-content: center; }
+  .nav-sub {
+    position: static; transform: none; min-width: 0; width: 100%;
+    border: none; border-top: 1px solid var(--border, #d4cfc8); box-shadow: none;
+    background: var(--cream, #ede9df); padding: 0;
+  }
+  .nav-grupo:hover .nav-sub, .nav-grupo:focus-within .nav-sub { display: none; } /* en táctil, hover no vale */
+  .nav-grupo.abierto .nav-sub { display: block; }
+  .nav-sub a { text-align: center; }
+}
