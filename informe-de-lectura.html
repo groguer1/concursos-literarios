@@ -60,6 +60,28 @@ ul,ol{margin:0 0 1rem 1.4rem}li{line-height:1.7;margin-bottom:.45rem}
 .cta a.boton:hover{background:#a92e22}
 .pasos{counter-reset:paso;list-style:none;margin-left:0}
 .pasos li{counter-increment:paso;position:relative;padding-left:2.4rem;margin-bottom:.9rem}
+.tarifas-tabla{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem}
+.tarifas-tabla th{text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding:.6rem .5rem;font-weight:500}
+.tarifas-tabla td{border-bottom:1px solid var(--border);padding:.85rem .5rem;vertical-align:top;line-height:1.5}
+.tarifas-tabla tr.destacada-fila{background:var(--cream)}
+.tarifas-tabla .precio-celda{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--accent);white-space:nowrap}
+.tarifas-tabla .detalle{font-size:.82rem;color:var(--muted)}
+.tabla-scroll{overflow-x:auto}
+.nota-tabla{font-size:.88rem;color:var(--muted)}
+.formulario{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:1.8rem;margin:1.5rem 0}
+.formulario .fila{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.formulario label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.formulario input,.formulario select,.formulario textarea{width:100%;padding:.7rem .8rem;border:1px solid var(--border);border-radius:4px;font-family:inherit;font-size:.95rem;background:#fff;color:var(--ink)}
+.formulario textarea{min-height:110px;resize:vertical}
+.formulario input:focus,.formulario select:focus,.formulario textarea:focus{outline:none;border-color:var(--ink)}
+.formulario .campo{margin-bottom:1rem}
+.formulario button{background:var(--accent);color:#fff;border:none;padding:.9rem 2rem;border-radius:4px;font-size:.9rem;font-weight:500;letter-spacing:.04em;cursor:pointer;font-family:inherit}
+.formulario button:hover{background:#a92e22}
+.formulario button:disabled{opacity:.6;cursor:not-allowed}
+.form-legal{font-size:.8rem;color:var(--muted);margin-top:.9rem;line-height:1.5}
+.form-ok{display:none;margin-top:1rem;padding:1rem;background:rgba(184,134,11,.12);border:1px solid var(--gold);border-radius:4px;font-size:.92rem}
+.form-error{display:none;margin-top:1rem;padding:1rem;background:rgba(200,57,43,.1);border:1px solid var(--accent);border-radius:4px;font-size:.92rem}
+@media(max-width:600px){.formulario .fila{grid-template-columns:1fr}.tarifas-tabla{font-size:.88rem}}
 .pasos li::before{content:counter(paso);position:absolute;left:0;top:.05rem;width:1.7rem;height:1.7rem;background:var(--ink);color:var(--paper);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem}
 footer{background:var(--ink);color:var(--paper);text-align:center;padding:2rem;margin-top:3rem;font-size:13px}
 footer a{color:var(--gold)}
@@ -83,22 +105,11 @@ footer a{color:var(--gold)}
     "description": "Escritor con más de 20 años de oficio, autor de las sagas Valentina Roca y Calan Kennett."
   },
   "offers": [
-    {
-      "@type": "Offer",
-      "name": "Diagnóstico de arranque",
-      "description": "Primeras 50 páginas, sinopsis y carta de presentación: lo que de verdad lee un editor antes de decidir.",
-      "price": "95",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/InStock"
-    },
-    {
-      "@type": "Offer",
-      "name": "Informe de lectura completo",
-      "description": "Novela entera de hasta 100.000 palabras, con informe escrito de 8 a 12 páginas y plan de revisión priorizado.",
-      "price": "290",
-      "priceCurrency": "EUR",
-      "availability": "https://schema.org/LimitedAvailability"
-    }
+    {"@type": "Offer", "name": "Diagnóstico de arranque", "description": "Primeras 50 páginas, sinopsis y carta de presentación.", "price": "95", "priceCurrency": "EUR", "availability": "https://schema.org/InStock"},
+    {"@type": "Offer", "name": "Informe de lectura hasta 40.000 palabras", "price": "190", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"},
+    {"@type": "Offer", "name": "Informe de lectura de 40.001 a 70.000 palabras", "price": "240", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"},
+    {"@type": "Offer", "name": "Informe de lectura de 70.001 a 100.000 palabras", "price": "290", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"},
+    {"@type": "Offer", "name": "Informe de lectura de 100.001 a 130.000 palabras", "price": "350", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"}
   ]
 }
 </script>
@@ -119,8 +130,7 @@ footer a{color:var(--gold)}
   "mainEntity": [
     {"@type": "Question", "name": "¿Qué es un informe de lectura y en qué se diferencia de una corrección?",
      "acceptedAnswer": {"@type": "Answer", "text": "Un informe de lectura valora la obra: si la estructura aguanta, si los personajes funcionan, dónde se cae el ritmo y si el conjunto está listo para enviarse a una editorial. No se toca el texto. Una corrección de estilo, en cambio, trabaja sobre el manuscrito frase a frase y es un servicio distinto, mucho más caro, que solo tiene sentido cuando la novela ya está cerrada. Corregir un texto que todavía va a cambiar de estructura es tirar el dinero."}},
-    {"@type": "Question", "name": "¿Cuánto cuesta un informe de lectura de una novela?",
-     "acceptedAnswer": {"@type": "Answer", "text": "Aquí, 290 euros para una novela de hasta 100.000 palabras, con 40 euros más por cada 20.000 palabras adicionales. El precio es cerrado y se sabe antes de empezar. También hay un diagnóstico de arranque por 95 euros, que cubre las primeras 50 páginas, la sinopsis y la carta de presentación. En el mercado español encontrarás informes desde 60 euros y por encima de 600; conviene preguntar siempre cuántas páginas tiene el informe y quién lo firma."}},
+    {"@type": "Question", "name": "¿Cuánto cuesta un informe de lectura de una novela?", "acceptedAnswer": {"@type": "Answer", "text": "El precio va por extensión: 190 euros hasta 40.000 palabras, 240 de 40.000 a 70.000, 290 de 70.000 a 100.000 y 350 de 100.000 a 130.000. Por encima de 130.000, presupuesto. También hay un diagnóstico de arranque de 95 euros sobre las primeras 50 páginas, la sinopsis y la carta. En el mercado español conviven servicios de 45 a 90 euros con agencias que cobran entre 190 y 410 euros más IVA según extensión; antes de contratar cualquiera, pregunta cuántas páginas tiene el informe y quién lo firma."}},
     {"@type": "Question", "name": "¿Cuánto tarda?",
      "acceptedAnswer": {"@type": "Answer", "text": "Tres semanas desde que se confirma el encargo para el informe completo, y una semana para el diagnóstico de arranque. Solo se aceptan dos novelas completas al mes: leer bien una novela lleva sus horas y no se puede acelerar sin que se note en el resultado."}},
     {"@type": "Question", "name": "¿Y si el informe me dice que la novela no está lista?",
@@ -191,34 +201,40 @@ footer a{color:var(--gold)}
 
 <h2>Precios</h2>
 
-<div class="tarifas">
-  <div class="tarifa">
-    <div class="etiqueta">Para empezar</div>
-    <h3>Diagnóstico de arranque</h3>
-    <div class="precio">95 €</div>
-    <p>Las <strong>primeras 50 páginas</strong>, la sinopsis y la carta de presentación: exactamente lo que lee un editor antes de decidir si sigue.</p>
-    <ul>
-      <li>Informe de 3 a 4 páginas</li>
-      <li>Entrega en una semana</li>
-      <li>Ideal si dudas antes de encargar el completo</li>
-    </ul>
-  </div>
-  <div class="tarifa destacada">
-    <div class="etiqueta">El completo</div>
-    <h3>Informe de lectura</h3>
-    <div class="precio">290 € <small>hasta 100.000 palabras</small></div>
-    <p>La novela entera, leída de principio a fin, con el informe de 8 a 12 páginas y el plan de revisión.</p>
-    <ul>
-      <li>+40 € por cada 20.000 palabras de más</li>
-      <li>Entrega en tres semanas</li>
-      <li>Incluye una respuesta por escrito a tus dudas sobre el informe</li>
-    </ul>
-  </div>
+<p>El precio depende de la extensión, porque leer 130.000 palabras no es el mismo trabajo que leer 45.000. Es cerrado: lo sabes antes de empezar y no cambia después.</p>
+
+<div class="tabla-scroll">
+<table class="tarifas-tabla">
+  <thead><tr><th>Extensión del manuscrito</th><th>Precio</th><th>Entrega</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Diagnóstico de arranque</strong><br><span class="detalle">Primeras 50 páginas + sinopsis + carta</span></td><td class="precio-celda">95 €</td><td>1 semana</td></tr>
+    <tr><td>Hasta 40.000 palabras<br><span class="detalle">Novela corta, juvenil, relatos</span></td><td class="precio-celda">190 €</td><td>2 semanas</td></tr>
+    <tr><td>De 40.001 a 70.000</td><td class="precio-celda">240 €</td><td>2 semanas</td></tr>
+    <tr class="destacada-fila"><td>De 70.001 a 100.000<br><span class="detalle">La extensión más habitual de una novela</span></td><td class="precio-celda">290 €</td><td>3 semanas</td></tr>
+    <tr><td>De 100.001 a 130.000</td><td class="precio-celda">350 €</td><td>4 semanas</td></tr>
+    <tr><td>Más de 130.000 palabras</td><td class="precio-celda">Presupuesto</td><td>A convenir</td></tr>
+  </tbody>
+</table>
 </div>
 
+<p class="nota-tabla">Precios finales, sin sorpresas. Si no sabes cuántas palabras tiene tu manuscrito, en Word está en «Revisar → Contar palabras»; dímelo aproximado y yo te confirmo el tramo.</p>
+
 <div class="aviso">
-  <p><strong>Dos novelas al mes, no más.</strong> Leer bien una novela son muchas horas y no se pueden acelerar sin que se note. Si el mes está cerrado, te lo digo y te doy fecha; no acepto encargos que no pueda hacer bien.</p>
+  <p><strong>Por encima de 130.000 palabras, hablamos antes.</strong> No es solo que cueste más leerlo: en una primera novela esa extensión es en sí misma un problema para publicar, y conviene que lo sepas antes de gastarte el dinero en un informe.</p>
 </div>
+
+<h3>¿Es caro o barato? Compáralo tú</h3>
+
+<p>El mercado español está partido en dos y conviene saberlo antes de contratar nada, aquí o en cualquier otro sitio:</p>
+
+<ul>
+  <li><strong>Servicios de 45 a 90 €.</strong> Existen y son legítimos, pero a ese precio nadie puede dedicarle a tu novela más de dos o tres horas. Suelen entregar entre 6 y 9 páginas con mucha descripción de lo que ya sabes y poco análisis.</li>
+  <li><strong>Agencias editoriales, de 190 a 410 € más IVA</strong> según extensión. Una de las más conocidas cobra <strong>410 € + IVA</strong> (unos 496 € finales) por una novela de 90.000 palabras y entrega un informe de <strong>5 a 6 páginas</strong> en un plazo de tres a seis semanas.</li>
+</ul>
+
+<p>Este servicio está en la banda profesional pero por debajo de las agencias: <strong>290 € finales por esa misma novela</strong>, con un informe de <strong>8 a 12 páginas</strong> y en tres semanas. La diferencia es que aquí no hay estructura de empresa que pagar y no lo lee un lector externo contratado por horas: lo leo yo.</p>
+
+<p class="nota-tabla">Antes de contratar cualquier informe, aquí o donde sea, pregunta siempre dos cosas: <strong>cuántas páginas tiene</strong> y <strong>quién lo firma</strong>.</p>
 
 <h2>Cómo funciona</h2>
 
@@ -245,12 +261,91 @@ footer a{color:var(--gold)}
   <p><strong>Antes de contratar nada, léete esto.</strong> Si una editorial te pide dinero por publicarte, no es una editorial: es una empresa de autoedición disfrazada. Lo explicamos en <a href="articulos/autopublicacion-vs-editorial-tradicional-espana.html">autopublicación frente a editorial tradicional</a>, y en el <a href="editoriales.html">directorio de editoriales</a> puedes comprobar cuáles aceptan manuscritos sin agente y por qué vía. Todo eso es gratis y seguirá siéndolo.</p>
 </div>
 
-<div class="cta">
-  <h2>¿Hablamos de tu novela?</h2>
-  <p>Cuéntame qué has escrito y te digo si puedo ayudarte, cuánto cuesta y para cuándo lo tendrías. Sin compromiso.</p>
-  <a class="boton" href="mailto:dmateos.pascual@gmail.com?subject=Informe%20de%20lectura%20-%20consulta">Escríbeme</a>
-  <p style="margin-top:1rem;font-size:.88rem">dmateos.pascual@gmail.com</p>
-</div>
+<h2 id="contacto">Cuéntame tu novela</h2>
+
+<p>Rellena esto y te contesto personalmente: te digo si puedo ayudarte, el precio exacto según la extensión y para cuándo lo tendrías. <strong>No se paga nada aquí.</strong> Si te encaja lo que te propongo, te envío entonces el enlace de pago; si no, no pasa nada y no hay compromiso.</p>
+
+<form class="formulario" id="form-informe" action="https://formspree.io/f/xqewlzgj" method="POST">
+  <input type="hidden" name="_subject" value="Letras Españolas · Solicitud de informe de lectura">
+  <input type="hidden" name="web" value="letrasespanolas.org - informe de lectura">
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+  <div class="fila">
+    <div><label for="nombre">Nombre y apellidos</label><input id="nombre" type="text" name="nombre" required></div>
+    <div><label for="email">Correo electrónico</label><input id="email" type="email" name="email" required></div>
+  </div>
+
+  <div class="fila">
+    <div>
+      <label for="servicio">Qué te interesa</label>
+      <select id="servicio" name="servicio" required>
+        <option value="">Elige una opción</option>
+        <option>Diagnóstico de arranque (95 €)</option>
+        <option>Informe de lectura completo</option>
+        <option>No lo tengo claro, aconséjame</option>
+      </select>
+    </div>
+    <div>
+      <label for="genero">Género</label>
+      <select id="genero" name="genero" required>
+        <option value="">Elige una opción</option>
+        <option>Narrativa contemporánea</option>
+        <option>Novela negra o thriller</option>
+        <option>Fantasía o ciencia ficción</option>
+        <option>Romántica</option>
+        <option>Histórica</option>
+        <option>Juvenil o infantil</option>
+        <option>Relatos</option>
+        <option>Otro</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="fila">
+    <div>
+      <label for="palabras">Extensión aproximada</label>
+      <select id="palabras" name="palabras" required>
+        <option value="">Elige una opción</option>
+        <option>Hasta 40.000 palabras</option>
+        <option>Entre 40.000 y 70.000</option>
+        <option>Entre 70.000 y 100.000</option>
+        <option>Entre 100.000 y 130.000</option>
+        <option>Más de 130.000</option>
+        <option>No lo sé</option>
+      </select>
+    </div>
+    <div>
+      <label for="estado">En qué punto estás</label>
+      <select id="estado" name="estado" required>
+        <option value="">Elige una opción</option>
+        <option>Primer borrador terminado</option>
+        <option>Ya lo he revisado yo</option>
+        <option>Lo han leído beta readers</option>
+        <option>Ya lo he enviado a editoriales</option>
+        <option>Todavía lo estoy escribiendo</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="campo">
+    <label for="mensaje">De qué va y qué es lo que más te preocupa</label>
+    <textarea id="mensaje" name="mensaje" placeholder="Cuéntame brevemente la novela y qué dudas tienes: si el principio engancha, si el final funciona, si es demasiado larga…" required></textarea>
+  </div>
+
+  <div class="campo" style="margin-bottom:1.2rem">
+    <label style="text-transform:none;letter-spacing:0;font-size:.85rem;color:var(--ink);display:flex;gap:.6rem;align-items:flex-start;line-height:1.5">
+      <input type="checkbox" name="consentimiento" required style="width:auto;margin-top:.2rem">
+      <span>He leído y acepto la <a href="privacidad.html" style="color:var(--accent)">política de privacidad</a>. Mis datos se usan solo para responder a esta consulta.</span>
+    </label>
+  </div>
+
+  <button type="submit">Enviar consulta</button>
+
+  <p class="form-legal">No envíes el manuscrito todavía: primero hablamos y, si seguimos adelante, te digo cómo mandarlo. Suelo contestar en 48 horas laborables. Puedes consultar las <a href="aviso-legal.html" style="color:var(--accent)">condiciones de contratación</a> y la <a href="privacidad.html" style="color:var(--accent)">política de privacidad</a>.</p>
+
+  <div class="form-ok" id="form-ok">✓ Recibido. Te contesto personalmente en un par de días laborables al correo que me has dejado.</div>
+  <div class="form-error" id="form-error">No se ha podido enviar. Escríbeme directamente a <a href="mailto:dmateos.pascual@gmail.com">dmateos.pascual@gmail.com</a>.</div>
+</form>
 
 <h2>Preguntas frecuentes</h2>
 
@@ -277,5 +372,34 @@ footer a{color:var(--gold)}
   <p>© <span id="year">2026</span> Letras Españolas · Para escritores de España</p>
   <p style="margin-top:6px"><a href="https://letrasespanolas.org/">Inicio</a> · <a href="https://letrasespanolas.org/articulos/">Artículos</a> · <a href="https://letrasespanolas.org/sobre.html">Sobre Letras Españolas</a> · <a href="https://letrasespanolas.org/contacto.html">Contacto</a> · <a href="https://letrasespanolas.org/aviso-legal.html">Aviso legal</a> · <a href="https://letrasespanolas.org/privacidad.html">Privacidad</a> · <a href="https://letrasespanolas.org/cookies.html">Cookies</a></p>
 </footer>
+<script>
+(function () {
+  var f = document.getElementById('form-informe');
+  if (!f) return;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var boton = f.querySelector('button[type=submit]');
+    var ok = document.getElementById('form-ok');
+    var err = document.getElementById('form-error');
+    ok.style.display = 'none'; err.style.display = 'none';
+    boton.disabled = true; boton.textContent = 'Enviando…';
+    fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+      .then(function (r) {
+        if (r.ok) {
+          f.reset();
+          ok.style.display = 'block';
+          boton.style.display = 'none';
+        } else {
+          err.style.display = 'block';
+          boton.disabled = false; boton.textContent = 'Enviar consulta';
+        }
+      })
+      .catch(function () {
+        err.style.display = 'block';
+        boton.disabled = false; boton.textContent = 'Enviar consulta';
+      });
+  });
+})();
+</script>
 </body>
 </html>
