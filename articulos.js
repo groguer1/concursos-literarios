@@ -16,7 +16,7 @@ const ARTICULOS = [
     cat: 'El oficio',
     titulo: 'Qué es un beta reader y cómo encontrar lectores cero en España',
     excerpt: 'Para qué sirve un beta reader, cuántos necesitas, dónde encontrarlos en España y cómo pedirles el feedback que realmente te sirve.',
-    tiempo: '11 min',
+    tiempo: '13 min',
     url: 'articulos/beta-readers-lectores-cero.html'
   },
   {
@@ -32,7 +32,7 @@ const ARTICULOS = [
     cat: 'El oficio',
     titulo: 'Fiscalidad del escritor en España: IRPF, IVA y lo que necesitas saber antes de cobrar',
     excerpt: 'Cuándo darte de alta como autónomo, cómo tributan las regalías, el IVA en los servicios del escritor, el modelo 130 y los gastos deducibles.',
-    tiempo: '15 min',
+    tiempo: '6 min',
     url: 'articulos/fiscalidad-escritor-autonomo-espana.html'
   },
   {
@@ -48,7 +48,7 @@ const ARTICULOS = [
     cat: 'El oficio',
     titulo: 'El síndrome de la segunda novela: qué es y cómo superarlo',
     excerpt: 'Por qué la segunda novela es diferente, las tres trampas más comunes, cómo volver a escribir después del primer libro y qué te enseña este proceso sobre tu oficio.',
-    tiempo: '11 min',
+    tiempo: '6 min',
     url: 'articulos/escribir-segunda-novela-sindrome.html'
   },
   {
@@ -56,7 +56,7 @@ const ARTICULOS = [
     cat: 'Técnica narrativa',
     titulo: 'Cómo titular tu novela: técnicas, criterios y errores frecuentes',
     excerpt: 'Qué tiene que hacer un buen título, los tipos que funcionan, los errores más frecuentes y lo que opinan los editores sobre cambiar el título que tú has elegido.',
-    tiempo: '10 min',
+    tiempo: '6 min',
     url: 'articulos/como-titular-novela.html'
   },
   {
@@ -64,39 +64,23 @@ const ARTICULOS = [
     cat: 'Publicación',
     titulo: 'Crowdfunding para publicar un libro en España: guía práctica 2026',
     excerpt: 'Plataformas disponibles, cómo calcular el objetivo de financiación, qué recompensas funcionan y qué determina el éxito o el fracaso de una campaña editorial.',
-    tiempo: '13 min',
+    tiempo: '6 min',
     url: 'articulos/crowdfunding-libro-espana.html'
-  },
-  {
-    id: 'punto-de-vista-narrativo',
-    cat: 'Técnica narrativa',
-    titulo: 'Punto de vista narrativo: cuál elegir y cómo no cambiar sin querer',
-    excerpt: 'Primera persona, tercera limitada y omnisciente: cómo elegir el punto de vista para tu novela y cómo detectar y corregir el head hopping en tu propio texto.',
-    tiempo: '13 min',
-    url: 'articulos/punto-de-vista-narrativo.html'
   },
   {
     id: 'como-escribir-dialogo-novela',
     cat: 'Técnica narrativa',
     titulo: 'Cómo escribir diálogos en una novela: técnica, ritmo y puntuación en español',
     excerpt: 'Para qué sirve el diálogo, cómo crear voces individuales, el subtexto, la puntuación correcta con rayas en español y cómo modular el ritmo entre narración y diálogo.',
-    tiempo: '13 min',
+    tiempo: '7 min',
     url: 'articulos/como-escribir-dialogo-novela.html'
-  },
-  {
-    id: 'sinopsis-novela-editorial',
-    cat: 'Publicación',
-    titulo: 'Cómo escribir una sinopsis que conquiste a editores y agentes',
-    excerpt: 'Guía completa para escribir la sinopsis de tu novela: estructura, los cinco elementos imprescindibles y los errores que la arruinan antes de que el agente pase a la segunda página.',
-    tiempo: '12 min',
-    url: 'articulos/sinopsis-novela-editorial.html'
   },
   {
     id: 'agente-literario-espana',
     cat: 'Publicación',
     titulo: 'Cómo encontrar un agente literario en España: guía completa',
     excerpt: 'Qué hace un agente, cuándo buscarlo, cómo preparar la propuesta y qué agencias representan tu género. Todo lo que necesitas antes de enviar tu primera consulta.',
-    tiempo: '14 min',
+    tiempo: '7 min',
     url: 'articulos/agente-literario-espana.html'
   },
   {
@@ -104,7 +88,7 @@ const ARTICULOS = [
     cat: 'Publicación',
     titulo: 'La carta de presentación a una editorial: cómo escribirla y qué no poner nunca',
     excerpt: 'La carta de presentación es lo primero que lee el agente. Esta guía explica la estructura exacta, los cuatro bloques que tiene que tener y los errores que la matan en treinta segundos.',
-    tiempo: '12 min',
+    tiempo: '13 min',
     url: 'articulos/carta-presentacion-editorial.html'
   },
   {
@@ -120,7 +104,7 @@ const ARTICULOS = [
     cat: 'Concursos',
     titulo: 'Los grandes premios literarios de España en 2026: guía completa',
     excerpt: 'Premio Planeta, Herralde, Alfaguara, Nadal, Loewe y los Premios Nacionales: dotación, requisitos y qué tipo de obra busca cada jurado.',
-    tiempo: '11 min',
+    tiempo: '13 min',
     url: 'articulos/premios-literarios-dotacion-espana.html'
   },
   {
@@ -128,7 +112,7 @@ const ARTICULOS = [
     cat: 'Escritura creativa',
     titulo: 'Cómo escribir un relato corto para ganar un concurso literario',
     excerpt: 'Guía técnica para relatos de concurso: estructura, apertura, el giro final, la extensión óptima y qué diferencia técnicamente a los finalistas del resto.',
-    tiempo: '13 min',
+    tiempo: '7 min',
     url: 'articulos/como-escribir-relato-corto-concurso.html'
   },
   {
@@ -144,7 +128,7 @@ const ARTICULOS = [
     cat: 'Escritura creativa',
     titulo: 'Estructura en tres actos: la guía definitiva para novelistas',
     excerpt: 'Cómo aplicar la estructura clásica de tres actos a tu novela sin que se note: detonante, punto oscuro, clímax y el arco del personaje que hace que el lector llegue al final.',
-    tiempo: '13 min',
+    tiempo: '7 min',
     url: 'articulos/estructura-tres-actos-novela.html'
   },
   {
@@ -152,7 +136,7 @@ const ARTICULOS = [
     cat: 'Publicación',
     titulo: 'Amazon KDP vs editorial tradicional: comparativa honesta para escritores españoles',
     excerpt: 'Regalías, distribución, control creativo y velocidad: cuándo tiene sentido cada opción y el modelo híbrido que usan cada vez más autores.',
-    tiempo: '15 min',
+    tiempo: '7 min',
     url: 'articulos/amazon-kdp-vs-editorial-tradicional.html'
   },
   {
@@ -160,7 +144,7 @@ const ARTICULOS = [
     cat: 'Publicación',
     titulo: 'Autopublicación en papel: guía completa de KDP Print e IngramSpark',
     excerpt: 'Cómo autopublicar tu libro en papel en España: diferencias entre KDP Print e IngramSpark, costes reales, distribución en librerías y lo que nadie te cuenta.',
-    tiempo: '14 min',
+    tiempo: '6 min',
     url: 'articulos/autopublicacion-papel-kdp-print.html'
   },
   {
@@ -168,7 +152,7 @@ const ARTICULOS = [
     cat: 'Derechos de autor',
     titulo: 'El contrato editorial: cláusulas que debes leer (y negociar) antes de firmar',
     excerpt: 'Anticipo, regalías, territorialidad, reversión de derechos, cláusula de opción: lo que significan, qué es negociable y qué nunca deberías aceptar.',
-    tiempo: '15 min',
+    tiempo: '7 min',
     url: 'articulos/contrato-editorial-clausulas.html'
   },
   {
@@ -184,7 +168,7 @@ const ARTICULOS = [
     cat: 'Derechos de autor',
     titulo: 'Cómo registrar tu obra literaria en España: guía paso a paso',
     excerpt: 'Para qué sirve el registro, dónde y cómo registrar en cada comunidad autónoma, cuánto cuesta y las alternativas gratuitas que son jurídicamente válidas.',
-    tiempo: '9 min',
+    tiempo: '6 min',
     url: 'articulos/registrar-obra-literaria-espana.html'
   },
   {
@@ -227,7 +211,7 @@ const ARTICULOS = [
     tiempo: '19 min',
     url: 'articulos/autopublicacion-vs-editorial-tradicional-espana.html'
   },
-{
+  {
 id: 'como-leer-bases-concurso-literario',
 cat: 'Concursos',
 titulo: 'Cómo leer las bases de un concurso literario: guía para no descalificarte',
@@ -235,7 +219,7 @@ excerpt: 'Los once apartados que debes revisar en cualquier convocatoria: extens
 tiempo: '12 min',
 url: 'articulos/como-leer-bases-concurso-literario.html'
 },
-{
+  {
 id: 'mismo-relato-varios-concursos',
 cat: 'Concursos',
 titulo: '¿Puedo presentar el mismo relato a varios concursos a la vez?',
@@ -243,7 +227,7 @@ excerpt: 'Sí, salvo que las bases lo prohíban. Qué significa exactamente iné
 tiempo: '8 min',
 url: 'articulos/mismo-relato-varios-concursos.html'
 },
-{
+  {
 id: 'concursos-literarios-escritores-ineditos-espana',
 cat: 'Concursos',
 titulo: 'Concursos literarios para escritores inéditos en España 2026: dónde buscarlos y cómo presentarse',
@@ -251,7 +235,7 @@ excerpt: 'Guía completa para escritores sin obra publicada: dónde encontrar co
 tiempo: '14 min',
 url: 'articulos/concursos-literarios-escritores-ineditos-espana.html'
 },
-{
+  {
 id: 'seudonimo-concurso-literario',
 cat: 'Concursos',
 titulo: 'El seudónimo en concursos literarios: qué es, por qué existe y cómo elegirlo',
@@ -259,6 +243,14 @@ excerpt: 'Por qué los concursos usan seudónimo, cómo funciona el sistema de s
 tiempo: '10 min',
 url: 'articulos/seudonimo-concurso-literario.html'
 },
+  {
+    id: 'como-obtener-isbn-espana',
+    cat: 'Publicación',
+    titulo: 'Cómo obtener el ISBN en España: precio, pasos y depósito legal',
+    excerpt: 'Cuánto cuesta el ISBN en 2026, cómo solicitarlo paso a paso en la Agencia del ISBN, si lo necesitas publicando en Amazon KDP y cuándo es obligatorio el depósito legal.',
+    tiempo: '6 min',
+    url: 'articulos/como-obtener-isbn-espana.html'
+  },
   {
     id: 'sinopsis-novela-editorial',
     cat: 'Publicación',
@@ -272,7 +264,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'El oficio',
     titulo: 'Talleres de escritura creativa en España: cómo elegir el que te conviene',
     excerpt: 'Cómo evaluar un taller de escritura: el currículum del docente, la metodología, el número de alumnos y las preguntas que debes hacer antes de inscribirte.',
-    tiempo: '11 min',
+    tiempo: '6 min',
     url: 'articulos/taller-escritura-creativa-espana.html'
   },
   {
@@ -288,7 +280,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Autopublicación',
     titulo: 'Cómo crear un epub: herramientas, formato y distribución de ebooks',
     excerpt: 'Flujo de trabajo completo para crear un epub: desde Word hasta el archivo validado listo para distribuir en Amazon KDP, Kobo, Apple Books y Google Play.',
-    tiempo: '13 min',
+    tiempo: '7 min',
     url: 'articulos/epub-formato-ebook-espana.html'
   },
   {
@@ -296,7 +288,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Técnica narrativa',
     titulo: 'Punto de vista narrativo: cuál elegir y cómo evitar el head hopping',
     excerpt: 'Primera persona, tercera limitada y omnisciente: criterios para elegir el punto de vista de tu novela y cómo detectar y corregir el head hopping.',
-    tiempo: '13 min',
+    tiempo: '7 min',
     url: 'articulos/punto-de-vista-narrativo.html'
   },
   {
@@ -304,7 +296,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Escritura creativa',
     titulo: 'Cómo escribir literatura infantil y juvenil: guía para autores',
     excerpt: 'El mapa del género por edades, los errores más comunes al escribir para niños, el protagonista con agencia y las editoriales de LIJ en España.',
-    tiempo: '14 min',
+    tiempo: '7 min',
     url: 'articulos/escritura-literatura-infantil-juvenil.html'
   },
   {
@@ -312,7 +304,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'El oficio',
     titulo: 'Becas y residencias de escritura en España: guía completa',
     excerpt: 'Tipos de ayudas, programas del Ministerio de Cultura, residencias autonómicas, fundaciones privadas y residencias internacionales para escritores.',
-    tiempo: '11 min',
+    tiempo: '5 min',
     url: 'articulos/becas-residencias-escritura-espana.html'
   },
   {
@@ -320,7 +312,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Escritura creativa',
     titulo: 'Cómo escribir ciencia ficción: guía técnica para escritores',
     excerpt: 'Subgéneros de la CF, worldbuilding coherente, extrañamiento cognitivo, los errores más frecuentes y cómo publicar CF en el mercado editorial español.',
-    tiempo: '14 min',
+    tiempo: '6 min',
     url: 'articulos/como-escribir-ciencia-ficcion.html'
   },
   {
@@ -328,7 +320,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Escritura creativa',
     titulo: 'Cómo escribir fantasía: worldbuilding, magia y estructura en el género',
     excerpt: 'Subgéneros de la fantasía, las Leyes de Sanderson para sistemas de magia, la worldbuilder\'s disease y cómo publicar fantasía en España.',
-    tiempo: '15 min',
+    tiempo: '6 min',
     url: 'articulos/como-escribir-fantasia.html'
   },
   {
@@ -338,14 +330,6 @@ url: 'articulos/seudonimo-concurso-literario.html'
     excerpt: 'Los cinco tipos de bloqueo del escritor y las soluciones específicas: perfeccionismo paralizante, desorientación narrativa, miedo al fracaso y agotamiento.',
     tiempo: '12 min',
     url: 'articulos/bloqueo-escritor-tecnicas.html'
-  },
-  {
-    id: 'cursos-online-escritores',
-    cat: 'El oficio',
-    titulo: 'Cursos online para escritores: ¿merecen la pena?',
-    excerpt: 'Análisis de los tipos de cursos online útiles para escritores: escritura creativa, autopublicación, marketing de autor y edición. Cuándo merece la pena pagar y dónde encontrarlos.',
-    tiempo: '13 min',
-    url: 'articulos/cursos-online-escritores.html'
   },
   {
     id: 'cursos-online-escritores',
@@ -418,7 +402,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     excerpt: 'Comparativa de costes por vía: editorial tradicional (0 €), Amazon KDP, servicios profesionales y coedición, con tabla por partidas, qué es gratis y señales de coedición abusiva.',
     tiempo: '12 min',
     url: 'articulos/cuanto-cuesta-publicar-libro-espana.html'
-  },
+  }
 ];
 
 // Función que renderiza la lista de artículos en el elemento indicado
