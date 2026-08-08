@@ -374,9 +374,9 @@ url: 'articulos/seudonimo-concurso-literario.html'
   {
     id: 'isbn-gratis-autopublicar-libro-espana',
     cat: 'Autopublicación',
-    titulo: 'ISBN gratis para autopublicar tu libro en España: guía 2026',
-    excerpt: 'Cómo conseguir el ISBN gratuito en España como autor autopublicado: quién puede pedirlo, el trámite paso a paso, ISBN propio vs el de Amazon KDP y el depósito legal.',
-    tiempo: '13 min',
+    titulo: '¿Hay ISBN gratis en España? Lo que cuesta de verdad y las vías gratuitas',
+    excerpt: 'El ISBN de la Agencia cuesta 45 € por edición para un autor que se autopublica: tarifas oficiales, cuáles son las vías realmente gratuitas, qué pierdes con ellas y cuándo compensa pagarlo.',
+    tiempo: '10 min',
     url: 'articulos/isbn-gratis-autopublicar-libro-espana.html'
   },
   {
