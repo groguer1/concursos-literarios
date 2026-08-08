@@ -224,7 +224,7 @@ id: 'mismo-relato-varios-concursos',
 cat: 'Concursos',
 titulo: '¿Puedo presentar el mismo relato a varios concursos a la vez?',
 excerpt: 'Sí, salvo que las bases lo prohíban. Qué significa exactamente inédito, las tres cláusulas de exclusividad que vas a encontrar y qué hacer si ganas dos premios con el mismo texto.',
-tiempo: '8 min',
+tiempo: '5 min',
 url: 'articulos/mismo-relato-varios-concursos.html'
 },
   {
