@@ -303,8 +303,8 @@ url: 'articulos/seudonimo-concurso-literario.html'
     id: 'becas-residencias-escritura-espana',
     cat: 'El oficio',
     titulo: 'Becas y residencias de escritura en España: guía completa',
-    excerpt: 'Tipos de ayudas, programas del Ministerio de Cultura, residencias autonómicas, fundaciones privadas y residencias internacionales para escritores.',
-    tiempo: '5 min',
+    excerpt: 'Quién convoca de verdad cada beca y residencia, qué requisitos piden y por qué no hace falta haber publicado antes para optar a la ayuda del Ministerio.',
+    tiempo: '9 min',
     url: 'articulos/becas-residencias-escritura-espana.html'
   },
   {
