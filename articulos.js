@@ -32,7 +32,7 @@ const ARTICULOS = [
     cat: 'El oficio',
     titulo: 'Fiscalidad del escritor en España: IRPF, IVA y lo que necesitas saber antes de cobrar',
     excerpt: 'Cuándo darte de alta como autónomo, cómo tributan las regalías, el IVA en los servicios del escritor, el modelo 130 y los gastos deducibles.',
-    tiempo: '6 min',
+    tiempo: '9 min',
     url: 'articulos/fiscalidad-escritor-autonomo-espana.html'
   },
   {
