@@ -252,6 +252,14 @@ url: 'articulos/seudonimo-concurso-literario.html'
     url: 'articulos/como-obtener-isbn-espana.html'
   },
   {
+    id: 'inteligencia-artificial-escritores-espana',
+    cat: 'El oficio',
+    titulo: 'Inteligencia artificial para escritores en España: usos y límites legales',
+    excerpt: 'Para qué sirve de verdad la IA al escribir, qué te obliga el Reglamento Europeo de IA desde agosto de 2026 (y qué no), si tienes derechos de autor sobre un texto escrito con su ayuda y qué pasa en concursos y editoriales.',
+    tiempo: '13 min',
+    url: 'articulos/inteligencia-artificial-escritores-espana.html'
+  },
+  {
     id: 'sinopsis-novela-editorial',
     cat: 'Publicación',
     titulo: 'Cómo escribir una sinopsis para editoriales y agentes literarios',
