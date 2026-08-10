@@ -2,13 +2,19 @@
 /**
  * Comprobador de sincronía de los tres directorios de letrasespanolas.org.
  *
- * Cada ficha vive en TRES sitios del mismo HTML y los tres tienen que decir lo mismo:
+ * Cada ficha vive en CUATRO sitios del mismo HTML y los cuatro tienen que decir lo mismo:
  *   1. el array JS (EDITORIALES / AGENTES / REVISTAS), que alimenta la vista de detalle;
  *   2. el <details class="dir-ficha">, que es lo que indexa Google;
- *   3. el atributo data-search de la tarjeta, que es lo que usa el buscador de la web.
+ *   3. el atributo data-search de la tarjeta, que es lo que usa el buscador de la web;
+ *   4. los atributos data-* de filtro (data-tipo, data-generos…) y el año visible en la
+ *      rejilla, que es lo que ve el lector y lo que devuelven los botones de filtro.
  *
- * El (3) se quedaba fuera de las comprobaciones anteriores: al corregir un dato en el
- * array y en el <details>, el buscador seguía encontrando la ficha por el dato viejo.
+ * El (3) se quedaba fuera hasta el 4/08: al corregir un dato en el array y en el <details>,
+ * el buscador seguía encontrando la ficha por el dato viejo.
+ * El (4) se quedaba fuera hasta el 11/08, y se pagó dos veces: los cuatro sellos
+ * reclasificados de independiente a grande el 4/08 seguían saliendo al pulsar
+ * «Independientes», y los 37 años de fundación retirados el 2/08 seguían impresos en la
+ * rejilla. Un dato corregido solo en el array no está corregido.
  *
  * Uso:  node scripts/comprobar-sincronia.js
  * Sale con código 1 si hay algún campo desincronizado.
@@ -26,6 +32,15 @@ const DIRECTORIOS = [
     variable: 'EDITORIALES',
     // Campos del array que se vuelcan en data-search (lo que busca el usuario).
     busqueda: ['nombre', 'desc', 'ciudad', 'tipo', 'autores'],
+    // Atributos data-* de la tarjeta que usan los botones de filtro.
+    filtros: {
+      'data-tipo': 'tipo',
+      'data-generos': 'generos',
+      'data-sinagente': 'sinAgente',
+      'data-premio': 'premio',
+      'data-noveles': 'noveles',
+    },
+    anioVisible: true, // la rejilla imprime el año de fundación como etiqueta
     etiquetas: {
       envio: 'Cómo enviar tu manuscrito',
       colecciones: 'Colecciones',
@@ -37,6 +52,7 @@ const DIRECTORIOS = [
     archivo: 'agentes.html',
     variable: 'AGENTES',
     busqueda: ['nombre', 'desc', 'ciudad'],
+    filtros: { 'data-especialidades': 'especialidades' },
     etiquetas: {
       contacto: 'Cómo enviar tu propuesta',
       autores: 'Autores representados',
@@ -47,6 +63,7 @@ const DIRECTORIOS = [
     archivo: 'revistas.html',
     variable: 'REVISTAS',
     busqueda: ['nombre', 'desc', 'ciudad'],
+    filtros: { 'data-tipo': 'tipo', 'data-acepta': 'acepta' },
     etiquetas: {
       colaboraciones: 'Cómo colaborar',
       periodicidad: 'Periodicidad',
@@ -112,7 +129,12 @@ function leerTarjetas(html) {
     const siguiente = html.indexOf('<div class="dir-item"', re.lastIndex);
     const trozo = html.slice(re.lastIndex, siguiente === -1 ? html.length : siguiente);
     const det = trozo.match(/<details class="dir-ficha"[\s\S]*?<\/details>/);
-    tarjetas.set(id, { busqueda: decodificar(busqueda), ficha: det ? det[0] : null });
+    // Atributos data-* de filtro y año impreso en la rejilla (capa 4).
+    const atribs = {};
+    for (const a of atributos.matchAll(/(data-[a-z-]+)="([^"]*)"/g)) atribs[a[1]] = decodificar(a[2]);
+    const tags = trozo.match(/<div class="dir-tags">[\s\S]*?<\/div>/);
+    const anio = tags ? (tags[0].match(/<span class="tag">(1[89]\d\d|20\d\d)<\/span>/) || [])[1] || null : null;
+    tarjetas.set(id, { busqueda: decodificar(busqueda), ficha: det ? det[0] : null, atribs, anio });
   }
   return tarjetas;
 }
@@ -172,6 +194,31 @@ for (const dir of DIRECTORIOS) {
       const esperado = decodificar(String(ficha[clave])).replace(/\s+/g, ' ').trim().toLowerCase();
       if (!tarjeta.busqueda.toLowerCase().includes(esperado)) {
         aviso(`${ficha.id} · ${clave}: data-search NO lo contiene (el buscador sigue usando el dato viejo)\n      array       → ${esperado}\n      data-search → ${tarjeta.busqueda}`);
+      }
+    }
+
+    // 4a: array ↔ atributos data-* de filtro (lo que devuelven los botones de la web)
+    for (const [atributo, clave] of Object.entries(dir.filtros || {})) {
+      const valor = ficha[clave];
+      if (valor === undefined || valor === null) continue;
+      campos++;
+      const esperado = Array.isArray(valor) ? valor.join(',') : String(valor);
+      const enTarjeta = tarjeta.atribs[atributo];
+      if (enTarjeta === undefined) {
+        aviso(`${ficha.id} · ${atributo}: falta en la tarjeta (el array dice "${esperado}")`);
+      } else if (enTarjeta !== esperado) {
+        aviso(`${ficha.id} · ${atributo}: el filtro usa el valor viejo\n      array   → ${esperado}\n      tarjeta → ${enTarjeta}`);
+      }
+    }
+
+    // 4b: array ↔ año impreso en la rejilla (los años retirados no pueden seguir publicados)
+    if (dir.anioVisible) {
+      campos++;
+      const esperado = ficha.fundada ? String(ficha.fundada) : null;
+      if (esperado !== tarjeta.anio) {
+        aviso(esperado === null
+          ? `${ficha.id}: la tarjeta publica el año ${tarjeta.anio} y el array no lo trae (¿se retiró solo del array?)`
+          : `${ficha.id}: el array dice fundada en ${esperado} y la tarjeta muestra ${tarjeta.anio || 'nada'}`);
       }
     }
 
