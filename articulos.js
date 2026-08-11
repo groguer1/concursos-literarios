@@ -191,8 +191,8 @@ const ARTICULOS = [
     id: 'editoriales-que-aceptan-manuscritos-sin-agente',
     cat: 'Publicación',
     titulo: 'Editoriales que aceptan manuscritos sin agente en España (2026)',
-    excerpt: 'Lista actualizada de editoriales españolas con propuestas directas: Anagrama, Impedimenta, Siruela, Valdemar y muchas más, con sus requisitos y tiempos de respuesta.',
-    tiempo: '17 min',
+    excerpt: 'Qué editoriales españolas leen originales sin agente y cuáles no: Siruela, Tusquets, Alianza, los premios con publicación y los formularios de Penguin Random House y Planeta, que sí existen.',
+    tiempo: '12 min',
     url: 'articulos/editoriales-que-aceptan-manuscritos-sin-agente.html'
   },
   {
