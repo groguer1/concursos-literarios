@@ -41,6 +41,22 @@ const DIRECTORIOS = [
       'data-noveles': 'noveles',
     },
     anioVisible: true, // la rejilla imprime el año de fundación como etiqueta
+    // Capa 5: el interruptor y el texto que lo explica tienen que decir lo mismo.
+    // Nació el 12/08: seis fichas llevaban el badge verde «Sin agente» y un texto que decía
+    // «NO acepta manuscritos no solicitados». El texto se corrigió el 2/08 y el interruptor no.
+    coherencia: [
+      {
+        campo: 'sinAgente', cuando: true, texto: 'envio',
+        contradice: /\bno\s+(?:se\s+)?(?:acepta|admite|reciben?)\w*\s+(?:actualmente\s+)?(?:manuscritos|originales|propuestas|envíos)|(?:recepción|convocatoria)[^.]{0,40}\b(?:cerrada|cerrado)|ha\s+cerrado\s+la\s+recepción|solo\s+(?:trabaja|trabajan)\s+con\s+agentes|la\s+vía\s+es\s+el\s+agente/i,
+      },
+      {
+        campo: 'sinAgente', cuando: false, texto: 'envio',
+        contradice: /manuscritos\.penguinrandomhouse|admite\s+originales|acepta\s+(?:propuestas|originales|manuscritos)|por\s+correo\s+postal/i,
+        // «no acepta originales no solicitados» contiene «acepta originales»: si la frase es
+        // negativa manda la negación, no la coincidencia suelta.
+        salvoQue: /\bno\s+(?:se\s+)?(?:acepta|admite|reciben?)\w*|solo\s+(?:trabaja|trabajan|publica)|cerrada|cerrado/i,
+      },
+    ],
     etiquetas: {
       envio: 'Cómo enviar tu manuscrito',
       colecciones: 'Colecciones',
@@ -219,6 +235,18 @@ for (const dir of DIRECTORIOS) {
         aviso(esperado === null
           ? `${ficha.id}: la tarjeta publica el año ${tarjeta.anio} y el array no lo trae (¿se retiró solo del array?)`
           : `${ficha.id}: el array dice fundada en ${esperado} y la tarjeta muestra ${tarjeta.anio || 'nada'}`);
+      }
+    }
+
+    // 5: coherencia entre el interruptor y el texto que lo explica
+    for (const regla of dir.coherencia || []) {
+      const valor = ficha[regla.campo];
+      const texto = decodificar(String(ficha[regla.texto] || ''));
+      if (!texto) continue;
+      campos++;
+      if (regla.salvoQue && regla.salvoQue.test(texto)) continue;
+      if (valor === regla.cuando && regla.contradice.test(texto)) {
+        aviso(`${ficha.id} · ${regla.campo}=${JSON.stringify(valor)} contradice lo que dice ${regla.texto}:\n      ${texto.slice(0, 160)}`);
       }
     }
 
