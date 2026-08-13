@@ -73,7 +73,7 @@ header{border-bottom:2px solid var(--ink);position:relative}
 .book-author{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
 .book-editorial{font-size:10px;color:var(--muted);margin-bottom:.5rem}
 .book-genre{font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--border);color:var(--muted);display:inline-block;margin-bottom:.6rem}
-.book-search-btn{width:100%;padding:6px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;transition:background .15s}
+.book-search-btn{display:block;width:100%;box-sizing:border-box;padding:6px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;transition:background .15s;text-align:center;text-decoration:none}
 .book-search-btn:hover{background:var(--accent)}
 .empty{text-align:center;padding:3rem;color:var(--muted);border:1px solid var(--border);background:white}
 .stats-bar{display:flex;gap:2rem;padding:.75rem 0;border-bottom:1px solid var(--border);margin-bottom:1.25rem;flex-wrap:wrap}
@@ -138,7 +138,9 @@ footer a:hover{color:var(--ink)}
       <h1 class="section-title">Últimas novedades editoriales</h1>
       <div class="section-sub">Libros recién publicados en España · Todos los géneros · Actualizado semanalmente</div>
 
-      <p class="dir-intro">Este directorio reúne las últimas novedades editoriales publicadas en España, con una lista que se actualiza automáticamente a partir de los lanzamientos más recientes del mercado del libro. Para cada título encontrarás autor, editorial, género, fecha aproximada de publicación y una breve sinopsis, junto con la portada cuando está disponible, de modo que puedas hacerte una idea rápida de la obra antes de buscarla en librerías o plataformas online. Puedes filtrar por género usando los botones superiores (narrativa, poesía, ensayo, infantil o teatro) o escribir directamente en el buscador el título, el autor o la editorial que te interesa. Cada ficha incluye además un botón para buscar el libro en Google y localizar dónde comprarlo. Este listado resulta útil tanto para lectores que quieren estar al día de las novedades como para escritores que quieren observar qué géneros y editoriales tienen más actividad en cada momento. Si estás valorando publicar tu propio libro, puede interesarte comparar antes las diferencias entre <a href="articulos/autopublicacion-vs-editorial-tradicional-espana.html">autopublicación y editorial tradicional</a>, o revisar <a href="articulos/cuanto-cuesta-autopublicar-libro-espana.html">cuánto cuesta autopublicar un libro en España</a> para calcular tu presupuesto con cifras reales antes de dar el paso.</p>
+      <p class="dir-intro">Este directorio reúne las últimas novedades editoriales publicadas en España, con una lista que se actualiza automáticamente a partir de los lanzamientos más recientes del mercado del libro. Para cada título encontrarás autor, editorial, género, fecha aproximada de publicación y una breve sinopsis, junto con la portada cuando está disponible, de modo que puedas hacerte una idea rápida de la obra antes de buscarla en librerías o plataformas online. Puedes filtrar por género usando los botones superiores (narrativa, poesía, ensayo, infantil o teatro) o escribir directamente en el buscador el título, el autor o la editorial que te interesa. Cada ficha incluye además un botón que lleva directamente a la página del libro en una librería online, para que no tengas que buscarlo tú. Este listado resulta útil tanto para lectores que quieren estar al día de las novedades como para escritores que quieren observar qué géneros y editoriales tienen más actividad en cada momento. Si estás valorando publicar tu propio libro, puede interesarte comparar antes las diferencias entre <a href="articulos/autopublicacion-vs-editorial-tradicional-espana.html">autopublicación y editorial tradicional</a>, o revisar <a href="articulos/cuanto-cuesta-autopublicar-libro-espana.html">cuánto cuesta autopublicar un libro en España</a> para calcular tu presupuesto con cifras reales antes de dar el paso.</p>
+
+<p class="aviso-afiliados"><small>Los botones de compra son enlaces de afiliado. Si compras a través de ellos, Letras Españolas puede recibir una comisión sin coste adicional para ti. No influye en qué libros aparecen aquí: la lista se genera automáticamente a partir de los más vendidos que publica CEGAL, la confederación de libreros.</small></p>
 
 <div class="stats-bar">
         <div class="stat"><span class="stat-num" id="total-libros">0</span><span class="stat-label">Novedades</span></div>
@@ -172,7 +174,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Manuel Garand</div>
 <div class="book-editorial">Ediciones Temas de Hoy · 08/2026</div>
 <div class="book-genre">Otro</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Murdoku: 80 acertijos de lógica y asesinatos','Manuel Garand')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-murdoku-volumen-1%2F9791387869380%2F17135403" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="otro" data-search="murdoku: viaje al pasado manuel garand ediciones temas de hoy">
@@ -188,7 +190,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Manuel Garand</div>
 <div class="book-editorial">Ediciones Temas de Hoy · 08/2026</div>
 <div class="book-genre">Otro</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Murdoku: Viaje al pasado','Manuel Garand')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-murdoku-volumen-2-viaje-al-pasado%2F9791388279119%2F18224989" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="comerás flores lucía solla sobral libros del asteroide s.l.u.">
@@ -204,7 +206,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Lucía Solla Sobral</div>
 <div class="book-editorial">Libros del Asteroide S.L.U. · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Comerás flores','Lucía Solla Sobral')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-comeras-flores%2F9788410178595%2F17139851" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="las gratitudes delphine de vigan editorial anagrama s.a.u.">
@@ -220,7 +222,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Delphine de Vigan</div>
 <div class="book-editorial">Editorial Anagrama S.A.U. · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Las gratitudes','Delphine de Vigan')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-las-gratitudes%2F9788433980830%2F12163053" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="han cantado bingo lana corujo reservoir books">
@@ -236,7 +238,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Lana Corujo</div>
 <div class="book-editorial">RESERVOIR BOOKS · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Han cantado bingo','Lana Corujo')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-han-cantado-bingo%2F9788410352018%2F16436532" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="la intriga del funeral inconveniente eduardo mendoza seix barral">
@@ -252,7 +254,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Eduardo Mendoza</div>
 <div class="book-editorial">Seix Barral · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('La intriga del funeral inconveniente','Eduardo Mendoza')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-la-intriga-del-funeral-inconveniente%2F9788432249747%2F17937202" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="otro" data-search="cuaderno blackie books. vol. 15 cristóbal fortúnez blackie books">
@@ -268,7 +270,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Cristóbal Fortúnez</div>
 <div class="book-editorial">Blackie Books · 08/2026</div>
 <div class="book-genre">Otro</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Cuaderno Blackie Books. Vol. 15','Cristóbal Fortúnez')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-cuaderno-blackie-books-vol-15%2F9791387748364%2F18213206" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="la cámara de las maravillas maría oruña plaza &amp; janes">
@@ -284,7 +286,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">María Oruña</div>
 <div class="book-editorial">PLAZA &amp; JANES · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('La Cámara de las Maravillas','María Oruña')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-la-camara-de-las-maravillas%2F9788401038631%2F18147364" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="la península de las casas vacías david uclés siruela">
@@ -300,7 +302,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">David Uclés</div>
 <div class="book-editorial">Siruela · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('La península de las casas vacías','David Uclés')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-el-secreto-de-la-asistenta-la-asistenta-2%2F9788419835734%2F15855604" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="llevará tu nombre sonsoles editorial planeta">
@@ -316,7 +318,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Sonsoles</div>
 <div class="book-editorial">Editorial Planeta · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Llevará tu nombre','Sonsoles')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-llevara-tu-nombre%2F9788408315247%2F17693131" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="otro" data-search="murdle: resuelve el crimen g. t. karber ediciones temas de hoy">
@@ -332,7 +334,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">G. T. Karber</div>
 <div class="book-editorial">Ediciones Temas de Hoy · 08/2026</div>
 <div class="book-genre">Otro</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Murdle: Resuelve el crimen','G. T. Karber')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-murdle-resuelve-el-crimen%2F9791387869458%2F17537801" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="el verano en que mi madre tuvo los ojos verdes tatiana ţîbuleac impedimenta">
@@ -348,7 +350,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Tatiana Ţîbuleac</div>
 <div class="book-editorial">Impedimenta · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('El verano en que mi madre tuvo los ojos verdes','Tatiana Ţîbuleac')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-el-verano-en-que-mi-madre-tuvo-los-ojos-verdes%2F9788417553036%2F9179705" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="maite fernando aramburu tusquets editores s.a.">
@@ -364,7 +366,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Fernando Aramburu</div>
 <div class="book-editorial">Tusquets Editores S.A. · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Maite','Fernando Aramburu')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-maite%2F9788411077484%2F17848082" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="dorayaki durian sukegawa chai editora">
@@ -380,7 +382,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Durian Sukegawa</div>
 <div class="book-editorial">Chai Editora · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Dorayaki','Durian Sukegawa')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-dorayaki%2F9788412763621%2F14411380" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="el sótano roberto leal espasa">
@@ -396,7 +398,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Roberto Leal</div>
 <div class="book-editorial">Espasa · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('El sótano','Roberto Leal')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-el-sotano%2F9788467082395%2F18030980" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="el último secreto dan brown editorial planeta">
@@ -412,7 +414,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Dan Brown</div>
 <div class="book-editorial">Editorial Planeta · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('El último secreto','Dan Brown')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-el-ultimo-secreto%2F9788408306863%2F16922940" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="yesteryear claire burke adn editorial grupo anaya">
@@ -428,7 +430,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Claire Burke</div>
 <div class="book-editorial">AdN Editorial Grupo Anaya · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Yesteryear','Claire Burke')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-yesteryear%2F9791387596415%2F17984312" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="narrativa" data-search="la paciente silenciosa alex michaelides debolsillo">
@@ -444,7 +446,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Alex Michaelides</div>
 <div class="book-editorial">DEBOLSILLO · 08/2026</div>
 <div class="book-genre">Narrativa</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('La paciente silenciosa','Alex Michaelides')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-la-paciente-silenciosa%2F9788466351935%2F12731000" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="book-card" data-genero="cómic y manga" data-search="frieren 15 ed. especial kanehito yamada norma editorial, s.a.">
@@ -476,7 +478,7 @@ footer a:hover{color:var(--ink)}
 <div class="book-author">Ketty Garat</div>
 <div class="book-editorial">Deusto · 08/2026</div>
 <div class="book-genre">Ensayo</div>
-<button class="book-search-btn" onclick="buscarEnGoogle('Todos los hombres de Sánchez','Ketty Garat')">🔍 Buscar en Google</button>
+<a class="book-search-btn" href="https://www.awin1.com/cread.php?awinmid=21491&amp;awinaffid=3033279&amp;clickref=letras-libros&amp;ued=https%3A%2F%2Fwww.casadellibro.com%2Flibro-todos-los-hombres-de-sanchez%2F9788423440078%2F17994977" target="_blank" rel="sponsored nofollow noopener">📖 Comprar el libro</a>
 </div>
 </div>
 <div class="empty" id="no-results" style="display:none;grid-column:1/-1">No se encontraron libros con esos criterios</div>
