@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#ede9df"/>
+  <text x="32" y="45" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="bold" text-anchor="middle">
+    <tspan fill="#1a1a18">L</tspan><tspan fill="#c8392b">E</tspan>
+  </text>
+</svg>
