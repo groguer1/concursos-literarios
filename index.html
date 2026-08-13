@@ -266,26 +266,8 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 </div>
       </div>
 
-      <div class="page" id="page-editoriales">
-        <div class="section-title">Editoriales españolas</div>
-        <div class="section-sub">Directorio completo con información para envío de originales</div>
-        <div class="search-wrap"><input type="text" id="search-edit" placeholder="Buscar editorial, género..." oninput="filterDir('editoriales-list','search-edit')"></div>
-        <div class="dir-grid" id="editoriales-list"></div>
-      </div>
 
-      <div class="page" id="page-agentes">
-        <div class="section-title">Agentes literarios</div>
-        <div class="section-sub">Directorio de agencias literarias en España</div>
-        <div class="search-wrap"><input type="text" id="search-agent" placeholder="Buscar agencia, especialidad..." oninput="filterDir('agentes-list','search-agent')"></div>
-        <div class="dir-grid" id="agentes-list"></div>
-      </div>
 
-      <div class="page" id="page-revistas">
-        <div class="section-title">Revistas literarias</div>
-        <div class="section-sub">Publicaciones donde puedes enviar tu obra</div>
-        <div class="search-wrap"><input type="text" id="search-rev" placeholder="Buscar revista, género..." oninput="filterDir('revistas-list','search-rev')"></div>
-        <div class="dir-grid" id="revistas-list"></div>
-      </div>
 
       <div class="page" id="page-articulos">
         <div class="section-title">Artículos para escritores</div>
@@ -494,10 +476,6 @@ const CONCURSOS_BASE = [{"titulo":"XVIII CERTAMEN DE POESÍA MUJERES SILENCIADAS
 // ══════════════════════════════════════════════
 // DATOS DIRECTORIOS
 // ══════════════════════════════════════════════
-const EDITORIALES=[{id:'alfaguara',nombre:'Alfaguara',ciudad:'Madrid',web:'https://www.alfaguara.com',contacto:'alfaguara@prh.com',generos:['Narrativa','Novela','Ensayo'],descripcion:'Sello del grupo Penguin Random House España, Alfaguara es una de las editoriales de referencia en el mundo hispanohablante. Fundada en 1964, ha publicado a los grandes nombres de la literatura en español, desde Mario Vargas Llosa hasta Javier Marías.',catalogo:['Javier Marías','Mario Vargas Llosa','Isabel Allende','Arturo Pérez-Reverte'],envio:'Alfaguara no acepta manuscritos no solicitados directamente. La vía recomendada es presentarse a través de un agente literario.',notas:'Premio Alfaguara de Novela: convocatoria anual con 175.000 dólares de dotación.'},{id:'anagrama',nombre:'Anagrama',ciudad:'Barcelona',web:'https://www.anagrama-ed.es',contacto:'info@anagrama-ed.es',generos:['Narrativa','Ensayo','Crónica'],descripcion:'Fundada en 1969 por Jorge Herralde, Anagrama es sinónimo de literatura de calidad y pensamiento crítico en España. Ha sido pionera en introducir en España a autores como Roberto Bolaño, Paul Auster o W.G. Sebald.',catalogo:['Roberto Bolaño','Enrique Vila-Matas','Antonio Orejudo','Rodrigo Fresán'],envio:'Anagrama acepta manuscritos por correo postal. Incluye sinopsis de una página, primeros tres capítulos y nota biográfica. Tiempo de respuesta: 3-6 meses.',notas:'Premio Herralde de Novela: uno de los más prestigiosos de España, dotado con 18.000 euros.'},{id:'tusquets',nombre:'Tusquets Editores',ciudad:'Barcelona',web:'https://www.tusquetseditores.com',contacto:'tusquets@tusquets.com',generos:['Narrativa','Poesía','Ensayo'],descripcion:'Tusquets combina la narrativa de calidad con la poesía y el ensayo desde 1969. Sigue siendo un referente para la narrativa literaria en español.',catalogo:['Eduardo Mendoza','Juan Marsé','Álvaro Pombo','Rosa Montero'],envio:'Tusquets acepta propuestas a través de agente preferentemente. Para nuevos autores, carta de presentación con sinopsis y primeros capítulos por correo postal.',notas:'Colección Andanzas para narrativa adulta.'},{id:'siruela',nombre:'Siruela',ciudad:'Madrid',web:'https://www.siruela.com',contacto:'siruela@siruela.com',generos:['Fantasía','Terror','Misterio'],descripcion:'La editorial de referencia para la literatura fantástica, de terror y el misterio en España desde 1982.',catalogo:['H.P. Lovecraft','Edgar Allan Poe','Peter Straub','Carlos Ruiz Zafón'],envio:'Aceptan manuscritos de novela y relato en los géneros que publican. Enviar sinopsis detallada y primeros tres capítulos por email.',notas:'Especialmente interesados en literatura fantástica literaria.'},{id:'nordica',nombre:'Nórdica Libros',ciudad:'Madrid',web:'https://www.nordicalibros.com',contacto:'info@nordicalibros.com',generos:['Literatura internacional','Ilustrado','Narrativa'],descripcion:'Fundada en 2006, especializada en literatura escandinava y centroeuropea. Sus ediciones ilustradas son referencia en calidad editorial.',catalogo:['Selma Lagerlöf','Tove Jansson','Hans Christian Andersen','Hermann Hesse'],envio:'Trabajan principalmente con literatura en traducción. Para autores españoles, aceptan propuestas con componente ilustrado.',notas:'Premio al mejor libro ilustrado en múltiples ocasiones.'},{id:'impedimenta',nombre:'Impedimenta',ciudad:'Madrid',web:'https://www.impedimenta.es',contacto:'info@impedimenta.es',generos:['Narrativa literaria','Clásicos','Novela negra'],descripcion:'Editorial independiente fundada en 2007, referente de la literatura exigente y los clásicos recuperados.',catalogo:['Saki','Ronald Firbank','Stella Gibbons','Jane Gardam'],envio:'Aceptan propuestas de narrativa literaria adulta. Primeros 50 páginas con sinopsis por email. Muy selectivos. Respuesta: hasta 4 meses.',notas:'No publican ensayo, poesía ni libros infantiles.'}];
-const AGENTES=[{id:'balcells',nombre:'Agencia Carmen Balcells',ciudad:'Barcelona',web:'https://www.agenciabalcells.com',contacto:'info@agenciabalcells.com',especialidades:['Narrativa literaria','Ensayo','Poesía'],descripcion:'La agencia literaria más legendaria del mundo hispanohablante, fundada en 1960. Su fundadora fue quien impulsó a García Márquez, Vargas Llosa y Cortázar en el boom latinoamericano.',buscan:'Narrativa literaria con ambición y originalidad. No representan literatura de género comercial.',como_contactar:'Carta de presentación personalizada con sinopsis, nota biográfica y primeros tres capítulos por correo postal. No aceptan email. Respuesta: 3 meses mínimo.'},{id:'kerrigan',nombre:'Antonia Kerrigan Literary Agency',ciudad:'Barcelona',web:'https://www.antoniokerrigan.com',contacto:'info@antoniokerrigan.com',especialidades:['Derechos internacionales','Narrativa','No ficción'],descripcion:'Fundada en 1992, especialista en la venta de derechos de traducción para autores españoles e iberoamericanos en mercados internacionales.',buscan:'Narrativa literaria y no ficción de calidad con potencial de venta internacional.',como_contactar:'Email con sinopsis de dos páginas, nota biográfica y primeros dos capítulos. Respuesta: 6-8 semanas.'},{id:'iese',nombre:"International Editors' Co.",ciudad:'Barcelona',web:'https://www.internationaleditors.com',contacto:'info@internationaleditors.com',especialidades:['Narrativa','Literatura de autor','Internacional'],descripcion:'Una de las agencias más activas en España para la narrativa de autor. Gestionan derechos en España y en el extranjero.',buscan:'Narrativa con voz propia, primera novela o autores con trayectoria. También no ficción narrativa.',como_contactar:'Email con sinopsis detallada, primeros capítulos, nota biográfica e historial de publicaciones. Responden en 4-6 semanas.'},{id:'schavelzon',nombre:'Schavelzon Graham',ciudad:'Barcelona / Buenos Aires',web:'https://www.schavelzongrahama.com',contacto:'info@schavelzongrahama.com',especialidades:['Latinoamérica','Narrativa contemporánea','No ficción'],descripcion:'Con oficinas en Barcelona y Buenos Aires, representan a autores de toda la América Latina y España.',buscan:'Narrativa latinoamericana y española, no ficción narrativa, crónica y ensayo de ideas.',como_contactar:'Email con sinopsis, capítulos de muestra y breve bio. Responden en 6-8 semanas.'},{id:'ella-sher',nombre:'The Ella Sher Literary Agency',ciudad:'Madrid',web:'https://www.ellasher.com',contacto:'info@ellasher.com',especialidades:['Infantil','Juvenil','Narrativa adulta'],descripcion:'Agencia boutique especializada en literatura infantil y juvenil, además de narrativa para adultos.',buscan:'Literatura infantil y juvenil con potencial internacional. En narrativa adulta, voces frescas con propuestas originales.',como_contactar:'Email con sinopsis, nota biográfica y primeros tres capítulos. Responden en 8 semanas.'}];
-const REVISTAS=[{id:'quimera',nombre:'Quimera — Revista de Literatura',ciudad:'Barcelona',web:'https://www.quimerarevista.com',frecuencia:'Mensual',generos:['Narrativa','Poesía','Crítica'],descripcion:'La revista literaria más veterana de España, fundada en 1980. Escaparate de la narrativa y la poesía española e iberoamericana durante más de cuatro décadas.',como_enviar:'Texto inédito por email con asunto "Colaboración + género". Narrativa: hasta 8.000 palabras. Poesía: entre 3 y 8 poemas. Nota biográfica breve.',plazos:'Responden en 6-10 semanas. No pagan por colaboraciones espontáneas pero ofrecen ejemplares de autor.'},{id:'clarin',nombre:'Clarín — Revista de Nueva Literatura',ciudad:'Asturias',web:'https://www.revistaclarin.com',frecuencia:'Bimestral',generos:['Poesía','Ensayo poético'],descripcion:'Revista de referencia para la poesía española contemporánea. Fundada en 1996, publica poemas inéditos, ensayos sobre poética y entrevistas a poetas.',como_enviar:'Entre 4 y 10 poemas inéditos por email. Nota biográfica y declaración breve sobre el proceso poético. También ensayos sobre poesía hasta 3.000 palabras.',plazos:'Responden en 8-12 semanas. Pagan un mínimo por colaboraciones seleccionadas.'},{id:'cuento',nombre:'El Cuento de Nunca Acabar',ciudad:'Digital',web:'https://www.elcuentodenuncaacabar.com',frecuencia:'Trimestral',generos:['Relato corto','Microrrelato'],descripcion:'Publicación digital especializada en relato corto y microrrelato desde 2010. Comunidad fiel de escritores y lectores.',como_enviar:'Relatos inéditos hasta 5.000 palabras. Microrrelato: máximo 300 palabras. Formulario web en períodos de convocatoria abierta.',plazos:'Responden en 4-6 semanas. Pagan tarifa mínima por relatos publicados.'},{id:'bem',nombre:'Revista BEM',ciudad:'Digital',web:'https://www.revistabem.es',frecuencia:'Cuatrimestral',generos:['Ciencia ficción','Fantasía','Terror'],descripcion:'La publicación de referencia para la literatura fantástica, CF y terror en España.',como_enviar:'Relatos inéditos de CF, fantasía o terror, entre 3.000 y 15.000 palabras. Formulario web durante convocatorias abiertas.',plazos:'Selección de 8-16 semanas. Pagan por relatos publicados.'},{id:'letras-libres',nombre:'Letras Libres',ciudad:'Madrid',web:'https://www.letraslibres.com',frecuencia:'Mensual',generos:['Ensayo','Política cultural','Narrativa'],descripcion:'Revista cultural de referencia fundada en México en 1999, con edición española desde 2001.',como_enviar:'Colaboraciones principalmente por encargo. Para propuestas espontáneas, enviar al director editorial propuesta de artículo, no el texto completo.',plazos:'Solo responden si hay interés. Pagan por todas las colaboraciones publicadas.'}];
-
 // ══════════════════════════════════════════════
 // NAVEGACIÓN
 // ══════════════════════════════════════════════
@@ -516,17 +494,11 @@ function showPage(id,btn){
 // DIRECTORIOS
 // ══════════════════════════════════════════════
 function renderDirectorios(){
-  renderDir('editoriales-list',EDITORIALES,'editorial');
-  renderDir('agentes-list',AGENTES,'agente');
-  renderDir('revistas-list',REVISTAS,'revista');
+  // Los directorios de editoriales, agentes y revistas viven en sus propias
+  // paginas (/editoriales.html, /agentes.html, /revistas.html), que son las
+  // auditadas. Aqui no se duplican: duplicarlos fue lo que dejo en la home
+  // datos retirados hace semanas.
   renderArt();
-}
-function renderDir(id,data,tipo){
-  const cont=document.getElementById(id);if(!cont)return;
-  cont.innerHTML=data.map(item=>{
-    const tags=(item.generos||item.especialidades||[]).slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('');
-    return`<div class="dir-item" onclick="showDetalle('${tipo}','${item.id}')"><div class="dir-name">${item.nombre}</div><div class="dir-desc">${item.descripcion.substring(0,180)}...</div><div class="dir-footer"><div class="dir-tags">${tags}</div><span class="dir-link">${item.ciudad} · Ver ficha →</span></div></div>`;
-  }).join('');
 }
 async function fetchUrl(url){
   try{
@@ -630,25 +602,15 @@ function renderArt(){
      </a>`
   ).join('');
 }
-function filterDir(listId,inputId){
-  const q=(document.getElementById(inputId)||{value:''}).value.toLowerCase();
-  document.querySelectorAll('#'+listId+' .dir-item').forEach(el=>{el.style.display=!q||el.textContent.toLowerCase().includes(q)?'':'none';});
-}
 function showDetalle(tipo,id){
   let item,backPage;
-  if(tipo==='editorial'){item=EDITORIALES.find(x=>x.id===id);backPage='editoriales';}
-  else if(tipo==='agente'){item=AGENTES.find(x=>x.id===id);backPage='agentes';}
-  else if(tipo==='revista'){item=REVISTAS.find(x=>x.id===id);backPage='revistas';}
-  else if(tipo==='articulo'){
+  if(tipo==='articulo'){
     const todosArt = typeof ARTICULOS !== 'undefined' ? [...ARTICULOS] : [];
     item=todosArt.find(x=>x.id===id);backPage='articulos';
   }
   if(!item)return;
   let html=`<div class="detail-back" onclick="showPage('${backPage}',null)">← Volver al directorio</div>`;
-  if(tipo==='editorial'){html+=`<div class="detail-header"><div class="detail-cat">Editorial</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad}</div></div><div class="detail-grid"><div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div><div><div class="detail-field-label">Contacto</div><div class="detail-field-value"><a href="mailto:${item.contacto}">${item.contacto}</a></div></div><div><div class="detail-field-label">Géneros</div><div class="detail-field-value">${item.generos.join(', ')}</div></div></div><div class="detail-body"><p>${item.descripcion}</p><h2>Autores del catálogo</h2><p>${item.catalogo.join(' · ')}</p><h2>Cómo enviar originales</h2><p>${item.envio}</p>${item.notas?`<div class="highlight">${item.notas}</div>`:''}</div>`;}
-  else if(tipo==='agente'){html+=`<div class="detail-header"><div class="detail-cat">Agencia literaria</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad}</div></div><div class="detail-grid"><div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div><div><div class="detail-field-label">Email</div><div class="detail-field-value"><a href="mailto:${item.contacto}">${item.contacto}</a></div></div><div><div class="detail-field-label">Especialidades</div><div class="detail-field-value">${item.especialidades.join(', ')}</div></div></div><div class="detail-body"><p>${item.descripcion}</p><h2>Qué buscan</h2><p>${item.buscan}</p><h2>Cómo contactar</h2><div class="highlight">${item.como_contactar}</div></div>`;}
-  else if(tipo==='revista'){html+=`<div class="detail-header"><div class="detail-cat">Revista literaria</div><h1 class="detail-title">${item.nombre}</h1><div class="detail-meta">${item.ciudad} · ${item.frecuencia}</div></div><div class="detail-grid"><div><div class="detail-field-label">Web</div><div class="detail-field-value"><a href="${item.web}" target="_blank">${item.web.replace('https://','')}</a></div></div><div><div class="detail-field-label">Géneros</div><div class="detail-field-value">${item.generos.join(', ')}</div></div><div><div class="detail-field-label">Periodicidad</div><div class="detail-field-value">${item.frecuencia}</div></div></div><div class="detail-body"><p>${item.descripcion}</p><h2>Cómo enviar tu obra</h2><p>${item.como_enviar}</p><h2>Plazos y condiciones</h2><div class="highlight">${item.plazos}</div></div>`;}
-  else if(tipo==='articulo'){html+=`<div class="detail-header"><div class="detail-cat">${item.cat}</div><h1 class="detail-title">${item.titulo}</h1><div class="detail-meta">Tiempo de lectura: ${item.tiempo}</div></div><div class="detail-body">${item.cuerpo}</div>`;}
+  if(tipo==='articulo'){html+=`<div class="detail-header"><div class="detail-cat">${item.cat}</div><h1 class="detail-title">${item.titulo}</h1><div class="detail-meta">Tiempo de lectura: ${item.tiempo}</div></div><div class="detail-body">${item.cuerpo}</div>`;}
   document.getElementById('detalle-content').innerHTML=html;
   showPage('detalle',null);
 }
@@ -723,6 +685,11 @@ function aplicarParametroCategoria(){
   // Navegación directa a sección
   const seccion = params.get('seccion');
   if(seccion){
+    // Los tres directorios tienen su propia página, que es la auditada.
+    // Aquí solo se redirige: no se sirve una copia.
+    const DIRECTORIOS = {editoriales:'/editoriales.html', agentes:'/agentes.html', revistas:'/revistas.html'};
+    if(DIRECTORIOS[seccion]){ window.location.replace(DIRECTORIOS[seccion]); return; }
+    if(!document.getElementById('page-'+seccion)) return;
     const btn = document.querySelector(`.nav-btn[href="/?seccion=${seccion}"]`);
     showPage(seccion, btn);
     return;
