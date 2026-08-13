@@ -4,7 +4,7 @@
   <!-- Página principal -->
   <url>
     <loc>https://letrasespanolas.org/</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -18,7 +18,7 @@
   <!-- Directorios principales -->
   <url>
     <loc>https://letrasespanolas.org/editoriales.html</loc>
-    <lastmod>2026-08-12</lastmod>
+    <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
