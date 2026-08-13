@@ -44,7 +44,9 @@
 /* En el cajón móvil el desplegable flotante se saldría de la pantalla: pasa a acordeón */
 @media (max-width: 700px) {
   .nav-grupo { position: static; display: block; width: 100%; }
-  .nav-toggle { width: 100%; justify-content: center; }
+  /* Alineados a la izquierda como los .nav-btn del cajón: antes los dos desplegables
+     salían centrados y el resto de entradas pegadas al margen, y se veía descuadrado. */
+  .nav-toggle { width: 100%; justify-content: flex-start; padding: .85rem 1.5rem; font-size: 13px; }
   .nav-sub {
     position: static; transform: none; min-width: 0; width: 100%;
     border: none; border-top: 1px solid var(--border, #d4cfc8); box-shadow: none;
@@ -52,5 +54,6 @@
   }
   .nav-grupo:hover .nav-sub, .nav-grupo:focus-within .nav-sub { display: none; } /* en táctil, hover no vale */
   .nav-grupo.abierto .nav-sub { display: block; }
-  .nav-sub a { text-align: center; }
+  /* Las entradas del acordeón, sangradas para que se vea que cuelgan del grupo */
+  .nav-sub a { text-align: left; padding-left: 2.5rem; }
 }
