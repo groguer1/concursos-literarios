@@ -41,6 +41,11 @@ const DIRECTORIOS = [
       'data-noveles': 'noveles',
     },
     anioVisible: true, // la rejilla imprime el año de fundación como etiqueta
+    // Capa 6: los badges de la rejilla, que es lo que el lector lee sin abrir la ficha.
+    badges: [
+      { nombre: 'premio',       campo: 'premio',    marca: /🏆/,             valor: v => v === true },
+      { nombre: 'independiente', campo: 'tipo',     marca: /Independiente/,  valor: v => v === 'independiente' },
+    ],
     // Capa 5: el interruptor y el texto que lo explica tienen que decir lo mismo.
     // Nació el 12/08: seis fichas llevaban el badge verde «Sin agente» y un texto que decía
     // «NO acepta manuscritos no solicitados». El texto se corrigió el 2/08 y el interruptor no.
@@ -150,7 +155,9 @@ function leerTarjetas(html) {
     for (const a of atributos.matchAll(/(data-[a-z-]+)="([^"]*)"/g)) atribs[a[1]] = decodificar(a[2]);
     const tags = trozo.match(/<div class="dir-tags">[\s\S]*?<\/div>/);
     const anio = tags ? (tags[0].match(/<span class="tag">(1[89]\d\d|20\d\d)<\/span>/) || [])[1] || null : null;
-    tarjetas.set(id, { busqueda: decodificar(busqueda), ficha: det ? det[0] : null, atribs, anio });
+    // Capa 6: los badges de la rejilla. Son el resumen que el lector lee sin abrir la ficha.
+    const badges = (trozo.match(/<div class="dir-badges">([\s\S]*?)<\/div>/) || [])[1] || '';
+    tarjetas.set(id, { busqueda: decodificar(busqueda), ficha: det ? det[0] : null, atribs, anio, badges });
   }
   return tarjetas;
 }
@@ -235,6 +242,19 @@ for (const dir of DIRECTORIOS) {
         aviso(esperado === null
           ? `${ficha.id}: la tarjeta publica el año ${tarjeta.anio} y el array no lo trae (¿se retiró solo del array?)`
           : `${ficha.id}: el array dice fundada en ${esperado} y la tarjeta muestra ${tarjeta.anio || 'nada'}`);
+      }
+    }
+
+    // 6: array ↔ badges de la rejilla. Nació el 13/08: al pasar Calambur a premio:false se
+    // corrigieron el array y data-premio, y la tarjeta siguió luciendo «🏆 Premio propio».
+    // El badge es lo único que el lector lee sin abrir la ficha, así que es el que más miente.
+    for (const regla of dir.badges || []) {
+      if (ficha[regla.campo] === undefined) continue;
+      campos++;
+      const debe = regla.valor(ficha[regla.campo]);
+      const esta = regla.marca.test(tarjeta.badges);
+      if (debe !== esta) {
+        aviso(`${ficha.id} · badge ${regla.nombre}: la rejilla dice ${esta} y el array ${debe} (${regla.campo}=${JSON.stringify(ficha[regla.campo])})`);
       }
     }
 
