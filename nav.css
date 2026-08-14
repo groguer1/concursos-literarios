@@ -28,8 +28,12 @@
   border: 1px solid var(--border, #d4cfc8); border-top: 2px solid var(--ink, #1a1a18);
   box-shadow: 0 8px 24px rgba(0, 0, 0, .10); z-index: 160; padding: .35rem 0;
 }
+/* OJO: aquí NO va `:focus-within`. Lo llevaba y era la causa de que dos desplegables
+   se quedaran abiertos a la vez: al pulsar el botón con el ratón el foco se queda
+   dentro del grupo, así que el submenú seguía en display:block aunque se le quitara
+   la clase .abierto. El teclado lo cubre ahora nav.js (abre con Enter y cierra al
+   salir el foco del grupo), que es lo mismo pero sin engancharse con el ratón. */
 .nav-grupo:hover .nav-sub,
-.nav-grupo:focus-within .nav-sub,
 .nav-grupo.abierto .nav-sub { display: block; }
 
 .nav-sub a {
@@ -52,7 +56,7 @@
     border: none; border-top: 1px solid var(--border, #d4cfc8); box-shadow: none;
     background: var(--cream, #ede9df); padding: 0;
   }
-  .nav-grupo:hover .nav-sub, .nav-grupo:focus-within .nav-sub { display: none; } /* en táctil, hover no vale */
+  .nav-grupo:hover .nav-sub { display: none; } /* en táctil, hover no vale */
   .nav-grupo.abierto .nav-sub { display: block; }
   /* Las entradas del acordeón, sangradas para que se vea que cuelgan del grupo */
   .nav-sub a { text-align: left; padding-left: 2.5rem; }
