@@ -3,6 +3,30 @@ const https = require('https');
 
 const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
 
+/* Ventana de convocatorias que se publican. Estaba en 60 dias y por eso el certamen
+   Mariana de Carvajal (15/10/2026) no entraba: quedaba a 62. */
+const VENTANA_DIAS = 90;
+
+/* Convocatorias metidas a mano, normalmente las que llegan por correo y el rastreo
+   no ve. Se juntan con las rastreadas y CADUCAN SOLAS al pasar su fecha limite,
+   asi que no hay que acordarse de retirarlas. Fichero: concursos-fijos.json */
+function leerFijos() {
+  try {
+    const arr = JSON.parse(fs.readFileSync('concursos-fijos.json', 'utf8'));
+    console.log('Concursos fijos leidos: ' + arr.length);
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    console.warn('Sin concursos fijos (' + e.message + ')');
+    return [];
+  }
+}
+
+function claveTitulo(t) {
+  return String(t || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
 setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 180000);
 
 function httpsPost(hostname, path, headers, bodyBuf) {
@@ -41,10 +65,13 @@ function limpiarHTML(texto) {
 async function llamarIA(texto, fuente) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
-  limite.setDate(limite.getDate() + 60);
+  limite.setDate(limite.getDate() + VENTANA_DIAS);
   const fechaLimite = limite.toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
 
-  const textoLimpio = limpiarHTML(texto).substring(0, 25000);
+  /* Antes se cortaba en 25.000 caracteres y la pagina de escritores.org tiene 57.000
+     de texto limpio: se tiraba el 56% SIN MIRARLO. Asi se perdio el certamen Mariana
+     de Carvajal, que cae en el caracter 39.110. Cabe entero de sobra en el contexto. */
+  const textoLimpio = limpiarHTML(texto).substring(0, 120000);
   console.log('Texto limpio de ' + fuente + ': ' + textoLimpio.length + ' chars');
 
   if (textoLimpio.length < 100) {
@@ -52,7 +79,11 @@ async function llamarIA(texto, fuente) {
     return '[]';
   }
 
-  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae como maximo los 15 concursos mas proximos con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. Si el texto incluye el enlace a las bases o a la convocatoria, ponlo en "url"; no inventes URLs. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
+  /* El tope de 15 por fuente era el que mas convocatorias se comia: escritores.org
+     publica cientos y la IA devolvia solo las 15 mas cercanas, que a 14/08/2026 no
+     pasaban del 30/08. Por eso quedaban fuera el Perez-Taybili (31/08) y LuchaLibro
+     (04/09), aun estando los dos dentro del plazo que el filtro si acepta. */
+  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 60, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. Si el texto incluye el enlace a las bases o a la convocatoria, ponlo en "url"; no inventes URLs. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
 
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
@@ -118,10 +149,25 @@ async function main() {
     }
   }
 
-  if (!todos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
+  /* Los fijos van PRIMERO para que, si una convocatoria esta en los dos sitios, gane
+     nuestra ficha revisada a mano y no la que saque la IA del listado ajeno. */
+  const fijos = leerFijos();
+  const vistos = new Set();
+  const todosConFijos = fijos.concat(todos).filter(c => {
+    const k = claveTitulo(c.titulo);
+    if (!k || vistos.has(k)) return false;
+    vistos.add(k);
+    return true;
+  });
+  console.log('Tras juntar fijos y rastreados y quitar repetidos: ' + todosConFijos.length);
 
-  const filtrados = todos
-    .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= 60; })
+  /* Si el rastreo falla (la fuente cambia, la IA devuelve vacio), antes se salia sin
+     escribir nada y la web se quedaba con lo del dia anterior. Ahora, si al menos hay
+     fijos, se publica lo que haya: es preferible a no publicar. */
+  if (!todosConFijos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
+
+  const filtrados = todosConFijos
+    .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
   console.log('Validos en rango: ' + filtrados.length);
