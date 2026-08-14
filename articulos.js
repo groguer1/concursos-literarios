@@ -368,7 +368,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Autopublicación',
     titulo: 'Portada libro autopublicación: Canva, Reedsy o diseñador profesional',
     excerpt: 'Cómo diseñar o contratar la portada de tu libro autopublicado: Canva Pro, Reedsy, 99designs y Fiverr con precios reales. Criterios de Amazon KDP y los errores más comunes.',
-    tiempo: '13 min',
+    tiempo: '8 min',
     url: 'articulos/portada-libro-autopublicacion.html'
   },
   {
@@ -376,7 +376,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
     cat: 'Marketing literario',
     titulo: 'Cómo conseguir reseñas para tu libro autopublicado en España',
     excerpt: 'Estrategia ARC, NetGalley, clubes de lectura, bloggers literarios y lectores beta para conseguir las primeras reseñas en Amazon y Goodreads. Cómo evitar las reseñas falsas.',
-    tiempo: '12 min',
+    tiempo: '7 min',
     url: 'articulos/conseguir-resenas-libro-espana.html'
   },
   {
@@ -392,7 +392,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
       cat: 'Marketing literario',
       titulo: 'Promocionar tu libro en BookTok e Instagram: guía 2026',
       excerpt: 'Estrategia paso a paso para promocionar tu libro en BookTok e Instagram siendo autor novel: contenido que funciona, hashtags y errores frecuentes.',
-      tiempo: '13 min',
+      tiempo: '8 min',
       url: 'articulos/promocionar-libro-booktok-instagram-espana.html'
   },
   {
@@ -400,7 +400,7 @@ url: 'articulos/seudonimo-concurso-literario.html'
       cat: 'Autopublicación',
       titulo: 'Cuánto cuesta autopublicar un libro en España en 2026: presupuesto real',
       excerpt: 'Desglose completo de costes para autopublicar un libro en España en 2026: corrección, portada, maquetación, ISBN y marketing, con cifras reales.',
-      tiempo: '14 min',
+      tiempo: '8 min',
       url: 'articulos/cuanto-cuesta-autopublicar-libro-espana.html'
   },
   {
