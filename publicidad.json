@@ -1,0 +1,27 @@
+{
+  "_leeme": "Bloque de publicidad de la portada. Tarifas y condiciones en PUBLICIDAD.md. Para publicarlo: rellenar los campos, poner activo en true y hacer push. Caduca solo al pasar la fecha de 'hasta' (formato DD/MM/AAAA), asi que no hay que acordarse de retirarlo. Solo un anunciante a la vez.",
+  "activo": false,
+  "hasta": "",
+  "titulo": "",
+  "organizacion": "",
+  "dotacion": "",
+  "plazo": "",
+  "descripcion": "",
+  "url": "",
+  "imagen": "",
+  "alt": "",
+  "cta": "Ver las bases",
+  "_ejemplo": {
+    "activo": true,
+    "hasta": "31/08/2026",
+    "titulo": "VIII Premio Perez-Taybili de relato 2026",
+    "organizacion": "Medina Cultura",
+    "dotacion": "2.000 euros",
+    "plazo": "Hasta el 31 de agosto de 2026",
+    "descripcion": "Relato inedito en castellano, tema libre. Mayores de 18 residentes en Espana. Sin cuota de inscripcion.",
+    "url": "https://medinacultura.com/",
+    "imagen": "/img/publi/perez-taybili-2026.jpg",
+    "alt": "Cartel del VIII Premio Perez-Taybili de relato",
+    "cta": "Ver las bases"
+  }
+}

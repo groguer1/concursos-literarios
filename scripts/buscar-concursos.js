@@ -123,6 +123,55 @@ function buildStaticCardsHTML(arr) {
   }).join('');
 }
 
+/* PUBLICIDAD (tarifas y condiciones en PUBLICIDAD.md). El bloque destacado NO puede
+   escribirse a mano en index.html: este script reescribe el fichero entero cada dia a
+   las 06:00 y se lo llevaria por delante. Vive en publicidad.json y CADUCA SOLO al
+   pasar su fecha "hasta", igual que los concursos fijos, para que no siga publicado un
+   anuncio ya vencido. Si algo falta o no cuadra, no se publica nada: mas vale hueco
+   que un anuncio a medias. */
+function leerPublicidad() {
+  let p;
+  try {
+    p = JSON.parse(fs.readFileSync('publicidad.json', 'utf8'));
+  } catch (e) {
+    console.warn('Sin publicidad (' + e.message + ')');
+    return null;
+  }
+  if (!p || p.activo !== true) { console.log('Publicidad: sin anunciante activo'); return null; }
+  if (!p.titulo || !p.url) { console.warn('Publicidad ACTIVA pero le falta titulo o url: no se publica'); return null; }
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(String(p.hasta || ''))) {
+    console.warn('Publicidad ACTIVA sin fecha "hasta" valida (DD/MM/AAAA): no se publica');
+    return null;
+  }
+  const dias = diasHasta(p.hasta);
+  if (dias <= 0) { console.log('Publicidad caducada el ' + p.hasta + ': no se publica'); return null; }
+  console.log('Publicidad activa: ' + p.titulo + ' (quedan ' + dias + ' dias)');
+  return p;
+}
+
+/* El rotulo "Publicidad" y el rel="sponsored nofollow noopener" NO son opcionales:
+   el primero lo exige la LSSI-CE art. 20 y el segundo evita que Google lo lea como
+   venta de enlaces, que penaliza la web entera. Ver PUBLICIDAD.md, punto 4. */
+function buildPublicidadHTML(p) {
+  const url = escapeHtml(p.url);
+  const img = p.imagen
+    ? '<img class="publi-img" src="' + escapeHtml(p.imagen) + '" alt="' + escapeHtml(p.alt || p.titulo) + '" loading="lazy">'
+    : '';
+  const meta = [p.dotacion ? '<strong>' + escapeHtml(p.dotacion) + '</strong>' : '', escapeHtml(p.plazo || '')]
+    .filter(Boolean).join(' &middot; ');
+  return '<aside class="publi">' +
+    '<span class="publi-label">Publicidad</span>' +
+    '<a class="publi-in" href="' + url + '" rel="sponsored nofollow noopener" target="_blank">' +
+    img +
+    '<span class="publi-txt">' +
+    '<span class="publi-tit">' + escapeHtml(p.titulo) + '</span>' +
+    (p.organizacion ? '<span class="publi-org">' + escapeHtml(p.organizacion) + '</span>' : '') +
+    (p.descripcion ? '<span class="publi-desc">' + escapeHtml(p.descripcion) + '</span>' : '') +
+    (meta ? '<span class="publi-meta">' + meta + '</span>' : '') +
+    '<span class="publi-cta">' + escapeHtml(p.cta || 'Ver las bases') + '</span>' +
+    '</span></a></aside>';
+}
+
 async function main() {
   console.log('Iniciando busqueda de concursos...');
   if (!ANTHROPIC_KEY) { console.error('ANTHROPIC_KEY no configurado'); process.exit(1); }
@@ -187,6 +236,14 @@ async function main() {
     htmlFinal = htmlConDatos.replace(staticRegex, staticHTML);
   } else {
     console.warn('No se encontraron los marcadores CONCURSOS-STATIC-START/END; se omite la actualizacion del bloque estatico');
+  }
+
+  const publiRegex = /<!-- PUBLI-START -->[\s\S]*?<!-- PUBLI-END -->/;
+  if (publiRegex.test(htmlFinal)) {
+    const publi = leerPublicidad();
+    htmlFinal = htmlFinal.replace(publiRegex, '<!-- PUBLI-START -->' + (publi ? buildPublicidadHTML(publi) : '') + '<!-- PUBLI-END -->');
+  } else {
+    console.warn('No se encontraron los marcadores PUBLI-START/END en index.html; se omite el bloque de publicidad');
   }
 
   fs.writeFileSync('index.html', htmlFinal, 'utf8');

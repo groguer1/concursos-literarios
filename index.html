@@ -186,6 +186,22 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
   .filter-btn{font-size:10px;padding:3px 9px}
   .modal{padding:1.25rem}
 }
+/* Bloque de publicidad de la portada (ver PUBLICIDAD.md). Lo rellena
+   scripts/buscar-concursos.js desde publicidad.json; si no hay anunciante, los
+   marcadores quedan vacios y no se ve nada. */
+.publi{border:1px solid var(--border);background:var(--cream);margin:0 0 1.5rem}
+.publi-label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.4rem .9rem;border-bottom:1px solid var(--border)}
+.publi-in{display:flex;gap:1.1rem;padding:1rem;align-items:center}
+.publi-img{width:180px;max-width:38%;height:auto;flex-shrink:0;border:1px solid var(--border);display:block}
+.publi-txt{flex:1;min-width:0;display:block}
+.publi-tit{font-family:'Playfair Display',serif;font-size:1.15rem;line-height:1.25;display:block}
+.publi-org{font-size:12px;color:var(--muted);margin-top:.2rem;display:block}
+.publi-desc{font-size:13px;line-height:1.5;color:var(--ink);margin-top:.5rem;display:block}
+.publi-meta{font-size:12.5px;color:var(--muted);margin-top:.5rem;display:block}
+.publi-meta strong{color:var(--accent)}
+.publi-cta{display:inline-block;margin-top:.7rem;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent)}
+.publi-in:hover .publi-tit{color:var(--accent)}
+@media(max-width:600px){.publi-in{flex-direction:column;align-items:flex-start}.publi-img{width:100%;max-width:100%}}
 </style>
 <link rel="stylesheet" href="/nav.css">
 </head>
@@ -256,6 +272,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
           <button class="filter-btn" onclick="setFiltro('infantil')" id="btn-infantil">Infantil</button>
           <button class="filter-btn" onclick="setFiltro('urgentes')" id="btn-urgentes">⚠ Cierran pronto</button>
         </div>
+        <!-- PUBLI-START --><!-- PUBLI-END -->
         <div class="cards" id="cards"><!-- CONCURSOS-STATIC-START --><div class="card"><div class="card-meta"><span class="card-cat">Relato corto</span></div><h3 class="card-title">CONCURSO DE RELATOS PEREZ TAYBILI 2026</h3><div class="card-org">Medina Cultura (Grupo Esenzias / Fundacion Nexo)</div><div class="card-footer"><span class="card-premio">2.000 euros</span><span class="card-fecha">Hasta 31/08/2026</span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Relato corto</span></div><h3 class="card-title">LUCHALIBRO JUVENIL 2026</h3><div class="card-org">Atrapavientos</div><div class="card-footer"><span class="card-premio">Cinturon de plata y publicacion</span><span class="card-fecha">Hasta 04/09/2026</span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Relato corto</span></div><h3 class="card-title">IX Certamen de Relatos Cortos Rincón de la Victoria, en homenaje a Gloria Fuertes 2026</h3><div class="card-org">Ayuntamiento de Rincón de la Victoria</div><div class="card-footer"><span class="card-premio">2.000€</span><span class="card-fecha"></span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Poesia</span></div><h3 class="card-title">XXXIV Premio de Poesía RINCÓN DE LA VICTORIA in memoriam Salvador Rueda</h3><div class="card-org">Ayuntamiento de Rincón de la Victoria</div><div class="card-footer"><span class="card-premio">3.000€</span><span class="card-fecha"></span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Relato corto</span></div><h3 class="card-title">XIV Concurso Internacional de Relato Bruma Negra</h3><div class="card-org">Ayuntamiento de Plentzia y Revista Digital CALIBRE .38</div><div class="card-footer"><span class="card-premio">300€</span><span class="card-fecha"></span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Poesia</span></div><h3 class="card-title">VI Concurso de Poesía VILLA DE ÁGREDA 2026</h3><div class="card-org">Villa de Ágreda</div><div class="card-footer"><span class="card-premio">650€</span><span class="card-fecha"></span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Novela</span></div><h3 class="card-title">XXVIII Certamen Literario de Novela Corta Ciudad de Tíjola</h3><div class="card-org">Ayuntamiento de Tíjola</div><div class="card-footer"><span class="card-premio">1.000€</span><span class="card-fecha"></span></div></div><div class="card"><div class="card-meta"><span class="card-cat">Relato corto</span></div><h3 class="card-title">I CERTAMEN INTERNACIONAL DE RELATO BREVE DE TORREDONJIMENO &quot;MARIANA DE CARVAJAL&quot;</h3><div class="card-org">Plataforma Tosiriana por la Coeducacion</div><div class="card-footer"><span class="card-premio">1.000 euros y accesit de 500 euros</span><span class="card-fecha">Hasta 15/10/2026</span></div></div><!-- CONCURSOS-STATIC-END --></div>
 <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
 <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:.75rem">Concursos literarios en España: cómo funcionan</h2>
