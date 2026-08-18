@@ -69,3 +69,16 @@
     if (e.key === 'Escape') cerrarTodos(null);
   });
 })();
+
+/* ------------------------------------------------------------------
+   POPUP DE SUSCRIPCIÓN [18/08/2026]
+   Se carga desde aquí y no con un <script> en cada página, porque nav.js ya está
+   enlazado en las 73 y así el popup se enciende o se apaga tocando UN fichero.
+   El propio newsletter-popup.js no muestra nada mientras no tenga la URL de Brevo.
+------------------------------------------------------------------ */
+(function () {
+  var s = document.createElement('script');
+  s.src = '/newsletter-popup.js';
+  s.defer = true;
+  document.head.appendChild(s);
+})();
