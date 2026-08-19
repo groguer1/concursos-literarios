@@ -226,12 +226,18 @@ footer a{text-decoration:underline}
       return;
     }
     boton.disabled = true; boton.textContent = 'Enviando…';
-    function hecho() {
+    /* Solo se da por buena el alta si Brevo confirma success:true. Antes esto
+       era .then(hecho).catch(hecho), que es como el popup de davidmateos estuvo
+       un mes diciendo «bienvenido» sin dar de alta a nadie. */
+    api.suscribir(email).then(function () {
       f.reset();
       boton.style.display = 'none';
       ok.style.display = 'block';
-    }
-    api.suscribir(email).then(hecho).catch(hecho);
+    }).catch(function () {
+      err.innerHTML = 'No se ha podido completar la suscripción. Puedes intentarlo de nuevo en un momento o escribir a <a href="mailto:dmateos.pascual@gmail.com">dmateos.pascual@gmail.com</a> y te apuntamos a mano.';
+      err.style.display = 'block';
+      boton.disabled = false; boton.textContent = 'Avisadme gratis';
+    });
   });
 })();
 </script>

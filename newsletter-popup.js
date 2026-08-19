@@ -5,6 +5,12 @@
 // Se muestra una vez a los 18 s o al 55 % de scroll; si se cierra, no vuelve a
 // aparecer en 30 días; si el usuario se suscribe, no vuelve a aparecer nunca.
 //
+// ⚠️ NO SE ENVÍA CON mode:'no-cors'. Así estaba el de davidmateos y escondió
+// durante un mes que ningún alta llegaba: la respuesta es ilegible y el código
+// daba la bienvenida igual. Brevo permite CORS desde este dominio, así que se lee
+// la respuesta y solo se confirma con success:true. Si un formulario no puede
+// fallar nunca a la vista, es que no se está mirando si falla.
+//
 // LA URL DEL FORMULARIO VIVE SOLO AQUÍ, a propósito: `suscribete.html` llama a
 // window.LE_NEWSLETTER.suscribir() en vez de repetirla. Si algún día se cambia la
 // lista de Brevo, se toca UN sitio y no dos.
@@ -28,7 +34,13 @@
     data.append('EMAIL', email);
     data.append('email_address_check', '');
     data.append('locale', 'es');
-    return fetch(FORM_URL, { method: 'POST', body: data, mode: 'no-cors' });
+    return fetch(FORM_URL, { method: 'POST', body: data })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          if (!r.ok || j.success !== true) throw new Error(j.message || ('HTTP ' + r.status));
+          return j;
+        });
+      });
   }
   function emailValido(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
 
@@ -131,7 +143,12 @@
           setTimeout(function () { overlay.remove(); }, 350);
         }, 4000);
       }
-      suscribir(email).then(done).catch(done);
+      suscribir(email).then(done).catch(function () {
+        error.innerHTML = 'No se ha podido completar la suscripci&oacute;n. Int&eacute;ntalo de nuevo o escribe a <a href="mailto:dmateos.pascual@gmail.com" style="color:#7a7670">dmateos.pascual@gmail.com</a>.';
+        error.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Avisadme gratis';
+      });
     });
   }
 
