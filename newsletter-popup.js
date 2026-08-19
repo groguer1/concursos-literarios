@@ -11,18 +11,21 @@
 (function () {
   var KEY = 'leNewsletterPopup';
 
-  /* ⚠️ PENDIENTE DE DAVID: pegar aquí la URL del formulario de Brevo de la lista de
-     Letras Españolas (Brevo → Contactos → Formularios → Compartir → «Enlace»).
-     Mientras esté vacía, el popup NO se muestra y el formulario de suscribete.html
-     avisa de que la suscripción aún no está activa. Es a propósito: más vale no
-     mostrar nada que recoger correos que no llegan a ninguna lista. */
-  var FORM_URL = '';
+  /* Formulario de Brevo de la lista «Letras Españolas — Avisos de convocatorias»,
+     creado por David el 19/08/2026 con doble confirmación activada.
+     Es la URL EXACTA del atributo action del propio formulario, «==» incluidos y con
+     el tramo /v2/ que Brevo usa en los formularios nuevos: NO es el mismo formato que
+     el de davidmateos (/serve/ sin v2 y sin «=='), así que no se copia de allí.
+     Si algún día se cambia la lista, se toca esta línea y nada más: suscribete.html
+     consume esta misma constante a través de window.LE_NEWSLETTER.
+     Si se deja vacía, el popup no se muestra y el formulario avisa de que la
+     suscripción no está activa. */
+  var FORM_URL = 'https://9a7395d6.sibforms.com/v2/serve/MUIFAI_Ox9v6F1ZwvVeY_cvIcUpI3bbp8_OJo60TNn8Sc1lEYYC99XJMSTP4LolE0ffUH79KABxPF7FrXhk_KP3wYdrrg2EyibzdkdcAnkf1SeivkdJP9UHUfEtJ_yREYgdghrYx5zig8-MgSylivnJoa9YJRMyf79Wo1B76poq5NH47JmHB3F3xncmEZLGUFAggq1WIly2ivXiKaA==';
 
   function suscribir(email) {
     if (!FORM_URL) return Promise.reject(new Error('sin-formulario'));
     var data = new FormData();
     data.append('EMAIL', email);
-    data.append('OPT_IN', '1');
     data.append('email_address_check', '');
     data.append('locale', 'es');
     return fetch(FORM_URL, { method: 'POST', body: data, mode: 'no-cors' });
