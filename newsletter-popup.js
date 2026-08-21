@@ -144,7 +144,7 @@
         }, 4000);
       }
       suscribir(email).then(done).catch(function () {
-        error.innerHTML = 'No se ha podido completar la suscripci&oacute;n. Int&eacute;ntalo de nuevo o escribe a <a href="mailto:dmateos.pascual@gmail.com" style="color:#7a7670">dmateos.pascual@gmail.com</a>.';
+        error.innerHTML = 'No se ha podido completar la suscripci&oacute;n. Int&eacute;ntalo de nuevo o escribe a <a href="mailto:info@letrasespanolas.org" style="color:#7a7670">info@letrasespanolas.org</a>.';
         error.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Avisadme gratis';

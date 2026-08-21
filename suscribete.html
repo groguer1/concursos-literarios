@@ -139,7 +139,7 @@ footer a{text-decoration:underline}
     <button type="submit">Avisadme gratis</button>
   </form>
   <div class="msg msg-ok" id="msg-ok"><strong>Ya casi está.</strong> Te hemos enviado un correo para que confirmes la suscripción. Hasta que no pulses ese enlace no te llegará nada más: así nos aseguramos de que la dirección es tuya y de que nadie te apunta sin querer.</div>
-  <div class="msg msg-error" id="msg-error">No se ha podido completar la suscripción. Puedes intentarlo de nuevo en un momento o escribir a <a href="mailto:dmateos.pascual@gmail.com">dmateos.pascual@gmail.com</a> y te apuntamos a mano.</div>
+  <div class="msg msg-error" id="msg-error">No se ha podido completar la suscripción. Puedes intentarlo de nuevo en un momento o escribir a <a href="mailto:info@letrasespanolas.org">info@letrasespanolas.org</a> y te apuntamos a mano.</div>
   <p class="nota">Gratis. Te das de baja con un clic. Tu dirección no se cede a nadie. <a href="/privacidad.html">Política de privacidad</a></p>
 </div>
 
@@ -221,7 +221,7 @@ footer a{text-decoration:underline}
       return;
     }
     if (!api || !api.activo) {
-      err.innerHTML = 'La suscripción todavía no está activa. Escribe a <a href="mailto:dmateos.pascual@gmail.com">dmateos.pascual@gmail.com</a> y te apuntamos a mano en cuanto se abra.';
+      err.innerHTML = 'La suscripción todavía no está activa. Escribe a <a href="mailto:info@letrasespanolas.org">info@letrasespanolas.org</a> y te apuntamos a mano en cuanto se abra.';
       err.style.display = 'block';
       return;
     }
@@ -234,7 +234,7 @@ footer a{text-decoration:underline}
       boton.style.display = 'none';
       ok.style.display = 'block';
     }).catch(function () {
-      err.innerHTML = 'No se ha podido completar la suscripción. Puedes intentarlo de nuevo en un momento o escribir a <a href="mailto:dmateos.pascual@gmail.com">dmateos.pascual@gmail.com</a> y te apuntamos a mano.';
+      err.innerHTML = 'No se ha podido completar la suscripción. Puedes intentarlo de nuevo en un momento o escribir a <a href="mailto:info@letrasespanolas.org">info@letrasespanolas.org</a> y te apuntamos a mano.';
       err.style.display = 'block';
       boton.disabled = false; boton.textContent = 'Avisadme gratis';
     });
