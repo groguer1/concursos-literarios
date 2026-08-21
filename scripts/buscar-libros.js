@@ -10,7 +10,11 @@ const AWIN_MID = '21491';
 const AWIN_AFFID = '3033279';
 const AWIN_SUBID = 'letras-libros';
 
-setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 300000);
+// Guardian por si una peticion se queda colgada. Va con unref() a proposito: asi NO mantiene
+// vivo el bucle de eventos cuando el trabajo ya esta hecho. Sin unref el proceso nunca
+// terminaba solo y dependia de que este temporizador lo matara, que es lo que rompio el
+// 21/08/2026 al subirlo de 180 s a 300 s sin tocar el timeout-minutes del workflow.
+setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 300000).unref();
 
 function httpsPost(hostname, path, headers, bodyBuf) {
   return new Promise((resolve, reject) => {
@@ -253,6 +257,7 @@ html_file = html_file.substring(0, gridStartIdx) + newGridBlock + html_file.subs
 fs.writeFileSync('libros.html', html_file, 'utf8');
   console.log('Actualizado con ' + libros.length + ' libros:');
   libros.forEach(l => console.log('  - ' + l.titulo + ' (' + l.autor + ')'));
+  process.exit(0);
 }
 
 main().catch(e => { console.error('Error fatal: ' + e.message); process.exit(0); });
