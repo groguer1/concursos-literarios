@@ -19,7 +19,17 @@ qué leer—, así que un anuncio de libro ahí desentona con el sitio donde est
 de ponerlos en la portada (idea de David, 28/08). Hoy la lista tiene **3 suscriptores**, así que no
 toca. El disparador para retomarlo es que la lista llegue a cientos.
 
-La página pública de tarifas es **`anunciate.html`**, enlazada desde el pie de todas las páginas.
+La página pública de tarifas es **`anunciate.html`**. Está enlazada en dos sitios:
+
+1. **La barra lateral de las 66 páginas que la tienen** —portada, directorios, herramientas y
+   artículos—, con el bloque «¿Organizas un concurso?». **Es el enlace que capta.**
+2. El pie de las 76 páginas, que es el sitio de cortesía.
+
+**El 28/08 estuvo unas horas solo en el pie y David lo dijo claro**: *«en el pie de página nadie lo
+ve»*. Tenía razón — una página que vende algo, metida entre «Aviso legal» y «Cookies», no la
+encuentra ningún anunciante. **Si se rehace la plantilla del sidebar, que el bloque no se caiga.**
+El sidebar está **fuera de los marcadores que reescribe el bot**, así que sobrevive a la
+actualización diaria de la portada.
 
 ## 2. Tarifas (IVA incluido, precio final)
 
