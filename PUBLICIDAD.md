@@ -78,12 +78,13 @@ pasada. En los cuatro casos deja el hueco vacío en vez de publicar algo roto.
 
 ## 6. Pendientes
 
-- **`publi@letrasespanolas.org` no existe todavía.** Verificado por SMTP el 28/08: da **554**, igual
-  que una dirección inventada, mientras `info@` da **250 Ok**. Hasta que se cree el alias de reenvío
-  en Namecheap, `anunciate.html` publica `info@`. Método de verificación en la memoria
-  `correos-propios-letras`.
-- **La newsletter no se vende todavía.** «Avisos de convocatorias» capta altas desde el 19/08 pero
-  **no se sabe cuántos suscriptores hay**, y no se vende un alcance que no se puede dimensionar.
-  Cuando David dé el número, se decide si entra como formato y a qué precio.
+- ~~`publi@letrasespanolas.org`~~ **DECIDIDO EL 28/08: no se crea.** David: *«deja el mail
+  info@letrasespanolas.org y no el de publi»*. El contacto de la página es **`info@`**, que está
+  verificado y funcionando. **No volver a proponerlo.**
+- **La newsletter NO se vende, y ya no es por falta de dato: tiene 3 suscriptores** (David, 28/08).
+  «Avisos de convocatorias» lleva captando desde el 19/08 y en nueve días van tres altas. Con ese
+  número no hay alcance que vender, así que **no entra como formato publicitario**. Volver a
+  mirarlo solo si la lista crece de verdad —cientos, no decenas—, y mientras tanto no mencionarla
+  en `anunciate.html`.
 - **Preguntar al gestor**: si la publicidad lleva retención de IRPF y con qué epígrafe de IAE
   (pendiente desde el 18/08).
