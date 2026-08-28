@@ -426,6 +426,12 @@
   <priority>0.7</priority>
 </url>
 <url>
+  <loc>https://letrasespanolas.org/anunciate.html</loc>
+  <lastmod>2026-08-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+<url>
   <loc>https://letrasespanolas.org/informe-de-lectura.html</loc>
   <lastmod>2026-08-04</lastmod>
   <changefreq>monthly</changefreq>
