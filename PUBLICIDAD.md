@@ -94,11 +94,16 @@ pasada. En los cuatro casos deja el hueco vacío en vez de publicar algo roto.
   número no hay alcance que vender, así que **no entra como formato publicitario**. Volver a
   mirarlo solo si la lista crece de verdad —cientos, no decenas—, y mientras tanto no mencionarla
   en `anunciate.html`. **Cuando crezca, es la vía por la que entran los libros** (ver apartado 1).
-- **Fuera las cifras de audiencia** (David, 28/08): *«si ha llegado a la página pensará que la
-  página se ve, no hace falta dar tanto detalle»*. La versión anterior publicaba impresiones y
-  clics con su fecha. **Lo que se queda, y no se quita**, es la cláusula de que no se garantiza
-  ningún número de clics, visitas ni participantes: eso no es un dato de audiencia, es lo que evita
-  una reclamación. Si un anunciante pregunta por cifras, se le dan las reales; lo que se ha
-  retirado es publicarlas de oficio.
+- **El dato de audiencia SÍ va; lo que sobraba era el juicio** (David, 28/08, en dos pasos). Primero
+  pidió quitarlo entero, y al ver el resultado lo matizó: *«quita lo de que nos visitan poco,
+  simplemente tuvimos x impresiones y ya está. Nada es una audiencia muy pequeña ni nada»*.
+  La página dice **«apareció 10.391 veces en los resultados de Google»** en 28 días, con su fecha, y
+  nada más. **Fuera**: «audiencia pequeña y muy específica», «si buscas alcance masivo este no es tu
+  sitio» y la comparación con lo que venden otras webs. Era honestidad mal calibrada — al que ya
+  está leyendo tu página de tarifas no se le vende pidiendo disculpas.
+  **Dos cosas que no se tocan**: la cláusula de que no se garantiza ningún número de clics, visitas
+  ni participantes (eso no es audiencia, es lo que evita una reclamación), y decir «apareció N veces
+  en los resultados» en vez de «N impresiones», que se confunde con visitas.
+  **Al actualizar la cifra, cambiar también la fecha.**
 - **Preguntar al gestor**: si la publicidad lleva retención de IRPF y con qué epígrafe de IAE
   (pendiente desde el 18/08).
