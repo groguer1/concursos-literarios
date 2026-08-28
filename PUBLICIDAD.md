@@ -8,8 +8,16 @@
 ## 1. Qué se vende
 
 **Un solo espacio**: el bloque destacado de la portada, encima del listado de convocatorias.
-Un anunciante a la vez, sin rotación y sin solapamiento. Sirve igual para una convocatoria de
-concurso que para el lanzamiento de un libro.
+Un anunciante a la vez, sin rotación y sin solapamiento.
+
+**SOLO CONVOCATORIAS DE CONCURSOS.** David lo acotó el 28/08, después de ver la primera versión:
+*«creo que no me gusta mezclar lo de libros, déjalo solo en anunciar concursos»*. Tiene sentido —
+el espacio está encima del listado de convocatorias y quien lo mira busca dónde presentarse, no
+qué leer—, así que un anuncio de libro ahí desentona con el sitio donde está puesto.
+
+**Los libros entran cuando la newsletter crezca**, y por otra vía: enviándolos en el boletín en vez
+de ponerlos en la portada (idea de David, 28/08). Hoy la lista tiene **3 suscriptores**, así que no
+toca. El disparador para retomarlo es que la lista llegue a cientos.
 
 La página pública de tarifas es **`anunciate.html`**, enlazada desde el pie de todas las páginas.
 
@@ -19,7 +27,7 @@ La página pública de tarifas es **`anunciate.html`**, enlazada desde el pie de
 |---|---|---|
 | Destacado en portada | **37 €** | 15 días |
 | Destacado en portada, mes completo | **59 €** | 30 días |
-| Segunda pieza del mismo anunciante | **20 €** | el mismo periodo |
+| Segunda convocatoria del mismo organizador | **20 €** | el mismo periodo |
 
 **De dónde salen estos números** (rastreo del 28/08/2026, leído en las páginas de tarifas, no en
 resúmenes de buscador):
@@ -85,6 +93,12 @@ pasada. En los cuatro casos deja el hueco vacío en vez de publicar algo roto.
   «Avisos de convocatorias» lleva captando desde el 19/08 y en nueve días van tres altas. Con ese
   número no hay alcance que vender, así que **no entra como formato publicitario**. Volver a
   mirarlo solo si la lista crece de verdad —cientos, no decenas—, y mientras tanto no mencionarla
-  en `anunciate.html`.
+  en `anunciate.html`. **Cuando crezca, es la vía por la que entran los libros** (ver apartado 1).
+- **Fuera las cifras de audiencia** (David, 28/08): *«si ha llegado a la página pensará que la
+  página se ve, no hace falta dar tanto detalle»*. La versión anterior publicaba impresiones y
+  clics con su fecha. **Lo que se queda, y no se quita**, es la cláusula de que no se garantiza
+  ningún número de clics, visitas ni participantes: eso no es un dato de audiencia, es lo que evita
+  una reclamación. Si un anunciante pregunta por cifras, se le dan las reales; lo que se ha
+  retirado es publicarlas de oficio.
 - **Preguntar al gestor**: si la publicidad lleva retención de IRPF y con qué epígrafe de IAE
   (pendiente desde el 18/08).
