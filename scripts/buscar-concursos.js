@@ -144,10 +144,12 @@ async function llamarIA(texto, fuente) {
      concursos. Se piden hasta 60 con nueve campos cada uno: eso son unos 9.000 tokens de
      respuesta, o sea que la respuesta se cortaba a mitad, el array se quedaba sin cerrar
      y mas abajo se descartaba la fuente ENTERA. Cuantos mas concursos encontraba, mas
-     probable era que fallase. 16.000 da margen de sobra para los 60. */
+     probable era que fallase. Se subio a 16.000, y al empezar a incluir tambien los
+     enlaces la respuesta volvio a cortarse (el rescate salvo 121 de los concursos, que
+     para eso esta), asi que 24.000. */
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 16000,
+    max_tokens: 24000,
     messages: [{ role: 'user', content: prompt }]
   }), 'utf8');
 
