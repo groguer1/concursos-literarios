@@ -72,6 +72,13 @@ function limpiarHTML(texto) {
   return texto
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<style[\s\S]*?<\/style>/gi, '')
+    /* Los enlaces se conservan COMO TEXTO antes de barrer las etiquetas. Si no, el
+       replace de abajo se lleva por delante todos los href y luego le pedimos al modelo
+       que rellene el campo "url" con enlaces que nunca ha visto: por eso salian 167
+       concursos y solo 2 con enlace a las bases. Queda "titulo del enlace [URL]", que es
+       justo lo que el prompt le pide que copie. */
+    .replace(/<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi,
+             (m, url, dentro) => dentro.replace(/<[^>]+>/g, ' ') + ' [' + url + '] ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
