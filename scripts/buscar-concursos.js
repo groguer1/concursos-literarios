@@ -27,14 +27,25 @@ function claveTitulo(t) {
     .replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
-setTimeout(() => { console.log('Timeout global'); process.exit(0); }, 180000);
+/* El tope global estaba en 3 minutos y el script ya tardaba 3m16s: iba justo a
+   quedarse a medias. Peor aun, salia con process.exit(0), o sea EXITO, asi que un
+   planton se veia en el log como un dia normal. Ahora hay margen (el paso del workflow
+   corta a los 4 min de todas formas) y sale con codigo 1 para que el run se marque en
+   rojo y se vea. */
+setTimeout(() => {
+  console.error('TIMEOUT GLOBAL: el script no ha terminado a tiempo. El listado NO se ha actualizado.');
+  process.exit(1);
+}, 210000);
 
 function httpsPost(hostname, path, headers, bodyBuf) {
   return new Promise((resolve, reject) => {
     const options = {
       hostname, port: 443, path, method: 'POST',
       headers: { ...headers, 'Content-Length': bodyBuf.length },
-      timeout: 90000,
+      /* 90 s bastaban con max_tokens en 8.000. Al subirlo a 16.000 la respuesta de
+         escritores.org tarda unos 90 s y empezo a dar Timeout: se arreglaba el truncado
+         y se caia por el otro lado. 150 s dan aire sin acercarse al tope global. */
+      timeout: 150000,
     };
     const req = https.request(options, (res) => {
       const chunks = [];
