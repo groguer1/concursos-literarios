@@ -62,6 +62,37 @@ function limpiarHTML(texto) {
     .replace(/\s+/g, ' ').trim();
 }
 
+/* Saca el array de concursos de la respuesta del modelo, AUNQUE VENGA CORTADO.
+   Antes esto era un indexOf('[') + lastIndexOf(']'), y si la respuesta se truncaba no
+   habia corchete de cierre: lastIndexOf devolvia -1 y se tiraba la fuente entera. Asi se
+   perdio escritores.org —la fuente grande— dia tras dia, y el listado se quedaba en los
+   fijos sin que nadie se enterase. Ahora, si falta el cierre, se recorta hasta el ultimo
+   objeto completo y se cierra el array a mano: se pierde el ultimo concurso a medias, no
+   los cincuenta que si habian llegado bien. */
+function extraerJSON(respuesta, fuente) {
+  const inicio = respuesta.indexOf('[');
+  if (inicio === -1) return null;
+
+  const fin = respuesta.lastIndexOf(']');
+  if (fin > inicio) {
+    try { return JSON.parse(respuesta.substring(inicio, fin + 1)); }
+    catch (e) { console.warn('JSON ilegible en ' + fuente + ', intentando rescatarlo: ' + e.message); }
+  }
+
+  /* Rescate: cortar por el ultimo objeto que cerro y cerrar el array. */
+  const trozo = respuesta.substring(inicio);
+  const ultimo = trozo.lastIndexOf('}');
+  if (ultimo === -1) return null;
+  try {
+    const rescatado = JSON.parse(trozo.substring(0, ultimo + 1) + ']');
+    console.warn('RESCATADOS ' + rescatado.length + ' concursos de una respuesta cortada de ' + fuente);
+    return rescatado;
+  } catch (e) {
+    console.error('No se ha podido rescatar el JSON de ' + fuente + ': ' + e.message);
+    return null;
+  }
+}
+
 async function llamarIA(texto, fuente) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
@@ -85,9 +116,14 @@ async function llamarIA(texto, fuente) {
      (04/09), aun estando los dos dentro del plazo que el filtro si acepta. */
   const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 60, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. Si el texto incluye el enlace a las bases o a la convocatoria, ponlo en "url"; no inventes URLs. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
 
+  /* max_tokens estaba en 8.000 y ESA ERA LA CAUSA de que el listado se quedara en 9
+     concursos. Se piden hasta 60 con nueve campos cada uno: eso son unos 9.000 tokens de
+     respuesta, o sea que la respuesta se cortaba a mitad, el array se quedaba sin cerrar
+     y mas abajo se descartaba la fuente ENTERA. Cuantos mas concursos encontraba, mas
+     probable era que fallase. 16.000 da margen de sobra para los 60. */
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 8000,
+    max_tokens: 16000,
     messages: [{ role: 'user', content: prompt }]
   }), 'utf8');
 
@@ -99,6 +135,12 @@ async function llamarIA(texto, fuente) {
 
   if (result.error) throw new Error(JSON.stringify(result.error));
   const respuesta = result.content[0].text;
+  /* Si la respuesta se corta por el tope, el modelo lo dice en stop_reason. Antes no se
+     miraba, asi que un truncado se veia igual que "no hay concursos": en silencio. */
+  if (result.stop_reason === 'max_tokens') {
+    console.warn('AVISO: la respuesta de ' + fuente + ' se ha CORTADO por max_tokens. ' +
+                 'Se rescatara lo que haya llegado entero, pero conviene subir el tope.');
+  }
   console.log('Respuesta IA: ' + respuesta.substring(0, 300));
   return respuesta;
 }
@@ -187,10 +229,8 @@ async function main() {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
       const respuesta = await llamarIA(html, f.nombre);
-      const inicio = respuesta.indexOf('[');
-      const fin = respuesta.lastIndexOf(']');
-      if (inicio === -1 || fin === -1) { console.warn('Sin JSON para ' + f.nombre); continue; }
-      const concursos = JSON.parse(respuesta.substring(inicio, fin + 1));
+      const concursos = extraerJSON(respuesta, f.nombre);
+      if (concursos === null) { console.warn('Sin JSON para ' + f.nombre); continue; }
       console.log('Encontrados en ' + f.nombre + ': ' + concursos.length);
       todos = todos.concat(concursos);
     } catch(e) {
@@ -221,6 +261,22 @@ async function main() {
 
   console.log('Validos en rango: ' + filtrados.length);
   if (!filtrados.length) { console.log('Ninguno en rango'); process.exit(0); }
+
+  /* EL GUARD QUE FALTABA. El de arriba solo salta si NO queda ninguno, y como los fijos
+     nunca fallan, nunca saltaba: se publicaban 9 concursos con toda normalidad mientras
+     la fuente grande llevaba dias cayendose. Entre el 25/08 y el 05/09 el listado salto
+     entre 74 y 8 sin que nadie lo notara. Una caida asi casi siempre es un raspado roto,
+     no que se hayan acabado los concursos de Espana, asi que se avisa. */
+  try {
+    const anterior = JSON.parse(fs.readFileSync('concursos.json', 'utf8'));
+    if (anterior.length >= 12 && filtrados.length < anterior.length * 0.6) {
+      console.warn('==================================================================');
+      console.warn('AVISO: el listado CAE de ' + anterior.length + ' a ' + filtrados.length + ' concursos.');
+      console.warn('Eso son ' + Math.round(100 - filtrados.length / anterior.length * 100) + ' % menos.');
+      console.warn('Mira mas arriba si alguna fuente ha dado "Sin JSON" o se ha cortado.');
+      console.warn('==================================================================');
+    }
+  } catch (e) { /* la primera vez no hay fichero previo: no es un fallo */ }
 
   let html_file = fs.readFileSync('index.html', 'utf8');
   const concursosJS = 'const CONCURSOS_BASE = ' + JSON.stringify(filtrados) + ';';
