@@ -32,10 +32,16 @@ function claveTitulo(t) {
    planton se veia en el log como un dia normal. Ahora hay margen (el paso del workflow
    corta a los 4 min de todas formas) y sale con codigo 1 para que el run se marque en
    rojo y se vea. */
-setTimeout(() => {
+/* .unref() NO ES OPCIONAL: sin el, este temporizador mantiene vivo el proceso aunque el
+   trabajo ya este hecho, asi que Node se queda esperando los 210 s y dispara el aviso
+   DESPUES de haber actualizado el listado. Paso en la prueba del 6/09: escribio los 94
+   concursos y aun asi el run acabo en rojo. Con unref, el temporizador solo salta si de
+   verdad queda algo pendiente. Es el mismo fallo que tuvo el bot de novedades. */
+const topeGlobal = setTimeout(() => {
   console.error('TIMEOUT GLOBAL: el script no ha terminado a tiempo. El listado NO se ha actualizado.');
   process.exit(1);
 }, 210000);
+topeGlobal.unref();
 
 function httpsPost(hostname, path, headers, bodyBuf) {
   return new Promise((resolve, reject) => {
