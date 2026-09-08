@@ -1,0 +1,31 @@
+name: Comprobar enlaces de los directorios
+
+on:
+  schedule:
+    # Lunes a las 7:00 hora espanola (6:00 UTC). Semanal basta: las webs no se caen
+    # a diario, y un aviso que llega todos los dias se deja de leer.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  enlaces:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Solo lee: no escribe nada en el repositorio.
+    permissions:
+      contents: read
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Falla si hay dominios caidos o enlaces rotos, y tambien si la propia
+      # comprobacion no es fiable (ver la guarda del final del script). Los "dudoso"
+      # y los "redirige" salen en el log pero no ponen el run en rojo.
+      - name: Comprobar los enlaces de las fichas
+        run: node scripts/comprobar-enlaces.js
