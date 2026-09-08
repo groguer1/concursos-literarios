@@ -1,0 +1,29 @@
+name: Comprobaciones
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Las mismas comprobaciones que lanza el hook de arranque de Claude, para que
+      # tambien se pasen cuando el cambio no viene de una sesion de Claude: un commit
+      # hecho a mano, o uno de los bots diarios.
+      # No necesita internet, asi que aqui no hay excusa de red.
+      - name: Comprobaciones que no necesitan internet
+        run: node scripts/comprobar-todo.js
