@@ -75,6 +75,38 @@ listado cae más de un 40 %, y `comprobar-enlaces.js` avisa si más del 60 % de 
 salen dudosos (señal de que no hay red, no de que las webs estén bien). Un script que
 termina en verde cuando en realidad no ha comprobado nada es peor que no tenerlo.
 
+## La PWA (instalable y sin conexión)
+
+El sitio se puede instalar en la pantalla de inicio y sigue funcionando sin cobertura.
+Piezas: `manifest.webmanifest`, `sw.js`, `offline.html`, los iconos de `img/` y el
+registro, que vive al final de `nav.js`.
+
+**La estrategia de caché no es la habitual, y el motivo importa.** Lo normal en una PWA
+es servir primero de caché. Aquí **no**: un bot reescribe `index.html` cada día a las
+06:00 con las convocatorias del día, y servir una copia guardada sería enseñarle a un
+escritor plazos ya cerrados. Así que:
+
+- **HTML y `.json` → siempre a la red primero.** La caché solo entra si no hay cobertura.
+- **CSS, JS e iconos → de caché, refrescando por detrás.** No caducan.
+- **Otros dominios → sin tocar.** AdSense, Analytics, Brevo, las fuentes y el worker de
+  Cloudflare no pasan por el service worker.
+- A un `.json` sin red se le responde `Response.error()`, **nunca la página de sin
+  conexión**: quien pide JSON y recibe HTML se rompe con un error incomprensible. La
+  portada ya sabe tratar ese fallo, se queda con `CONCURSOS_BASE`.
+
+**`SW_ACTIVO` en `nav.js` es la salida de emergencia y no es decorativa.** Un service
+worker se queda instalado en el navegador del visitante y sigue ahí aunque se borre del
+servidor. Poniéndola en `false`, `nav.js` desinstala el que hubiera y vacía sus cachés en
+la siguiente visita. Comprobado que funciona.
+
+Al cambiar `sw.js`, **subir `VERSION`**: es lo que borra las cachés viejas al activarse.
+
+**Las notificaciones push NO están hechas**, y no se pueden hacer solo con ficheros
+estáticos: hacen falta claves VAPID, un sitio donde guardar las suscripciones y un
+servicio que las envíe. La vía más barata sería un Worker de Cloudflare con KV, que ya
+se usa uno en el proyecto. Mientras no exista ese servicio, la PWA es instalable y
+funciona sin conexión, pero no avisa de nada.
+
 ## Los scripts
 
 | Fichero | Para qué |
@@ -98,8 +130,9 @@ termina en verde cuando en realidad no ha comprobado nada es peor que no tenerlo
 ## Decisiones ya tomadas (no volver a proponerlas sin datos nuevos)
 
 - **App móvil nativa: no.** ~400-800 visitas/mes y 3 suscriptores en el boletín no sostienen
-  99 €/año de Apple más el mantenimiento. Si algún día se hace algo, es una PWA, y después
-  de que el boletín crezca.
+  99 €/año de Apple más el mantenimiento. La alternativa, la PWA, ya está hecha (ver
+  arriba): instalable y sin conexión, sin tiendas ni cuotas. Lo que falta de ella son las
+  notificaciones, y eso necesita un servicio que las envíe, no otra app.
 - **API pública como producto: no.** No hay consumidores, y publicar los datos en abierto
   canibaliza las visitas, que es lo único que monetiza. Además los datos vienen de raspar
   fuentes ajenas: republicarlos como API es una reutilización más fuerte que listarlos.
