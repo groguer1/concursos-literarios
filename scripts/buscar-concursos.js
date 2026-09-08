@@ -68,7 +68,43 @@ function httpsPost(hostname, path, headers, bodyBuf) {
   });
 }
 
-function limpiarHTML(texto) {
+/* Los listados enlazan la ficha de cada convocatoria con rutas RELATIVAS
+   ("/recursos-para-escritores/42034-..."). Antes se copiaban tal cual al texto que ve el
+   modelo, y el prompt le prohibe inventarse URLs: una ruta suelta no es una URL, asi que
+   la descartaba. Resultado, el 08/09/2026: de los 8 concursos con enlace, 6 eran de
+   guiadeconcursos.com (que enlaza en absoluto) y los otros 2 estaban metidos a mano en
+   concursos-fijos.json. Del raspado de escritores.org no salia NI UNO.
+   Aqui se resuelven contra la URL de la fuente antes de ensenarselas al modelo.
+   Devuelve '' para mailto:, javascript:, #anclas y href rotos, para no meterle ruido. */
+function absolutizar(href, base) {
+  const h = String(href || '').trim();
+  /* Las anclas ("#arriba") resuelven a la URL del propio listado, y entonces el modelo
+     ve la portada de la fuente colgando de un enlace cualquiera y se la puede colocar a
+     un concurso como si fueran sus bases. Fuera antes de resolver nada. */
+  if (!h || h.startsWith('#')) return '';
+  try {
+    const u = new URL(h, base);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return '';
+    u.hash = '';
+    /* Mismo motivo con los enlaces a la propia pagina (el logo, "volver al listado",
+       la paginacion): no son las bases de nada. */
+    const sinBarra = x => String(x).replace(/\/+$/, '');
+    if (sinBarra(u.href) === sinBarra(base)) return '';
+    return u.href;
+  } catch (e) { return ''; }
+}
+
+/* Filtro de lo que devuelve el modelo. Ahora que ve muchos mas enlaces, conviene
+   comprobar que lo que pone en "url" es de verdad una URL y no un trozo de texto. */
+function urlValida(u) {
+  if (!u) return '';
+  try {
+    const x = new URL(String(u).trim());
+    return (x.protocol === 'http:' || x.protocol === 'https:') ? x.href : '';
+  } catch (e) { return ''; }
+}
+
+function limpiarHTML(texto, base) {
   return texto
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<style[\s\S]*?<\/style>/gi, '')
@@ -78,7 +114,11 @@ function limpiarHTML(texto) {
        concursos y solo 2 con enlace a las bases. Queda "titulo del enlace [URL]", que es
        justo lo que el prompt le pide que copie. */
     .replace(/<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi,
-             (m, url, dentro) => dentro.replace(/<[^>]+>/g, ' ') + ' [' + url + '] ')
+             (m, url, dentro) => {
+               const abs = absolutizar(url, base);
+               const txt = dentro.replace(/<[^>]+>/g, ' ');
+               return abs ? txt + ' [' + abs + '] ' : txt + ' ';
+             })
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
@@ -117,7 +157,7 @@ function extraerJSON(respuesta, fuente) {
   }
 }
 
-async function llamarIA(texto, fuente) {
+async function llamarIA(texto, fuente, base) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
   limite.setDate(limite.getDate() + VENTANA_DIAS);
@@ -126,8 +166,13 @@ async function llamarIA(texto, fuente) {
   /* Antes se cortaba en 25.000 caracteres y la pagina de escritores.org tiene 57.000
      de texto limpio: se tiraba el 56% SIN MIRARLO. Asi se perdio el certamen Mariana
      de Carvajal, que cae en el caracter 39.110. Cabe entero de sobra en el contexto. */
-  const textoLimpio = limpiarHTML(texto).substring(0, 120000);
-  console.log('Texto limpio de ' + fuente + ': ' + textoLimpio.length + ' chars');
+  const textoLimpio = limpiarHTML(texto, base).substring(0, 120000);
+  /* Cuantos enlaces le llegan de verdad al modelo. Si esto sale 0 para una fuente, el
+     problema esta en el raspado (o la fuente ha cambiado de plantilla), no en el prompt:
+     es el dato que faltaba para saber por que escritores.org no daba ni un enlace. */
+  const enlacesVisibles = (textoLimpio.match(/\[https?:\/\//g) || []).length;
+  console.log('Texto limpio de ' + fuente + ': ' + textoLimpio.length + ' chars, ' +
+              enlacesVisibles + ' enlaces visibles para el modelo');
 
   if (textoLimpio.length < 100) {
     console.warn('Texto demasiado corto, saltando ' + fuente);
@@ -244,9 +289,15 @@ async function main() {
   console.log('Iniciando busqueda de concursos...');
   if (!ANTHROPIC_KEY) { console.error('ANTHROPIC_KEY no configurado'); process.exit(1); }
 
+  /* "base" tiene que ser la MISMA URL que descarga el workflow en el paso
+     "Descargar paginas de concursos" (.github/workflows/actualizar-concursos.yml).
+     Es contra lo que se resuelven los enlaces relativos de cada listado: si aqui se
+     pone otra cosa, los enlaces salen apuntando a donde no es. */
   const fuentes = [
-    { archivo: '/tmp/fuente1.html', nombre: 'escritores.org' },
-    { archivo: '/tmp/fuente2.html', nombre: 'guiadeconcursos.com' },
+    { archivo: '/tmp/fuente1.html', nombre: 'escritores.org',
+      base: 'https://www.escritores.org/concursos/concursos-1/concursos-literarios' },
+    { archivo: '/tmp/fuente2.html', nombre: 'guiadeconcursos.com',
+      base: 'https://www.guiadeconcursos.com/' },
   ];
 
   let todos = [];
@@ -254,10 +305,16 @@ async function main() {
     try {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
-      const respuesta = await llamarIA(html, f.nombre);
+      const respuesta = await llamarIA(html, f.nombre, f.base);
       const concursos = extraerJSON(respuesta, f.nombre);
       if (concursos === null) { console.warn('Sin JSON para ' + f.nombre); continue; }
-      console.log('Encontrados en ' + f.nombre + ': ' + concursos.length);
+      /* Se normaliza aqui, fuente a fuente, para poder decir en el log cuantos traen
+         enlace. Es la cifra que hay que vigilar: si una fuente da 40 concursos y 0
+         enlaces, algo se ha roto en esa fuente aunque el listado siga saliendo lleno. */
+      concursos.forEach(c => { c.url = urlValida(c.url); });
+      const conEnlace = concursos.filter(c => c.url).length;
+      console.log('Encontrados en ' + f.nombre + ': ' + concursos.length +
+                  ' (' + conEnlace + ' con enlace a las bases)');
       todos = todos.concat(concursos);
     } catch(e) {
       console.error('Error con ' + f.nombre + ': ' + e.message);
@@ -267,6 +324,7 @@ async function main() {
   /* Los fijos van PRIMERO para que, si una convocatoria esta en los dos sitios, gane
      nuestra ficha revisada a mano y no la que saque la IA del listado ajeno. */
   const fijos = leerFijos();
+  fijos.forEach(c => { c.url = urlValida(c.url); });
   const vistos = new Set();
   const todosConFijos = fijos.concat(todos).filter(c => {
     const k = claveTitulo(c.titulo);
@@ -330,7 +388,9 @@ async function main() {
 
   fs.writeFileSync('index.html', htmlFinal, 'utf8');
   fs.writeFileSync('concursos.json', JSON.stringify(filtrados.length ? filtrados : JSON.parse(html_file.match(/const CONCURSOS_BASE = (\[[\s\S]*?\]);/)[1])), 'utf8');
-  console.log('Actualizado con ' + filtrados.length + ' concursos:');
+  const totalConEnlace = filtrados.filter(c => c.url).length;
+  console.log('Actualizado con ' + filtrados.length + ' concursos, ' + totalConEnlace +
+              ' con enlace a las bases (' + Math.round(totalConEnlace / filtrados.length * 100) + ' %):');
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
