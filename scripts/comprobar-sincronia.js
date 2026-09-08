@@ -23,7 +23,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const RAIZ = path.join(__dirname, '..');
+// leerArray se comparte con comprobar-enlaces.js: ver scripts/lib/directorios.js
+const { RAIZ, leerArray } = require('./lib/directorios.js');
 
 // Las etiquetas del <details> NO son iguales en los tres directorios.
 const DIRECTORIOS = [
@@ -92,33 +93,6 @@ const DIRECTORIOS = [
     },
   },
 ];
-
-/** Extrae el array JS del HTML y lo evalúa (nada de regex sobre los campos: ver CLAUDE.md). */
-function leerArray(html, variable) {
-  const inicio = html.indexOf(`const ${variable} = [`);
-  if (inicio === -1) throw new Error(`No encuentro "const ${variable} = [" en el HTML`);
-  const abre = html.indexOf('[', inicio);
-  let profundidad = 0;
-  let cierra = -1;
-  let enCadena = null;
-  for (let i = abre; i < html.length; i++) {
-    const c = html[i];
-    if (enCadena) {
-      if (c === '\\') i++;
-      else if (c === enCadena) enCadena = null;
-      continue;
-    }
-    if (c === "'" || c === '"' || c === '`') { enCadena = c; continue; }
-    if (c === '[') profundidad++;
-    else if (c === ']') {
-      profundidad--;
-      if (profundidad === 0) { cierra = i; break; }
-    }
-  }
-  if (cierra === -1) throw new Error(`El array ${variable} no cierra`);
-  // eslint-disable-next-line no-eval
-  return eval(html.slice(abre, cierra + 1));
-}
 
 /** Decodifica las entidades HTML que usan estos ficheros. */
 function decodificar(s) {
