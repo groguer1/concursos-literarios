@@ -157,6 +157,42 @@ function extraerJSON(respuesta, fuente) {
   }
 }
 
+/* LA SONDA DE GASTO. Este bot llama a un modelo todos los dias y hasta hoy no
+   registraba lo que costaba: se estimaba a ojo, que es justo lo que no vale.
+   Precios de Claude Haiku 4.5 a 09/09/2026: 1,00 $ por millon de tokens de
+   entrada y 5,00 $ por millon de salida. SI SE CAMBIA DE MODELO HAY QUE CAMBIAR
+   ESTO, o el numero que imprime deja de significar nada. */
+const PRECIO_ENTRADA_POR_MILLON = 1.00;
+const PRECIO_SALIDA_POR_MILLON  = 5.00;
+const gasto = { entrada: 0, salida: 0, cacheLeida: 0, cacheEscrita: 0, llamadas: 0 };
+
+function dolares() {
+  return (gasto.entrada / 1e6) * PRECIO_ENTRADA_POR_MILLON +
+         (gasto.salida  / 1e6) * PRECIO_SALIDA_POR_MILLON;
+}
+
+/* LA DECISION DE PUBLICAR O NO, aparte para poder probarla sin llamar a la API.
+   Devuelve {bloquear, motivo}. Se exigen DOS condiciones para bloquear:
+     a) el listado cae por debajo del 60 % de lo que habia ayer, y
+     b) alguna fuente ha devuelto CERO concursos.
+   Solo con (a) se bloquearia un dia en que venzan muchas convocatorias de golpe, y
+   el bloqueo no se levantaria nunca. Atado a (b), en cuanto la fuente vuelve, publica. */
+function decidirPublicacion(anterior, ahora, porFuente) {
+  const caidas = Object.keys(porFuente || {}).filter(n => porFuente[n] === 0);
+  const base = Array.isArray(anterior) ? anterior.length : 0;
+  const desplome = base >= 12 && ahora < base * 0.6;
+  if (desplome && caidas.length) {
+    return { bloquear: true, caidas,
+             motivo: 'el listado cae de ' + base + ' a ' + ahora +
+                     ' y estas fuentes han dado cero: ' + caidas.join(', ') };
+  }
+  if (desplome) {
+    return { bloquear: false, caidas,
+             motivo: 'cae de ' + base + ' a ' + ahora + ', pero ninguna fuente ha fallado: parece real' };
+  }
+  return { bloquear: false, caidas, motivo: 'sin desplome' };
+}
+
 async function llamarIA(texto, fuente, base) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
@@ -205,6 +241,18 @@ async function llamarIA(texto, fuente, base) {
   }, body);
 
   if (result.error) throw new Error(JSON.stringify(result.error));
+
+  /* El uso REAL, no una estimacion. Sin esto no se puede decidir si merece la pena
+     enriquecer las fichas: el coste se adivinaba. */
+  const u = result.usage || {};
+  gasto.entrada      += u.input_tokens  || 0;
+  gasto.salida       += u.output_tokens || 0;
+  gasto.cacheLeida   += u.cache_read_input_tokens     || 0;
+  gasto.cacheEscrita += u.cache_creation_input_tokens || 0;
+  gasto.llamadas     += 1;
+  console.log('Gasto de ' + fuente + ': ' + (u.input_tokens || 0) + ' tokens de entrada, ' +
+              (u.output_tokens || 0) + ' de salida');
+
   const respuesta = result.content[0].text;
   /* Si la respuesta se corta por el tope, el modelo lo dice en stop_reason. Antes no se
      miraba, asi que un truncado se veia igual que "no hay concursos": en silencio. */
@@ -301,7 +349,12 @@ async function main() {
   ];
 
   let todos = [];
+  /* Cuantos ha dado cada fuente. Es lo que permite distinguir "hoy hay menos
+     concursos" de "una fuente se ha caido", que es la diferencia entre publicar y
+     no publicar. */
+  const porFuente = {};
   for (const f of fuentes) {
+    porFuente[f.nombre] = 0;
     try {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
@@ -315,6 +368,7 @@ async function main() {
       const conEnlace = concursos.filter(c => c.url).length;
       console.log('Encontrados en ' + f.nombre + ': ' + concursos.length +
                   ' (' + conEnlace + ' con enlace a las bases)');
+      porFuente[f.nombre] = concursos.length;
       todos = todos.concat(concursos);
     } catch(e) {
       console.error('Error con ' + f.nombre + ': ' + e.message);
@@ -351,15 +405,34 @@ async function main() {
      la fuente grande llevaba dias cayendose. Entre el 25/08 y el 05/09 el listado salto
      entre 74 y 8 sin que nadie lo notara. Una caida asi casi siempre es un raspado roto,
      no que se hayan acabado los concursos de Espana, asi que se avisa. */
+  /* EL GUARD, AHORA CON FRENO. Antes solo AVISABA en el log, y el log de una Action
+     que nadie abre no lo lee nadie: entre el 24/08 y el 09/09, OCHO de veintiun dias
+     la portada se publico con 8-10 concursos porque una fuente se habia caido. Google
+     veia una portada que perdia el 90 % de su contenido un dia si y otro no.
+
+     La regla: si una fuente se ha caido (cero concursos) Y ademas el listado cae por
+     debajo del 60 % de lo que habia ayer, NO SE PUBLICA. Se deja lo del dia anterior,
+     que son concursos que siguen abiertos, y se sale con codigo 0 para no llenar de
+     rojo el historial por algo que se arregla solo mañana.
+
+     Se exigen las DOS condiciones a proposito. Solo con la caida se bloquearia un dia
+     en que de verdad venzan muchas convocatorias a la vez, y el bloqueo se quedaria
+     puesto para siempre; atandolo a que una fuente haya fallado, en cuanto la fuente
+     vuelve, se publica. */
   try {
     const anterior = JSON.parse(fs.readFileSync('concursos.json', 'utf8'));
-    if (anterior.length >= 12 && filtrados.length < anterior.length * 0.6) {
+    const veredicto = decidirPublicacion(anterior, filtrados.length, porFuente);
+    if (veredicto.bloquear) {
       console.warn('==================================================================');
-      console.warn('AVISO: el listado CAE de ' + anterior.length + ' a ' + filtrados.length + ' concursos.');
-      console.warn('Eso son ' + Math.round(100 - filtrados.length / anterior.length * 100) + ' % menos.');
-      console.warn('Mira mas arriba si alguna fuente ha dado "Sin JSON" o se ha cortado.');
+      console.warn('NO SE PUBLICA: ' + veredicto.motivo + '.');
+      console.warn('Se conserva el listado de ayer, que son concursos que siguen abiertos.');
+      console.warn('Recuento por fuente: ' + JSON.stringify(porFuente));
       console.warn('==================================================================');
+      console.log('Gasto de esta ejecucion: ' + gasto.entrada + ' tokens de entrada, ' +
+                  gasto.salida + ' de salida, ' + dolares().toFixed(4) + ' $');
+      process.exit(0);
     }
+    if (veredicto.motivo !== 'sin desplome') console.warn('AVISO: ' + veredicto.motivo);
   } catch (e) { /* la primera vez no hay fichero previo: no es un fallo */ }
 
   let html_file = fs.readFileSync('index.html', 'utf8');
@@ -391,7 +464,18 @@ async function main() {
   const totalConEnlace = filtrados.filter(c => c.url).length;
   console.log('Actualizado con ' + filtrados.length + ' concursos, ' + totalConEnlace +
               ' con enlace a las bases (' + Math.round(totalConEnlace / filtrados.length * 100) + ' %):');
+  console.log('---');
+  console.log('GASTO DE ESTA EJECUCION: ' + gasto.llamadas + ' llamadas · ' +
+              gasto.entrada + ' tokens de entrada · ' + gasto.salida + ' de salida · ' +
+              dolares().toFixed(4) + ' $  (a ' + (dolares() * 30).toFixed(2) + ' $/mes a este ritmo)');
+  console.log('Recuento por fuente: ' + JSON.stringify(porFuente));
+  console.log('---');
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
-main().catch(e => { console.error('Error fatal: ' + e.message); process.exit(0); });
+if (typeof module !== 'undefined') module.exports = { decidirPublicacion };
+
+/* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
+if (require.main === module) {
+  main().catch(e => { console.error('Error fatal: ' + e.message); process.exit(0); });
+}

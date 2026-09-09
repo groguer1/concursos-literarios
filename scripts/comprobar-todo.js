@@ -59,6 +59,13 @@ const PRUEBAS = [
       return (salida.trim().split('\n').pop() || '').trim();
     },
   },
+  {
+    nombre: 'Freno que impide publicar una portada vacia',
+    ejecutar: () => {
+      const salida = execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/decidir-publicacion.test.js')], { encoding: 'utf8' });
+      return (salida.trim().split('\n').pop() || '').trim();
+    },
+  },
 ];
 
 let fallos = 0;
