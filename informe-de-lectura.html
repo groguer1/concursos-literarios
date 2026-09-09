@@ -71,6 +71,15 @@ ul,ol{margin:0 0 1rem 1.4rem}li{line-height:1.7;margin-bottom:.45rem}
 .tarifas-tabla tr.destacada-fila{background:var(--cream)}
 .tarifas-tabla .precio-celda{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--accent);white-space:nowrap}
 .tarifas-tabla .detalle{font-size:.82rem;color:var(--muted)}
+.tarifas-tabla tr.fila-detalle td{padding:0 .5rem .9rem;border-bottom:1px solid var(--border)}
+.que-incluye{border-left:2px solid var(--gold);padding:0 0 0 .9rem}
+.que-incluye summary{cursor:pointer;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);font-weight:500;padding:.15rem 0;list-style:none}
+.que-incluye summary::-webkit-details-marker{display:none}
+.que-incluye summary::before{content:'+ ';font-weight:700}
+.que-incluye[open] summary::before{content:'\2212 '}
+.que-incluye summary:hover{color:var(--accent)}
+.que-incluye p{font-size:.88rem;line-height:1.65;margin:.6rem 0 0;color:var(--ink)}
+.que-incluye[open]{padding-bottom:.4rem}
 .tabla-scroll{overflow-x:auto}
 .nota-tabla{font-size:.88rem;color:var(--muted)}
 .formulario{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:1.8rem;margin:1.5rem 0}
@@ -110,7 +119,7 @@ footer a{color:var(--gold)}
     "description": "Escritor con más de 20 años de oficio, autor de las sagas Valentina Roca y Calan Kennett."
   },
   "offers": [
-    {"@type": "Offer", "name": "Diagnóstico de arranque", "description": "Primeras 50 páginas, sinopsis y carta de presentación.", "price": "95", "priceCurrency": "EUR", "availability": "https://schema.org/InStock"},
+    {"@type": "Offer", "name": "Informe general", "description": "El manuscrito completo. Valoración de conjunto de estructura, personajes, voz narrativa, ritmo y encaje editorial, con veredicto y plan de revisión priorizado.", "price": "95", "priceCurrency": "EUR", "availability": "https://schema.org/InStock"},
     {"@type": "Offer", "name": "Informe de lectura hasta 40.000 palabras", "price": "140", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"},
     {"@type": "Offer", "name": "Informe de lectura de 40.001 a 70.000 palabras", "price": "180", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"},
     {"@type": "Offer", "name": "Informe de lectura de 70.001 a 100.000 palabras", "price": "215", "priceCurrency": "EUR", "availability": "https://schema.org/LimitedAvailability"},
@@ -137,9 +146,9 @@ footer a{color:var(--gold)}
   "mainEntity": [
     {"@type": "Question", "name": "¿Qué es un informe de lectura y en qué se diferencia de una corrección?",
      "acceptedAnswer": {"@type": "Answer", "text": "Un informe de lectura valora la obra: si la estructura aguanta, si los personajes funcionan, dónde se cae el ritmo y si el conjunto está listo para enviarse a una editorial. No se toca el texto. Una corrección de estilo, en cambio, trabaja sobre el manuscrito frase a frase y es un servicio distinto, mucho más caro, que solo tiene sentido cuando la novela ya está cerrada. Corregir un texto que todavía va a cambiar de estructura es tirar el dinero."}},
-    {"@type": "Question", "name": "¿Cuánto cuesta un informe de lectura de una novela?", "acceptedAnswer": {"@type": "Answer", "text": "El precio va por extensión: 140 euros hasta 40.000 palabras, 180 de 40.000 a 70.000, 215 de 70.000 a 100.000 y 260 de 100.000 a 130.000. Por encima de 130.000, presupuesto. También hay un diagnóstico de arranque de 95 euros sobre las primeras 50 páginas, la sinopsis y la carta. En el mercado español conviven servicios de 45 a 90 euros con agencias que cobran entre 190 y 410 euros más IVA según extensión; antes de contratar cualquiera, pregunta cuántas páginas tiene el informe y quién lo firma."}},
+    {"@type": "Question", "name": "¿Cuánto cuesta un informe de lectura de una novela?", "acceptedAnswer": {"@type": "Answer", "text": "El precio va por extensión: 140 euros hasta 40.000 palabras, 180 de 40.000 a 70.000, 215 de 70.000 a 100.000 y 260 de 100.000 a 130.000. Por encima de 130.000, presupuesto. También hay un informe general de 95 euros sobre el manuscrito completo, con valoración de conjunto y plan de revisión. En el mercado español conviven servicios de 45 a 90 euros con agencias que cobran entre 190 y 410 euros más IVA según extensión; antes de contratar cualquiera, pregunta cuántas páginas tiene el informe y quién lo firma."}},
     {"@type": "Question", "name": "¿Cuánto tarda?",
-     "acceptedAnswer": {"@type": "Answer", "text": "Tres semanas desde que se confirma el encargo para el informe completo, y una semana para el diagnóstico de arranque. Solo se aceptan dos novelas completas al mes: leer bien una novela lleva sus horas y no se puede acelerar sin que se note en el resultado."}},
+     "acceptedAnswer": {"@type": "Answer", "text": "Tres semanas desde que se confirma el encargo para el informe completo, y una semana para el informe general. Solo se aceptan dos novelas completas al mes: leer bien una novela lleva sus horas y no se puede acelerar sin que se note en el resultado."}},
     {"@type": "Question", "name": "¿Y si el informe me dice que la novela no está lista?",
      "acceptedAnswer": {"@type": "Answer", "text": "Es una posibilidad real y conviene saberlo antes de pagar. El informe dice lo que hay, con argumentos y ejemplos del propio texto, no lo que uno querría oír. Un informe que solo diga cosas agradables no vale el dinero que cuesta: para eso ya están los amigos y la familia. Ahora bien, decir que algo no funciona sin explicar por qué ni cómo se arregla tampoco sirve; por eso el informe termina siempre con un plan de revisión ordenado por prioridad."}},
     {"@type": "Question", "name": "¿Qué pasa con los derechos de mi manuscrito?",
@@ -243,11 +252,21 @@ footer a{color:var(--gold)}
 <table class="tarifas-tabla">
   <thead><tr><th>Extensión del manuscrito</th><th>Precio</th><th>Entrega</th></tr></thead>
   <tbody>
-    <tr><td><strong>Diagnóstico de arranque</strong><br><span class="detalle">Primeras 50 páginas + sinopsis + carta</span></td><td class="precio-celda">95 €</td><td>1 semana</td></tr>
-    <tr><td>Hasta 40.000 palabras<br><span class="detalle">Novela corta, juvenil, relatos</span></td><td class="precio-celda">140 €</td><td>2 semanas</td></tr>
+    <tr><td><strong>Informe general</strong><br><span class="detalle">El manuscrito completo, valoración de conjunto</span></td><td class="precio-celda">95 €</td><td>1 semana</td></tr>
+    <tr class="fila-detalle"><td colspan="3"><details class="que-incluye">
+  <summary>Qué incluye el informe general</summary>
+  <p>Se lee el manuscrito entero, no una muestra. El informe tiene entre cinco y seis páginas y responde a lo que decide un editor cuando abre un original: si la estructura aguanta de principio a fin, si los personajes tienen recorrido, dónde pierde el pulso el relato, si la voz narrativa es tuya o es la de todos, y en qué punto del mercado encaja lo que has escrito. Termina con un veredicto claro y un plan de revisión ordenado por prioridad, para que sepas por dónde empezar.</p>
+  <p>No lleva el anexo de ejemplos con la página de cada caso ni la comprobación de continuidad y cronología. Eso es lo que añade el informe completo.</p>
+</details></td></tr>
+<tr><td>Hasta 40.000 palabras<br><span class="detalle">Novela corta, juvenil, relatos</span></td><td class="precio-celda">140 €</td><td>2 semanas</td></tr>
     <tr><td>De 40.001 a 70.000</td><td class="precio-celda">180 €</td><td>2 semanas</td></tr>
     <tr class="destacada-fila"><td>De 70.001 a 100.000<br><span class="detalle">La extensión más habitual de una novela</span></td><td class="precio-celda">215 €</td><td>3 semanas</td></tr>
     <tr><td>De 100.001 a 130.000</td><td class="precio-celda">260 €</td><td>4 semanas</td></tr>
+<tr class="fila-detalle"><td colspan="3"><details class="que-incluye">
+  <summary>Qué añade el informe completo (los cuatro tramos por extensión)</summary>
+  <p>Todo lo del informe general y, además, lo que convierte un diagnóstico en un plan de trabajo. Un <strong>anexo de ejemplos con la página exacta</strong> de cada cosa que se señala, para que puedas ir al sitio y verlo con tus ojos. La <strong>comprobación de continuidad</strong>: fechas, edades, cronología y datos que no cuadran entre capítulos —en una novela con saltos en el tiempo, esto es justo lo que un autor no puede hacer solo, porque se lo sabe de memoria y ya no lo ve—. El <strong>encaje editorial con comparables reales y actuales</strong> del mercado español, no con títulos de hace veinte años, y los sellos a los que de verdad le cabe tu novela. Y un <strong>plan de revisión ordenado</strong>, en el que cada problema va acompañado de su vía de arreglo, con el nivel de intervención que recomiendo y por qué.</p>
+  <p>Entre ocho y doce páginas, con ejemplos de tu propio texto en cada apartado. Ninguna crítica se queda sin una manera de resolverla: un informe que solo señala no sirve de nada.</p>
+</details></td></tr>
     <tr><td>Más de 130.000 palabras</td><td class="precio-celda">Presupuesto</td><td>A convenir</td></tr>
   </tbody>
 </table>
@@ -278,7 +297,18 @@ footer a{color:var(--gold)}
   <thead><tr><th>Tipo de corrección</th><th>Precio por cada 1.000 palabras</th></tr></thead>
   <tbody>
     <tr><td><strong>Ortotipográfica</strong><br><span class="detalle">Erratas, ortografía, puntuación, rayas de diálogo, mayúsculas y cursivas</span></td><td class="precio-celda">3,75 €</td></tr>
+<tr class="fila-detalle"><td colspan="2"><details class="que-incluye">
+  <summary>Qué se hace en la corrección ortotipográfica</summary>
+  <p>Se trabaja sobre tu manuscrito y se te devuelve con <strong>control de cambios real de Word</strong>: cada intervención aparece marcada, con lo eliminado tachado y lo añadido subrayado, y tú aceptas o rechazas una por una. No hay ningún cambio impuesto. Se abre igual en Word, en LibreOffice y en Google Docs.</p>
+  <p>Entran las erratas, la ortografía y las tildes, la puntuación, las rayas de diálogo y su espaciado, las comillas —angulares en español, no inglesas—, las mayúsculas, las cursivas, los espacios dobles y los puntos suspensivos. Es la capa que ve una imprenta antes que nadie y la que delata un manuscrito sin preparar.</p>
+</details></td></tr>
     <tr><td><strong>Completa</strong><br><span class="detalle">Lo anterior más gramática y estilo: ambigüedades, repeticiones, tiempos verbales, frases enrevesadas</span></td><td class="precio-celda">7,50 €</td></tr>
+<tr class="fila-detalle"><td colspan="2"><details class="que-incluye">
+  <summary>Qué se hace en la corrección completa</summary>
+  <p>Lo anterior más la lengua: concordancias, tiempos verbales, régimen preposicional, laísmos y leísmos, gerundios mal empleados, repeticiones cercanas, muletillas y frases que se enredan sobre sí mismas.</p>
+  <p><strong>Y una cosa que conviene decir por escrito: no se toca tu voz.</strong> Los coloquialismos, los dialectalismos, el habla propia de cada personaje y la puntuación expresiva se respetan, y se te dice cuáles se han respetado y por qué. Un corrector automático los marca todos en rojo; aquí no, porque muy a menudo son lo mejor que tiene el libro.</p>
+  <p>Se entrega además un resumen con el recuento de cambios por categoría y los errores que más se repiten en tu escritura. Eso es lo que hace que la siguiente corrección te salga más barata: las páginas nuevas ya nacen limpias.</p>
+</details></td></tr>
   </tbody>
 </table>
 </div>
@@ -329,7 +359,7 @@ footer a{color:var(--gold)}
       <label for="servicio">Qué te interesa</label>
       <select id="servicio" name="servicio" required>
         <option value="">Elige una opción</option>
-        <option>Diagnóstico de arranque (95 €)</option>
+        <option>Informe general (95 €)</option>
         <option>Informe de lectura completo</option>
         <option>Corrección (ya tengo el informe hecho)</option>
         <option>Mi caso es distinto, quiero que lo valores</option>
@@ -417,7 +447,7 @@ footer a{color:var(--gold)}
 <p>Sí, cualquier género de narrativa, para adulto o juvenil, y también colecciones de relatos. Poesía y ensayo no.</p>
 
 <h3>¿Puedo enviarte solo un trozo?</h3>
-<p>Para eso está el diagnóstico de arranque de 95 euros: las primeras 50 páginas, la sinopsis y la carta. Es justo el material con el que una editorial decide, así que es un buen sitio por donde empezar si tienes dudas.</p>
+<p>El informe se hace sobre el manuscrito entero, porque la mitad de lo que hay que valorar —si la estructura aguanta, si los personajes llegan a alguna parte, si el final está a la altura— solo se ve leyéndolo hasta el final. Si todavía no lo tienes terminado, escríbeme y lo miramos: hay casos en los que tiene sentido leer lo que hay y otros en los que es mejor esperar, y te lo digo antes de que pagues nada.</p>
 
 </main>
 <footer>
