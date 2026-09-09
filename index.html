@@ -5,6 +5,8 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#f5f2eb">
     <link rel="canonical" href="https://letrasespanolas.org/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Concursos Literarios en España 2026 | Letras Españolas</title>
@@ -330,6 +332,11 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
         <a class="sidebar-link" href="/anunciate.html" style="color:var(--accent);font-weight:500">Ver las tarifas →</a>
       </div>
       <div class="sidebar-section">
+        <div class="sidebar-title">Avisos de convocatorias</div>
+        <p style="font-size:12.5px;line-height:1.6;color:var(--muted);margin:.4rem 0 .7rem">Una vez al mes te enviamos las convocatorias que se abren y las que están a punto de cerrar, con su dotación y su fecha límite. Gratis.</p>
+        <a class="sidebar-link" href="/suscribete.html" style="color:var(--accent);font-weight:500">Suscribirme →</a>
+      </div>
+      <div class="sidebar-section">
         <div class="sidebar-title">Concursos por género</div>
         <a class="sidebar-link" href="/?categoria=poesia">Concursos de poesía</a>
         <a class="sidebar-link" href="/concursos-relato-corto.html">Concursos de relato corto</a>
@@ -442,7 +449,13 @@ const FUENTES = ['https://www.escritores.org/becas-y-concursos/','https://cultur
 const CACHE_KEY='letras_v7', CACHE_HOURS=24;
 const SHEETS_ARTICULOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=0&single=true&output=csv';
 const SHEETS_CONCURSOS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRo9M2BOXkf1YVD7Jv0_AGTLjdLIFaEd_8PBs10xuCIYBoJ0NZ8q3WbK4IZWCMQLBbcgxIIaU6QhPp/pub?gid=450389386&single=true&output=csv';
-const DOMINIOS_GENERICOS = ['escritores.org','culturamas.es','google.com','bing.com','yahoo.com'];
+/* Un enlace a un directorio de concursos NO es la convocatoria oficial, y hasta ahora
+   guiadeconcursos.com no estaba en esta lista: sus fichas se anunciaban como "Enlace
+   directo a la convocatoria oficial" (el 08/09/2026, 6 de los 8 concursos con enlace
+   eran suyos) y ademas se saltaban la busqueda que podria encontrar las bases de verdad. */
+const DOMINIOS_DIRECTORIO = ['escritores.org','culturamas.es','guiadeconcursos.com'];
+const DOMINIOS_BUSCADOR = ['google.com','bing.com','yahoo.com','duckduckgo.com'];
+const DOMINIOS_GENERICOS = DOMINIOS_DIRECTORIO.concat(DOMINIOS_BUSCADOR);
 
 let concursos=[], filtroActivo='todos', nuevosConcursos=[];
 
@@ -474,6 +487,7 @@ async function buscarUrlDuckDuckGo(titulo, organizacion){
       if(link.includes('google.com')) continue;
       if(link.includes('escritores.org')) continue;
       if(link.includes('culturamas.es')) continue;
+      if(link.includes('guiadeconcursos.com')) continue;
       if(link.includes('facebook.com')) continue;
       if(link.includes('twitter.com')) continue;
       if(link.includes('utm_')) continue;
@@ -488,6 +502,16 @@ function urlBusquedaGoogle(titulo, organizacion){
   return `https://www.google.com/search?q=${q}`;
 }
 
+// Ficha en un directorio de concursos: sirve, pero no es la convocatoria oficial.
+function esUrlDirectorio(url){
+  if(!url) return false;
+  try{
+    const u = new URL(url);
+    if(!DOMINIOS_DIRECTORIO.some(d => u.hostname.includes(d))) return false;
+    return u.pathname.replace(/\/+$/,'').length >= 5; // la portada del directorio no vale
+  }catch{ return false; }
+}
+
 async function resolverUrl(concurso){
   if(esUrlEspecifica(concurso.url)){
     return { url: concurso.url, nivel: 1, label: 'Ver convocatoria oficial' };
@@ -496,7 +520,15 @@ async function resolverUrl(concurso){
   if(urlDDG){
     return { url: urlDDG, nivel: 2, label: 'Ver convocatoria oficial' };
   }
-  return { url: urlBusquedaGoogle(concurso.titulo, concurso.organizacion||''), nivel: 3, label: 'Buscar convocatoria en Google' };
+  /* Antes de mandar al escritor a Google, si tenemos la ficha del directorio se la
+     damos: es menos que las bases oficiales, pero es mucho mas que una busqueda. Va
+     DESPUES de la busqueda para que, si aparecen las bases de verdad, ganen ellas. */
+  if(esUrlDirectorio(concurso.url)){
+    let host = '';
+    try{ host = new URL(concurso.url).hostname.replace(/^www\./,''); }catch{}
+    return { url: concurso.url, nivel: 3, label: 'Ver la ficha en ' + (host || 'el directorio') };
+  }
+  return { url: urlBusquedaGoogle(concurso.titulo, concurso.organizacion||''), nivel: 4, label: 'Buscar convocatoria en Google' };
 }
 
 // ══════════════════════════════════════════════
@@ -919,12 +951,16 @@ async function openModal(idx){
   try{
     const resultado=await resolverUrl(c);
     if(resultado.nivel===1){
-      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria oficial →</a>${googleUrl}`;
+      actions.innerHTML=`<a href="${resultado.url}" target="_blank" rel="noopener" class="modal-btn modal-btn-primary">Ver convocatoria oficial →</a>${googleUrl}`;
       statusEl.textContent='Enlace directo a la convocatoria oficial';
       statusEl.classList.add('visible');
     }else if(resultado.nivel===2){
-      actions.innerHTML=`<a href="${resultado.url}" target="_blank" class="modal-btn modal-btn-primary">Ver convocatoria →</a>${googleUrl}`;
+      actions.innerHTML=`<a href="${resultado.url}" target="_blank" rel="noopener" class="modal-btn modal-btn-primary">Ver convocatoria →</a>${googleUrl}`;
       statusEl.textContent='Enlace encontrado automáticamente';
+      statusEl.classList.add('visible');
+    }else if(resultado.nivel===3){
+      actions.innerHTML=`<a href="${resultado.url}" target="_blank" rel="noopener" class="modal-btn modal-btn-primary">${resultado.label} →</a>${googleUrl}`;
+      statusEl.textContent='Ficha en un directorio de concursos, no la convocatoria oficial';
       statusEl.classList.add('visible');
     }
   }catch(e){}

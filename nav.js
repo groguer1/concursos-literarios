@@ -82,3 +82,39 @@
   s.defer = true;
   document.head.appendChild(s);
 })();
+
+/* -------------------------------------------------------------------
+   SERVICE WORKER / PWA [08/09/2026]
+   Se registra desde aquí por el mismo motivo que el popup: nav.js está en todas las
+   páginas, así que esto se enciende o se apaga tocando UN fichero.
+
+   SW_ACTIVO ES LA SALIDA DE EMERGENCIA, y no es opcional. Un service worker se queda
+   instalado en el navegador del visitante y sigue ahí aunque se borre del servidor:
+   sin esta bandera, un fallo en sw.js no se podría recoger. Poniéndola en false, el
+   propio nav.js desinstala el que hubiera y vacía sus cachés en la siguiente visita.
+------------------------------------------------------------------- */
+(function () {
+  var SW_ACTIVO = true;
+
+  if (!('serviceWorker' in navigator)) return;
+
+  if (!SW_ACTIVO) {
+    navigator.serviceWorker.getRegistrations().then(function (rs) {
+      rs.forEach(function (r) { r.unregister(); });
+    });
+    if (window.caches && caches.keys) {
+      caches.keys().then(function (ks) {
+        ks.forEach(function (k) { if (k.indexOf('letras-') === 0) caches.delete(k); });
+      });
+    }
+    return;
+  }
+
+  /* Después de load, no antes: registrarlo durante la carga compite por el ancho de
+     banda con el contenido que el lector está esperando. */
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/sw.js').catch(function (e) {
+      console.warn('No se ha podido registrar el service worker:', e);
+    });
+  });
+})();
