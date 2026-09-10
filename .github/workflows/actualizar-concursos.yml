@@ -38,8 +38,13 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add index.html
-          git add concursos.json 2>/dev/null || true
+          # 'git add index.html' se quedo corto el 10/09: el bot escribe ademas
+          # concursos-relato-corto.html y concursos-poesia.html, esas quedaban sin
+          # preparar y 'git pull --rebase' se plantaba con "You have unstaged changes",
+          # asi que el push NO se hacia y el listado no se publicaba. El runner parte de
+          # un checkout limpio, o sea que lo unico modificado es lo que escribe el bot:
+          # con -A no vuelve a caducar cuando el bot escriba una pagina mas.
+          git add -A
           git diff --staged --quiet || git commit -m "Actualizacion automatica de concursos $(date +'%d/%m/%Y')"
           git pull --rebase origin main
           git push
