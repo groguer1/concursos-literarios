@@ -30,7 +30,7 @@ function claveTitulo(t) {
 /* El tope global estaba en 3 minutos y el script ya tardaba 3m16s: iba justo a
    quedarse a medias. Peor aun, salia con process.exit(0), o sea EXITO, asi que un
    planton se veia en el log como un dia normal. Ahora hay margen (el paso del workflow
-   corta a los 4 min de todas formas) y sale con codigo 1 para que el run se marque en
+   corta a los 10 min de todas formas) y sale con codigo 1 para que el run se marque en
    rojo y se vea. */
 /* .unref() NO ES OPCIONAL: sin el, este temporizador mantiene vivo el proceso aunque el
    trabajo ya este hecho, asi que Node se queda esperando los 210 s y dispara el aviso
@@ -40,7 +40,7 @@ function claveTitulo(t) {
 const topeGlobal = setTimeout(() => {
   console.error('TIMEOUT GLOBAL: el script no ha terminado a tiempo. El listado NO se ha actualizado.');
   process.exit(1);
-}, 210000);
+}, 540000);
 topeGlobal.unref();
 
 function httpsPost(hostname, path, headers, bodyBuf) {
@@ -50,8 +50,16 @@ function httpsPost(hostname, path, headers, bodyBuf) {
       headers: { ...headers, 'Content-Length': bodyBuf.length },
       /* 90 s bastaban con max_tokens en 8.000. Al subirlo a 16.000 la respuesta de
          escritores.org tarda unos 90 s y empezo a dar Timeout: se arreglaba el truncado
-         y se caia por el otro lado. 150 s dan aire sin acercarse al tope global. */
-      timeout: 150000,
+         y se caia por el otro lado.
+         EL 10/09 SE PLANTO OTRA VEZ, y el motivo es que 150 s nunca fueron aire: la
+         llamada de escritores.org tardo 147 s en la ejecucion de las 07:09 de ESE MISMO
+         DIA (18.186 tokens de salida), o sea que pasaba por tres segundos. A las 10:32
+         no paso y el listado se quedo congelado. La causa de fondo es que max_tokens
+         subio de 16.000 a 24.000 y este tope no se toco con el: correccion a medias.
+         Ahora 240 s, que son 63 % de margen sobre lo medido, y el tope global sube a
+         540 s para que sea SIEMPRE este timeout el que corte una fuente lenta y la otra
+         se pueda seguir intentando. */
+      timeout: 240000,
     };
     const req = https.request(options, (res) => {
       const chunks = [];
