@@ -152,7 +152,7 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <h2>Cómo elegir a qué concurso presentarte</h2>
 <p>Con tantas convocatorias abiertas, presentarse a todas es la receta para no ganar ninguna. Tres criterios prácticos: primero, <strong>ajusta la extensión</strong> — si tu relato tiene 12 páginas, descarta los certámenes de microrrelato en lugar de amputarlo. Segundo, <strong>mira quién convoca y cuántas ediciones lleva</strong>: un premio con veinte ediciones a la espalda da prestigio real en una biografía de autor; uno recién nacido puede ser más fácil de ganar. Tercero, <strong>lee las restricciones antes de ilusionarte</strong>: edad, residencia, temática y la casi universal exigencia de obra inédita.</p>
 <p>Y un consejo de intendencia que ahorra disgustos: lleva un registro de qué relato has enviado a qué certamen y hasta cuándo está comprometido. Muchas bases prohíben la presentación simultánea, y retirar un relato premiado en otro sitio es de las peores cartas que puede escribir un autor.</p>
-<p>Si además del certamen quieres mover tus relatos por la vía editorial, te interesan la <a href="/articulos/carta-presentacion-editorial.html">carta de presentación a una editorial</a> y la guía de <a href="/articulos/como-enviar-manuscrito-editorial.html">cómo enviar un manuscrito</a>. Y para ver todas las categorías de certámenes —poesía, novela, infantil—, la <a href="https://letrasespanolas.org/">portada de concursos literarios</a> se filtra por género.</p>
+<p>Si además del certamen quieres mover tus relatos por la vía editorial, te interesan la <a href="/articulos/carta-presentacion-editorial.html">carta de presentación a una editorial</a> y la guía de <a href="/articulos/como-enviar-manuscrito-editorial.html">cómo enviar un manuscrito</a>. Y si además escribes verso, tienes las convocatorias de <a href="/concursos-poesia.html">concursos de poesía</a> en su propia página; para el resto de categorías —novela, infantil, teatro—, la <a href="https://letrasespanolas.org/">portada de concursos literarios</a> se filtra por género.</p>
 
 <h2>Preguntas frecuentes</h2>
 <h3>¿Cada cuánto se actualiza esta lista?</h3>
@@ -162,18 +162,11 @@ footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
 <h3>¿Qué extensión suele pedirse?</h3>
 <p>Los microrrelatos suelen moverse entre 100 y 500 palabras; los relatos cortos, entre 3 y 15 páginas. La cifra exacta la fijan las bases, y pasarse descalifica.</p>
 
-<script>
-(async()=>{try{
-const r=await fetch('/concursos.json',{cache:'no-store'});
-const d=await r.json();
-const lst=Array.isArray(d)?d:(d.concursos||[]);
-const rel=lst.filter(c=>String(c.categoria||'').toLowerCase().includes('relato'));
-if(!rel.length)return;
-const esc=s=>String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
-document.getElementById('lista-relato').innerHTML=rel.map(c=>'<div class="concurso-item" style="border:1px solid #e2d9c8;border-radius:8px;padding:1rem 1.2rem;margin-bottom:.9rem;background:#fff"><div style="font-weight:700;font-size:1rem;line-height:1.4;margin-bottom:.35rem">'+esc(c.titulo)+'</div><div style="font-size:.85rem;color:#6b5d4a;margin-bottom:.4rem">🏆 '+esc(c.premio||'—')+' &nbsp;·&nbsp; 📅 Cierre: '+esc(c.fecha_limite||'Consultar bases')+' &nbsp;·&nbsp; '+esc(c.organizacion||'')+'</div><p style="font-size:.88rem;margin:0;line-height:1.6">'+esc(c.descripcion||'')+'</p></div>').join('');
-document.getElementById('num-relato').textContent=rel.length;
-}catch(e){}})();
-</script>
+<!-- La lista la escribe scripts/buscar-concursos.js en cada ejecucion diaria.
+     Antes se pintaba aqui con JavaScript sobre concursos.json, pero eso dejaba a Google
+     viendo el respaldo escrito a mano, que nadie actualizaba: llego a servir tres concursos
+     ya vencidos. Con el bot escribiendo el HTML no hace falta, y una sola fuente no puede
+     divergir de si misma. -->
     </main>
 
     <aside class="sidebar">

@@ -475,26 +475,36 @@ async function main() {
 
   fs.writeFileSync('index.html', htmlFinal, 'utf8');
 
-  /* LA PAGINA DE RELATO CORTO. Servia OCHO concursos escritos a mano, tres de ellos ya
-     vencidos —dos con fecha de julio—, y el JavaScript los sustituia solo para el
-     visitante: Google se tragaba la lista fosil. Como el dato ya esta calculado, escribirlo
-     aqui tambien no cuesta ni un token mas. El filtro es el mismo que usa el <script> de
-     esa pagina ('relato' como subcadena, que recoge «Relato corto» y «Microrrelato»). */
-  try {
-    const RELATO = 'concursos-relato-corto.html';
-    let hr = fs.readFileSync(RELATO, 'utf8');
-    const rx = /<!-- RELATO-STATIC-START -->[\s\S]*?<!-- RELATO-STATIC-END -->/;
-    if (!rx.test(hr)) {
-      console.warn('No se encontraron los marcadores RELATO-STATIC en ' + RELATO + ': se omite');
-    } else {
-      const rel = filtrados.filter(c => String(c.categoria || '').toLowerCase().includes('relato'));
-      hr = hr.replace(rx, '<!-- RELATO-STATIC-START -->' + buildRelatoHTML(rel) + '<!-- RELATO-STATIC-END -->');
-      hr = hr.replace(/<span id="num-relato">[^<]*<\/span>/, '<span id="num-relato">' + rel.length + '</span>');
-      fs.writeFileSync(RELATO, hr, 'utf8');
-      console.log('Pagina de relato corto: ' + rel.length + ' convocatorias escritas en el HTML');
+  /* LAS PAGINAS POR CATEGORIA. Servian su lista escrita a mano, y nadie la actualizaba:
+     la de relato corto llego a mostrarle a Google TRES concursos ya vencidos, dos con fecha
+     de julio, porque el JavaScript los sustituia solo para el visitante. Como el dato ya
+     esta calculado para la portada, escribir estas paginas no cuesta ni un token mas.
+
+     Anadir una categoria nueva es anadir una linea a esta tabla y poner los marcadores en
+     el HTML. El filtro es por SUBCADENA a proposito: 'relato' recoge «Relato corto» y
+     «Microrrelato», y 'poes' recoge «Poesia» con y sin tilde y las categorias compuestas
+     del tipo «Relato corto|Poesia». */
+  const PAGINAS_CATEGORIA = [
+    { archivo: 'concursos-relato-corto.html', marca: 'RELATO', contador: 'num-relato', filtro: 'relato' },
+    { archivo: 'concursos-poesia.html',       marca: 'POESIA', contador: 'num-poesia',  filtro: 'poes'   },
+  ];
+  for (const pg of PAGINAS_CATEGORIA) {
+    try {
+      let hp = fs.readFileSync(pg.archivo, 'utf8');
+      const rx = new RegExp('<!-- ' + pg.marca + '-STATIC-START -->[\\s\\S]*?<!-- ' + pg.marca + '-STATIC-END -->');
+      if (!rx.test(hp)) {
+        console.warn('Sin marcadores ' + pg.marca + '-STATIC en ' + pg.archivo + ': se omite');
+        continue;
+      }
+      const sel = filtrados.filter(c => String(c.categoria || '').toLowerCase().includes(pg.filtro));
+      hp = hp.replace(rx, '<!-- ' + pg.marca + '-STATIC-START -->' + buildRelatoHTML(sel) + '<!-- ' + pg.marca + '-STATIC-END -->');
+      hp = hp.replace(new RegExp('<span id="' + pg.contador + '">[^<]*</span>'),
+                      '<span id="' + pg.contador + '">' + sel.length + '</span>');
+      fs.writeFileSync(pg.archivo, hp, 'utf8');
+      console.log(pg.archivo + ': ' + sel.length + ' convocatorias escritas en el HTML');
+    } catch (e) {
+      console.warn('No se ha podido actualizar ' + pg.archivo + ': ' + e.message);
     }
-  } catch (e) {
-    console.warn('No se ha podido actualizar la pagina de relato corto: ' + e.message);
   }
   fs.writeFileSync('concursos.json', JSON.stringify(filtrados.length ? filtrados : JSON.parse(html_file.match(/const CONCURSOS_BASE = (\[[\s\S]*?\]);/)[1])), 'utf8');
   const totalConEnlace = filtrados.filter(c => c.url).length;
