@@ -275,6 +275,20 @@ function escapeHtml(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+/* El bloque de la pagina de relato corto. El marcado es LETRA POR LETRA el mismo que
+   pinta el <script> de esa pagina, para que lo que ve Google y lo que ve el visitante
+   sean lo mismo. Si se cambia alli, hay que cambiarlo aqui. */
+function buildRelatoHTML(arr) {
+  return arr.map(c =>
+    '<div class="concurso-item" style="border:1px solid #e2d9c8;border-radius:8px;padding:1rem 1.2rem;margin-bottom:.9rem;background:#fff">' +
+    '<div style="font-weight:700;font-size:1rem;line-height:1.4;margin-bottom:.35rem">' + escapeHtml(c.titulo) + '</div>' +
+    '<div style="font-size:.85rem;color:#6b5d4a;margin-bottom:.4rem">&#127942; ' + escapeHtml(c.premio || '—') +
+    ' &nbsp;·&nbsp; &#128197; Cierre: ' + escapeHtml(c.fecha_limite || 'Consultar bases') +
+    ' &nbsp;·&nbsp; ' + escapeHtml(c.organizacion || '') + '</div>' +
+    '<p style="font-size:.88rem;margin:0;line-height:1.6">' + escapeHtml(c.descripcion || '') + '</p></div>'
+  ).join('');
+}
+
 function buildStaticCardsHTML(arr) {
   return arr.map(c => {
     const cat = escapeHtml(c.categoria || 'Otro');
@@ -460,6 +474,28 @@ async function main() {
   }
 
   fs.writeFileSync('index.html', htmlFinal, 'utf8');
+
+  /* LA PAGINA DE RELATO CORTO. Servia OCHO concursos escritos a mano, tres de ellos ya
+     vencidos —dos con fecha de julio—, y el JavaScript los sustituia solo para el
+     visitante: Google se tragaba la lista fosil. Como el dato ya esta calculado, escribirlo
+     aqui tambien no cuesta ni un token mas. El filtro es el mismo que usa el <script> de
+     esa pagina ('relato' como subcadena, que recoge «Relato corto» y «Microrrelato»). */
+  try {
+    const RELATO = 'concursos-relato-corto.html';
+    let hr = fs.readFileSync(RELATO, 'utf8');
+    const rx = /<!-- RELATO-STATIC-START -->[\s\S]*?<!-- RELATO-STATIC-END -->/;
+    if (!rx.test(hr)) {
+      console.warn('No se encontraron los marcadores RELATO-STATIC en ' + RELATO + ': se omite');
+    } else {
+      const rel = filtrados.filter(c => String(c.categoria || '').toLowerCase().includes('relato'));
+      hr = hr.replace(rx, '<!-- RELATO-STATIC-START -->' + buildRelatoHTML(rel) + '<!-- RELATO-STATIC-END -->');
+      hr = hr.replace(/<span id="num-relato">[^<]*<\/span>/, '<span id="num-relato">' + rel.length + '</span>');
+      fs.writeFileSync(RELATO, hr, 'utf8');
+      console.log('Pagina de relato corto: ' + rel.length + ' convocatorias escritas en el HTML');
+    }
+  } catch (e) {
+    console.warn('No se ha podido actualizar la pagina de relato corto: ' + e.message);
+  }
   fs.writeFileSync('concursos.json', JSON.stringify(filtrados.length ? filtrados : JSON.parse(html_file.match(/const CONCURSOS_BASE = (\[[\s\S]*?\]);/)[1])), 'utf8');
   const totalConEnlace = filtrados.filter(c => c.url).length;
   console.log('Actualizado con ' + filtrados.length + ' concursos, ' + totalConEnlace +
@@ -473,7 +509,7 @@ async function main() {
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
-if (typeof module !== 'undefined') module.exports = { decidirPublicacion };
+if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
