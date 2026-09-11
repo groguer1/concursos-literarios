@@ -66,6 +66,13 @@ const PRUEBAS = [
       return (salida.trim().split('\n').pop() || '').trim();
     },
   },
+  {
+    nombre: 'Reintento cuando el modelo omite los enlaces a las bases',
+    ejecutar: () => {
+      const salida = execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/enlaces-bases.test.js')], { encoding: 'utf8' });
+      return (salida.trim().split('\n').pop() || '').trim();
+    },
+  },
 ];
 
 let fallos = 0;

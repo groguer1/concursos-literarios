@@ -103,11 +103,13 @@ function absolutizar(href, base) {
 }
 
 /* Filtro de lo que devuelve el modelo. Ahora que ve muchos mas enlaces, conviene
-   comprobar que lo que pone en "url" es de verdad una URL y no un trozo de texto. */
+   comprobar que lo que pone en "url" es de verdad una URL y no un trozo de texto.
+   Los enlaces le llegan como "texto [URL]", asi que a veces copia tambien los corchetes,
+   y new URL("[https://...]") falla: se quitan antes de validar para no tirar un enlace bueno. */
 function urlValida(u) {
   if (!u) return '';
   try {
-    const x = new URL(String(u).trim());
+    const x = new URL(String(u).trim().replace(/^[\[<("']+|[\]>)"']+$/g, ''));
     return (x.protocol === 'http:' || x.protocol === 'https:') ? x.href : '';
   } catch (e) { return ''; }
 }
@@ -201,7 +203,18 @@ function decidirPublicacion(anterior, ahora, porFuente) {
   return { bloquear: false, caidas, motivo: 'sin desplome' };
 }
 
-async function llamarIA(texto, fuente, base) {
+/* EL MODELO PUEDE OMITIR LOS ENLACES AUNQUE LOS VEA. El 11/09/2026 el cron leyo 420
+   enlaces en escritores.org —los mismos que el dia anterior, con el mismo codigo— y
+   devolvio 88 concursos con 0 enlaces, cuando la vispera habian sido 94 de 94. Se publico
+   asi, en verde, porque nada lo miraba. Es variabilidad del modelo y no se puede quitar;
+   lo que si se puede es no aceptarla en silencio: si la fuente trae enlaces de sobra y la
+   respuesta casi no los usa, se repite la llamada una vez. Aparte para poder probarlo. */
+function faltanEnlaces(total, conEnlace, visibles) {
+  if (total < 20 || visibles < 20) return false;
+  return conEnlace < total * 0.2;
+}
+
+async function llamarIA(texto, fuente, base, insistir) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
   limite.setDate(limite.getDate() + VENTANA_DIAS);
@@ -220,14 +233,17 @@ async function llamarIA(texto, fuente, base) {
 
   if (textoLimpio.length < 100) {
     console.warn('Texto demasiado corto, saltando ' + fuente);
-    return '[]';
+    return { respuesta: '[]', enlacesVisibles };
   }
 
   /* El tope de 15 por fuente era el que mas convocatorias se comia: escritores.org
      publica cientos y la IA devolvia solo las 15 mas cercanas, que a 14/08/2026 no
      pasaban del 30/08. Por eso quedaban fuera el Perez-Taybili (31/08) y LuchaLibro
      (04/09), aun estando los dos dentro del plazo que el filtro si acepta. */
-  const prompt = 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 60, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. Si el texto incluye el enlace a las bases o a la convocatoria, ponlo en "url"; no inventes URLs. Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
+  const aviso = insistir
+    ? 'ATENCION: en un intento anterior devolviste los concursos sin su "url" aunque el texto trae los enlaces. Esta vez copia el [URL] de cada concurso que lo tenga. '
+    : '';
+  const prompt = aviso + 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 60, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. En el texto, cada enlace aparece como "texto del enlace [URL]". Si junto al concurso (en su titulo, o en un "bases" o "mas informacion") hay un [URL], copia esa URL SIN los corchetes en "url": es obligatorio siempre que exista. No inventes URLs: si junto al concurso no hay ningun [URL], deja "url" vacia.Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
 
   /* max_tokens estaba en 8.000 y ESA ERA LA CAUSA de que el listado se quedara en 9
      concursos. Se piden hasta 60 con nueve campos cada uno: eso son unos 9.000 tokens de
@@ -269,7 +285,7 @@ async function llamarIA(texto, fuente, base) {
                  'Se rescatara lo que haya llegado entero, pero conviene subir el tope.');
   }
   console.log('Respuesta IA: ' + respuesta.substring(0, 300));
-  return respuesta;
+  return { respuesta, enlacesVisibles };
 }
 
 function diasHasta(fechaStr) {
@@ -380,16 +396,36 @@ async function main() {
     try {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
-      const respuesta = await llamarIA(html, f.nombre, f.base);
-      const concursos = extraerJSON(respuesta, f.nombre);
+      const { respuesta, enlacesVisibles } = await llamarIA(html, f.nombre, f.base);
+      let concursos = extraerJSON(respuesta, f.nombre);
       if (concursos === null) { console.warn('Sin JSON para ' + f.nombre); continue; }
       /* Se normaliza aqui, fuente a fuente, para poder decir en el log cuantos traen
          enlace. Es la cifra que hay que vigilar: si una fuente da 40 concursos y 0
          enlaces, algo se ha roto en esa fuente aunque el listado siga saliendo lleno. */
       concursos.forEach(c => { c.url = urlValida(c.url); });
-      const conEnlace = concursos.filter(c => c.url).length;
+      let conEnlace = concursos.filter(c => c.url).length;
       console.log('Encontrados en ' + f.nombre + ': ' + concursos.length +
                   ' (' + conEnlace + ' con enlace a las bases)');
+      /* Un segundo intento, y solo uno (ver faltanEnlaces). Va en su propio try: si el
+         reintento falla, se publica lo del primero en vez de perder la fuente entera.
+         El tiempo cabe: escritores.org tarda ~90 s y el tope global es de 540. */
+      if (faltanEnlaces(concursos.length, conEnlace, enlacesVisibles)) {
+        console.warn('AVISO: ' + f.nombre + ' trae ' + enlacesVisibles + ' enlaces y el modelo ha usado ' +
+                     conEnlace + ' en ' + concursos.length + ' concursos. Se repite la llamada una vez.');
+        try {
+          const otra = await llamarIA(html, f.nombre, f.base, true);
+          const segunda = extraerJSON(otra.respuesta, f.nombre);
+          if (segunda) {
+            segunda.forEach(c => { c.url = urlValida(c.url); });
+            const conEnlace2 = segunda.filter(c => c.url).length;
+            console.log('Segundo intento en ' + f.nombre + ': ' + segunda.length +
+                        ' (' + conEnlace2 + ' con enlace a las bases)');
+            if (conEnlace2 > conEnlace) { concursos = segunda; conEnlace = conEnlace2; }
+          }
+        } catch (e) {
+          console.error('El segundo intento con ' + f.nombre + ' ha fallado, se queda el primero: ' + e.message);
+        }
+      }
       porFuente[f.nombre] = concursos.length;
       todos = todos.concat(concursos);
     } catch(e) {
@@ -527,7 +563,7 @@ async function main() {
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
-if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml };
+if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
