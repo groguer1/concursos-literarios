@@ -384,6 +384,52 @@ footer a{color:var(--gold)}
   <div class="form-error" id="form-error">No se ha podido enviar el formulario. Escríbenos directamente a <a href="mailto:informeslectura@letrasespanolas.org?subject=Informe%20de%20lectura">informeslectura@letrasespanolas.org</a> contándonos género, extensión y en qué punto estás, y te contestamos igual.</div>
 </form>
 
+<h2 id="opiniones">Opiniones de quienes han encargado un informe</h2>
+
+<p>Si ya has recibido un informe de lectura o una corrección, nos ayuda mucho saber qué te ha parecido, tanto lo que te ha servido como lo que echaste en falta. Publicamos las opiniones en esta página después de comprobar que corresponden a un encargo real, con el nombre que tú indiques. Tu correo no se publica.</p>
+
+<form class="formulario" id="form-opinion" action="https://formspree.io/f/xqewlzgj" method="POST">
+  <input type="hidden" name="_subject" value="Letras Españolas · Opinión sobre el servicio">
+  <input type="hidden" name="web" value="letrasespanolas.org - opinión de cliente">
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+  <div class="fila">
+    <div><label for="op-nombre">Cómo quieres que aparezca tu nombre</label><input id="op-nombre" type="text" name="nombre_publico" placeholder="Nombre, iniciales o «Anónimo»" required></div>
+    <div><label for="op-email">Correo del encargo (no se publica)</label><input id="op-email" type="email" name="email" required></div>
+  </div>
+
+  <div class="fila">
+    <div>
+      <label for="op-servicio">Servicio</label>
+      <select id="op-servicio" name="servicio" required>
+        <option value="">Elige uno</option>
+        <option>Informe general</option>
+        <option>Informe completo</option>
+        <option>Informe y corrección</option>
+        <option>Corrección</option>
+      </select>
+    </div>
+    <div><label for="op-obra">Género de tu obra (opcional)</label><input id="op-obra" type="text" name="genero" placeholder="Novela negra, saga familiar, relatos…"></div>
+  </div>
+
+  <div class="campo">
+    <label for="op-texto">Tu opinión</label>
+    <textarea id="op-texto" name="opinion" required></textarea>
+  </div>
+
+  <div class="campo" style="margin-bottom:1.2rem">
+    <label style="text-transform:none;letter-spacing:0;font-size:.85rem;color:var(--ink);display:flex;gap:.6rem;align-items:flex-start;line-height:1.5">
+      <input type="checkbox" name="consentimiento_publicacion" required style="width:auto;margin-top:.2rem">
+      <span>Acepto que mi opinión se publique en esta página con el nombre que he indicado, y he leído la <a href="privacidad.html" style="color:var(--accent)">política de privacidad</a>. Puedo pedir que se retire cuando quiera.</span>
+    </label>
+  </div>
+
+  <button type="submit">Enviar opinión</button>
+
+  <div class="form-ok" id="opinion-ok">✓ Recibida. Gracias por tomarte el tiempo de escribirla.</div>
+  <div class="form-error" id="opinion-error">No se ha podido enviar la opinión. Puedes mandárnosla a <a href="mailto:informeslectura@letrasespanolas.org?subject=Opini%C3%B3n%20sobre%20el%20servicio">informeslectura@letrasespanolas.org</a>.</div>
+</form>
+
 <h2>Preguntas frecuentes</h2>
 
 <h3>¿En qué se diferencia de una corrección de estilo?</h3>
@@ -411,31 +457,35 @@ footer a{color:var(--gold)}
 </footer>
 <script>
 (function () {
-  var f = document.getElementById('form-informe');
-  if (!f) return;
-  f.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var boton = f.querySelector('button[type=submit]');
-    var ok = document.getElementById('form-ok');
-    var err = document.getElementById('form-error');
-    ok.style.display = 'none'; err.style.display = 'none';
-    boton.disabled = true; boton.textContent = 'Enviando…';
-    fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
-      .then(function (r) {
-        if (r.ok) {
-          f.reset();
-          ok.style.display = 'block';
-          boton.style.display = 'none';
-        } else {
+  function conectar(idForm, idOk, idErr, textoBoton) {
+    var f = document.getElementById(idForm);
+    if (!f) return;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var boton = f.querySelector('button[type=submit]');
+      var ok = document.getElementById(idOk);
+      var err = document.getElementById(idErr);
+      ok.style.display = 'none'; err.style.display = 'none';
+      boton.disabled = true; boton.textContent = 'Enviando…';
+      fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+        .then(function (r) {
+          if (r.ok) {
+            f.reset();
+            ok.style.display = 'block';
+            boton.style.display = 'none';
+          } else {
+            err.style.display = 'block';
+            boton.disabled = false; boton.textContent = textoBoton;
+          }
+        })
+        .catch(function () {
           err.style.display = 'block';
-          boton.disabled = false; boton.textContent = 'Enviar consulta';
-        }
-      })
-      .catch(function () {
-        err.style.display = 'block';
-        boton.disabled = false; boton.textContent = 'Enviar consulta';
-      });
-  });
+          boton.disabled = false; boton.textContent = textoBoton;
+        });
+    });
+  }
+  conectar('form-informe', 'form-ok', 'form-error', 'Enviar consulta');
+  conectar('form-opinion', 'opinion-ok', 'opinion-error', 'Enviar opinión');
 })();
 </script>
 <script src="/nav.js" defer></script>
