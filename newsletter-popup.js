@@ -34,7 +34,10 @@
     data.append('EMAIL', email);
     data.append('email_address_check', '');
     data.append('locale', 'es');
-    return fetch(FORM_URL, { method: 'POST', body: data })
+    /* ?isAjax=1 es imprescindible [16/09/2026]: sin él, a un NAVEGADOR Brevo le devuelve su
+       página HTML de «confirma tu suscripción» en vez de JSON (a curl no, por eso no se vio),
+       y el código daba error con el alta ya hecha. Pasó desde el 19/08 hasta el 16/09. */
+    return fetch(FORM_URL + (FORM_URL.indexOf('?') < 0 ? '?' : '&') + 'isAjax=1', { method: 'POST', body: data })
       .then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
           if (!r.ok || j.success !== true) throw new Error(j.message || ('HTTP ' + r.status));
