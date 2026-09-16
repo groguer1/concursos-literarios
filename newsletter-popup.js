@@ -166,3 +166,47 @@
   setTimeout(trigger, 18000);
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
+
+/* FORMULARIOS DE AVISOS DENTRO DEL TEXTO [16/09/2026]
+   Los bloques <form class="form-avisos"> de las páginas de concursos usan la misma
+   window.LE_NEWSLETTER que el popup y suscribete.html: una sola URL de Brevo. Solo se
+   da por buena el alta con success:true; cualquier otra cosa se enseña como error. */
+(function () {
+  function enlazar(f) {
+    var msg = f.parentNode.querySelector('.avisos-msg');
+    var boton = f.querySelector('button[type=submit]');
+    var input = f.querySelector('input[type=email]');
+    function decir(html, ok) {
+      msg.innerHTML = html; msg.hidden = false;
+      msg.style.color = ok ? '#2f5d34' : '#8b2c1f';
+    }
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var api = window.LE_NEWSLETTER;
+      var email = input.value.trim();
+      if (!api || !api.activo) {
+        decir('La suscripción no está disponible ahora mismo. Escribe a <a href="mailto:info@letrasespanolas.org">info@letrasespanolas.org</a> y te apuntamos a mano.');
+        return;
+      }
+      if (!api.valido(email)) { decir('Escribe un correo válido para suscribirte.'); return; }
+      boton.disabled = true; boton.textContent = 'Enviando…';
+      api.suscribir(email).then(function () {
+        f.hidden = true;
+        decir('<strong>Ya casi está.</strong> Te hemos enviado un correo para que confirmes la suscripción; hasta que no pulses ese enlace no te llegará nada.', true);
+      }).catch(function () {
+        decir('No se ha podido completar la suscripción. Inténtalo de nuevo en un momento o escribe a <a href="mailto:info@letrasespanolas.org">info@letrasespanolas.org</a>.');
+        boton.disabled = false; boton.textContent = 'Avisadme gratis';
+      });
+    });
+  }
+  function iniciar() {
+    // El onsubmit del HTML manda a /suscribete.html si esto no ha cargado (p. ej. el
+    // service worker sirvió la versión anterior de este fichero): el correo nunca va
+    // a la URL y nadie se queda sin respuesta.
+    window.LE_AVISOS = true;
+    var fs = document.querySelectorAll('form.form-avisos');
+    for (var i = 0; i < fs.length; i++) enlazar(fs[i]);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+  else iniciar();
+})();
