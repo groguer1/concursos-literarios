@@ -167,7 +167,7 @@ footer a:hover{color:var(--ink)}
     {
       "@type": "Question",
       "name": "¿Cuáles son las principales editoriales independientes en España?",
-      "acceptedAnswer": {"@type": "Answer", "text": "España tiene un ecosistema muy vivo de editoriales independientes: sellos como Anagrama, Impedimenta, Sexto Piso, Nórdica, Blackie Books o Candaya, entre muchos otros. Cada uno tiene una línea editorial propia. Usa el filtro «Independiente» de este directorio para recorrerlas."}
+      "acceptedAnswer": {"@type": "Answer", "text": "España tiene un ecosistema muy vivo de editoriales independientes: sellos como Acantilado, Impedimenta, Sexto Piso, Nórdica, Blackie Books o Candaya, entre muchos otros. Cada uno tiene una línea editorial propia. Usa el filtro «Independiente» de este directorio para recorrerlas."}
     },
     {
       "@type": "Question",
@@ -277,12 +277,12 @@ footer a:hover{color:var(--ink)}
         <div class="filter-sep"></div>
         <div class="results-count" id="results-count">Mostrando 55 editoriales</div>
         <div class="dir-grid" id="editoriales-list">
-<div class="dir-item" data-id="anagrama" data-generos="narrativa,ensayo,poesia,biografias" data-sinagente="false" data-premio="false" data-tipo="independiente" data-noveles="false" data-search="anagrama una de las editoriales independientes más prestigiosas de españa. narrativa española e internacional, ensayo y poesía de alta calidad literaria. narrativa ensayo poesia biografias barcelona independiente emmanuel carrère, sara mesa, alejandro zambra, paul auster" onclick="verDetalle('anagrama')">
+<div class="dir-item" data-id="anagrama" data-generos="narrativa,ensayo,poesia,biografias" data-sinagente="false" data-premio="false" data-tipo="grande" data-noveles="false" data-search="anagrama una de las editoriales literarias más prestigiosas de españa, del grupo feltrinelli desde 2010. narrativa española e internacional, ensayo y poesía de alta calidad literaria. narrativa ensayo poesia biografias barcelona grande emmanuel carrère, sara mesa, alejandro zambra, paul auster" onclick="verDetalle('anagrama')">
 <div class="dir-item-top">
 <div class="dir-name">Anagrama</div>
-<div class="dir-badges"><span class="badge badge-red">Solo agente</span><span class="badge badge-blue">Independiente</span></div>
+<div class="dir-badges"><span class="badge badge-red">Solo agente</span></div>
 </div>
-<div class="dir-desc">Una de las editoriales independientes más prestigiosas de España. Narrativa española e internacional, ensayo y poesía de alta calidad literaria.</div>
+<div class="dir-desc">Una de las editoriales literarias más prestigiosas de España, del Grupo Feltrinelli desde 2010. Narrativa española e internacional, ensayo y poesía de alta calidad literaria.</div>
 <div class="dir-footer">
 <div class="dir-tags">
 <span class="tag">narrativa</span><span class="tag">ensayo</span><span class="tag">poesia</span><span class="tag">biografias</span>
@@ -1151,7 +1151,7 @@ footer a:hover{color:var(--ink)}
           </details>
           <details style="border-bottom:1px solid var(--border);padding:.9rem 0">
             <summary style="cursor:pointer;font-weight:700;font-size:.95rem;color:var(--ink)">¿Cuáles son las principales editoriales independientes en España?</summary>
-            <p style="font-size:.9rem;color:var(--muted);line-height:1.8;margin-top:.9rem">España tiene un ecosistema muy vivo de editoriales independientes: sellos como Anagrama, Impedimenta, Sexto Piso, Nórdica, Blackie Books o Candaya, entre muchos otros. Cada uno tiene una línea editorial propia. Usa el filtro «Independiente» de este directorio para recorrerlas y consulta su ficha para ver géneros, colecciones y vía de contacto.</p>
+            <p style="font-size:.9rem;color:var(--muted);line-height:1.8;margin-top:.9rem">España tiene un ecosistema muy vivo de editoriales independientes: sellos como Acantilado, Impedimenta, Sexto Piso, Nórdica, Blackie Books o Candaya, entre muchos otros. Cada uno tiene una línea editorial propia. Usa el filtro «Independiente» de este directorio para recorrerlas y consulta su ficha para ver géneros, colecciones y vía de contacto.</p>
           </details>
           <details style="border-bottom:1px solid var(--border);padding:.9rem 0">
             <summary style="cursor:pointer;font-weight:700;font-size:.95rem;color:var(--ink)">¿Cómo elijo la editorial adecuada para mi libro?</summary>
@@ -1210,9 +1210,9 @@ document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString
 // sinAgente: true = acepta envíos directos | false = solo agente | 'premio' = vía concurso
 // noveles: true = especialmente abierta a autores nuevos
 const EDITORIALES = [
-  {id:'anagrama',nombre:'Anagrama',ciudad:'Barcelona',fundada:1969,tipo:'independiente',sinAgente:false,premio:false,noveles:false,
+  {id:'anagrama',nombre:'Anagrama',ciudad:'Barcelona',fundada:1969,tipo:'grande',sinAgente:false,premio:false,noveles:false,
    generos:['narrativa','ensayo','poesia','biografias'],
-   desc:'Una de las editoriales independientes más prestigiosas de España. Narrativa española e internacional, ensayo y poesía de alta calidad literaria.',
+   desc:'Una de las editoriales literarias más prestigiosas de España, del Grupo Feltrinelli desde 2010. Narrativa española e internacional, ensayo y poesía de alta calidad literaria.',
    envio:'Tiene la recepción de manuscritos parada. Su web dice: «Dado el amplio número de propuestas pendientes de valoración, Editorial Anagrama mantendrá pausada temporalmente la recepción de manuscritos» (comprobado el 13/09/2026). Mientras dure, la vía es el agente literario.',
    web:'https://www.anagrama-ed.es',autores:'Emmanuel Carrère, Sara Mesa, Alejandro Zambra, Paul Auster',
    colecciones:'Narrativas hispánicas, Panorama de narrativas, Argumentos, La Bella Varsovia, Biblioteca de la memoria',
