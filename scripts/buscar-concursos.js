@@ -460,7 +460,7 @@ async function main() {
      fijos, se publica lo que haya: es preferible a no publicar. */
   if (!todosConFijos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
 
-  const filtrados = todosConFijos
+  let filtrados = todosConFijos
     .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
@@ -491,16 +491,42 @@ async function main() {
     const veredicto = decidirPublicacion(anterior, filtrados.length, porFuente);
     if (veredicto.bloquear) {
       console.warn('==================================================================');
-      console.warn('NO SE PUBLICA: ' + veredicto.motivo + '.');
-      console.warn('Se conserva el listado de ayer, que son concursos que siguen abiertos.');
+      console.warn('NO SE PUBLICA LO RASTREADO HOY: ' + veredicto.motivo + '.');
       console.warn('Recuento por fuente: ' + JSON.stringify(porFuente));
+      /* PERO EL LISTADO DE AYER SE PODA. Conservarlo tal cual solo esta bien un dia:
+         el 18/09 la clave de la API se quedo sin cuota hasta el 1 de octubre, o sea
+         trece dias sin rastreo, y en trece dias vencen convocatorias. Sin esto, la web
+         seguiria anunciando concursos con el plazo cerrado, que es peor que publicar de
+         menos. Aqui NO se inventa nada ni se llama al modelo: se vuelve a publicar lo
+         que ya habia quitando lo que ha caducado, con el mismo filtro de ventana. */
+      const vigentes = anterior
+        .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
+        .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
+      if (!vigentes.length) {
+        console.warn('El listado de ayer se queda sin nada en plazo: no se toca la web.');
+        console.log('Gasto de esta ejecucion: ' + gasto.entrada + ' tokens de entrada, ' +
+                    gasto.salida + ' de salida, ' + dolares().toFixed(4) + ' $');
+        process.exit(0);
+      }
+      if (vigentes.length === anterior.length) {
+        console.warn('Ninguno del listado de ayer ha vencido: se deja la web como estaba.');
+        console.log('Gasto de esta ejecucion: ' + gasto.entrada + ' tokens de entrada, ' +
+                    gasto.salida + ' de salida, ' + dolares().toFixed(4) + ' $');
+        process.exit(0);
+      }
+      console.warn('Se republica el listado de ayer sin los vencidos: ' + anterior.length +
+                   ' pasan a ' + vigentes.length + '.');
       console.warn('==================================================================');
-      console.log('Gasto de esta ejecucion: ' + gasto.entrada + ' tokens de entrada, ' +
-                  gasto.salida + ' de salida, ' + dolares().toFixed(4) + ' $');
-      process.exit(0);
-    }
+      filtrados = vigentes;
+    } else
     if (veredicto.motivo !== 'sin desplome') console.warn('AVISO: ' + veredicto.motivo);
-  } catch (e) { /* la primera vez no hay fichero previo: no es un fallo */ }
+  } catch (e) {
+    /* La primera vez no hay fichero previo y eso no es un fallo, pero callar CUALQUIER
+       error aqui dentro si lo seria: desde el 18/09 este bloque tambien decide la poda
+       de vencidos, y un fallo suyo dejaria la web publicando concursos cerrados sin que
+       nadie lo supiera. */
+    if (e.code !== 'ENOENT') console.error('Aviso al decidir la publicacion: ' + e.message);
+  }
 
   let html_file = fs.readFileSync('index.html', 'utf8');
   const concursosJS = 'const CONCURSOS_BASE = ' + JSON.stringify(filtrados) + ';';
