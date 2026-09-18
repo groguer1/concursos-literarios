@@ -59,11 +59,15 @@ function httpsPost(hostname, path, headers, bodyBuf) {
          Ahora 240 s, que son 63 % de margen sobre lo medido, y el tope global sube a
          540 s para que sea SIEMPRE este timeout el que corte una fuente lenta y la otra
          se pueda seguir intentando.
-         EL 18/09 SE SUBE A 300 s AL MISMO TIEMPO que max_tokens pasa de 24.000 a 36.000,
-         para no repetir la correccion a medias de la vez anterior. Medido: 24.000 tokens
-         de salida tardaron 134 s en la ejecucion de las 10:30 del 18/09, o sea 5,6 ms por
-         token; 36.000 salen a unos 200 s y 300 s dejan 50 % de margen. */
-      timeout: 300000,
+         EL 18/09 SUBE A 420 s AL MISMO TIEMPO que max_tokens pasa de 24.000 a 48.000,
+         para no repetir la correccion a medias de la vez anterior. La medida es real, de
+         la ejecucion de las 18:56 de ese dia: 31.207 tokens de salida en 172 s, o sea
+         5,5 ms por token. 48.000 salen a unos 264 s y 420 s dejan 59 % de margen; el tope
+         global de 540 s sigue cubriendo esta fuente mas la otra, que tarda 9 s.
+         EL PAR (max_tokens, timeout) HAY QUE MOVERLO JUNTO: si el modelo llega al tope
+         nuevo y el timeout corta antes, se pierde la fuente ENTERA, que es peor que un
+         corte por max_tokens, porque el corte al menos rescata lo que llego. */
+      timeout: 420000,
     };
     const req = https.request(options, (res) => {
       const chunks = [];
@@ -260,10 +264,15 @@ async function llamarIA(texto, fuente, base, insistir) {
      la fuente crecio de 70 concursos a 136 y el tope se quedo corto otra vez. Lo que se
      pierde con un corte son los concursos del FINAL del texto de la fuente, que no son
      los mas lejanos en fecha (el texto no viene ordenado), asi que se caen convocatorias
-     en plazo sin que nada lo diga salvo el AVISO del log. Se sube a 36.000. */
+     en plazo sin que nada lo diga salvo el AVISO del log.
+     MEDIDO el mismo dia al quitar el tope: la fuente daba 177 concursos y 31.207 tokens,
+     o sea que el corte se estaba comiendo 36 convocatorias en plazo, un 20 % del listado.
+     Y crece deprisa (70 el 16/09, 136 el 17, 177 el 18), asi que 36.000 se quedaria corto
+     en una semana: se pone 48.000, que es lo que cabe en el timeout de esta misma funcion.
+     Subir el tope NO encarece por si solo: solo se paga lo que el modelo escriba. */
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 36000,
+    max_tokens: 48000,
     messages: [{ role: 'user', content: prompt }]
   }), 'utf8');
 
