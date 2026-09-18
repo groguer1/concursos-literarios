@@ -58,8 +58,12 @@ function httpsPost(hostname, path, headers, bodyBuf) {
          subio de 16.000 a 24.000 y este tope no se toco con el: correccion a medias.
          Ahora 240 s, que son 63 % de margen sobre lo medido, y el tope global sube a
          540 s para que sea SIEMPRE este timeout el que corte una fuente lenta y la otra
-         se pueda seguir intentando. */
-      timeout: 240000,
+         se pueda seguir intentando.
+         EL 18/09 SE SUBE A 300 s AL MISMO TIEMPO que max_tokens pasa de 24.000 a 36.000,
+         para no repetir la correccion a medias de la vez anterior. Medido: 24.000 tokens
+         de salida tardaron 134 s en la ejecucion de las 10:30 del 18/09, o sea 5,6 ms por
+         token; 36.000 salen a unos 200 s y 300 s dejan 50 % de margen. */
+      timeout: 300000,
     };
     const req = https.request(options, (res) => {
       const chunks = [];
@@ -243,7 +247,7 @@ async function llamarIA(texto, fuente, base, insistir) {
   const aviso = insistir
     ? 'ATENCION: en un intento anterior devolviste los concursos sin su "url" aunque el texto trae los enlaces. Esta vez copia el [URL] de cada concurso que lo tenga. '
     : '';
-  const prompt = aviso + 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 60, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. En el texto, cada enlace aparece como "texto del enlace [URL]". Si junto al concurso (en su titulo, o en un "bases" o "mas informacion") hay un [URL], copia esa URL SIN los corchetes en "url": es obligatorio siempre que exista. No inventes URLs: si junto al concurso no hay ningun [URL], deja "url" vacia.Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
+  const prompt = aviso + 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 150, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. En el texto, cada enlace aparece como "texto del enlace [URL]". Si junto al concurso (en su titulo, o en un "bases" o "mas informacion") hay un [URL], copia esa URL SIN los corchetes en "url": es obligatorio siempre que exista. No inventes URLs: si junto al concurso no hay ningun [URL], deja "url" vacia.Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
 
   /* max_tokens estaba en 8.000 y ESA ERA LA CAUSA de que el listado se quedara en 9
      concursos. Se piden hasta 60 con nueve campos cada uno: eso son unos 9.000 tokens de
@@ -251,10 +255,15 @@ async function llamarIA(texto, fuente, base, insistir) {
      y mas abajo se descartaba la fuente ENTERA. Cuantos mas concursos encontraba, mas
      probable era que fallase. Se subio a 16.000, y al empezar a incluir tambien los
      enlaces la respuesta volvio a cortarse (el rescate salvo 121 de los concursos, que
-     para eso esta), asi que 24.000. */
+     para eso esta), asi que 24.000.
+     EL 17 Y EL 18/09 VOLVIO A CORTARSE, los dos dias exactos en 24.000 tokens de salida:
+     la fuente crecio de 70 concursos a 136 y el tope se quedo corto otra vez. Lo que se
+     pierde con un corte son los concursos del FINAL del texto de la fuente, que no son
+     los mas lejanos en fecha (el texto no viene ordenado), asi que se caen convocatorias
+     en plazo sin que nada lo diga salvo el AVISO del log. Se sube a 36.000. */
   const body = Buffer.from(JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 24000,
+    max_tokens: 36000,
     messages: [{ role: 'user', content: prompt }]
   }), 'utf8');
 
