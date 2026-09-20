@@ -73,6 +73,13 @@ const PRUEBAS = [
       return (salida.trim().split('\n').pop() || '').trim();
     },
   },
+  {
+    nombre: 'Modo incremental del bot de concursos',
+    ejecutar: () => {
+      const salida = execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/incremental.test.js')], { encoding: 'utf8' });
+      return (salida.trim().split('\n').pop() || '').trim();
+    },
+  },
 ];
 
 let fallos = 0;
