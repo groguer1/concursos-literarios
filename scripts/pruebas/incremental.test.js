@@ -6,8 +6,8 @@
         cada dia, asi que el dedupe por titulo NO basta),
      2. que se quede en incremental para siempre y no se entere de un cambio de bases,
      3. que oculte un raspado roto, porque cero concursos nuevos es lo normal. */
-const { esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES } =
-  require('../buscar-concursos.js');
+const { esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
+        recortarConocidos, MIN_TEXTO_RECORTADO } = require('../buscar-concursos.js');
 
 let fallos = 0;
 function ok(nombre, cond, detalle) {
@@ -71,6 +71,37 @@ ok('un dia sin nada nuevo conserva el listado entero', r.length === 1);
 
 r = fusionar([], [], []);
 ok('todo vacio no revienta', Array.isArray(r) && r.length === 0);
+
+console.log('\nEL RECORTE (lo que el modelo no ve, no lo puede devolver)\n');
+const rellena = 'texto de relleno '.repeat(120);   // para superar MIN_TEXTO_RECORTADO
+const texto = 'XII Certamen de Poesia [https://x.es/p12] ' +
+              'Nuevo Relato 2026 [https://x.es/nuevo] ' +
+              'Premio Ensayo [https://x.es/ensayo] ' + rellena;
+
+let rec = recortarConocidos(texto, ['https://x.es/p12']);
+ok('quita el concurso ya publicado', !rec.texto.includes('XII Certamen de Poesia'), rec.texto.slice(0, 80));
+ok('deja los que no teniamos', rec.texto.includes('Nuevo Relato 2026') && rec.texto.includes('Premio Ensayo'));
+ok('cuenta lo que ha quitado', rec.quitados === 1);
+
+rec = recortarConocidos(texto, ['https://x.es/p12/?utm=1']);
+ok('la url conocida casa aunque venga con barra y querystring', rec.quitados === 1);
+
+rec = recortarConocidos(texto, []);
+ok('sin urls conocidas no toca nada', rec.texto === texto && rec.quitados === 0);
+
+rec = recortarConocidos(texto, ['https://x.es/NO-ESTA']);
+ok('una url que no aparece no quita nada', rec.quitados === 0);
+
+/* La salvaguarda: si el recorte se lo lleva casi todo, se manda el texto completo.
+   Es la diferencia entre pagar de mas un dia y publicar una web vacia. */
+const corto = 'A [https://x.es/a] B [https://x.es/b]';
+rec = recortarConocidos(corto, ['https://x.es/a', 'https://x.es/b']);
+ok('si el recorte deja el texto bajo minimos, se manda el completo',
+   rec.texto === corto && rec.quitados === 0,
+   'quedaria en ' + MIN_TEXTO_RECORTADO + ' chars o menos');
+
+rec = recortarConocidos(texto, null);
+ok('urlsConocidas nula no revienta', rec.texto === texto);
 
 console.log('\nEL CHIVATO DE FUENTE MUDA\n');
 ok('una fuente que ha dejado de leerse se detecta',

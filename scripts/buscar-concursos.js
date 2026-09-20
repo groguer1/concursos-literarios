@@ -271,6 +271,48 @@ function esBarridoCompleto(anterior, hoy) {
   return { si: false, motivo: 'incremental' };
 }
 
+/* EL RECORTE, y esto es la segunda vuelta del ahorro (20/09, por la tarde).
+   La primera version solo PEDIA al modelo que no repitiera lo ya publicado, y la medida
+   real dijo que obedece a medias: de 98 concursos devueltos, 86 ya los teniamos. El
+   gasto bajo de 0,2021 $ a 0,1422 $, un 30 %, cuando la estimacion era del 75 %. Es
+   otra vez la leccion de "una estimacion de coste no vale hasta que se mide".
+
+   Asi que en vez de PEDIRLE que los omita, se le QUITAN DEL TEXTO. El texto limpio es
+   una secuencia de "titulo del concurso [URL de su ficha]", asi que se trocea por los
+   [URL] y se tira el segmento entero de cada URL que ya tenemos publicada. Lo que el
+   modelo no ve, no lo puede devolver: el ahorro deja de depender de que obedezca.
+
+   SALVAGUARDA: si el recorte deja el texto por debajo de MIN_TEXTO_RECORTADO, se usa el
+   completo. Un recorte que se lleva casi todo es sintoma de que las URLs conocidas
+   casan con cualquier cosa, y ahi es preferible pagar de mas que publicar de menos. */
+const MIN_TEXTO_RECORTADO = 2000;
+
+function recortarConocidos(texto, urlsConocidas) {
+  if (!Array.isArray(urlsConocidas) || !urlsConocidas.length) return { texto, quitados: 0 };
+  const conocidas = new Set(urlsConocidas.map(claveURL).filter(Boolean));
+  if (!conocidas.size) return { texto, quitados: 0 };
+
+  /* El split con grupo de captura devuelve [texto, enlace, texto, enlace, ...], asi que
+     cada par es "lo que se dice de un concurso" + "su enlace". */
+  const partes = texto.split(/(\[https?:\/\/[^\]\s]+\])/);
+  const fuera = [];
+  let quitados = 0;
+  for (let i = 0; i < partes.length; i += 2) {
+    const trozo = partes[i] || '';
+    const enlace = partes[i + 1] || '';
+    const k = enlace ? claveURL(enlace.slice(1, -1)) : '';
+    if (k && conocidas.has(k)) { quitados++; continue; }
+    fuera.push(trozo + enlace);
+  }
+  const recortado = fuera.join(' ').replace(/\s+/g, ' ').trim();
+  if (recortado.length < MIN_TEXTO_RECORTADO) {
+    console.warn('El recorte dejaria el texto en ' + recortado.length + ' chars (menos de ' +
+                 MIN_TEXTO_RECORTADO + '): se manda el texto completo por si acaso.');
+    return { texto, quitados: 0 };
+  }
+  return { texto: recortado, quitados };
+}
+
 /* Normaliza una URL para compararla: sin barra final, sin querystring de campana y en
    minusculas. Sin esto, "…/42034-premio/" y "…/42034-premio" serian dos concursos. */
 function claveURL(u) {
@@ -314,13 +356,28 @@ async function llamarIA(texto, fuente, base, insistir, urlsConocidas) {
   /* Antes se cortaba en 25.000 caracteres y la pagina de escritores.org tiene 57.000
      de texto limpio: se tiraba el 56% SIN MIRARLO. Asi se perdio el certamen Mariana
      de Carvajal, que cae en el caracter 39.110. Cabe entero de sobra en el contexto. */
-  const textoLimpio = limpiarHTML(texto, base).substring(0, 120000);
-  /* Cuantos enlaces le llegan de verdad al modelo. Si esto sale 0 para una fuente, el
-     problema esta en el raspado (o la fuente ha cambiado de plantilla), no en el prompt:
-     es el dato que faltaba para saber por que escritores.org no daba ni un enlace. */
+  let textoLimpio = limpiarHTML(texto, base).substring(0, 120000);
+
+  /* EL RECUENTO DE ENLACES SE HACE SOBRE EL TEXTO COMPLETO, ANTES DE RECORTAR, y el
+     orden no es un detalle: esta cifra es el chivato de raspado roto (fuentesMudas), y
+     el recorte le quita justamente los enlaces de los concursos que van bien. Medirla
+     despues haria que el guard saltara mas cuanto mejor funcionase el ahorro, que es
+     exactamente al reves de lo que tiene que hacer. */
   const enlacesVisibles = (textoLimpio.match(/\[https?:\/\//g) || []).length;
   console.log('Texto limpio de ' + fuente + ': ' + textoLimpio.length + ' chars, ' +
-              enlacesVisibles + ' enlaces visibles para el modelo');
+              enlacesVisibles + ' enlaces visibles');
+
+  if (Array.isArray(urlsConocidas) && urlsConocidas.length) {
+    const antes = textoLimpio.length;
+    const r = recortarConocidos(textoLimpio, urlsConocidas);
+    textoLimpio = r.texto;
+    if (r.quitados) {
+      console.log('Recorte en ' + fuente + ': fuera ' + r.quitados + ' concursos ya publicados · ' +
+                  antes + ' -> ' + textoLimpio.length + ' chars (' +
+                  Math.round(100 * textoLimpio.length / antes) + ' %) · ' +
+                  (textoLimpio.match(/\[https?:\/\//g) || []).length + ' enlaces van al modelo');
+    }
+  }
 
   if (textoLimpio.length < 100) {
     console.warn('Texto demasiado corto, saltando ' + fuente);
@@ -754,7 +811,8 @@ async function main() {
 }
 
 if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
-                   esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES };
+                   esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
+                   recortarConocidos, MIN_TEXTO_RECORTADO };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
