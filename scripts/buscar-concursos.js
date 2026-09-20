@@ -211,6 +211,16 @@ function decidirPublicacion(anterior, ahora, porFuente) {
   return { bloquear: false, caidas, motivo: 'sin desplome' };
 }
 
+/* Fuentes que han dejado de leerse. MIN_ENLACES es deliberadamente bajo: las dos
+   fuentes traen cientos (escritores.org ~411, guiadeconcursos ~170), asi que 20 solo
+   salta cuando de verdad se ha roto el raspado, no por un dia flojo. Se mide sobre el
+   texto limpio, o sea que no depende de lo que conteste el modelo. */
+const MIN_ENLACES = 20;
+
+function fuentesMudas(enlacesPorFuente) {
+  return Object.keys(enlacesPorFuente || {}).filter(n => enlacesPorFuente[n] < MIN_ENLACES);
+}
+
 /* EL MODELO PUEDE OMITIR LOS ENLACES AUNQUE LOS VEA. El 11/09/2026 el cron leyo 420
    enlaces en escritores.org —los mismos que el dia anterior, con el mismo codigo— y
    devolvio 88 concursos con 0 enlaces, cuando la vispera habian sido 94 de 94. Se publico
@@ -222,7 +232,80 @@ function faltanEnlaces(total, conEnlace, visibles) {
   return conEnlace < total * 0.2;
 }
 
-async function llamarIA(texto, fuente, base, insistir) {
+/* ─────────────────────────────────────────────────────────────────────────────
+   MODO INCREMENTAL. Anadido el 20/09/2026 porque el bot costaba 0,2021 $ AL DIA y
+   el 80 % de eso era lo que el MODELO ESCRIBE, no lo que lee. Al comparar el
+   listado del 19 con el del 20 POR URL salio el dato que lo justifica todo:
+
+       170 concursos publicados · 169 ya estaban ayer · 1 era nuevo.
+
+   O sea que se pagaba por reescribir 169 fichas identicas para encontrar una. Y
+   habia un efecto secundario que nadie habia visto: comparando por TITULO salian
+   "65 nuevos", y eran los mismos concursos con el titulo redactado de otra forma.
+   64 convocatorias cambiaban de titulo de un dia para otro sin cambiar de URL, o
+   sea que la web reescribia su contenido a diario sin motivo.
+
+   Como funciona: se le pasa al modelo la lista de URLs que ya tenemos y se le pide
+   que NO las devuelva. Lo conocido se conserva tal cual del fichero de ayer —con su
+   titulo, que asi deja de bailar— y solo se poda por fecha, que no necesita modelo.
+
+   POR QUE ES SEGURO: si el modelo ignora la instruccion y los devuelve todos, no se
+   rompe nada —la fusion deduplica y el resultado es el de siempre—, solo se deja de
+   ahorrar ese dia. El modo degradado es el comportamiento actual.
+
+   BARRIDO COMPLETO LOS LUNES (decidido con David el 20/09). Un incremental
+   indefinido nunca se enteraria de que una convocatoria ha cambiado de bases, de
+   dotacion o de plazo, y arrastraria ese error mientras la fecha aguante. Una vez
+   por semana se reprocesa todo y se corrige solo. Es la leccion de "un guard que
+   conserva lo de ayer es correcto un dia y falso a los trece", aplicada por
+   adelantado: al escribir un modo degradado, decidir cuanto puede durar. */
+const DIA_BARRIDO_COMPLETO = 1;   /* 0=domingo, 1=lunes */
+
+/* Se fuerza con BARRIDO_COMPLETO=1 para poder probarlo sin esperar al lunes. */
+function esBarridoCompleto(anterior, hoy) {
+  const d = hoy || new Date();
+  if (process.env.BARRIDO_COMPLETO === '1') return { si: true, motivo: 'forzado por BARRIDO_COMPLETO=1' };
+  if (!Array.isArray(anterior) || !anterior.length) return { si: true, motivo: 'no hay listado anterior' };
+  if (anterior.length < 12) return { si: true, motivo: 'el listado anterior es muy corto (' + anterior.length + ')' };
+  if (d.getDay() === DIA_BARRIDO_COMPLETO) return { si: true, motivo: 'es el dia del barrido semanal' };
+  return { si: false, motivo: 'incremental' };
+}
+
+/* Normaliza una URL para compararla: sin barra final, sin querystring de campana y en
+   minusculas. Sin esto, "…/42034-premio/" y "…/42034-premio" serian dos concursos. */
+function claveURL(u) {
+  const v = urlValida(u);
+  if (!v) return '';
+  try {
+    const x = new URL(v);
+    x.hash = '';
+    x.search = '';
+    return (x.host + x.pathname).toLowerCase().replace(/\/+$/, '');
+  } catch (e) { return ''; }
+}
+
+/* La fusion. Prioridad: fijos (revisados a mano) > conocidos (titulo estable) > nuevos.
+   Deduplica POR URL ademas de por titulo, que es lo que faltaba: el modelo reescribe el
+   titulo cada dia, asi que dedupe solo por titulo dejaria entrar el mismo concurso dos
+   veces en cuanto se conserve el de ayer. */
+function fusionar(fijos, conocidos, nuevos) {
+  const porTitulo = new Set();
+  const porUrl = new Set();
+  const out = [];
+  for (const c of [].concat(fijos, conocidos, nuevos)) {
+    const kt = claveTitulo(c.titulo);
+    const ku = claveURL(c.url);
+    if (!kt) continue;
+    if (porTitulo.has(kt)) continue;
+    if (ku && porUrl.has(ku)) continue;
+    porTitulo.add(kt);
+    if (ku) porUrl.add(ku);
+    out.push(c);
+  }
+  return out;
+}
+
+async function llamarIA(texto, fuente, base, insistir, urlsConocidas) {
   const hoy = new Date().toLocaleDateString('es-ES', {day:'2-digit',month:'2-digit',year:'numeric'});
   const limite = new Date();
   limite.setDate(limite.getDate() + VENTANA_DIAS);
@@ -251,7 +334,16 @@ async function llamarIA(texto, fuente, base, insistir) {
   const aviso = insistir
     ? 'ATENCION: en un intento anterior devolviste los concursos sin su "url" aunque el texto trae los enlaces. Esta vez copia el [URL] de cada concurso que lo tenga. '
     : '';
-  const prompt = aviso + 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 150, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. En el texto, cada enlace aparece como "texto del enlace [URL]". Si junto al concurso (en su titulo, o en un "bases" o "mas informacion") hay un [URL], copia esa URL SIN los corchetes en "url": es obligatorio siempre que exista. No inventes URLs: si junto al concurso no hay ningun [URL], deja "url" vacia.Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio;
+
+  /* EL AHORRO. Se le da la lista de lo que ya tenemos publicado y se le pide que no lo
+     repita. Cuesta entrada (unos 20 tokens por URL, o sea centimos) y ahorra salida, que
+     es lo que vale 5 veces mas. Si el modelo lo ignora, la fusion de mas abajo deduplica
+     y no pasa nada: por eso esto es una optimizacion y no un punto de rotura. */
+  const yaTenemos = Array.isArray(urlsConocidas) && urlsConocidas.length
+    ? 'YA TENEMOS PUBLICADOS los concursos cuyas URLs se listan al final de este mensaje bajo "URLS YA PUBLICADAS". NO los incluyas en tu respuesta: devuelve UNICAMENTE los concursos cuya URL no aparezca en esa lista, y los que no tengan URL. Si todos los concursos del texto ya estan en la lista, devuelve exactamente: []. '
+    : '';
+  const prompt = aviso + yaTenemos + 'Analiza este texto de una web de concursos literarios espanoles. Extrae TODOS los concursos que encuentres, hasta un maximo de 150, con fecha limite entre hoy (' + hoy + ') y ' + fechaLimite + '. Si no hay fecha clara incluye el concurso con fecha_limite vacia. IMPORTANTE: incluye SOLO concursos LITERARIOS (poesia, relato, cuento, novela, teatro, ensayo, microrrelato, literatura infantil o juvenil). NO incluyas premios de pintura, fotografia, comic, musica, cine ni artes plasticas aunque aparezcan en el mismo listado. En "pais" indica el pais del organizador deducido del texto (nombre de la entidad, ciudad, moneda del premio): "Espana" si es de Espana o no hay indicios en contra, o el nombre del pais si es de Hispanoamerica u otro. En el texto, cada enlace aparece como "texto del enlace [URL]". Si junto al concurso (en su titulo, o en un "bases" o "mas informacion") hay un [URL], copia esa URL SIN los corchetes en "url": es obligatorio siempre que exista. No inventes URLs: si junto al concurso no hay ningun [URL], deja "url" vacia.Devuelve SOLO array JSON sin texto adicional ni marcadores de codigo. Ejemplo: [{"titulo":"nombre","organizacion":"entidad","categoria":"Poesia|Relato corto|Novela|Infantil|Teatro|Otro","premio":"dotacion","fecha_limite":"DD/MM/YYYY o vacia","descripcion":"descripcion breve max 100 caracteres","url":"url o vacia","pais":"Espana u otro pais","nuevo":false}] Si no hay ninguno devuelve solo: []\n\n' + textoLimpio +
+    (yaTenemos ? '\n\nURLS YA PUBLICADAS (no devuelvas estos concursos):\n' + urlsConocidas.join('\n') : '');
 
   /* max_tokens estaba en 8.000 y ESA ERA LA CAUSA de que el listado se quedara en 9
      concursos. Se piden hasta 60 con nueve campos cada uno: eso son unos 9.000 tokens de
@@ -404,17 +496,48 @@ async function main() {
       base: 'https://www.guiadeconcursos.com/' },
   ];
 
+  /* El listado de ayer y el modo del dia. Se lee ANTES del bucle porque decide que se
+     le pide al modelo. Si el fichero no existe o no se entiende, se va a barrido
+     completo: fallar al lado seguro es reprocesar de mas, nunca de menos. */
+  let anteriorPublicado = null;
+  try {
+    const raw = JSON.parse(fs.readFileSync('concursos.json', 'utf8'));
+    if (Array.isArray(raw)) anteriorPublicado = raw;
+    else console.warn('concursos.json no es un array: se hace barrido completo');
+  } catch (e) {
+    if (e.code !== 'ENOENT') console.warn('No se ha podido leer concursos.json (' + e.message + '): barrido completo');
+  }
+  const modo = esBarridoCompleto(anteriorPublicado);
+  /* Solo se conservan los que siguen EN PLAZO: lo caducado no se arrastra ni se le
+     manda al modelo como "ya publicado", porque entonces no volveria a salir nunca. */
+  const conocidos = (!modo.si && anteriorPublicado)
+    ? anteriorPublicado.filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
+    : [];
+  const urlsConocidas = [...new Set(conocidos.map(c => urlValida(c.url)).filter(Boolean))];
+  console.log('MODO: ' + (modo.si ? 'BARRIDO COMPLETO' : 'INCREMENTAL') + ' (' + modo.motivo + ')' +
+              (modo.si ? '' : ' · se conservan ' + conocidos.length + ' concursos en plazo y se le ocultan al modelo ' +
+                               urlsConocidas.length + ' URLs'));
+
   let todos = [];
   /* Cuantos ha dado cada fuente. Es lo que permite distinguir "hoy hay menos
      concursos" de "una fuente se ha caido", que es la diferencia entre publicar y
      no publicar. */
   const porFuente = {};
+  /* EL CHIVATO QUE HACE FALTA EN INCREMENTAL. En barrido completo, un raspado roto se
+     ve solo: la fuente devuelve cero concursos y el guard de publicacion salta. En
+     incremental NO, porque cero concursos nuevos es lo normal un martes cualquiera y el
+     listado sigue lleno con los conservados: la web se quedaria congelada en silencio
+     hasta el lunes. Los ENLACES VISIBLES no dependen del modelo —se cuentan sobre el
+     texto ya limpio—, asi que sirven para distinguir 'hoy no hay nada nuevo' de 'esta
+     fuente ha dejado de leerse'. */
+  const enlacesPorFuente = {};
   for (const f of fuentes) {
     porFuente[f.nombre] = 0;
     try {
       const html = fs.readFileSync(f.archivo, 'utf8');
       console.log('Leido ' + f.nombre + ': ' + html.length + ' bytes');
-      const { respuesta, enlacesVisibles } = await llamarIA(html, f.nombre, f.base);
+      const { respuesta, enlacesVisibles } = await llamarIA(html, f.nombre, f.base, false, urlsConocidas);
+      enlacesPorFuente[f.nombre] = enlacesVisibles;
       let concursos = extraerJSON(respuesta, f.nombre);
       if (concursos === null) { console.warn('Sin JSON para ' + f.nombre); continue; }
       /* Se normaliza aqui, fuente a fuente, para poder decir en el log cuantos traen
@@ -431,7 +554,7 @@ async function main() {
         console.warn('AVISO: ' + f.nombre + ' trae ' + enlacesVisibles + ' enlaces y el modelo ha usado ' +
                      conEnlace + ' en ' + concursos.length + ' concursos. Se repite la llamada una vez.');
         try {
-          const otra = await llamarIA(html, f.nombre, f.base, true);
+          const otra = await llamarIA(html, f.nombre, f.base, true, urlsConocidas);
           const segunda = extraerJSON(otra.respuesta, f.nombre);
           if (segunda) {
             segunda.forEach(c => { c.url = urlValida(c.url); });
@@ -453,16 +576,39 @@ async function main() {
 
   /* Los fijos van PRIMERO para que, si una convocatoria esta en los dos sitios, gane
      nuestra ficha revisada a mano y no la que saque la IA del listado ajeno. */
+  /* Si una fuente ha dejado de leerse, en incremental hay que decirlo Y reprocesar todo:
+     lo conservado seguiria publicandose y ocultaria el problema. Forzar el barrido
+     completo cuesta una llamada cara ese dia y evita una web congelada varios. */
+  const mudas = fuentesMudas(enlacesPorFuente);
+  if (mudas.length) {
+    console.warn('AVISO: estas fuentes traen menos de ' + MIN_ENLACES + ' enlaces visibles, ' +
+                 'que es el sintoma de un raspado roto: ' + mudas.join(', ') +
+                 '  (enlaces: ' + JSON.stringify(enlacesPorFuente) + ')');
+    if (!modo.si) console.warn('Estando en modo incremental, eso dejaria la web congelada sin que se notase.');
+  }
+
   const fijos = leerFijos();
   fijos.forEach(c => { c.url = urlValida(c.url); });
-  const vistos = new Set();
-  const todosConFijos = fijos.concat(todos).filter(c => {
-    const k = claveTitulo(c.titulo);
-    if (!k || vistos.has(k)) return false;
-    vistos.add(k);
-    return true;
-  });
-  console.log('Tras juntar fijos y rastreados y quitar repetidos: ' + todosConFijos.length);
+  /* Los conocidos van DESPUES de los fijos y ANTES de los nuevos: si una convocatoria
+     esta en los tres sitios gana nuestra ficha revisada a mano, y entre la de ayer y la
+     de hoy gana la de ayer, que es lo que mantiene el titulo estable. */
+  const todosConFijos = fusionar(fijos, conocidos, todos);
+  console.log('Tras juntar fijos' + (conocidos.length ? ', conservados' : '') +
+              ' y rastreados y quitar repetidos: ' + todosConFijos.length +
+              ' (' + fijos.length + ' fijos + ' + conocidos.length + ' conservados + ' +
+              todos.length + ' del rastreo de hoy)');
+  if (!modo.si) {
+    /* El dato que justifica todo esto, impreso cada dia para poder vigilarlo: cuantos de
+       los que ha devuelto el modelo eran de verdad nuevos. Si esto sale alto y sostenido,
+       es que el modelo esta ignorando la lista de URLs y conviene mirarlo. */
+    const yaEstaban = new Set(conocidos.map(c => claveURL(c.url)).filter(Boolean));
+    const repetidos = todos.filter(c => { const k = claveURL(c.url); return k && yaEstaban.has(k); }).length;
+    console.log('Del rastreo de hoy, ' + (todos.length - repetidos) + ' eran nuevos y ' +
+                repetidos + ' ya los teniamos' +
+                (repetidos > todos.length * 0.5 && todos.length >= 10
+                  ? '  <-- AVISO: el modelo esta devolviendo lo que ya tenemos pese a la lista de URLs; el ahorro no se esta produciendo'
+                  : ''));
+  }
 
   /* Si el rastreo falla (la fuente cambia, la IA devuelve vacio), antes se salia sin
      escribir nada y la web se quedaba con lo del dia anterior. Ahora, si al menos hay
@@ -607,7 +753,8 @@ async function main() {
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
-if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida };
+if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
+                   esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
