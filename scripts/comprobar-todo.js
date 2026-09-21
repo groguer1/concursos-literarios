@@ -80,6 +80,13 @@ const PRUEBAS = [
       return (salida.trim().split('\n').pop() || '').trim();
     },
   },
+  {
+    nombre: 'Los concursos metidos a mano se saltan la ventana de 90 dias',
+    ejecutar: () => {
+      const salida = execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/ventana-fijos.test.js')], { encoding: 'utf8' });
+      return (salida.trim().split('\n').pop() || '').trim();
+    },
+  },
 ];
 
 let fallos = 0;

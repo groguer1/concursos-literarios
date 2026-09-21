@@ -34,5 +34,17 @@
     "pais": "Espana",
     "nuevo": false,
     "origen": "correo 14/08/2026"
+  },
+  {
+    "titulo": "I CONCURSO INTERNACIONAL DE RELATOS CORTOS ESCRITOS CON IA",
+    "organizacion": "Antonio Blázquez-Madrid",
+    "categoria": "Relato corto",
+    "premio": "Diploma, el equivalente a tres meses de ChatGPT Plus y publicación en antología",
+    "fecha_limite": "15/01/2027",
+    "descripcion": "Certamen experimental de ámbito internacional. Tema: EL FUTURO. Relato inédito en español, de 600 a 1.200 palabras, un solo relato por autor, mayores de 18 años de cualquier nacionalidad. Condición indispensable: la obra debe tener entre un 60 % y un 80 % de intervención de IA (y entre un 20 % y un 40 % humana), y se comprobará con detectores como GPTZero o Copyleaks. Jurado: ChatGPT y Google Gemini. Envío por correo electrónico con relato y plica por separado; consulta las bases para la dirección exacta. Fallo entre finales de marzo y principios de abril de 2027.",
+    "url": "",
+    "pais": "Internacional",
+    "nuevo": true,
+    "origen": "peticion de Antonio Blazquez-Madrid via David, 21/09/2026"
   }
 ]

@@ -14,7 +14,11 @@ function leerFijos() {
   try {
     const arr = JSON.parse(fs.readFileSync('concursos-fijos.json', 'utf8'));
     console.log('Concursos fijos leidos: ' + arr.length);
-    return Array.isArray(arr) ? arr : [];
+    /* Se marcan para que enPlazo() NO les aplique la ventana de 90 dias: un fijo lo ha
+       metido una persona porque alguien pidio que se publicara, asi que la ventana no
+       pinta nada. La marca viaja en el JSON publicado, de modo que al releer el listado
+       de ayer sigue sabiendose cual era fijo. */
+    return Array.isArray(arr) ? arr.map(c => Object.assign({}, c, { fijo: true })) : [];
   } catch (e) {
     console.warn('Sin concursos fijos (' + e.message + ')');
     return [];
@@ -462,6 +466,16 @@ function diasHasta(fechaStr) {
   return Math.ceil((new Date(parts[2], parts[1]-1, parts[0]) - new Date()) / 86400000);
 }
 
+/* UN CONCURSO ESTA EN PLAZO SI NO HA VENCIDO. La ventana de 90 dias solo se aplica a
+   los RASTREADOS, para no llenar la web de convocatorias lejanas; los fijos se publican
+   siempre, porque alguien ha pedido expresamente que salgan. Nacio del I Concurso de
+   Relatos con IA (cierra el 15/01/2027, a 116 dias): metido a mano, no habria salido
+   hasta el 17/10 y nadie se habria enterado de por que. */
+function enPlazo(c) {
+  const d = diasHasta(c.fecha_limite);
+  return d > 0 && (c.fijo === true || d <= VENTANA_DIAS);
+}
+
 function escapeHtml(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -568,7 +582,7 @@ async function main() {
   /* Solo se conservan los que siguen EN PLAZO: lo caducado no se arrastra ni se le
      manda al modelo como "ya publicado", porque entonces no volveria a salir nunca. */
   const conocidos = (!modo.si && anteriorPublicado)
-    ? anteriorPublicado.filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
+    ? anteriorPublicado.filter(enPlazo)
     : [];
   const urlsConocidas = [...new Set(conocidos.map(c => urlValida(c.url)).filter(Boolean))];
   console.log('MODO: ' + (modo.si ? 'BARRIDO COMPLETO' : 'INCREMENTAL') + ' (' + modo.motivo + ')' +
@@ -673,7 +687,7 @@ async function main() {
   if (!todosConFijos.length) { console.log('Sin concursos nuevos'); process.exit(0); }
 
   let filtrados = todosConFijos
-    .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
+    .filter(enPlazo)
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
   console.log('Validos en rango: ' + filtrados.length);
@@ -712,7 +726,7 @@ async function main() {
          menos. Aqui NO se inventa nada ni se llama al modelo: se vuelve a publicar lo
          que ya habia quitando lo que ha caducado, con el mismo filtro de ventana. */
       const vigentes = anterior
-        .filter(c => { const d = diasHasta(c.fecha_limite); return d > 0 && d <= VENTANA_DIAS; })
+        .filter(enPlazo)
         .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
       if (!vigentes.length) {
         console.warn('El listado de ayer se queda sin nada en plazo: no se toca la web.');
