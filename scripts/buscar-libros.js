@@ -74,6 +74,20 @@ async function llamarIA(texto) {
   }, body);
 
   if (result.error) throw new Error(JSON.stringify(result.error));
+
+  /* LA SONDA DEL GASTO. Este bot llevaba desde que se escribio sin medir lo que cuesta:
+     el de concursos si lo imprime y este no, asi que en cada repaso de cuentas habia que
+     estimarlo, que es justo lo que la regla prohibe. Precios de Haiku 4.5 a 21/09/2026:
+     1 $ por millon de tokens de entrada y 5 $ por millon de salida. Corre los dias 1, 11
+     y 21, o sea 3 veces al mes. */
+  const u = result.usage || {};
+  const entrada = (u.input_tokens || 0) + (u.cache_creation_input_tokens || 0) + (u.cache_read_input_tokens || 0);
+  const salida = u.output_tokens || 0;
+  const coste = entrada / 1e6 * 1 + salida / 1e6 * 5;
+  console.log('GASTO DE ESTA EJECUCION: ' + entrada + ' tokens de entrada · ' + salida +
+              ' de salida · ' + coste.toFixed(4) + ' $  (a ' + (coste * 3).toFixed(2) + ' $/mes a este ritmo)');
+  if (salida >= 8000) console.log('AVISO: la respuesta ha llegado al tope de max_tokens; puede venir cortada');
+
   const respuesta = result.content[0].text;
   console.log('Respuesta IA: ' + respuesta.substring(0, 300));
   return respuesta;
