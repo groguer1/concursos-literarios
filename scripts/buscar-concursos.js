@@ -7,6 +7,30 @@ const ANTHROPIC_KEY = process.env.ANTHROPIC_KEY;
    Mariana de Carvajal (15/10/2026) no entraba: quedaba a 62. */
 const VENTANA_DIAS = 90;
 
+/* LOS LEJANOS SE GUARDAN APARTE (30/09/2026). Antes, lo que el modelo devolvia con el
+   plazo a mas de VENTANA_DIAS se descartaba sin guardarlo en ninguna parte, y como el
+   modo incremental solo le oculta al modelo lo PUBLICADO, al dia siguiente lo volvia a
+   extraer, y al otro, y se pagaba cada vez. El 30/09 devolvio 48 «nuevos» y solo se
+   publicaron 5: los demas eran esos lejanos de siempre. Ahora se guardan en este
+   fichero, se le ocultan al modelo igual que los publicados y entran solos en la web
+   el dia que les toque, sin volver a pedirlos. El lunes, en barrido completo, el
+   fichero se rehace desde cero con lo que devuelva el modelo. */
+const FICHERO_LEJANOS = 'concursos-lejanos.json';
+function esLejano(c) {
+  if (c.fijo === true) return false;
+  const d = diasHasta(c.fecha_limite);
+  return d > VENTANA_DIAS;
+}
+function leerLejanos() {
+  try {
+    const raw = JSON.parse(fs.readFileSync(FICHERO_LEJANOS, 'utf8'));
+    return Array.isArray(raw) ? raw.filter(c => c && c.titulo && diasHasta(c.fecha_limite) > 0) : [];
+  } catch (e) {
+    if (e.code !== 'ENOENT') console.warn('No se ha podido leer ' + FICHERO_LEJANOS + ' (' + e.message + '): se ignora');
+    return [];
+  }
+}
+
 /* Convocatorias metidas a mano, normalmente las que llegan por correo y el rastreo
    no ve. Se juntan con las rastreadas y CADUCAN SOLAS al pasar su fecha limite,
    asi que no hay que acordarse de retirarlas. Fichero: concursos-fijos.json */
@@ -584,10 +608,13 @@ async function main() {
   const conocidos = (!modo.si && anteriorPublicado)
     ? anteriorPublicado.filter(enPlazo)
     : [];
-  const urlsConocidas = [...new Set(conocidos.map(c => urlValida(c.url)).filter(Boolean))];
+  const lejanos = !modo.si ? leerLejanos() : [];
+  const guardados = conocidos.concat(lejanos);
+  const urlsConocidas = [...new Set(guardados.map(c => urlValida(c.url)).filter(Boolean))];
   console.log('MODO: ' + (modo.si ? 'BARRIDO COMPLETO' : 'INCREMENTAL') + ' (' + modo.motivo + ')' +
               (modo.si ? '' : ' · se conservan ' + conocidos.length + ' concursos en plazo y se le ocultan al modelo ' +
-                               urlsConocidas.length + ' URLs'));
+                               urlsConocidas.length + ' URLs' +
+                               (lejanos.length ? ' (incluidos ' + lejanos.length + ' lejanos guardados)' : '')));
 
   let todos = [];
   /* Cuantos ha dado cada fuente. Es lo que permite distinguir "hoy hay menos
@@ -663,16 +690,17 @@ async function main() {
   /* Los conocidos van DESPUES de los fijos y ANTES de los nuevos: si una convocatoria
      esta en los tres sitios gana nuestra ficha revisada a mano, y entre la de ayer y la
      de hoy gana la de ayer, que es lo que mantiene el titulo estable. */
-  const todosConFijos = fusionar(fijos, conocidos, todos);
+  const todosConFijos = fusionar(fijos, guardados, todos);
   console.log('Tras juntar fijos' + (conocidos.length ? ', conservados' : '') +
               ' y rastreados y quitar repetidos: ' + todosConFijos.length +
               ' (' + fijos.length + ' fijos + ' + conocidos.length + ' conservados + ' +
+              (lejanos.length ? lejanos.length + ' lejanos guardados + ' : '') +
               todos.length + ' del rastreo de hoy)');
   if (!modo.si) {
     /* El dato que justifica todo esto, impreso cada dia para poder vigilarlo: cuantos de
        los que ha devuelto el modelo eran de verdad nuevos. Si esto sale alto y sostenido,
        es que el modelo esta ignorando la lista de URLs y conviene mirarlo. */
-    const yaEstaban = new Set(conocidos.map(c => claveURL(c.url)).filter(Boolean));
+    const yaEstaban = new Set(guardados.map(c => claveURL(c.url)).filter(Boolean));
     const repetidos = todos.filter(c => { const k = claveURL(c.url); return k && yaEstaban.has(k); }).length;
     console.log('Del rastreo de hoy, ' + (todos.length - repetidos) + ' eran nuevos y ' +
                 repetidos + ' ya los teniamos' +
@@ -691,6 +719,12 @@ async function main() {
     .sort((a,b) => diasHasta(a.fecha_limite) - diasHasta(b.fecha_limite));
 
   console.log('Validos en rango: ' + filtrados.length);
+  const lejanosHoy = todosConFijos.filter(esLejano);
+  const vencidos = todosConFijos.length - filtrados.length - lejanosHoy.length;
+  console.log('Fuera de la web: ' + lejanosHoy.length + ' lejanos (plazo a mas de ' + VENTANA_DIAS +
+              ' dias, guardados en ' + FICHERO_LEJANOS + ') y ' + vencidos + ' vencidos');
+  try { fs.writeFileSync(FICHERO_LEJANOS, JSON.stringify(lejanosHoy), 'utf8'); }
+  catch (e) { console.warn('No se ha podido guardar ' + FICHERO_LEJANOS + ': ' + e.message); }
   if (!filtrados.length) { console.log('Ninguno en rango'); process.exit(0); }
 
   /* EL GUARD QUE FALTABA. El de arriba solo salta si NO queda ninguno, y como los fijos
@@ -826,7 +860,7 @@ async function main() {
 
 if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
                    esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
-                   recortarConocidos, MIN_TEXTO_RECORTADO };
+                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {

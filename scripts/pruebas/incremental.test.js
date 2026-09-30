@@ -7,7 +7,7 @@
      2. que se quede en incremental para siempre y no se entere de un cambio de bases,
      3. que oculte un raspado roto, porque cero concursos nuevos es lo normal. */
 const { esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
-        recortarConocidos, MIN_TEXTO_RECORTADO } = require('../buscar-concursos.js');
+        recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS } = require('../buscar-concursos.js');
 
 let fallos = 0;
 function ok(nombre, cond, detalle) {
@@ -110,6 +110,23 @@ ok('un dia normal no avisa de nada',
    fuentesMudas({ 'escritores.org': 411, 'guiadeconcursos.com': 170 }).length === 0);
 ok('el umbral es bajo a proposito, no salta por poco',
    fuentesMudas({ 'a': MIN_ENLACES }).length === 0 && fuentesMudas({ 'a': MIN_ENLACES - 1 }).length === 1);
+
+console.log('\nLOS LEJANOS SE GUARDAN (30/09/2026)\n');
+const dentroDe = n => { const d = new Date(); d.setDate(d.getDate() + n);
+  return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); };
+ok('un rastreado a 120 dias es lejano',              esLejano({ fecha_limite: dentroDe(120) }) === true);
+ok('uno dentro de ventana NO se guarda como lejano', esLejano({ fecha_limite: dentroDe(30) }) === false);
+ok('el borde (' + VENTANA_DIAS + ' dias) se publica, no se guarda', esLejano({ fecha_limite: dentroDe(VENTANA_DIAS) }) === false);
+ok('un fijo nunca es lejano (se publica siempre)',  esLejano({ fijo: true, fecha_limite: dentroDe(200) }) === false);
+ok('un vencido no es lejano',                        esLejano({ fecha_limite: dentroDe(-3) }) === false);
+/* El recorrido entero: un lejano guardado ayer, que hoy ya esta en ventana, entra en la
+   fusion por el lado de los guardados y el modelo no lo tiene que devolver. */
+const guardadoAyer = { titulo: 'Premio Lejano', url: 'https://x.es/lejano', fecha_limite: dentroDe(89) };
+const fusion = fusionar([], [guardadoAyer], []);
+ok('un lejano que entra en ventana se publica sin volver a pedirlo',
+   fusion.length === 1 && !esLejano(fusion[0]));
+ok('si el modelo lo devuelve igualmente, no sale dos veces',
+   fusionar([], [guardadoAyer], [{ titulo: 'PREMIO LEJANO 2026', url: 'https://x.es/lejano/' }]).length === 1);
 
 console.log('\n' + (fallos ? fallos + ' FALLO(S)' : 'Todo correcto') + '\n');
 process.exit(fallos ? 1 : 0);
