@@ -61,3 +61,10 @@
   /* Las entradas del acordeón, sangradas para que se vea que cuelgan del grupo */
   .nav-sub a { text-align: left; padding-left: 2.5rem; }
 }
+
+/* Enlaces dentro del texto de los artículos [13/10/2026]. Cada artículo trae en su <style>
+   un reset «a{color:inherit;text-decoration:none}» y ninguno volvía a pintar los enlaces del
+   cuerpo, así que en los 55 artículos se leían como texto normal, incluido el enlace al
+   informe de lectura. Va aquí, y no artículo por artículo, porque todos cargan nav.css. */
+.art-body a { color: var(--accent, #c8392b); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.art-body a:hover { text-decoration-thickness: 2px; }
