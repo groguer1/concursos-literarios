@@ -58,5 +58,17 @@
     "pais": "Espana",
     "nuevo": false,
     "origen": "revisada a mano 5/10/2026 contra BOME-A-2026-369"
+  },
+  {
+    "titulo": "PREMIO LITERARIO INTERNACIONAL «MICHELE LEONI» 2026/2027",
+    "organizacion": "HEFRA APS (Fidenza, Italia)",
+    "categoria": "Poesia",
+    "premio": "Placas y diplomas (sin dotación en dinero)",
+    "fecha_limite": "31/12/2026",
+    "descripcion": "Certamen de poesía con cinco categorías; para autores en español sirven la C (poesía inédita en lengua extranjera) y la D (poesía publicada en lengua extranjera), hasta tres poemas por categoría. Mayores de 18 años de cualquier nacionalidad. Cuota de inscripción: 20 € por categoría (10 € de 18 a 25 años). Los premios son placas y diplomas, no dinero. Asistir a la ceremonia en Fidenza (Italia) el 13 de marzo de 2027 es obligatorio para conservar el premio. Bases completas en español en la web del premio.",
+    "url": "https://www.hefra.it/reglamento-espanol-premio-literario-michele-leoni/",
+    "pais": "Italia",
+    "nuevo": true,
+    "origen": "correo de HEFRA APS a info@, 16/10/2026; bases leídas ese día"
   }
 ]
