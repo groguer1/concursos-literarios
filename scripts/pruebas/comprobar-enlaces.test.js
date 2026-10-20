@@ -27,6 +27,7 @@ const servidor = http.createServer((req, res) => {
     case '/404':           res.writeHead(404); return res.end();
     case '/500':           res.writeHead(500); return res.end();
     case '/403':           res.writeHead(403); return res.end();
+    case '/406':           res.writeHead(406); return res.end();
     // Servidor que rechaza HEAD pero responde a GET: existen, y darlos por rotos
     // mandaría a revisar a mano una ficha que está perfecta.
     case '/solo-get':      res.writeHead(req.method === 'HEAD' ? 405 : 200); return res.end();
@@ -45,6 +46,7 @@ const CASOS_HTTP = [
   ['404',                          B + '/404',           'roto'],
   ['500',                          B + '/500',           'roto'],
   ['403 (antibots, no es un fallo)', B + '/403',         'dudoso'],
+  ['406 (antibots, caso de Alba)',   B + '/406',         'dudoso'],
   ['no admite HEAD pero sí GET',   B + '/solo-get',      'ok'],
   ['redirige dentro del sitio',    B + '/redir-interna', 'ok'],
   ['redirige a OTRO dominio',      B + '/redir-fuera',   'redirige'],

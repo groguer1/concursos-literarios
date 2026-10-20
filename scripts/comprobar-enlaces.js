@@ -74,7 +74,7 @@ function pedir(url, metodo, saltos) {
 async function comprobar(url) {
   let r = await pedir(url, 'HEAD', 0);
   // El servidor no admite HEAD: se reintenta con GET antes de darlo por malo.
-  if (r.estado === 'respuesta' && [403, 405, 501].includes(r.codigo)) {
+  if (r.estado === 'respuesta' && [403, 405, 406, 501].includes(r.codigo)) {
     r = await pedir(url, 'GET', 0);
   }
 
@@ -100,7 +100,9 @@ async function comprobar(url) {
     }
     return { nivel: 'ok', texto: String(c) };
   }
-  if (c === 403 || c === 429) return { nivel: 'dudoso', texto: c + ' (puede ser protección antibots)' };
+  /* 406 tambien es antibots: albaeditorial.es lo devuelve a este script desde el 28/09 y
+     contesta 200 a un navegador. Clasificarlo como roto tuvo el aviso semanal en rojo un mes. */
+  if (c === 403 || c === 406 || c === 429) return { nivel: 'dudoso', texto: c + ' (puede ser protección antibots)' };
   return { nivel: 'roto', texto: 'HTTP ' + c };
 }
 
