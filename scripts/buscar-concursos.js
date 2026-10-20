@@ -826,6 +826,7 @@ async function main() {
   const PAGINAS_CATEGORIA = [
     { archivo: 'concursos-relato-corto.html', marca: 'RELATO', contador: 'num-relato', filtro: 'relato' },
     { archivo: 'concursos-poesia.html',       marca: 'POESIA', contador: 'num-poesia',  filtro: 'poes'   },
+    { archivo: 'concursos-novela.html',       marca: 'NOVELA', contador: 'num-novela',  filtro: 'novela' },
   ];
   for (const pg of PAGINAS_CATEGORIA) {
     try {
