@@ -827,6 +827,7 @@ async function main() {
     { archivo: 'concursos-relato-corto.html', marca: 'RELATO', contador: 'num-relato', filtro: 'relato' },
     { archivo: 'concursos-poesia.html',       marca: 'POESIA', contador: 'num-poesia',  filtro: 'poes'   },
     { archivo: 'concursos-novela.html',       marca: 'NOVELA', contador: 'num-novela',  filtro: 'novela' },
+    { archivo: 'premios-poesia-joven.html',   marca: 'POESIAJOVEN', contador: 'num-poesia-joven', filtro: 'poes', test: esPoesiaJoven },
   ];
   for (const pg of PAGINAS_CATEGORIA) {
     try {
@@ -836,7 +837,7 @@ async function main() {
         console.warn('Sin marcadores ' + pg.marca + '-STATIC en ' + pg.archivo + ': se omite');
         continue;
       }
-      const sel = filtrados.filter(c => String(c.categoria || '').toLowerCase().includes(pg.filtro));
+      const sel = filtrados.filter(c => String(c.categoria || '').toLowerCase().includes(pg.filtro) && (!pg.test || pg.test(c)));
       hp = hp.replace(rx, '<!-- ' + pg.marca + '-STATIC-START -->' + buildRelatoHTML(sel) + '<!-- ' + pg.marca + '-STATIC-END -->');
       hp = hp.replace(new RegExp('<span id="' + pg.contador + '">[^<]*</span>'),
                       '<span id="' + pg.contador + '">' + sel.length + '</span>');
@@ -859,9 +860,20 @@ async function main() {
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
+/* Poesia JOVEN: el limite de edad solo viene en el titulo o en la descripcion, nunca en un
+   campo propio. Se busca «joven» o un tope de edad por ARRIBA (menores de 30, de 18 a 35,
+   nacidos a partir de...). «Mayores de 18» no cuenta: eso lo pide casi cualquier concurso.
+   Y «de 18 a 25 años» tampoco: en el Michele Leoni era una CUOTA reducida, no un limite. */
+function esPoesiaJoven(c) {
+  const t = (String(c.titulo || '') + ' ' + String(c.descripcion || '')).toLowerCase();
+  return /\bj[oó]ven(es)?\b/.test(t) ||
+         /menores de (2\d|3\d|40) a[nñ]os/.test(t) ||
+         /nacid[oa]s a partir/.test(t);
+}
+
 if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
                    esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
-                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS };
+                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
