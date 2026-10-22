@@ -828,6 +828,7 @@ async function main() {
     { archivo: 'concursos-poesia.html',       marca: 'POESIA', contador: 'num-poesia',  filtro: 'poes'   },
     { archivo: 'concursos-novela.html',       marca: 'NOVELA', contador: 'num-novela',  filtro: 'novela' },
     { archivo: 'concursos-ensayo.html',       marca: 'ENSAYO', contador: 'num-ensayo',  filtro: 'ensayo' },
+    { archivo: 'concursos-teatro.html',       marca: 'TEATRO', contador: 'num-teatro',  filtro: 'teatr'  },
     { archivo: 'premios-poesia-joven.html',   marca: 'POESIAJOVEN', contador: 'num-poesia-joven', filtro: 'poes', test: esPoesiaJoven },
   ];
   for (const pg of PAGINAS_CATEGORIA) {
