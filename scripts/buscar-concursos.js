@@ -824,7 +824,7 @@ async function main() {
      «Microrrelato», y 'poes' recoge «Poesia» con y sin tilde y las categorias compuestas
      del tipo «Relato corto|Poesia». */
   const PAGINAS_CATEGORIA = [
-    { archivo: 'concursos-relato-corto.html', marca: 'RELATO', contador: 'num-relato', filtro: 'relato' },
+    { archivo: 'concursos-relato-corto.html', marca: 'RELATO', contador: 'num-relato', filtro: '', test: esRelatoOCuento },
     { archivo: 'concursos-poesia.html',       marca: 'POESIA', contador: 'num-poesia',  filtro: 'poes'   },
     { archivo: 'concursos-novela.html',       marca: 'NOVELA', contador: 'num-novela',  filtro: 'novela' },
     { archivo: 'concursos-ensayo.html',       marca: 'ENSAYO', contador: 'num-ensayo',  filtro: 'ensayo' },
@@ -862,6 +862,13 @@ async function main() {
   filtrados.forEach(c => console.log('  - ' + c.titulo + ' (' + c.fecha_limite + ')'));
 }
 
+/* RELATO CORTO: el modelo devuelve a veces la categoria «Cuento» (9 concursos el 22/10/2026)
+   aunque el prompt no la ofrece, y el filtro por la subcadena 'relato' los dejaba fuera de la
+   pagina de relato corto. Cuento y relato son lo mismo para quien busca, asi que van juntos. */
+function esRelatoOCuento(c) {
+  return /relato|cuento|microrr/i.test(String(c.categoria || ''));
+}
+
 /* Poesia JOVEN: el limite de edad solo viene en el titulo o en la descripcion, nunca en un
    campo propio. Se busca «joven» o un tope de edad por ARRIBA (menores de 30, de 18 a 35,
    nacidos a partir de...). «Mayores de 18» no cuenta: eso lo pide casi cualquier concurso.
@@ -875,7 +882,7 @@ function esPoesiaJoven(c) {
 
 if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
                    esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
-                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven };
+                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven, esRelatoOCuento };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
