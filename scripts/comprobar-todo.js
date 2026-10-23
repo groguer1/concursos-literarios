@@ -87,6 +87,13 @@ const PRUEBAS = [
       return (salida.trim().split('\n').pop() || '').trim();
     },
   },
+  {
+    nombre: 'El mismo concurso con dos titulos sale una sola vez',
+    ejecutar: () => {
+      const salida = execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/duplicados.test.js')], { encoding: 'utf8' });
+      return (salida.trim().split('\n').pop() || '').trim();
+    },
+  },
 ];
 
 let fallos = 0;

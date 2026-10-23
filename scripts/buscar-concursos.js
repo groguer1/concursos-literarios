@@ -368,11 +368,55 @@ function fusionar(fijos, conocidos, nuevos) {
     if (!kt) continue;
     if (porTitulo.has(kt)) continue;
     if (ku && porUrl.has(ku)) continue;
+    const gemelo = out.find(o => mismoConcurso(o, c));
+    if (gemelo) {
+      /* El que ya estaba manda, pero si le falta la fecha o el enlace se los da el
+         repetido: de los tres «Manuel Nevado» uno no tenia fecha y otro no tenia URL. */
+      if (!gemelo.fecha_limite && c.fecha_limite) gemelo.fecha_limite = c.fecha_limite;
+      if (!urlValida(gemelo.url) && urlValida(c.url)) gemelo.url = c.url;
+      porTitulo.add(kt);
+      if (ku) porUrl.add(ku);
+      continue;
+    }
     porTitulo.add(kt);
     if (ku) porUrl.add(ku);
     out.push(c);
   }
   return out;
+}
+
+/* EL MISMO CONCURSO CON DOS TITULOS. escritores.org y guiadeconcursos.com escriben el
+   mismo certamen de forma distinta («XXIII EDICION CONCURSO DE MICRORRELATOS MINEROS
+   "MANUEL NEVADO MADRID"» frente a «XXIII Concurso de Microrrelatos Mineros MANUEL NEVADO
+   MADRID 2026»), y como la URL tambien cambia, el 23/10/2026 salia TRES veces en la web.
+   Se compara el titulo sin acentos, anos ni palabras de relleno. Dos reglas:
+   1) mismas palabras significativas: es el mismo, sin mas;
+   2) misma edicion (XXIII, 42...), al menos el 60 % de palabras en comun y fechas que no
+      se contradicen (iguales o una vacia). La fecha es lo que separa «I Concurso de relatos
+      cortos» (15/11) del «I Concurso internacional de relatos cortos escritos con IA»
+      (15/01), que comparten el 60 % y son dos concursos distintos. */
+const RELLENO = new Set(('de del la el los las y en a al para por con concurso concursos certamen ' +
+  'premio premios edicion convocatoria literario literaria o e un una').split(' '));
+function palabrasTitulo(t) {
+  return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .split(/[^a-z0-9]+/).filter(w => w && !RELLENO.has(w) && !/^20\d\d$/.test(w));
+}
+function edicionTitulo(t) {
+  const w = palabrasTitulo(t).find(x => /^[ivxlc]+$/.test(x) || /^\d{1,3}[oa]?$/.test(x));
+  return w ? w.replace(/[oa]$/, '') : '';
+}
+function mismoConcurso(a, b) {
+  const A = new Set(palabrasTitulo(a.titulo));
+  const B = new Set(palabrasTitulo(b.titulo));
+  if (!A.size || !B.size) return false;
+  const comunes = [...A].filter(w => B.has(w)).length;
+  const union = new Set([...A, ...B]).size;
+  if (comunes === union) return true;
+  const ed = edicionTitulo(a.titulo);
+  if (!ed || ed !== edicionTitulo(b.titulo)) return false;
+  const fa = String(a.fecha_limite || '').trim(), fb = String(b.fecha_limite || '').trim();
+  if (fa && fb && fa !== fb) return false;
+  return comunes / union >= 0.6;
 }
 
 async function llamarIA(texto, fuente, base, insistir, urlsConocidas) {
@@ -883,7 +927,8 @@ function esPoesiaJoven(c) {
 
 if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
                    esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
-                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven, esRelatoOCuento };
+                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven, esRelatoOCuento,
+                   mismoConcurso };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */
 if (require.main === module) {
