@@ -1,5 +1,12 @@
 # Publicidad de letrasespanolas.org — tarifas y cómo se publica
 
+> ⛔ **RETIRADA EL 23/10/2026 por decisión de David**: «son 37 euros que nos tiene que pagar una
+> asociación o un ayuntamiento y es un lío para tan poca ganancia; viviremos de los informes».
+> Quitados el bloque lateral (74 páginas) y el enlace del pie (85); `anunciate.html` redirige a
+> contacto y salió del sitemap. `publicidad.json` queda con `activo:false` y el código del bot se
+> deja como está (no pinta nada mientras siga en false). **No volver a proponerlo.** Lo de abajo
+> es histórico.
+
 > **Este fichero faltaba.** `publicidad.json`, la cola de letras y el diario del 18/08/2026 lo
 > citaban («Tarifas y condiciones en PUBLICIDAD.md», «los tres pasos están en el apartado 5») y
 > **nunca se llegó a crear**: el commit `e8fae85` solo añadió `index.html`, `publicidad.json` y
