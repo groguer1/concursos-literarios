@@ -875,6 +875,7 @@ async function main() {
     { archivo: 'concursos-teatro.html',       marca: 'TEATRO', contador: 'num-teatro',  filtro: 'teatr'  },
     { archivo: 'concursos-microrrelatos.html', marca: 'MICRO', contador: 'num-micro', filtro: 'microrr' },
     { archivo: 'premios-poesia-joven.html',   marca: 'POESIAJOVEN', contador: 'num-poesia-joven', filtro: 'poes', test: esPoesiaJoven },
+    { archivo: 'concursos-literarios-jovenes.html', marca: 'JOVENES', contador: 'num-jovenes', filtro: '', test: esParaJovenes },
   ];
   for (const pg of PAGINAS_CATEGORIA) {
     try {
@@ -925,9 +926,26 @@ function esPoesiaJoven(c) {
          /nacid[oa]s a partir/.test(t);
 }
 
+/* JOVENES, de cualquier genero: lo de poesia joven mas los rangos de edad con tope por
+   arriba («de 14 a 39 años», el Premio Espasa de novela juvenil del 24/10/2026, que el
+   filtro de poesia dejaba fuera) y los concursos para estudiantes. El rango no cuenta si
+   va justo detras de un precio: en el Michele Leoni «10 € de 18 a 25 años» era una cuota. */
+function esParaJovenes(c) {
+  if (esPoesiaJoven(c)) return true;
+  const t = (String(c.titulo || '') + ' ' + String(c.descripcion || '')).toLowerCase();
+  const rx = /(?:de|entre|desde) (\d{1,2}) (?:a|y|hasta) (\d{1,2}) a[nñ]os/g;
+  let m;
+  while ((m = rx.exec(t))) {
+    const antes = t.slice(Math.max(0, m.index - 12), m.index);
+    if (+m[2] <= 40 && !/€|euros?|cuota/.test(antes)) return true;
+  }
+  return /estudiantes de (universidad|universidades|bachillerato|eso|secundaria|primaria|educaci[oó]n)/.test(t) ||
+         /\balumn[oa]s\b/.test(t) || /\bescolar(es)?\b/.test(t) || /concurso juvenil/.test(t);
+}
+
 if (typeof module !== 'undefined') module.exports = { decidirPublicacion, buildRelatoHTML, escapeHtml, faltanEnlaces, urlValida,
                    esBarridoCompleto, claveURL, fusionar, fuentesMudas, MIN_ENLACES,
-                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven, esRelatoOCuento,
+                   recortarConocidos, MIN_TEXTO_RECORTADO, esLejano, VENTANA_DIAS, esPoesiaJoven, esParaJovenes, esRelatoOCuento,
                    mismoConcurso };
 
 /* Solo arranca si se ejecuta directamente, no si lo carga la prueba. */

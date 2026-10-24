@@ -94,6 +94,14 @@ const PRUEBAS = [
       return (salida.trim().split('\n').pop() || '').trim();
     },
   },
+  {
+    nombre: 'Los filtros de edad de poesia joven y de jovenes',
+    ejecutar: () => {
+      execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/poesia-joven.test.js')], { encoding: 'utf8' });
+      const salida = execFileSync('node', [path.join(RAIZ, 'scripts/pruebas/jovenes.test.js')], { encoding: 'utf8' });
+      return (salida.trim().split('\n').pop() || '').trim();
+    },
+  },
 ];
 
 let fallos = 0;
