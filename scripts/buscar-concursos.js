@@ -876,6 +876,7 @@ async function main() {
     { archivo: 'concursos-microrrelatos.html', marca: 'MICRO', contador: 'num-micro', filtro: 'microrr' },
     { archivo: 'premios-poesia-joven.html',   marca: 'POESIAJOVEN', contador: 'num-poesia-joven', filtro: 'poes', test: esPoesiaJoven },
     { archivo: 'concursos-literarios-jovenes.html', marca: 'JOVENES', contador: 'num-jovenes', filtro: '', test: esParaJovenes },
+    { archivo: 'concursos-cuentos-infantiles.html', marca: 'INFANTIL', contador: 'num-infantil', filtro: 'infantil' },
   ];
   for (const pg of PAGINAS_CATEGORIA) {
     try {
