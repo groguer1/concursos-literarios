@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#f5f2eb">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo corregir tu novela: el orden de las revisiones</title>
+    <meta name="description" content="Cómo corregir tu propia novela por pasadas, de lo grande a lo pequeño: reposo, estructura, personajes y continuidad, estilo y erratas. Qué puede hacer la IA y cuándo pedir otra mirada.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Letras Españolas">
+<meta name="author" content="Letras Españolas">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NCS6BXJS');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322984058410308" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a18;--paper:#f5f2eb;--cream:#ede9df;--accent:#c8392b;--gold:#b8860b;--muted:#7a7670;--border:#d4cfc5}
+*{box-sizing:border-box;margin:0;padding:0}a{color:inherit;text-decoration:none}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink)}
+header{border-bottom:2px solid var(--ink);position:relative}
+.header-top{display:flex;justify-content:space-between;align-items:center;padding:.5rem 2rem;border-bottom:1px solid var(--border);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.header-main{text-align:center;padding:1.5rem 2rem 1rem;position:relative}
+.site-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;letter-spacing:-.02em}
+.site-title span{color:var(--accent);font-style:italic}
+.site-tagline{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+.header-nav{display:flex;justify-content:center;border-top:1px solid var(--border)}
+.nav-btn{padding:.6rem 1.1rem;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border:none;border-right:1px solid var(--border);background:none;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center}
+.nav-btn:hover,.nav-btn.active{color:var(--accent);background:var(--cream)}
+.nav-btn:last-child{border-right:none}
+.hamburger{display:none;position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;flex-direction:column;gap:4px;z-index:200}
+.hamburger span{display:block;width:20px;height:2px;background:var(--ink);transition:all .2s}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:2rem 0 3rem}
+.breadcrumb{font-size:12px;color:var(--muted);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--muted)}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{margin:0 .4rem;opacity:.5}
+.art-header{border-bottom:2px solid var(--ink);padding-bottom:1.5rem;margin-bottom:2rem}
+.art-cat{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:.5rem}
+.art-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.15;margin-bottom:.75rem}
+.art-meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.art-body{font-size:15px;line-height:1.85;color:#2a2a28}
+.art-body h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin:2.5rem 0 .85rem;padding-top:2rem;border-top:1px solid var(--border)}
+.art-body h3{font-size:1rem;font-weight:600;margin:1.75rem 0 .5rem;letter-spacing:.02em}
+.art-body p{margin-bottom:1.1rem}
+.art-body ul,.art-body ol{margin:0 0 1.1rem 1.75rem}
+.art-body li{margin-bottom:.5rem;line-height:1.7}
+.art-body strong{font-weight:600}
+.art-body .highlight{background:var(--cream);border-left:3px solid var(--accent);padding:.85rem 1.1rem;margin:1.75rem 0;font-size:14px;line-height:1.7}
+.art-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:13.5px}
+.art-body th{background:var(--ink);color:var(--paper);padding:8px 12px;text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.art-body td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.art-body tr:nth-child(even) td{background:var(--cream)}
+.sidebar-section{margin-bottom:2rem}
+.sidebar-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:5px;margin-bottom:.75rem;font-weight:500}
+.related-item{display:block;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--ink)}
+.related-item:last-child{border-bottom:none}
+.related-item:hover{color:var(--accent)}
+.related-item::before{content:'→ ';color:var(--accent);font-size:11px}
+footer{border-top:2px solid var(--ink);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.05em}
+footer a{color:var(--muted)}footer a:hover{color:var(--accent)}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:700px){
+  .header-top{display:none}.header-main{padding:1rem}.hamburger{display:flex}
+  .header-nav{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .header-nav.open{display:flex}
+  .nav-btn{border-right:none;border-bottom:1px solid var(--border);padding:.85rem 1.5rem;font-size:13px;justify-content:flex-start;width:100%}
+  .nav-btn:last-child{border-bottom:none}
+  .nav-btn.active{border-left:3px solid var(--accent);padding-left:calc(1.5rem - 3px)}
+  .container{padding:0 1rem}.layout{padding:1.25rem 0 2rem}
+  .art-body table{font-size:12px}.art-body th,.art-body td{padding:6px 8px}
+}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Cómo corregir tu novela: el orden de las revisiones", "description": "Cómo corregir tu propia novela por pasadas, de lo grande a lo pequeño: reposo, estructura, personajes y continuidad, estilo y erratas. Qué puede hacer la IA y cuándo pedir otra mirada.", "inLanguage": "es", "author": {"@type": "Organization", "name": "Letras Españolas"}, "publisher": {"@type": "Organization", "name": "Letras Españolas", "url": "https://letrasespanolas.org/"}, "datePublished": "2026-10-27", "dateModified": "2026-10-27", "mainEntityOfPage": "https://letrasespanolas.org/articulos/como-corregir-tu-novela.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://letrasespanolas.org/"}, {"@type": "ListItem", "position": 2, "name": "Artículos", "item": "https://letrasespanolas.org/articulos/"}, {"@type": "ListItem", "position": 3, "name": "Cómo corregir tu novela: el orden de las revisiones", "item": "https://letrasespanolas.org/articulos/como-corregir-tu-novela.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿En qué orden hay que corregir una novela?", "acceptedAnswer": {"@type": "Answer", "text": "De lo grande a lo pequeño: primero la estructura (qué escenas sobran, faltan o están fuera de sitio), después los personajes y la continuidad, luego el estilo frase a frase y al final las erratas y la ortotipografía. Corregir comas en un capítulo que luego se va a cortar es trabajo perdido."}}, {"@type": "Question", "name": "¿Cuánto tiempo hay que dejar reposar una novela antes de corregirla?", "acceptedAnswer": {"@type": "Answer", "text": "No hay una cifra fija. Stephen King, en Mientras escribo, recomienda un mínimo de seis semanas en un cajón. Lo que importa es volver al texto cuando ya no lo recuerdas frase a frase, porque entonces lees lo que está escrito y no lo que querías escribir."}}, {"@type": "Question", "name": "¿Cuántas veces hay que corregir una novela?", "acceptedAnswer": {"@type": "Answer", "text": "No hay un número. Una señal práctica de que estás terminando: cuando los cambios que haces ya no arreglan nada, solo cambian una palabra por otra que te gusta igual."}}, {"@type": "Question", "name": "¿Se puede corregir una novela con inteligencia artificial?", "acceptedAnswer": {"@type": "Answer", "text": "Sirve para cazar erratas, repeticiones y frases enrevesadas, pero no para decidir si la novela funciona: no sabe si sobra un capítulo ni si un personaje convence. Y antes de subir un inédito, revisa las condiciones de la herramienta sobre el uso de lo que subes."}}, {"@type": "Question", "name": "¿Qué va primero, el informe de lectura o la corrección?", "acceptedAnswer": {"@type": "Answer", "text": "El informe. Valora la obra entera (estructura, personajes, ritmo) y dice qué cambiar; la corrección deja limpio el texto frase a frase. Si se corrige antes, lo que se reescriba después hay que corregirlo otra vez."}}]}</script>
+<link rel="stylesheet" href="/nav.css">
+<link rel="canonical" href="https://letrasespanolas.org/articulos/como-corregir-tu-novela.html">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCS6BXJS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<header>
+  <div class="header-top"><span id="fecha"></span><span>Recursos para escritores de España</span><span>letrasespanolas.org</span></div>
+  <div class="header-main">
+    <a href="https://letrasespanolas.org"><div class="site-title">Letras <span>Españolas</span></div></a>
+    <p class="site-tagline">Concursos · Recursos · Editoriales · Artículos para escritores</p>
+    <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="header-nav">
+  <a class="nav-btn" href="https://letrasespanolas.org/">Concursos</a>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-directorios">Directorios <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-directorios">
+      <a class="" href="https://letrasespanolas.org/editoriales.html">Editoriales</a>
+      <a class="" href="https://letrasespanolas.org/agentes.html">Agentes</a>
+      <a class="" href="https://letrasespanolas.org/revistas.html">Revistas</a>
+    </div>
+  </div>
+  <div class="nav-grupo">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sub-herramientas">Herramientas <span class="nav-flecha" aria-hidden="true">&#9662;</span></button>
+    <div class="nav-sub" id="sub-herramientas">
+      <a class="" href="https://letrasespanolas.org/buscador.html">Buscador</a>
+      <a class="" href="https://letrasespanolas.org/calculadora.html">Calculadora</a>
+      <a class="" href="https://letrasespanolas.org/checklist.html">Checklist</a>
+      <a class="" href="https://letrasespanolas.org/cuanto-tardaras.html">Planificador</a>
+      <a class="" href="https://letrasespanolas.org/generador-carta.html">Carta editorial</a>
+    </div>
+  </div>
+  <a class="nav-btn active" href="https://letrasespanolas.org/articulos/">Artículos</a>
+  <a class="nav-btn" href="https://letrasespanolas.org/libros.html">Novedades</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/informe-de-lectura.html">Informe de lectura</a>
+  <a class="nav-btn nav-destacado" href="https://letrasespanolas.org/correccion-de-manuscritos.html">Corrección</a>
+</nav>
+</header>
+<div class="container">
+  <div class="layout">
+    <main>
+      <div class="breadcrumb"><a href="https://letrasespanolas.org">Inicio</a><span>›</span><a href="https://letrasespanolas.org/#articulos">Artículos</a><span>›</span>Técnica narrativa</div>
+<div class="art-header">
+  <div class="art-cat">Técnica narrativa</div>
+  <h1 class="art-title">Cómo corregir tu novela: el orden de las revisiones</h1>
+  <div class="art-meta">Lectura: 7 min &nbsp;·&nbsp; Actualizado el 27 de octubre de 2026</div>
+</div>
+<div class="art-body">
+<p>Has escrito la palabra «fin» y ahora toca lo que separa un borrador de un manuscrito: corregirlo. La mayoría de autores lo hacen leyendo la novela de principio a fin y arreglando lo que ven por el camino, una coma aquí, un capítulo allá. Funciona mal, porque en cada lectura se intenta mirar todo a la vez y se acaba viendo solo lo pequeño.</p>
+<p>Lo que funciona es corregir <strong>por pasadas</strong>, cada una con un solo objetivo, y en un orden concreto: <strong>de lo grande a lo pequeño</strong>. Primero lo que puede obligarte a cortar o mover capítulos enteros; al final, las comas. Así no pules frases que luego vas a borrar.</p>
+
+<h2>Antes de empezar: deja que repose</h2>
+<p>Recién terminada, la novela se lee de memoria: el ojo ve lo que querías escribir, no lo que escribiste. Stephen King, en <em>Mientras escribo</em>, recomienda dejar el manuscrito un mínimo de seis semanas en un cajón antes de releerlo. No hace falta tanto si no puedes esperar, pero sí el tiempo suficiente para no recordar cada frase.</p>
+<p>Y cuando vuelvas, <strong>cambia el formato</strong>: imprímelo, pásalo al lector de libros electrónicos o cambia el tipo de letra. Un texto que se ve distinto se lee como si fuera de otro, y los fallos saltan antes.</p>
+
+<h2>Primera pasada: leer de corrido sin tocar nada</h2>
+<p>La primera lectura no es para corregir. Lee la novela entera, lo más seguido que puedas, y apunta en una libreta aparte lo que notes: aquí me aburro, este personaje desaparece, esto ya lo había contado, no entiendo por qué hace esto. No arregles nada todavía. Si te paras a reescribir una página, pierdes la visión de conjunto, que es lo único que esta lectura te puede dar.</p>
+
+<h2>Segunda pasada: la estructura</h2>
+<p>Con las notas delante, haz una lista de escenas: una línea por escena, con lo que ocurre y lo que cambia en ella. Es una herramienta pobre y muy eficaz, porque deja a la vista lo que la prosa esconde:</p>
+<ul>
+<li><strong>Escenas en las que no cambia nada.</strong> Si al terminar la escena todo está igual que al empezarla, probablemente sobra o se puede fundir con otra.</li>
+<li><strong>Información repetida.</strong> El lector se entera de lo mismo dos veces, en capítulos distintos.</li>
+<li><strong>Un arranque lento.</strong> Muchas novelas empiezan de verdad en el capítulo dos o tres, y lo anterior es el autor calentando.</li>
+<li><strong>Un tramo central sin rumbo</strong> y un final que llega deprisa.</li>
+</ul>
+<p>Aquí se corta, se mueve y se reescribe a lo grande. Si quieres un marco para ordenar la trama, lo tienes en <a href="estructura-tres-actos-novela.html">la estructura en tres actos</a>, y para el arranque, en <a href="como-escribir-primer-parrafo-novela.html">cómo escribir el primer párrafo</a>.</p>
+
+<h2>Tercera pasada: personajes y continuidad</h2>
+<p>Ahora sigue a cada personaje importante a lo largo de la novela, solo a él. ¿Quiere algo desde el principio? ¿Sus decisiones se entienden? ¿Hay alguno que aparece en el capítulo tres y no vuelve a salir?</p>
+<p>En esta misma pasada se comprueba la <strong>continuidad</strong>, que es lo que más se escapa en un texto largo. Ayuda llevar una hoja con los datos que se repiten: nombres y cómo se escriben, edades, color de ojos, parentescos, fechas, días de la semana, quién sabe qué en cada momento. Los errores típicos son un personaje que cambia de nombre a mitad de libro, una semana con dos martes o alguien que se entera de algo antes de que se lo cuenten.</p>
+
+<h2>Cuarta pasada: el estilo, frase a frase</h2>
+<p>Solo cuando la estructura y los personajes están decididos tiene sentido trabajar la prosa. Lo que más se repite en los manuscritos:</p>
+<ul>
+<li><strong>Palabras repetidas en el mismo párrafo</strong>, sobre todo verbos comodín como <em>hacer</em>, <em>poner</em>, <em>tener</em> o <em>dar</em>.</li>
+<li><strong>Adverbios en <em>-mente</em> encadenados</strong>, y los que repiten lo que el verbo ya dice (<em>susurró en voz baja</em>).</li>
+<li><strong>Frases largas que se pierden</strong>: si al leerla tienes que volver al principio, pártela.</li>
+<li><strong>Muletillas propias</strong>: cada autor tiene las suyas. Cuando descubras una, búscala en todo el texto.</li>
+</ul>
+<p>El truco que más rinde en esta pasada es <strong>leer en voz alta</strong>, sobre todo los diálogos. Lo que tropieza en la boca tropieza en la lectura. Para las reglas del diálogo tienes <a href="como-escribir-dialogo-novela.html">cómo escribir diálogos en una novela</a>. Stephen King da en el mismo libro una fórmula orientativa: la segunda versión es la primera menos un diez por ciento.</p>
+
+<h2>Quinta pasada: erratas y ortotipografía</h2>
+<p>La última, y la única que se puede hacer en parte con el buscador del procesador de textos. Repasa:</p>
+<ul>
+<li><strong>La raya de diálogo</strong> (—), que no es el guion (-), y su puntuación en los incisos.</li>
+<li><strong>Las comillas</strong>: en texto impreso se recomiendan las angulares (« »).</li>
+<li><strong>Tildes que cambiaron con la Ortografía de 2010</strong>: <em>guion</em>, <em>truhan</em> o <em>solo</em> no llevan tilde.</li>
+<li><strong>Espacios dobles</strong> y puntos suspensivos escritos de formas distintas a lo largo del texto.</li>
+<li><strong>Coherencia en todo lo que no tiene norma única</strong>: cómo escribes los pensamientos, los mensajes de móvil o las cifras. Lo tienes en <a href="como-escribir-pensamientos-mensajes-novela.html">pensamientos, mensajes y recuerdos en una novela</a>.</li>
+</ul>
+
+<h2>¿Y la inteligencia artificial?</h2>
+<p>Para la quinta pasada, y en parte para la cuarta, una herramienta de IA o un corrector automático ahorra tiempo: caza erratas, repeticiones y frases enrevesadas. Lo que no hace es decirte si la novela funciona: no sabe si te sobra un capítulo, si el giro del final se ve venir o si un personaje convence. Esas son las pasadas que más pesan, y siguen siendo tuyas o de un lector humano.</p>
+<p>Dos precauciones. Revisa cada cambio que te proponga, porque tiende a igualar el estilo y a quitar lo que tiene de propio tu voz. Y antes de subir un inédito, mira las condiciones de la herramienta sobre lo que subes: en algunas, como ChatGPT, hay una opción en los ajustes para que tus textos no se usen para mejorar el modelo. Los aspectos legales los tienes en <a href="inteligencia-artificial-escritores-espana.html">IA para escritores en España</a>.</p>
+
+<h2>Cuándo parar y pedir otra mirada</h2>
+<p>Llega un punto en que ya no ves tu propia novela: los cambios no arreglan nada, solo cambian una palabra por otra que te gusta igual. Ahí corregir más no la mejora, y lo que hace falta es alguien que la lea sin conocerla. Los <a href="beta-readers-lectores-cero.html">lectores beta</a> son la primera opción, y son gratis; su límite es que suelen ser amigos o conocidos, y les cuesta decirte lo que no funciona.</p>
+
+<div class="highlight" data-cta="informe"><strong>Si quieres una valoración profesional antes de enviarla,</strong> un <a href="https://letrasespanolas.org/informe-de-lectura.html">informe de lectura</a> es la valoración escrita de un lector profesional que lee el manuscrito entero y te dice qué funciona, qué no y qué revisar primero. Encaja después de la segunda pasada y antes de la cuarta: antes de pulir frases, para no pulir lo que vas a cambiar. El informe general cuesta 95 € y se entrega en una semana; el completo, con ejemplos página a página y comprobación de continuidad, va según la extensión, desde 140 €.</div>
+
+<h2>¿Cuánto cuesta que te corrijan la novela?</h2>
+<p>Depende de la extensión y del nivel de corrección: la ortotipográfica (erratas, puntuación, tildes) es más barata que la de estilo, que entra en la lengua frase a frase. Las tarifas las fija cada profesional; lo que hay que saber para comparar presupuestos está en <a href="correccion-estilo-manuscrito.html">corrector de estilo para manuscritos</a>. Si quieres que corrijamos la tuya, te pasamos presupuesto cerrado en <a href="https://letrasespanolas.org/correccion-de-manuscritos.html">corrección de manuscritos</a>. El orden que ahorra dinero es el mismo de toda esta guía: primero lo grande, después las comas.</p>
+
+<h2>Preguntas frecuentes</h2>
+<h3>¿En qué orden hay que corregir una novela?</h3>
+<p>De lo grande a lo pequeño: primero la estructura (qué escenas sobran, faltan o están fuera de sitio), después los personajes y la continuidad, luego el estilo frase a frase y al final las erratas y la ortotipografía. Corregir comas en un capítulo que luego se va a cortar es trabajo perdido.</p>
+<h3>¿Cuánto tiempo hay que dejar reposar una novela antes de corregirla?</h3>
+<p>No hay una cifra fija. Stephen King, en Mientras escribo, recomienda un mínimo de seis semanas en un cajón. Lo que importa es volver al texto cuando ya no lo recuerdas frase a frase, porque entonces lees lo que está escrito y no lo que querías escribir.</p>
+<h3>¿Cuántas veces hay que corregir una novela?</h3>
+<p>No hay un número. Una señal práctica de que estás terminando: cuando los cambios que haces ya no arreglan nada, solo cambian una palabra por otra que te gusta igual.</p>
+<h3>¿Se puede corregir una novela con inteligencia artificial?</h3>
+<p>Sirve para cazar erratas, repeticiones y frases enrevesadas, pero no para decidir si la novela funciona: no sabe si sobra un capítulo ni si un personaje convence. Y antes de subir un inédito, revisa las condiciones de la herramienta sobre el uso de lo que subes.</p>
+<h3>¿Qué va primero, el informe de lectura o la corrección?</h3>
+<p>El informe. Valora la obra entera (estructura, personajes, ritmo) y dice qué cambiar; la corrección deja limpio el texto frase a frase. Si se corrige antes, lo que se reescriba después hay que corregirlo otra vez.</p>
+</div>
+
+    </main>
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Avisos de convocatorias</div>
+        <p style="font-size:12.5px;line-height:1.6;color:var(--muted);margin:.4rem 0 .7rem">Una vez al mes te enviamos las convocatorias que se abren y las que están a punto de cerrar, con su dotación y su fecha límite. Gratis.</p>
+        <a class="sidebar-link" href="/suscribete.html" style="color:var(--accent);font-weight:500">Suscribirme →</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Artículos relacionados</div>
+        <a class="related-item" href="como-escribir-pensamientos-mensajes-novela.html">Pensamientos, mensajes y recuerdos</a>
+        <a class="related-item" href="como-escribir-primer-parrafo-novela.html">Cómo escribir el primer párrafo</a>
+        <a class="related-item" href="como-titular-novela.html">Cómo titular tu novela</a>
+        <a class="related-item" href="beta-readers-lectores-cero.html">Beta readers: cómo encontrar lectores cero</a>
+        <a class="related-item" href="como-publicar-primera-novela-espana.html">Cómo publicar tu primera novela en España</a>
+        <a class="related-item" href="agente-literario-espana.html">Cómo encontrar un agente literario en España</a>
+        <a class="related-item" href="contrato-editorial-clausulas.html">El contrato editorial: cláusulas que negociar</a>
+        <a class="related-item" href="guia-concursos-literarios-espana.html">Guía para presentarte a concursos literarios</a>
+        <a class="related-item" href="cuanto-cobra-escritor-regalias-espana.html">Cuánto cobra un escritor por regalías</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Recursos</div>
+        <a class="related-item" href="https://letrasespanolas.org/editoriales.html">Directorio de editoriales</a>
+        <a class="related-item" href="https://letrasespanolas.org/agentes.html">Directorio de agentes</a>
+        <a class="related-item" href="https://letrasespanolas.org/buscador.html">Buscador de concursos</a>
+      </div>
+    </aside>
+  </div>
+</div>
+<footer>
+  <p>© <span id="year">2026</span> Letras Españolas · Para escritores de España</p>
+  <p style="margin-top:6px"><a href="https://letrasespanolas.org/">Inicio</a> · <a href="https://letrasespanolas.org/articulos/">Artículos</a> · <a href="https://letrasespanolas.org/sobre.html">Sobre Letras Españolas</a> · <a href="https://letrasespanolas.org/contacto.html">Contacto</a> · <a href="https://letrasespanolas.org/aviso-legal.html">Aviso legal</a> · <a href="https://letrasespanolas.org/privacidad.html">Privacidad</a> · <a href="https://letrasespanolas.org/cookies.html">Cookies</a></p>
+</footer>
+<script>
+  const h = document.querySelector('.hamburger');
+  const n = document.querySelector('.header-nav');
+  if(h && n){ h.addEventListener('click',()=>{ h.classList.toggle('open'); n.classList.toggle('open'); h.setAttribute('aria-expanded', h.classList.contains('open')); }); }
+  const fd = document.getElementById('fecha');
+  if(fd){ const d=new Date(); fd.textContent=d.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
+</script>
+<script src="/nav.js" defer></script>
+</body>
+</html>
