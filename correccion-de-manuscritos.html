@@ -347,6 +347,8 @@ footer a{color:var(--gold)}
     boton.disabled = true; boton.textContent = 'Enviando…';
     fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
       .then(function (r) {
+        // Segundo aviso por Telegram (ver avisar.js): va antes de f.reset(), que vacia los campos.
+        if (window.avisarSolicitud) avisarSolicitud(f, r.ok ? 'ok' : 'HTTP ' + r.status);
         if (r.ok) {
           // Avisa a Analytics (via GTM) de cada solicitud enviada. Hasta el 27/10 no se
           // contaba en ningun sitio: GA4 veia empezar el formulario (form_start) y nunca el envio.
@@ -360,6 +362,7 @@ footer a{color:var(--gold)}
         }
       })
       .catch(function () {
+        if (window.avisarSolicitud) avisarSolicitud(f, 'sin conexion con Formspree');
         err.style.display = 'block';
         boton.disabled = false; boton.textContent = 'Enviar consulta';
       });
@@ -367,5 +370,6 @@ footer a{color:var(--gold)}
 })();
 </script>
 <script src="/nav.js" defer></script>
+<script src="/avisar.js" defer></script>
 </body>
 </html>
