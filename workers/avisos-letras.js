@@ -33,7 +33,17 @@ export default {
     };
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
-    // GET /prueba: comprueba que los secretos estan puestos sin mandar nada.
+    // GET /chat: devuelve el numero de chat de quien le ha escrito al bot, para rellenar
+    // TELEGRAM_CHAT_ID sin que nadie tenga que manejar el token fuera de Cloudflare.
+    // El numero de chat no es secreto: sin el token no sirve para escribir a nadie.
+    if (req.method === 'GET' && new URL(req.url).pathname === '/chat') {
+      if (!env.TELEGRAM_TOKEN) return new Response('falta TELEGRAM_TOKEN', { status: 500, headers: cors });
+      const u = await (await fetch('https://api.telegram.org/bot' + env.TELEGRAM_TOKEN + '/getUpdates')).json();
+      const chats = [...new Set((u.result || []).map((x) => x.message && x.message.chat && x.message.chat.id).filter(Boolean))];
+      return new Response(chats.length ? 'chat: ' + chats.join(', ') : 'nadie ha escrito al bot todavia', { headers: cors });
+    }
+
+    // GET: comprueba que los secretos estan puestos sin mandar nada.
     if (req.method === 'GET') {
       const listo = Boolean(env.TELEGRAM_TOKEN && env.TELEGRAM_CHAT_ID);
       return new Response(listo ? 'avisos-letras: listo' : 'avisos-letras: faltan los secretos', {
