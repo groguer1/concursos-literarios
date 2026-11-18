@@ -99,13 +99,13 @@
         '<button id="le-np-close" aria-label="Cerrar">&times;</button>' +
         '<div class="le-np-eyebrow">Avisos de convocatorias</div>' +
         '<h2 id="le-np-title">&iquest;Se te pasan los plazos?</h2>' +
-        '<p>Una vez al mes te enviamos las convocatorias que se abren y las que est&aacute;n a punto de cerrar, con su dotaci&oacute;n y su fecha l&iacute;mite. Sin cuota de inscripci&oacute;n y verificadas una a una.</p>' +
+        '<p>Una vez al mes te enviamos las convocatorias que se abren y las que est&aacute;n a punto de cerrar, con su dotaci&oacute;n y su fecha l&iacute;mite.</p>' +
         '<form novalidate>' +
           '<input type="email" name="EMAIL" placeholder="Tu correo electr&oacute;nico" autocomplete="email" required>' +
           '<div class="le-np-error">Escribe un correo v&aacute;lido para suscribirte.</div>' +
           '<button type="submit">Avisadme gratis</button>' +
         '</form>' +
-        '<p class="le-np-note">Una al mes. Sin spam. Te das de baja con un clic. <a href="/privacidad.html">Privacidad</a></p>' +
+        '<p class="le-np-note">Una al mes. Te das de baja cuando quieras. <a href="/privacidad.html">Privacidad</a></p>' +
       '</div>';
     document.body.appendChild(overlay);
     requestAnimationFrame(function () { overlay.classList.add('le-np-visible'); });
