@@ -9,11 +9,11 @@
 <meta name="theme-color" content="#f5f2eb">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora de derechos de autor — Letras Españolas</title>
-<meta name="description" content="Calcula cuánto cobrarás como autor por tu libro. Derechos de autor según precio, tirada, porcentaje y tipo de contrato editorial. Gratis y sin registro.">
+<meta name="description" content="Calcula cuánto cobrarás como autor por tu libro. Derechos de autor según precio, ejemplares vendidos, porcentaje y anticipo, y lo que deja Amazon KDP. Gratis y sin registro.">
 <meta name="google-site-verification" content="yIGT3ZQujBl7hF7lcUu2BQr7d1MGXeIMDnXAu7GFFTM">
   <link rel="canonical" href="https://letrasespanolas.org/calculadora.html">
   <meta property="og:title" content="Calculadora de derechos de autor — Letras Españolas">
-  <meta property="og:description" content="Calcula cuánto cobrarás como autor por tu libro según regalías, precio, tirada y anticipo. Gratis y sin registro.">
+  <meta property="og:description" content="Calcula cuánto cobrarás como autor por tu libro según regalías, precio, ejemplares vendidos y anticipo. Gratis y sin registro.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://letrasespanolas.org/calculadora.html">
   <meta property="og:site_name" content="Letras Españolas">
@@ -191,37 +191,30 @@ footer a:hover{color:var(--ink)}
           <div class="calc-panel">
             <div class="calc-panel-title">Datos del libro</div>
             <div class="field">
-              <label>Precio de venta al público (PVP)</label>
+              <label>Precio de venta al público (con IVA)</label>
               <div class="range-wrap">
                 <input type="range" id="pvp" min="5" max="40" step="0.5" value="20" oninput="sync('pvp','pvp-val');calcContrato()">
                 <span class="range-val" id="pvp-val">20,00 €</span>
               </div>
             </div>
             <div class="field">
-              <label>Tirada inicial (ejemplares)</label>
+              <label>Ejemplares vendidos</label>
               <div class="range-wrap">
-                <input type="range" id="tirada" min="500" max="20000" step="500" value="3000" oninput="sync('tirada','tirada-val');calcContrato()">
-                <span class="range-val" id="tirada-val">3.000</span>
+                <input type="range" id="vendidos" min="100" max="20000" step="100" value="1000" oninput="sync('vendidos','vendidos-val');calcContrato()">
+                <span class="range-val" id="vendidos-val">1.000</span>
               </div>
-            </div>
-            <div class="field">
-              <label>% de venta estimado de la tirada</label>
-              <div class="range-wrap">
-                <input type="range" id="ventas-pct" min="10" max="100" step="5" value="50" oninput="sync('ventas-pct','ventas-pct-val');calcContrato()">
-                <span class="range-val" id="ventas-pct-val">50%</span>
-              </div>
-              <div class="hint">Un debut suele vender entre el 20% y el 50% de la tirada</div>
+              <div class="hint">Cuenta los vendidos, no la tirada: las regalías solo se cobran por los ejemplares vendidos.</div>
             </div>
           </div>
           <div class="calc-panel">
             <div class="calc-panel-title">Condiciones del contrato</div>
             <div class="field">
-              <label>Porcentaje de regalías sobre PVP</label>
+              <label>Porcentaje de regalías</label>
               <div class="range-wrap">
                 <input type="range" id="royalty" min="5" max="20" step="0.5" value="10" oninput="sync('royalty','royalty-val');calcContrato()">
                 <span class="range-val" id="royalty-val">10%</span>
               </div>
-              <div class="hint">Lo habitual en España: 8-10% para noveles, 10-15% para consolidados</div>
+              <div class="hint">En papel, el 10 % es lo más frecuente: lo tenía el 44 % de los contratos en la encuesta del Libro Blanco del Escritor de la ACE (2019); un 19 % había firmado entre el 0 y el 5 %.</div>
             </div>
             <div class="field">
               <label>Anticipo (€)</label>
@@ -232,12 +225,7 @@ footer a:hover{color:var(--ink)}
               <div class="hint">El anticipo se descuenta de las regalías futuras</div>
             </div>
             <div class="field">
-              <label>Tipo de base de cálculo</label>
-              <select id="base-calculo" onchange="calcContrato()">
-                <option value="pvp">Sobre PVP (precio de venta al público)</option>
-                <option value="neto">Sobre precio neto (PVP menos descuento librero ~40%)</option>
-              </select>
-              <div class="hint">Las grandes editoriales suelen calcular sobre PVP</div>
+              <div class="hint">El cálculo usa el precio <strong>sin IVA</strong> (el IVA del libro es del 4 %), que es la base habitual en los contratos. Si el tuyo calcula sobre otra base, como el precio neto que cobra la editorial, cobrarás menos.</div>
             </div>
           </div>
         </div>
@@ -299,17 +287,26 @@ footer a:hover{color:var(--ink)}
             <div class="field">
               <label>Plataforma</label>
               <select id="ap-plataforma" onchange="calcAuto()">
-                <option value="0.70" data-kdp="ebook">Amazon KDP ebook España — 70% (precio 2,69€–9,99€ en Amazon.es)</option>
-                <option value="0.35">Amazon KDP ebook — 35% (precio fuera del rango 2,69€–9,99€)</option>
-                <option value="0.60" data-kdp="papel">Amazon KDP papel España — 60% si PVP ≥ 9,99€ (menos coste de impresión)</option>
-                <option value="0.50" data-kdp="papel">Amazon KDP papel España — 50% si PVP ≤ 9,98€ (menos coste de impresión)</option>
-                <option value="0.60">Kobo Writing Life — 70% (menos costes)</option>
-                <option value="0.60">Google Play Books — 52% aprox.</option>
-                <option value="0.55">Apple Books — 70% (sobre precio neto)</option>
-                <option value="0.65">Lektu (solo ebook, sin DRM) — 65%</option>
-                <option value="0.50">Distribuidor (IngramSpark, PubliBook) — ~50%</option>
+                <option value="kdp-ebook">Amazon KDP, ebook (Amazon.es)</option>
+                <option value="kdp-papel">Amazon KDP, papel (Amazon.es)</option>
+                <option value="otra">Otra plataforma (escribe su porcentaje)</option>
               </select>
               <div class="hint" id="kdp-aviso" style="display:none;color:var(--accent)"></div>
+            </div>
+            <div class="field" id="campo-paginas" style="display:none">
+              <label>Páginas del libro en papel</label>
+              <div class="range-wrap">
+                <input type="range" id="ap-paginas" min="24" max="828" step="2" value="300" oninput="document.getElementById('ap-paginas-val').textContent=this.value;calcAuto()">
+                <span class="range-val" id="ap-paginas-val">300</span>
+              </div>
+            </div>
+            <div class="field" id="campo-otra" style="display:none">
+              <label>Porcentaje que paga la plataforma (sobre el precio sin IVA)</label>
+              <div class="range-wrap">
+                <input type="range" id="ap-otra" min="10" max="90" step="5" value="50" oninput="document.getElementById('ap-otra-val').textContent=this.value+'%';calcAuto()">
+                <span class="range-val" id="ap-otra-val">50%</span>
+              </div>
+              <div class="hint">Míralo en las condiciones de la plataforma: cambian a menudo.</div>
             </div>
           </div>
           <div class="calc-panel">
@@ -358,7 +355,7 @@ footer a:hover{color:var(--ink)}
               <div class="result-item-value" id="ap-break-even">—</div>
             </div>
           </div>
-          <p class="disclaimer">Cálculo orientativo. Los porcentajes varían según precio, país y plataforma. Revisa siempre las condiciones actuales de cada plataforma antes de publicar.</p>
+          <p class="disclaimer">Cálculo orientativo, sobre el precio sin IVA. Las condiciones de KDP son las de su ayuda oficial (revisadas en octubre de 2026); en ebook no se descuenta el coste de entrega, que depende del tamaño del archivo. Revisa siempre las condiciones actuales antes de publicar.</p>
         </div>
       </div>
 
@@ -407,16 +404,16 @@ footer a:hover{color:var(--ink)}
             </div>
           </div>
           <div id="comp-conclusion" style="font-size:14px;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.2)"></div>
-          <p class="disclaimer">Comparativa simplificada. No tiene en cuenta visibilidad, distribución, derechos subsidiarios, traducciones u otros factores que suelen favorecer a las editoriales tradicionales.</p>
+          <p class="disclaimer">Comparativa simplificada, sobre el precio sin IVA. No tiene en cuenta la distribución, la promoción ni los derechos de traducción o adaptación.</p>
         </div>
       </div>
 
       <!-- INFO EXTRA -->
       <div class="info-grid">
         <div class="info-card">
-          <span class="info-card-num">8–10%</span>
-          <div class="info-card-title">Regalía habitual para noveles</div>
-          <div class="info-card-body">La mayoría de contratos con editoriales medianas y grandes en España ofrecen entre el 8% y el 10% sobre PVP para autores que publican por primera vez.</div>
+          <span class="info-card-num">10%</span>
+          <div class="info-card-title">Lo más frecuente en papel</div>
+          <div class="info-card-body">Sobre el precio sin IVA. En la encuesta del Libro Blanco del Escritor de la ACE (2019, 603 autores), el 44 % de los contratos tenía el 10 % en papel y el 19 % entre el 0 y el 5 %. Más en <a href="https://letrasespanolas.org/articulos/cuanto-cobra-escritor-regalias-espana.html">cuánto cobra un escritor por regalías</a>.</div>
         </div>
         <div class="info-card">
           <span class="info-card-num">15%</span>
@@ -426,7 +423,7 @@ footer a:hover{color:var(--ink)}
         <div class="info-card">
           <span class="info-card-num">70%</span>
           <div class="info-card-title">Regalía en Amazon KDP (España)</div>
-          <div class="info-card-body">En Amazon.es, el 70% de regalía en ebook exige un precio entre 2,69€ y 9,99€ (fuera de ese rango se aplica el 35%; mínimo absoluto 0,89€). En papel, la regalía es del 60% si el PVP es de 9,99€ o más y del 50% si es igual o inferior a 9,98€, siempre tras restar el coste de impresión.</div>
+          <div class="info-card-body">En ebook, el 70 % se aplica con un precio entre 2,69 € y 12,99 €, sobre el precio sin IVA y menos un coste de entrega según el tamaño del archivo; fuera de ese rango, el 35 %. En papel, el 60 % desde 9,99 € y el 50 % por debajo, menos el coste de impresión. Datos de la ayuda oficial de KDP, revisada en octubre de 2026.</div>
         </div>
       </div>
     </main>
@@ -473,8 +470,7 @@ function sync(id, valId) {
   if(id==='pvp') el.textContent = fmt(v);
   else if(id==='royalty') el.textContent = fmtPct(v);
   else if(id==='anticipo') el.textContent = fmt(v);
-  else if(id==='tirada') el.textContent = fmtN(v);
-  else if(id==='ventas-pct') el.textContent = v+'%';
+  else if(id==='vendidos') el.textContent = fmtN(v);
 }
 function syncAP(id, valId) {
   const v = parseFloat(document.getElementById(id).value);
@@ -500,14 +496,10 @@ function setTab(tab, btn) {
 
 function calcContrato() {
   const pvp = parseFloat(document.getElementById('pvp').value);
-  const tirada = parseInt(document.getElementById('tirada').value);
-  const ventasPct = parseInt(document.getElementById('ventas-pct').value)/100;
+  const ejemplares = parseInt(document.getElementById('vendidos').value);
   const royalty = parseFloat(document.getElementById('royalty').value)/100;
   const anticipo = parseFloat(document.getElementById('anticipo').value);
-  const base = document.getElementById('base-calculo').value;
-
-  const precioBase = base === 'neto' ? pvp * 0.60 : pvp;
-  const ejemplares = Math.round(tirada * ventasPct);
+  const precioBase = pvp / 1.04;
   const porEjemplar = precioBase * royalty;
   const brutas = ejemplares * porEjemplar;
   const breakEjemplares = anticipo > 0 ? Math.ceil(anticipo / porEjemplar) : 0;
@@ -530,32 +522,34 @@ function calcAuto() {
   const ventas = parseInt(document.getElementById('ap-ventas').value);
   const sel = document.getElementById('ap-plataforma');
   const opt = sel.selectedOptions[0];
-  let royaltyPct = parseFloat(sel.value);
   const corrCost = parseFloat(document.getElementById('coste-corr').value);
   const portadaCost = parseFloat(document.getElementById('coste-portada').value);
   const maqCost = parseFloat(document.getElementById('coste-maq').value);
-
-  // Reglas KDP España: el 70% en ebook exige precio entre 2,69€ y 9,99€ en Amazon.es;
-  // fuera de ese rango Amazon aplica el 35%. En papel el % depende del PVP (50%/60%).
+  const tipo = sel.value;
+  const sinIva = precio / 1.04;
   const aviso = document.getElementById('kdp-aviso');
+  document.getElementById('campo-paginas').style.display = tipo === 'kdp-papel' ? 'block' : 'none';
+  document.getElementById('campo-otra').style.display = tipo === 'otra' ? 'block' : 'none';
   aviso.style.display = 'none';
-  if (opt.dataset.kdp === 'ebook' && (precio < 2.69 || precio > 9.99)) {
-    royaltyPct = 0.35;
-    aviso.textContent = '⚠ Con ' + fmt(precio) + ' estás fuera del rango 2,69€–9,99€ de Amazon.es: KDP aplica el 35%, no el 70%. El cálculo ya usa el 35%.';
+  let porEjemplar = 0;
+  if (tipo === 'kdp-ebook') {
+    const pct = (precio >= 2.69 && precio <= 12.99) ? 0.70 : 0.35;
+    porEjemplar = sinIva * pct;
+    aviso.textContent = pct === 0.70
+      ? 'Con ' + fmt(precio) + ' cobras el 70 % (rango de 2,69 € a 12,99 €). Amazon descuenta además un coste de entrega según el tamaño del archivo, que aquí no se resta.'
+      : 'Con ' + fmt(precio) + ' estás fuera del rango de 2,69 € a 12,99 €: KDP paga el 35 %. El cálculo ya lo usa.';
     aviso.style.display = 'block';
-  } else if (opt.dataset.kdp === 'papel') {
-    const pctPapel = precio >= 9.99 ? 0.60 : 0.50;
-    if (pctPapel !== royaltyPct) {
-      royaltyPct = pctPapel;
-      aviso.textContent = 'ℹ Con PVP de ' + fmt(precio) + ' el tramo de KDP papel es del ' + Math.round(pctPapel*100) + '%. El cálculo usa ese porcentaje. Recuerda restar el coste de impresión por ejemplar.';
-      aviso.style.display = 'block';
-    } else {
-      aviso.textContent = 'ℹ En papel, Amazon descuenta además el coste de impresión de cada ejemplar (depende de páginas y tinta). Este cálculo no lo incluye.';
-      aviso.style.display = 'block';
-    }
+  } else if (tipo === 'kdp-papel') {
+    const pags = parseInt(document.getElementById('ap-paginas').value);
+    const impresion = pags <= 110 ? 2.05 : 0.75 + 0.012 * pags;
+    const pct = precio >= 9.99 ? 0.60 : 0.50;
+    porEjemplar = Math.max(0, sinIva * pct - impresion);
+    aviso.textContent = 'Papel: el ' + Math.round(pct*100) + ' % del precio sin IVA menos ' + fmt(impresion) + ' de impresión (' + pags + ' páginas en blanco y negro).';
+    aviso.style.display = 'block';
+  } else {
+    porEjemplar = sinIva * parseFloat(document.getElementById('ap-otra').value) / 100;
   }
-
-  const mensual = precio * royaltyPct * ventas;
+  const mensual = porEjemplar * ventas;
   const anual = mensual * 12;
   const inversion = corrCost + portadaCost + maqCost;
   const breakEven = mensual > 0 ? (inversion / mensual) : Infinity;
@@ -574,19 +568,19 @@ function calcComparar() {
   const aPvp = parseFloat(document.getElementById('ca-pvp').value);
   const aRoyalty = parseFloat(document.getElementById('ca-royalty').value)/100;
   const aAnticipo = parseFloat(document.getElementById('ca-anticipo').value);
-  const aGanancia = Math.max(aAnticipo, ventas * aPvp * aRoyalty);
+  const aGanancia = Math.max(aAnticipo, ventas * (aPvp / 1.04) * aRoyalty);
 
   const bPrecio = parseFloat(document.getElementById('cb-precio').value);
   const bRoyalty = parseFloat(document.getElementById('cb-royalty').value)/100;
   const bInversion = parseFloat(document.getElementById('cb-inversion').value);
-  const bGanancia = Math.max(0, ventas * bPrecio * bRoyalty - bInversion);
+  const bGanancia = Math.max(0, ventas * (bPrecio / 1.04) * bRoyalty - bInversion);
 
   document.getElementById('comp-a').textContent = fmt(aGanancia);
   document.getElementById('comp-b').textContent = fmt(bGanancia);
 
   const diff = bGanancia - aGanancia;
   const winner = diff > 0 ? 'B (autopublicación)' : 'A (contrato editorial)';
-  document.getElementById('comp-conclusion').textContent = `Con ${fmtN(ventas)} ejemplares vendidos, la opción ${winner} genera ${fmt(Math.abs(diff))} más. Recuerda que la editorial ofrece distribución, visibilidad y respaldo que no aparecen en este cálculo.`;
+  document.getElementById('comp-conclusion').textContent = `Con ${fmtN(ventas)} ejemplares vendidos, la opción ${winner} genera ${fmt(Math.abs(diff))} más. La distribución y la promoción no entran en este cálculo.`;
 }
 
 // Inicializar
